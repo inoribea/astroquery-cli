@@ -1,0 +1,39 @@
+# Python
+   __pycache__/
+   *.py[cod]
+   *$py.class
+   *.so
+   *.egg-info/
+   .installed.cfg
+   *.egg
+   dist/
+   build/
+   *.tar.gz
+   *.whl
+
+   # Virtualenv
+   .venv/
+   venv/
+   ENV/
+   env/
+   env.bak/
+   venv.bak/
+
+   # Poetry
+   .poetry/
+   poetry.lock 
+
+   # IDE / Editor specific
+   .vscode/
+   .idea/
+   *.sublime-project
+   *.sublime-workspace
+
+   # OS specific
+   .DS_Store
+   Thumbs.db
+
+   # Logs and databases
+   *.log
+   *.sql
+   *.sqlite3
