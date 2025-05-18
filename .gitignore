@@ -22,6 +22,7 @@
    # Poetry
    .poetry/
    poetry.lock 
+   dist/
 
    # IDE / Editor specific
    .vscode/
