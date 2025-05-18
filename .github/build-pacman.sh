@@ -36,26 +36,39 @@ PY_BIN_DIR="./pkg/usr/bin"
 
 mkdir -p "${PY_SITEPACKAGES_DIR}"
 mkdir -p "${PY_BIN_DIR}"
+ 
+-# Find the built wheel file. Assumes it's in ./dist/
+-# Wheel name pattern: ${MODULE_NAME}-${PKG_VERSION}-py3-none-any.whl
+-# Example: astroquery_cli-0.1.0-py3-none-any.whl
+-WHEEL_FILE_PATTERN="dist/${MODULE_NAME}-${PKG_VERSION}-py3-none-any.whl"
+-WHEEL_FILE=$(ls $WHEEL_FILE_PATTERN 2>/dev/null | head -n 1)
++if [[ -z "$WHEEL_FILENAME_ENV" ]]; then
++  echo "Error: WHEEL_FILENAME_ENV environment variable is not set."
++  exit 1
++fi
+ 
+-if [[ ! -f "$WHEEL_FILE" ]]; then
+-  echo "Warning: Wheel file matching pattern '$WHEEL_FILE_PATTERN' not found."
+-  echo "Attempting to find a more generic wheel for ${MODULE_NAME} with version ${PKG_VERSION}..."
+-  WHEEL_FILE=$(ls dist/${MODULE_NAME}-${PKG_VERSION}-*.whl 2>/dev/null | head -n 1)
+-  if [[ ! -f "$WHEEL_FILE" ]]; then
+-    echo "Error: Could not find any wheel file for ${MODULE_NAME} with version ${PKG_VERSION} in dist/ directory."
+-    echo "Contents of dist/ directory:"
+-    ls -Rla dist/
+-    exit 1
+-  fi
+-  echo "Found wheel file using alternative pattern: $WHEEL_FILE"
++WHEEL_FILE="dist/${WHEEL_FILENAME_ENV}"
++echo "Expecting wheel file at: $WHEEL_FILE"
++
++if [[ ! -f "$WHEEL_FILE" ]]; then
++  echo "Error: Wheel file '$WHEEL_FILE' not found in dist/ directory."
++  echo "Contents of dist/ directory:"
++  ls -Rla dist/
++  exit 1
+ fi
+ echo "Using wheel file: $WHEEL_FILE"
 
-# Find the built wheel file. Assumes it's in ./dist/
-# Wheel name pattern: ${MODULE_NAME}-${PKG_VERSION}-py3-none-any.whl
-# Example: astroquery_cli-0.1.0-py3-none-any.whl
-WHEEL_FILE_PATTERN="dist/${MODULE_NAME}-${PKG_VERSION}-py3-none-any.whl"
-WHEEL_FILE=$(ls $WHEEL_FILE_PATTERN 2>/dev/null | head -n 1)
-
-if [[ ! -f "$WHEEL_FILE" ]]; then
-  echo "Warning: Wheel file matching pattern '$WHEEL_FILE_PATTERN' not found."
-  echo "Attempting to find a more generic wheel for ${MODULE_NAME} with version ${PKG_VERSION}..."
-  WHEEL_FILE=$(ls dist/${MODULE_NAME}-${PKG_VERSION}-*.whl 2>/dev/null | head -n 1)
-  if [[ ! -f "$WHEEL_FILE" ]]; then
-    echo "Error: Could not find any wheel file for ${MODULE_NAME} with version ${PKG_VERSION} in dist/ directory."
-    echo "Contents of dist/ directory:"
-    ls -Rla dist/
-    exit 1
-  fi
-  echo "Found wheel file using alternative pattern: $WHEEL_FILE"
-fi
-echo "Using wheel file: $WHEEL_FILE"
 
 # Install wheel to target directory
 echo "Installing wheel $WHEEL_FILE to ${PY_SITEPACKAGES_DIR}"
