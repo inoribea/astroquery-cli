@@ -22,7 +22,7 @@ Simbad.TIMEOUT = 60
 def add_common_fields(simbad_instance: Simbad):
     fields_to_add = [
         "ra(d)", "dec(d)", "plx", "plx_error",
-        "rv_value", "rvz_error",
+        "rv_value", "rv_error",
         "pmra", "pmdec", "pm_err_maj", "pm_err_min",
         "sptype",
         "fe_h",
