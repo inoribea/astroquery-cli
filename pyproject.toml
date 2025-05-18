@@ -18,6 +18,7 @@ babel = "^2.15.0"
 
 [tool.poetry.group.dev.dependencies] # Optional: for development
 pytest = "^7.4.2"
+snakeviz = "^2.2.0"
 
 [build-system]
 requires = ["poetry-core"]
