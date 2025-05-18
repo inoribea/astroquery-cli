@@ -26,9 +26,9 @@ msgstr "Astroquery 命令行界面。提供对各种天文数据服务的访问�
 
 #: astroquery_cli/main.py:89
 msgid ""
-"Set the language for output messages (e.g., 'en', 'zh_CN'). Affects help "
+"Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
-msgstr "设置输出信息的语言（例如，'en'，'zh_CN'）。影响帮助文本和输出。"
+msgstr "设置输出信息的语言（例如，'en'，'zh'）。影响帮助文本和输出。"
 
 #: astroquery_cli/main.py:110
 msgid "Manage application configuration."
@@ -39,7 +39,7 @@ msgid "Sets the default language for the CLI."
 msgstr ""
 
 #: astroquery_cli/main.py:114
-msgid "The language code to set as default (e.g., 'en', 'zh_CN')."
+msgid "The language code to set as default (e.g., 'en', 'zh')."
 msgstr ""
 
 #: astroquery_cli/main.py:129
@@ -1903,7 +1903,7 @@ msgstr "VizieR query_constraints"
 #~ "    Astroquery CLI: Your gateway to astronomical data. 🌠\n"
 #~ "\n"
 #~ "    Use '--lang' or '-l' to set the interface language.\n"
-#~ "    Example: aq -l zh_CN simbad query-object M31\n"
+#~ "    Example: aq -l zh simbad query-object M31\n"
 #~ "    "
 #~ msgstr ""
 

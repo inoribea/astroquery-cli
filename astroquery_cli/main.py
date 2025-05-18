@@ -23,10 +23,10 @@ from .modules import (
 )
 
 app = typer.Typer(
-    name="aq",
+    name="aqc",
     help=_("Astroquery Command Line Interface. Provides access to various astronomical data services."),
-    invoke_without_command=True, # <--- 主要改变在这里
-    no_args_is_help=True,      # 保持这个，以便 `aq` (无参数) 显示帮助
+    invoke_without_command=True, 
+    no_args_is_help=True,     
     add_completion=False,
     context_settings={"help_option_names": ["-h", "--help"]}
 )
@@ -36,23 +36,20 @@ def lang_callback(ctx: typer.Context, value: str):
         i18n.init_translation(value)
         global _
         _ = i18n.get_translator()
-        # 更新 Typer app 的帮助文本和 main_callback 的 docstring
         current_help = _("Astroquery Command Line Interface. Provides access to various astronomical data services.")
-        if ctx.parent: # 在 Typer 0.9.0+ 中，app 是 ctx.parent
+        if ctx.parent: 
             ctx.parent.help = current_help
-        elif hasattr(app, 'help'): # 兼容旧版本或直接访问
+        elif hasattr(app, 'help'):
             app.help = current_help
 
         current_docstring = _("""
     Astroquery CLI: Your gateway to astronomical data. 🌠
 
     Use '--lang' or '-l' to set the interface language.
-    Example: aq -l zh_CN simbad query-object M31
+    Example: aqc -l zh simbad query-object M31
     """)
         if main_callback.__doc__:
             main_callback.__doc__ = current_docstring
-            # 尝试更新 Typer 内部对回调的描述，这可能需要更深层次的操作
-            # 但至少 Python 的 __doc__ 是更新了的
     return value
 
 @app.callback()
@@ -63,34 +60,21 @@ def main_callback(
         "-l",
         "--lang",
         "--language",
-        help=_("Set the language for output messages (e.g., 'en', 'zh_CN'). Affects help texts and outputs."),
+        help=_("Set the language for output messages (e.g., 'en', 'zh'). Affects help texts and outputs."),
         callback=lang_callback,
         is_eager=True,
         envvar="AQ_LANG",
-        show_default=False # 不在帮助中显示默认值，因为它是动态初始化的
+        show_default=False 
     )
 ):
-    """
-    Astroquery CLI: Your gateway to astronomical data. 🌠
 
-    Use '--lang' or '-l' to set the interface language.
-    Example: aq -l zh_CN simbad query-object M31
-    """
-    # 如果 main_callback 被调用了，但没有子命令被调用
     if ctx.invoked_subcommand is None:
-        # 检查是否只传递了语言选项
-        # `ctx.params` 会包含所有解析到的顶级选项，如 {'lang': 'zh_CN'}
-        # 如果除了 'lang' 之外还有其他参数被传递但没有被识别为命令，
-        # Typer 通常会在之前就报错（除非这些是全局选项）。
-
-        # 如果用户只输入了 `aq -l <lang_code>`
-        # `sys.argv` 检查是否只包含程序名、语言选项和其值
         lang_option_flags = ["-l", "--lang", "--language"]
         is_only_lang_option = False
-        if len(sys.argv) == 3: # e.g., program -l en
+        if len(sys.argv) == 3: 
             if sys.argv[1] in lang_option_flags and not sys.argv[2].startswith("-"):
                 is_only_lang_option = True
-        elif len(sys.argv) == 2 and "=" in sys.argv[1]: # e.g., program --lang=en
+        elif len(sys.argv) == 2 and "=" in sys.argv[1]: 
              opt_name, opt_val = sys.argv[1].split("=", 1)
              if opt_name in lang_option_flags and not opt_val.startswith("-"):
                  is_only_lang_option = True
@@ -101,28 +85,10 @@ def main_callback(
             typer.echo(_("Run '{prog_name} --help' or '{prog_name} -h' to see available commands.").format(prog_name=ctx.find_root().info_name))
             raise typer.Exit(code=0)
         else:
-            # 如果调用了 `aq` (没有参数)，`no_args_is_help=True` 会先生效，显示帮助并退出，
-            # 所以这里通常不会执行到。
-            # 如果用户输入了 `aq --some-unknown-global-option` 并且没有命令，
-            # Typer 可能会在这里或者之前报错。
-            # 如果用户输入了 `aq some_arg_not_a_command -l en` Typer 会报错
-            # "Got unexpected extra argument (some_arg_not_a_command)"
-            # 基本上，如果到这里且 is_only_lang_option 为 False，可能意味着
-            # 用户只输入了 `aq`（已经被 no_args_is_help 处理）
-            # 或者有一些不应该出现的情况。
-            # 为了安全，如果不是预期的 "仅语言选项" 模式，并且没有子命令，
-            # 我们也显示帮助。
+            
             if not ctx.args and not any(arg for arg in sys.argv[1:] if not arg.startswith('-') and arg not in lang_option_flags and arg != lang):
-                 # 这意味着除了选项外，没有其他可能是命令的参数
-                 # 但也不是 is_only_lang_option 的情况
-                 # 例如 `aq -l` (没有值)，Typer 会报错
-                 # 如果是 `aq --version` (假设有这个选项)，会执行并退出
-                 # 这里主要是捕获那些 invoke_without_command=True 允许的、
-                 # 但又不是我们特定处理的 "仅语言选项" 的情况。
-                 # 如果没有其他参数，打印帮助可能是最安全的。
-                 pass # Typer 的 no_args_is_help 应该已经处理了 `aq` 的情况。
-                     # 如果有其他选项但没有命令，Typer 会在解析时报错或执行那些选项。
-                     # 此处不再需要特别的 get_help(), 除非 no_args_is_help 被移除。
+                
+                 pass 
 
 
 app.add_typer(simbad_cli.app, name="simbad", help=_("SIMBAD astronomical database."))

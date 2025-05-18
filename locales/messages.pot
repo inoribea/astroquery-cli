@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-18 22:15+0800\n"
+"POT-Creation-Date: 2025-05-18 23:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,40 +17,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: astroquery_cli/main.py:77
+#: astroquery_cli/main.py:27 astroquery_cli/main.py:40
 msgid ""
 "Astroquery Command Line Interface. Provides access to various "
 "astronomical data services."
 msgstr ""
 
-#: astroquery_cli/main.py:89
+#: astroquery_cli/main.py:46
 msgid ""
-"Set the language for output messages (e.g., 'en', 'zh_CN'). Affects help "
+"\n"
+"    Astroquery CLI: Your gateway to astronomical data. 🌠\n"
+"\n"
+"    Use '--lang' or '-l' to set the interface language.\n"
+"    Example: aq -l zh simbad query-object M31\n"
+"    "
+msgstr ""
+
+#: astroquery_cli/main.py:66
+msgid ""
+"Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
 msgstr ""
 
-#: astroquery_cli/main.py:110
-msgid "Manage application configuration."
+#: astroquery_cli/main.py:100
+#, python-brace-format
+msgid "Language active: {lang_code}"
 msgstr ""
 
-#: astroquery_cli/main.py:112
-msgid "Sets the default language for the CLI."
+#: astroquery_cli/main.py:101
+#, python-brace-format
+msgid "Run '{prog_name} --help' or '{prog_name} -h' to see available commands."
 msgstr ""
 
-#: astroquery_cli/main.py:114
-msgid "The language code to set as default (e.g., 'en', 'zh_CN')."
+#: astroquery_cli/main.py:128
+msgid "SIMBAD astronomical database."
 msgstr ""
 
 #: astroquery_cli/main.py:129
-msgid "SIMBAD query string."
+msgid "Query the ALMA archive."
 msgstr ""
 
-#: astroquery_cli/main.py:136
-msgid "ALMA query string."
+#: astroquery_cli/main.py:130
+msgid "Query the ESA Sky archive."
 msgstr ""
 
-#: astroquery_cli/main.py:141
-msgid "ESA Sky query string."
+#: astroquery_cli/main.py:131
+msgid "Query the Gaia archive."
+msgstr ""
+
+#: astroquery_cli/main.py:132 astroquery_cli/modules/irsa_cli.py:19
+msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
+msgstr ""
+
+#: astroquery_cli/main.py:133
+msgid "Query IRSA dust maps."
+msgstr ""
+
+#: astroquery_cli/main.py:134
+msgid "Query JPL Horizons ephemeris service."
+msgstr ""
+
+#: astroquery_cli/main.py:135 astroquery_cli/modules/jplsbdb_cli.py:18
+msgid "Query JPL Small-Body Database (SBDB)."
+msgstr ""
+
+#: astroquery_cli/main.py:136 astroquery_cli/modules/mast_cli.py:20
+msgid "Query the Mikulski Archive for Space Telescopes (MAST)."
+msgstr ""
+
+#: astroquery_cli/main.py:137
+msgid "Query the NASA Astrophysics Data System (ADS)."
+msgstr ""
+
+#: astroquery_cli/main.py:138
+msgid "Query the NASA/IPAC Extragalactic Database (NED)."
+msgstr ""
+
+#: astroquery_cli/main.py:139 astroquery_cli/modules/splatalogue_cli.py:19
+msgid "Query the Splatalogue spectral line database."
+msgstr ""
+
+#: astroquery_cli/main.py:140
+msgid "Query the VizieR astronomical catalog service."
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:19
@@ -457,10 +505,6 @@ msgstr ""
 msgid ""
 "[bold red]ADQL Query Error Details from server:\n"
 "{error_details}[/bold red]"
-msgstr ""
-
-#: astroquery_cli/modules/irsa_cli.py:19
-msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:25
@@ -878,10 +922,6 @@ msgstr ""
 msgid "JPL Horizons"
 msgstr ""
 
-#: astroquery_cli/modules/jplsbdb_cli.py:18
-msgid "Query JPL Small-Body Database (SBDB)."
-msgstr ""
-
 #: astroquery_cli/modules/jplsbdb_cli.py:22
 msgid "Query JPL SBDB for a small body."
 msgstr ""
@@ -989,10 +1029,6 @@ msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:88
 msgid "JPL SBDB query"
-msgstr ""
-
-#: astroquery_cli/modules/mast_cli.py:20
-msgid "Query the Mikulski Archive for Space Telescopes (MAST)."
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:27
@@ -1447,10 +1483,6 @@ msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:141
 msgid "SIMBAD query_bibcode"
-msgstr ""
-
-#: astroquery_cli/modules/splatalogue_cli.py:19
-msgid "Query the Splatalogue spectral line database."
 msgstr ""
 
 #: astroquery_cli/modules/splatalogue_cli.py:28

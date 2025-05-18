@@ -30,13 +30,13 @@ msgid ""
 "    Astroquery CLI: Your gateway to astronomical data. 🌠\n"
 "\n"
 "    Use '--lang' or '-l' to set the interface language.\n"
-"    Example: aq -l zh_CN simbad query-object M31\n"
+"    Example: aq -l zh simbad query-object M31\n"
 "    "
 msgstr ""
 
 #: astroquery_cli/main.py:66
 msgid ""
-"Set the language for output messages (e.g., 'en', 'zh_CN'). Affects help "
+"Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
 msgstr ""
 
