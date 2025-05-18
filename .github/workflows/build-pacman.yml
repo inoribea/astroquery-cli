@@ -1,0 +1,103 @@
+name: Build Pacman Package
+
+on:
+  push:
+    branches:
+      - main # 或者你的默认分支，例如 master
+    tags:
+      - 'v*' # 当创建如 v1.0, v2.3.4 这样的标签时触发
+  workflow_dispatch: # 允许手动从 Actions 标签页触发
+
+jobs:
+  build-pacman:
+    runs-on: ubuntu-latest
+    outputs:
+      package_name: ${{ steps.package_script.outputs.package_name }}
+      package_path: ${{ steps.package_script.outputs.package_path }}
+      package_version: ${{ steps.get_version.outputs.pkg_version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: setup_python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' # 指定你希望使用的 Python 版本
+
+      - name: Install Python build dependencies and build wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel # 这会在 ./dist/ 目录下创建 wheel 文件
+
+      - name: Install FPM
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ruby ruby-dev build-essential rpm
+          sudo gem install fpm --no-document # --no-document 加快安装速度
+
+      - name: Determine Package Version
+        id: get_version
+        run: |
+          VERSION=""
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            # 假设标签格式为 v1.2.3, 移除 'v' 前缀
+            VERSION=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+            echo "Using version from tag: $VERSION"
+          else
+            VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
+            echo "Using version from pyproject.toml (branch build): $VERSION"
+          fi
+          if [[ -z "$VERSION" ]]; then
+            echo "Error: Could not determine package version."
+            exit 1
+          fi
+          echo "pkg_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Run packaging script
+        id: package_script
+        env:
+          PKG_VERSION_OVERRIDE: ${{ steps.get_version.outputs.pkg_version }}
+        run: |
+          chmod +x .github/scripts/build-pacman.sh
+          .github/scripts/build-pacman.sh
+
+      - name: Upload Pacman package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pacman-package-${{ steps.get_version.outputs.pkg_version }}
+          path: ${{ steps.package_script.outputs.package_path }} # 从脚本输出获取路径
+          retention-days: 7 # 可选：设置产物保留天数
+
+  create-release:
+    needs: build-pacman # 仅在 build-pacman 任务成功后运行
+    if: github.ref_type == 'tag' # 仅为标签创建 Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 需要此权限来创建 Release 和上传附件
+    steps:
+      - name: Download Pacman package artifact
+        uses: actions/download-artifact@v4
+        with:
+          # 名称必须与 build-pacman 任务中 upload-artifact 的 name 匹配
+          name: pacman-package-${{ needs.build-pacman.outputs.package_version }}
+          path: ./downloaded-artifact # 下载到指定目录
+
+      - name: Display structure of downloaded files
+        run: |
+          echo "Downloaded files:"
+          ls -R ./downloaded-artifact
+
+      - name: Create GitHub Release and Upload Asset
+        uses: softprops/action-gh-release@v2 # 使用较新的 v2 版本
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub 自动提供此 token
+        with:
+          files: ./downloaded-artifact/${{ needs.build-pacman.outputs.package_name }}
+          tag_name: ${{ github.ref_name }} # action-gh-release 默认使用此标签名
+          name: Release ${{ github.ref_name }}
+          body: |
+            Automated release for ${{ github.ref_name }}.
+            Pacman package (${{ needs.build-pacman.outputs.package_name }}) attached.
+          # draft: false # 设置为 true 如果你想创建草稿 Release
+          # prerelease: false # 设置为 true 如果是预发布版本
