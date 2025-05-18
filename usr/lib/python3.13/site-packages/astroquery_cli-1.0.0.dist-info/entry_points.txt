@@ -1,0 +1,3 @@
+[console_scripts]
+aq=astroquery_cli.main:app
+

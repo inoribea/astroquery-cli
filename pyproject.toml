@@ -1,19 +1,19 @@
 # pyproject.toml
 
 [tool.poetry]
-name = "astroquery-cli"
+name = "astroquery_cli"
 version = "1.0.0"
 description = "CLI for astroquery modules with autocompletion."
-authors = ["Your Name <you@example.com>"] # Change this
+authors = ["inoribea <inoribea@outlook.com>"] # Change this
 readme = "README.md"
 packages = [{include = "astroquery_cli"}]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0" 
-typer = {extras = ["all"], version = "^0.9.0"} # "all" extras include shellingham for better completion detection
+python = "^3.11" 
+typer = "^0.15.4"
 rich = "^13.5.2"
-astroquery = "^0.4.6"
-astropy = "^5.3.3" # Explicitly list if needed for specific version
+astroquery = "^0.4.10"
+astropy = "^7.0.0" # Explicitly list if needed for specific version
 
 [tool.poetry.group.dev.dependencies] # Optional: for development
 pytest = "^7.4.2"
