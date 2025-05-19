@@ -243,61 +243,61 @@ jobs:
           path: ${{ steps.package_script.outputs.package_path }}
           retention-days: 7
 
-create_release:
-    needs: [determine_version, build_pacman, build_deb, build_rpm, build_windows, build_wheel]
-    if: github.ref_type == 'tag'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Download Pacman package artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: pacman-package-${{ needs.determine_version.outputs.pkg_version }}
-          path: ./pacman-artifact
-      - name: Download DEB package artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: deb-package-${{ needs.determine_version.outputs.pkg_version }}
-          path: ./deb-artifact
-          
-      - name: Download RPM package artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: rpm-package-${{ needs.determine_version.outputs.pkg_version }}
-          path: ./rpm-artifact
-          
-      - name: Download Windows package artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-package-${{ needs.determine_version.outputs.pkg_version }}
-          path: ./windows-artifact
-      - name: Download Python wheel artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: python-wheel-${{ needs.determine_version.outputs.pkg_version }}
-          path: ./wheel-artifact
-      - name: Create GitHub Release and Upload Assets
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: |
-            ./pacman-artifact/${{ needs.build_pacman.outputs.package_name }}
-            ./deb-artifact/${{ needs.build_deb.outputs.package_name }}
-            ./rpm-artifact/${{ needs.build_rpm.outputs.package_name }}
-            ./windows-artifact/${{ needs.build_windows.outputs.package_name }}
-            ./wheel-artifact/${{ needs.build_wheel.outputs.wheel_filename }}
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          body: |
-            Automated release for ${{ github.ref_name }}.
-            ## Available Packages:
-            
-            - Pacman (Arch): `${{ needs.build_pacman.outputs.package_name }}`
-            - Debian/Ubuntu (.deb): `${{ needs.build_deb.outputs.package_name }}`
-            - RPM (.rpm): `${{ needs.build_rpm.outputs.package_name }}`
-            - Windows Installer (.exe): `${{ needs.build_windows.outputs.package_name }}`
-            - Python Wheel (.whl): `${{ needs.build_wheel.outputs.wheel_filename }}`
+	create_release:
+	    needs: [determine_version, build_pacman, build_deb, build_rpm, build_windows, build_wheel]
+	    if: github.ref_type == 'tag'
+	    runs-on: ubuntu-latest
+	    permissions:
+	      contents: write
+	    steps:
+	      - name: Download Pacman package artifact
+		uses: actions/download-artifact@v4
+		with:
+		  name: pacman-package-${{ needs.determine_version.outputs.pkg_version }}
+		  path: ./pacman-artifact
+	      - name: Download DEB package artifact
+		uses: actions/download-artifact@v4
+		with:
+		  name: deb-package-${{ needs.determine_version.outputs.pkg_version }}
+		  path: ./deb-artifact
+		  
+	      - name: Download RPM package artifact
+		uses: actions/download-artifact@v4
+		with:
+		  name: rpm-package-${{ needs.determine_version.outputs.pkg_version }}
+		  path: ./rpm-artifact
+		  
+	      - name: Download Windows package artifact
+		uses: actions/download-artifact@v4
+		with:
+		  name: windows-package-${{ needs.determine_version.outputs.pkg_version }}
+		  path: ./windows-artifact
+	      - name: Download Python wheel artifact
+		uses: actions/download-artifact@v4
+		with:
+		  name: python-wheel-${{ needs.determine_version.outputs.pkg_version }}
+		  path: ./wheel-artifact
+	      - name: Create GitHub Release and Upload Assets
+		uses: softprops/action-gh-release@v2
+		env:
+		  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+		with:
+		  files: |
+		    ./pacman-artifact/${{ needs.build_pacman.outputs.package_name }}
+		    ./deb-artifact/${{ needs.build_deb.outputs.package_name }}
+		    ./rpm-artifact/${{ needs.build_rpm.outputs.package_name }}
+		    ./windows-artifact/${{ needs.build_windows.outputs.package_name }}
+		    ./wheel-artifact/${{ needs.build_wheel.outputs.wheel_filename }}
+		  tag_name: ${{ github.ref_name }}
+		  name: Release ${{ github.ref_name }}
+		  body: |
+		    Automated release for ${{ github.ref_name }}.
+		    ## Available Packages:
+		    
+		    - Pacman (Arch): `${{ needs.build_pacman.outputs.package_name }}`
+		    - Debian/Ubuntu (.deb): `${{ needs.build_deb.outputs.package_name }}`
+		    - RPM (.rpm): `${{ needs.build_rpm.outputs.package_name }}`
+		    - Windows Installer (.exe): `${{ needs.build_windows.outputs.package_name }}`
+		    - Python Wheel (.whl): `${{ needs.build_wheel.outputs.wheel_filename }}`
 
 
