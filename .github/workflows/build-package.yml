@@ -52,7 +52,7 @@ jobs:
 
       - name: check code path
         run: 
-          ls -l astroquery_cli || (echo "astroquery_cli code error that is no code！" && exit 1)
+          ls -l astroquery_cli || (echo "astroquery_cli code error that is no code" && exit 1)
           [ -f astroquery_cli/__init__.py ] || (echo "astroquery_cli 缺 __init__.py" && exit 1)
 
       - name: Build wheel
