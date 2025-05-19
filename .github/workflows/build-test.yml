@@ -1,0 +1,83 @@
+name: Build Packages
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*' # Trigger on tags like v1.0, v2.3.4
+  workflow_dispatch:
+
+jobs:
+  determine_version:
+    runs-on: ubuntu-latest
+    outputs:
+      pkg_version: ${{ steps.get_version.outputs.pkg_version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine Package Version
+        id: get_version
+        run: |
+          VERSION=""
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            VERSION=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+            echo "Using version from tag: $VERSION"
+          else
+            PYPROJECT_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
+            VERSION="${PYPROJECT_VERSION}-$(echo $GITHUB_SHA | cut -c1-7)"
+            echo "Using version for branch build: $VERSION"
+          fi
+          if [[ -z "$VERSION" ]]; then
+            echo "Error: Could not determine package version."
+            exit 1
+          fi
+          echo "pkg_version=$VERSION" >> $GITHUB_OUTPUT
+
+  build_wheel:
+    needs: determine_version
+    runs-on: ubuntu-latest
+    outputs:
+      wheel_filename: ${{ steps.build_the_wheel.outputs.wheel_filename }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check main package module
+        run: |
+          echo "Project root structure:"
+          ls -l
+          if [ ! -d astroquery_cli ]; then
+            echo "::error file=build-package.yml::Directory astroquery_cli does not exist."
+            exit 1
+          fi
+          if [ ! -f astroquery_cli/__init__.py ]; then
+            echo "::error file=astroquery_cli/__init__.py::Main package module missing __init__.py"
+            exit 1
+          fi
+
+      - name: Build wheel
+        id: build_the_wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+          unzip -l dist/*.whl
+          BUILT_WHEEL_FILE=$(ls dist/*.whl 2>/dev/null | head -n 1)
+          if [[ -z "$BUILT_WHEEL_FILE" ]]; then
+            echo "Error: No wheel file found in dist/"
+            exit 1
+          fi
+          echo "wheel_filename=${BUILT_WHEEL_FILE#dist/}" >> $GITHUB_OUTPUT
+          echo "Built wheel: $BUILT_WHEEL_FILE"
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-wheel-${{ needs.determine_version.outputs.pkg_version }}
+          path: dist/${{ steps.build_the_wheel.outputs.wheel_filename }}
