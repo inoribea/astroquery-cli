@@ -1,34 +1,52 @@
 #!/bin/bash
-
 set -e
 
-REPO_PKG_NAME="python-astroquery-cli"
-DEB_PKG_NAME="python3-astroquery-cli"
-
-if [[ -n "$PKG_VERSION_OVERRIDE" ]]; then
-  PKG_VERSION="$PKG_VERSION_OVERRIDE"
-  echo "Using PKG_VERSION from environment: $PKG_VERSION"
+if [ -n "$PKG_VERSION_OVERRIDE" ]; then
+    PKG_VERSION="$PKG_VERSION_OVERRIDE"
 else
-  PKG_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
-  echo "Using PKG_VERSION from pyproject.toml: $PKG_VERSION"
+    PKG_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
 fi
 
-MODULE_NAME="astroquery_cli"
-CMD_NAME="aqc"
+PKG_NAME="python-astroquery-cli"
+DEB_PKG_NAME="python3-astroquery-cli"
+PKG_DESC="CLI for astroquery modules with autocompletion."
+MAINTAINER="Developer <dev@example.com>"
+PYTHON_DEB_DEPENDS="python3, python3-requests, python3-astroquery"
 
-if [[ -z "$PKG_VERSION" ]]; then
-  echo "Error: PKG_VERSION is not set."
-  exit 1
-fi
+PY_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
 
-PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+PKG_ROOT="./pkg"
+PY_DIST_PACKAGES="${PKG_ROOT}/usr/lib/python${PY_VERSION}/dist-packages"
+BIN_DIR="${PKG_ROOT}/usr/bin"
 
-rm -rf ./pkg-deb
-PY_DISTPACKAGES_DIR="./pkg-deb/usr/lib/python${PYTHON_VERSION}/dist-packages"
-PY_BIN_DIR="./pkg-deb/usr/bin"
-mkdir -p "${PY_DISTPACKAGES_DIR}"
-mkdir -p "${PY_BIN_DIR}"
+rm -rf "$PKG_ROOT"
+mkdir -p "$PY_DIST_PACKAGES" "$BIN_DIR"
 
-pip3 install . --no-deps --target "${PY_DISTPACKAGES_DIR}"
+pip3 install . --no-deps --target "$PY_DIST_PACKAGES"
 
-cat
+cat > "${BIN_DIR}/aqc" << EOF
+#!/bin/bash
+exec python3 -m astroquery_cli.main "\$@"
+EOF
+
+chmod +x "${BIN_DIR}/aqc"
+
+DEB_VERSION=$(echo $PKG_VERSION | sed 's/-/+/g')
+
+fpm -s dir -t deb \
+    -p "${DEB_PKG_NAME}_${DEB_VERSION}_all.deb" \
+    -n "$DEB_PKG_NAME" \
+    -v "$DEB_VERSION" \
+    --iteration 1 \
+    --architecture all \
+    --description "$PKG_DESC" \
+    --maintainer "$MAINTAINER" \
+    --depends "python3" \
+    --depends "python3-requests" \
+    --depends "python3-astroquery" \
+    -C "$PKG_ROOT" \
+    usr/
+
+# 输出结果给 Github Actions
+echo "package_name=${DEB_PKG_NAME}_${DEB_VERSION}_all.deb" >> $GITHUB_OUTPUT
+echo "package_path=${DEB_PKG_NAME}_${DEB_VERSION}_all.deb" >> $GITHUB_OUTPUT
