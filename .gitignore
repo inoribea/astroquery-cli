@@ -38,3 +38,7 @@ Thumbs.db
 *.sql
 *.sqlite3
 
+# aur
+PKGBUILD
+.SRCINFO
+

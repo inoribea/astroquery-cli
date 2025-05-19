@@ -2,7 +2,7 @@
 
 [tool.poetry]
 name = "astroquery_cli"
-version = "1.1.4"
+version = "1.1.5"
 description = "CLI for astroquery modules with autocompletion."
 authors = ["inoribea <inoribea@outlook.com>"]
 readme = "README.md"
@@ -26,6 +26,6 @@ build-backend = "poetry.core.masonry.api"
 
 # This is the crucial part for the CLI command
 [tool.poetry.scripts]
-aq = "astroquery_cli.main:app" # 'aq' will be the command, pointing to the Typer app
+aqc = "astroquery_cli.main:app" # 'aqc' will be the command, pointing to the Typer app
 # You can also use a longer name like 'astroquery-cli'
 # astroquery-cli = "astroquery_cli.main:app"

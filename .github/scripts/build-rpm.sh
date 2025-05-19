@@ -16,7 +16,7 @@ mkdir -p ./pkg-rpm/usr/bin
 
 cat > ./pkg-rpm/usr/bin/aqc << EOF
 #!/bin/bash
-exec python3 -m astroquery_cli "\$@"
+exec python3 -m astroquery_cli.main "\$@"
 EOF
 
 chmod +x ./pkg-rpm/usr/bin/aqc

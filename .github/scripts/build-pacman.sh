@@ -16,7 +16,7 @@ mkdir -p ./pkg/usr/bin
 
 cat > ./pkg/usr/bin/aqc << EOF
 #!/bin/bash
-exec python3 -m astroquery_cli "\$@"
+exec python3 -m astroquery_cli.main "\$@"
 EOF
 
 chmod +x ./pkg/usr/bin/aqc
