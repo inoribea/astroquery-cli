@@ -20,6 +20,30 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== IRSA_FIELDS =============================
+IRSA_FIELDS = [
+    "ra",
+    "dec",
+    "designation",
+    "w1mpro",
+    "w2mpro",
+    "w3mpro",
+    "w4mpro",
+    "ph_qual",
+    "cc_flags",
+    "ext_flg",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in IRSA_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
 Irsa.ROW_LIMIT = 500
 
 @app.command(name="query-gator", help=_("Query a specific catalog in IRSA using Gator."))

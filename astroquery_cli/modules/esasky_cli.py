@@ -20,6 +20,37 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== ESASKY_CATALOGS =========================
+ESASKY_CATALOGS = [
+    "Gaia DR3",
+    "Gaia DR2",
+    "Hipparcos",
+    "AllWISE",
+    "2MASS",
+    "Messier",
+    "NGC",
+    # ...
+]
+# ============================================================
+# ================== ESASKY_FIELDS ===========================
+ESASKY_FIELDS = [
+    "main_id",
+    "source_id",
+    "ra",
+    "dec",
+    # ...
+]
+# ============================================================
+
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in ESASKY_CATALOGS + ESASKY_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
 @app.command(name="query-object-catalogs", help=_("Query ESASky catalogs for an object."))
 def query_object_catalogs(
     object_name: str = typer.Argument(..., help=_("Name of the astronomical object.")),

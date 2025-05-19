@@ -18,25 +18,26 @@ app = typer.Typer(
 
 Simbad.ROW_LIMIT = 50
 Simbad.TIMEOUT = 60
+# ================== VOTABLE_FIELDS =========================
+VOTABLE_FIELDS = [
+    "ra(d)", "dec(d)", "plx", "plx_error",
+    "rvz_nature", "rv_error",
+    "pmra", "pmdec", "pm_err_maj", "pm_err_min",
+    "sptype", "fe_h",
+    "flux(V)", "flux_error(V)",
+    "flux(B)", "flux_error(B)",
+    "flux(R)", "flux_error(R)",
+    "flux(I)", "flux_error(I)",
+    "flux(J)", "flux_error(J)",
+    "flux(H)", "flux_error(H)",
+    "flux(K)", "flux_error(K)",
+    "otype(V)",
+    "id(HD)", "id(HIP)", "id(TYC)", "id(Gaia)"
+]
+# ===========================================================
 
 def add_common_fields(simbad_instance: Simbad):
-    fields_to_add = [
-        "ra(d)", "dec(d)", "plx", "plx_error",
-        "rv_value", "rv_error",
-        "pmra", "pmdec", "pm_err_maj", "pm_err_min",
-        "sptype",
-        "fe_h",
-        "flux(V)", "flux_error(V)",
-        "flux(B)", "flux_error(B)",
-        "flux(R)", "flux_error(R)",
-        "flux(I)", "flux_error(I)",
-        "flux(J)", "flux_error(J)",
-        "flux(H)", "flux_error(H)",
-        "flux(K)", "flux_error(K)",
-        "otype(V)",
-        "id(HD)", "id(HIP)", "id(TYC)", "id(Gaia)"
-    ]
-    for field in fields_to_add:
+    for field in VOTABLE_FIELDS:
         try:
             simbad_instance.add_votable_fields(field)
         except ValueError:

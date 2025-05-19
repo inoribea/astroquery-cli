@@ -21,6 +21,27 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== NED_FIELDS ==============================
+NED_FIELDS = [
+    "Object Name",
+    "Type",
+    "RA(deg)",
+    "DEC(deg)",
+    "Redshift",
+    "Photometry",
+    "References",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in NED_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
 Ned.TIMEOUT = 120
 
 @app.command(name="query-object", help=_("Query NED for an object by name."))

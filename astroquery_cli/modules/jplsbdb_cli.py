@@ -19,6 +19,40 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== JPL_SBDB_FIELDS =========================
+JPL_SBDB_FIELDS = [
+    "spkid",
+    "full_name",
+    "class",
+    "epoch",
+    "a",
+    "e",
+    "i",
+    "per",
+    "node",
+    "om",
+    "w",
+    "ma",
+    "q",
+    "H",
+    "G",
+    "tp",
+    "MOID",
+    "diameter",
+    "albedo",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in JPL_SBDB_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
+
 @app.command(name="query", help=_("Query JPL SBDB for a small body."))
 def query_sbdb(
     target: str = typer.Argument(..., help=_("Target small body (e.g., 'Ceres', '1P', '2023 BU').")),

@@ -17,6 +17,34 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== JPL_HORIZONS_QUANTITIES =================
+JPL_HORIZONS_QUANTITIES = [
+    "1",
+    "2",
+    "4",
+    "8",
+    "9",
+    "10",
+    "12",
+    "13",
+    "14",
+    "19",
+    "20",
+    "21",
+    "23",
+    "24",
+    "31",
+    # ...补充需要的quantity号码
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in JPL_HORIZONS_QUANTITIES:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
 JPL_SERVERS = {
     "nasa": jpl_conf.horizons_server,
     "ksb": "https://ssd.jpl.nasa.gov/horizons_batch.cgi"

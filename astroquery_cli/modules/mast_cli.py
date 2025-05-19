@@ -21,6 +21,37 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== MAST_FIELDS =============================
+MAST_FIELDS = [
+    "obsid",
+    "provenance_name",
+    "obs_collection",
+    "instrument_name",
+    "target_name",
+    "t_min",
+    "t_max",
+    "s_ra",
+    "s_dec",
+    "em_min",
+    "em_max",
+    "telescope_name",
+    "proposal_pi",
+    "dataRights",
+    "calib_level",
+    "dataProductType",
+    "obs_title",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in MAST_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
 Observations.TIMEOUT = 120
 Observations.PAGESIZE = 2000
 

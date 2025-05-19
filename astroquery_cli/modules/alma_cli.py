@@ -23,6 +23,43 @@ app = typer.Typer(
 Alma.ROW_LIMIT = 50
 Alma.TIMEOUT = 60
 
+# ================== ALMA_VOTABLE_FIELDS =====================
+ALMA_VOTABLE_FIELDS = [
+    "obs_id",
+    "project_code",
+    "target_name",
+    "source_name_alma",
+    "band_list",
+    "instrument_name",
+    "obs_collection",
+    "science_observation",
+    "data_rights",
+    "proposal_pi",
+    "obs_release_date",
+    "frequency_support",
+    "s_ra",
+    "s_dec",
+    "s_fov",
+    "t_min",
+    "t_max",
+    "obs_title",
+    "asdm_uid",
+    "member_ous_uid",
+    "field_name",
+    "antenna_arrays",
+    # ...补充你常用的所有字段
+]
+# ============================================================
+
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in ALMA_VOTABLE_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
 @app.command(name="query-object", help=_("Query ALMA for observations of an object."))
 def query_object(
     object_name: str = typer.Argument(..., help=_("Name of the astronomical object.")),

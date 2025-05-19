@@ -18,6 +18,7 @@ app = typer.Typer(
 
 gaia_conf.show_server_messages = False
 
+# ================== GAIA_TABLES =============================
 GAIA_TABLES = {
     "main_source": "gaiadr3.gaia_source",
     "dr2_source": "gaiadr2.gaia_source",
@@ -25,6 +26,30 @@ GAIA_TABLES = {
     "tmass_best_neighbour": "gaiadr3.tmass_psc_xsc_best_neighbour",
     "allwise_best_neighbour": "gaiadr3.allwise_best_neighbour",
 }
+# ============================================================
+
+# ================== GAIA_VOTABLE_FIELDS =====================
+GAIA_VOTABLE_FIELDS = [
+    "source_id",
+    "ra",
+    "dec",
+    "parallax",
+    "pmra",
+    "pmdec",
+    "phot_g_mean_mag",
+    "radial_velocity",
+    "astrometric_excess_noise",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    ffor field in list(GAIA_TABLES.values()) + GAIA_VOTABLE_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
 
 @app.command(name="cone-search", help=_("Perform a cone search around a coordinate."))
 def cone_search(

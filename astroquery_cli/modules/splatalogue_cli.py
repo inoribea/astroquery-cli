@@ -20,6 +20,26 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== NED_FIELDS ==============================
+SPLATALOGUE_FIELDS = [
+    "Object Name",
+    "Type",
+    "RA(deg)",
+    "DEC(deg)",
+    "Redshift",
+    "Photometry",
+    "References",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in SPLATALOGUE_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
 Splatalogue.TIMEOUT = 120
 
 def parse_frequency_range(freq_str: str) -> Tuple[u.Quantity, u.Quantity]:

@@ -18,6 +18,28 @@ app = typer.Typer(
     no_args_is_help=True
 )
 
+# ================== IRSA_DUST_FIELDS ========================
+IRSA_DUST_FIELDS = [
+    "E(B-V)",
+    "tau_100",
+    "IRIS100",
+    "Planck_857",
+    "Planck_545",
+    "Planck_353",
+    "Planck_217",
+    "Planck_Temp",
+    # ...
+]
+# ============================================================
+
+def add_common_fields(simbad_instance: Simbad):
+    for field in IRSA_DUST_FIELDS:
+        try:
+            simbad_instance.add_votable_fields(field)
+        except ValueError:
+            pass
+
+
 @app.command(name="get-extinction", help=_("Get E(B-V) dust extinction values for one or more coordinates."))
 def get_extinction(
     targets: List[str] = typer.Argument(..., help=_("Object name(s) or coordinate(s) (e.g., 'M31', '10.68h +41.26d', '160.32 41.45'). Can be specified multiple times.")),
