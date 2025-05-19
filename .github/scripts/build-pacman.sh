@@ -1,110 +1,83 @@
 #!/bin/bash
+set -e
 
-set -e 
-
-PKG_NAME="python-astroquery-cli"
-if [[ -n "$PKG_VERSION_OVERRIDE" ]]; then
-  PKG_VERSION="$PKG_VERSION_OVERRIDE"
-  echo "Using PKG_VERSION from environment: $PKG_VERSION"
+# If PKG_VERSION_OVERRIDE is provided, use it, otherwise use version from pyproject.toml
+if [ -n "$PKG_VERSION_OVERRIDE" ]; then
+    PKG_VERSION="$PKG_VERSION_OVERRIDE"
+    echo "Using PKG_VERSION from environment: $PKG_VERSION"
 else
-  PKG_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
-  echo "Using PKG_VERSION from pyproject.toml: $PKG_VERSION"
+    PKG_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
+    echo "Using PKG_VERSION from pyproject.toml: $PKG_VERSION"
 fi
 
-MODULE_NAME="astroquery_cli" 
-CMD_NAME="aqc"  
+echo "Starting packaging for python-astroquery-cli version $PKG_VERSION"
 
-if [[ -z "$PKG_VERSION" ]]; then
-  echo "Error: PKG_VERSION is not set."
-  exit 1
-fi
+# Detect Python version
+PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+echo "Detected Python version for packaging: $PYTHON_VERSION"
 
-echo "Starting packaging for $PKG_NAME version $PKG_VERSION"
-
-
-rm -rf ./pkg
-mkdir -p ./pkg
-
-PYTHON_VERSION_DETECTED=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-echo "Detected Python version for packaging: $PYTHON_VERSION_DETECTED"
-
-PY_SITEPACKAGES_DIR="./pkg/usr/lib/python${PYTHON_VERSION_DETECTED}/site-packages"
-PY_BIN_DIR="./pkg/usr/bin"
-
-mkdir -p "${PY_SITEPACKAGES_DIR}"
-mkdir -p "${PY_BIN_DIR}"
-
-if [[ -z "$WHEEL_FILENAME_ENV" ]]; then
-  echo "Error: WHEEL_FILENAME_ENV environment variable is not set."
-  exit 1
-fi
-
-WHEEL_FILE="dist/${WHEEL_FILENAME_ENV}"
-echo "Expecting wheel file at: $WHEEL_FILE"
-
-if [[ ! -f "$WHEEL_FILE" ]]; then
-  echo "Error: Wheel file '$WHEEL_FILE' not found in dist/ directory."
-  echo "Contents of dist/ directory:"
-  ls -Rla dist/
-  exit 1
-fi
-echo "Using wheel file: $WHEEL_FILE"
-
-echo "Installing wheel $WHEEL_FILE to ${PY_SITEPACKAGES_DIR}"
-pip install --no-deps --target "${PY_SITEPACKAGES_DIR}" "$WHEEL_FILE"
-
-echo "Creating launcher script at ${PY_BIN_DIR}/${CMD_NAME}"
-cat > "${PY_BIN_DIR}/${CMD_NAME}" << EOF
-
-#!/bin/sh
-
-exec python${PYTHON_VERSION_DETECTED} -m ${MODULE_NAME}.main "\$@"
-EOF
-chmod +x "${PY_BIN_DIR}/${CMD_NAME}"
-
-PKG_DESCRIPTION=$(grep "^description" pyproject.toml | cut -d'"' -f2)
-if [[ -z "$PKG_DESCRIPTION" ]]; then
-    echo "Warning: Description not found in pyproject.toml. Using a default description."
-    PKG_DESCRIPTION="Astroquery CLI application"
-fi
-echo "Using package description: $PKG_DESCRIPTION"
-
-PKG_RELEASE="1" 
-PKG_EPOCH="0"   
-ARCH="x86_64"   
-
-EXPECTED_FPM_OUTPUT_NAME="${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}-${ARCH}.pkg.tar.zst"
-
-echo "Building Pacman package: $EXPECTED_FPM_OUTPUT_NAME"
-
-fpm -s dir -t pacman \
-    -n "${PKG_NAME}" \
-    -v "${PKG_VERSION}" \
-    --epoch "${PKG_EPOCH}" \
-    --iteration "${PKG_RELEASE}" \
-    --architecture "${ARCH}" \
-    --description "${PKG_DESCRIPTION}" \
-    --maintainer "inoribea <inoribea@outlook.com>" \
-    --url "https://github.com/inoribea/${PKG_NAME}" \
-    --license "MIT" \
-    --depends "python>=3.8" \
-    --depends "python-typer" \
-    --depends "python-click" \
-    --depends "python-rich" \
-    --depends "python-astroquery" \
-    --depends "python-astropy" \
-    --pacman-compression zstd \
-    -C ./pkg \
-    usr
-
-if [ -f "$EXPECTED_FPM_OUTPUT_NAME" ]; then
-    echo "Successfully created Pacman package: ${EXPECTED_FPM_OUTPUT_NAME}"
-    echo "package_name=${EXPECTED_FPM_OUTPUT_NAME}" >> "$GITHUB_OUTPUT"
-    echo "package_path=${EXPECTED_FPM_OUTPUT_NAME}" >> "$GITHUB_OUTPUT" 
+# Ensure wheel file is available
+if [ -n "$WHEEL_FILENAME_ENV" ]; then
+    WHEEL_FILE="dist/$WHEEL_FILENAME_ENV"
+    echo "Expecting wheel file at: $WHEEL_FILE"
 else
-    echo "Error: Expected package file ${EXPECTED_FPM_OUTPUT_NAME} not found after FPM run."
-    echo "Current directory contents:"
-    ls -l .
+    WHEEL_FILE=$(ls dist/*-py3-none-any.whl 2>/dev/null | head -n 1)
+    if [ -z "$WHEEL_FILE" ]; then
+        echo "Error: No wheel file found in dist/ directory"
+        exit 1
+    fi
+    echo "Found wheel file: $WHEEL_FILE"
+fi
+
+# Verify the wheel file exists
+if [ ! -f "$WHEEL_FILE" ]; then
+    echo "Error: Wheel file $WHEEL_FILE not found"
     exit 1
 fi
+
+echo "Using wheel file: $WHEEL_FILE"
+
+# Create directories for installation
+mkdir -p ./pkg/usr/lib/python${PYTHON_VERSION}/site-packages
+mkdir -p ./pkg/usr/bin
+
+# Install the wheel into the package directory
+echo "Installing wheel $WHEEL_FILE to ./pkg/usr/lib/python${PYTHON_VERSION}/site-packages"
+pip install --target=./pkg/usr/lib/python${PYTHON_VERSION}/site-packages "$WHEEL_FILE"
+
+# Create the launcher script
+echo "Creating launcher script at ./pkg/usr/bin/aqc"
+cat > ./pkg/usr/bin/aqc << 'EOF'
+#!/bin/bash
+exec python -m astroquery_cli "$@"
+EOF
+chmod +x ./pkg/usr/bin/aqc
+
+# Prepare package metadata
+PKG_NAME="python-astroquery-cli"
+PKG_DESC="CLI for astroquery modules with autocompletion."
+echo "Using package description: $PKG_DESC"
+
+# Create pacman-safe version (replace dashes in version with underscores for pacman)
+PACMAN_VERSION=$(echo $PKG_VERSION | sed 's/-/_/g')
+
+# Build the package
+echo "Building Pacman package: ${PKG_NAME}-${PACMAN_VERSION}-1-x86_64.pkg.tar.zst"
+sudo apt-get update && sudo apt-get install -y libarchive-tools
+
+# Build the package with FPM
+fpm -s dir -t pacman \
+    -p "${PKG_NAME}-${PACMAN_VERSION}-1-x86_64.pkg.tar.zst" \
+    -n "${PKG_NAME}" \
+    -v "${PACMAN_VERSION}" \
+    --iteration 1 \
+    --architecture x86_64 \
+    --description "${PKG_DESC}" \
+    --maintainer "Developer <dev@example.com>" \
+    -C ./pkg \
+    usr/
+
+# Set output variables for GitHub Actions
+echo "package_name=${PKG_NAME}-${PACMAN_VERSION}-1-x86_64.pkg.tar.zst" >> $GITHUB_OUTPUT
+echo "package_path=${PKG_NAME}-${PACMAN_VERSION}-1-x86_64.pkg.tar.zst" >> $GITHUB_OUTPUT
 

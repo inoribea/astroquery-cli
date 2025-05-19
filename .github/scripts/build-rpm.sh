@@ -1,110 +1,84 @@
 #!/bin/bash
-
 set -e
 
-REPO_PKG_NAME="python-astroquery-cli"
-RPM_PKG_NAME="python3-astroquery-cli"
-
-if [[ -n "$PKG_VERSION_OVERRIDE" ]]; then
-  PKG_VERSION="$PKG_VERSION_OVERRIDE"
-  echo "Using PKG_VERSION from environment: $PKG_VERSION"
+# If PKG_VERSION_OVERRIDE is provided, use it, otherwise use version from pyproject.toml
+if [ -n "$PKG_VERSION_OVERRIDE" ]; then
+    PKG_VERSION="$PKG_VERSION_OVERRIDE"
+    echo "Using PKG_VERSION from environment: $PKG_VERSION"
 else
-  PKG_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
-  echo "Using PKG_VERSION from pyproject.toml: $PKG_VERSION"
+    PKG_VERSION=$(grep "^version" pyproject.toml | cut -d'"' -f2)
+    echo "Using PKG_VERSION from pyproject.toml: $PKG_VERSION"
 fi
 
-MODULE_NAME="astroquery_cli"
-CMD_NAME="aqc"
-
-if [[ -z "$PKG_VERSION" ]]; then
-  echo "Error: PKG_VERSION is not set."
-  exit 1
-fi
-
-if [[ -z "$WHEEL_FILENAME_ENV" ]]; then
-  echo "Error: WHEEL_FILENAME_ENV environment variable is not set."
-  exit 1
-fi
-
-WHEEL_FILE="dist/${WHEEL_FILENAME_ENV}"
-echo "Expecting wheel file at: $WHEEL_FILE"
-
-if [[ ! -f "$WHEEL_FILE" ]]; then
-  echo "Error: Wheel file '$WHEEL_FILE' not found in dist/ directory."
-  echo "Contents of dist/ directory:"
-  ls -Rla dist/
-  exit 1
-fi
-echo "Using wheel file: $WHEEL_FILE"
-
-echo "Starting RPM packaging for $RPM_PKG_NAME version $PKG_VERSION"
-
-rm -rf ./pkg-rpm
-mkdir -p ./pkg-rpm
-
-PYTHON_VERSION_DETECTED=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-echo "Detected Python version for packaging: $PYTHON_VERSION_DETECTED"
-
-# RPM typically uses site-packages
-PY_SITEPACKAGES_DIR="./pkg-rpm/usr/lib/python${PYTHON_VERSION_DETECTED}/site-packages"
-PY_BIN_DIR="./pkg-rpm/usr/bin"
-
-mkdir -p "${PY_SITEPACKAGES_DIR}"
-mkdir -p "${PY_BIN_DIR}"
-
-echo "Installing wheel $WHEEL_FILE to ${PY_SITEPACKAGES_DIR}"
-pip3 install --no-deps --target "${PY_SITEPACKAGES_DIR}" "$WHEEL_FILE"
-
-echo "Creating launcher script at ${PY_BIN_DIR}/${CMD_NAME}"
-cat > "${PY_BIN_DIR}/${CMD_NAME}" << EOF
-#!/bin/sh
-exec python3 -m ${MODULE_NAME}.main "\$@"
-EOF
-chmod +x "${PY_BIN_DIR}/${CMD_NAME}"
-
-PKG_DESCRIPTION=$(grep "^description" pyproject.toml | cut -d'"' -f2)
-if [[ -z "$PKG_DESCRIPTION" ]]; then
-    PKG_DESCRIPTION="Astroquery CLI application"
-fi
-echo "Using package description: $PKG_DESCRIPTION"
-
-echo "Building RPM package for $RPM_PKG_NAME version $PKG_VERSION"
-
-# RPM-specific variables
-RPM_RELEASE="1"
-ARCH="x86_64"
-
-fpm -s dir -t rpm \
-    -n "${RPM_PKG_NAME}" \
-    -v "${PKG_VERSION}" \
-    --architecture "${ARCH}" \
-    --description "${PKG_DESCRIPTION}" \
-    --maintainer "inoribea <inoribea@outlook.com>" \
-    --url "https://github.com/inoribea/${REPO_PKG_NAME}" \
-    --license "MIT" \
-    --rpm-digest sha256 \
-    --rpm-os linux \
-    --iteration "${RPM_RELEASE}" \
-    --depends "python3 >= 3.8" \
-    --depends "python3-typer" \
-    --depends "python3-click" \
-    --depends "python3-rich" \
-    --depends "python3-astroquery" \
-    --depends "python3-astropy" \
-    -C ./pkg-rpm \
-    usr
-
-GENERATED_RPM_FILE=$(ls ${RPM_PKG_NAME}-${PKG_VERSION}-*.rpm 2>/dev/null | head -n 1)
-
-if [ -f "$GENERATED_RPM_FILE" ]; then
-    echo "Successfully created RPM package: ${GENERATED_RPM_FILE}"
-    echo "package_name=${GENERATED_RPM_FILE}" >> "$GITHUB_OUTPUT"
-    echo "package_path=${GENERATED_RPM_FILE}" >> "$GITHUB_OUTPUT"
+# Expect wheel file
+if [ -n "$WHEEL_FILENAME_ENV" ]; then
+    WHEEL_FILE="dist/$WHEEL_FILENAME_ENV"
+    echo "Expecting wheel file at: $WHEEL_FILE"
 else
-    echo "Error: Expected RPM package file not found after FPM run."
-    echo "Looking for pattern: ${RPM_PKG_NAME}-${PKG_VERSION}-*.rpm"
-    echo "Current directory contents:"
-    ls -l .
+    WHEEL_FILE=$(ls dist/*-py3-none-any.whl 2>/dev/null | head -n 1)
+    if [ -z "$WHEEL_FILE" ]; then
+        echo "Error: No wheel file found in dist/ directory"
+        exit 1
+    fi
+    echo "Found wheel file: $WHEEL_FILE"
+fi
+
+# Verify the wheel file exists
+if [ ! -f "$WHEEL_FILE" ]; then
+    echo "Error: Wheel file $WHEEL_FILE not found"
     exit 1
 fi
+
+echo "Using wheel file: $WHEEL_FILE"
+
+# Create RPM-safe version (replace dashes with underscores for RPM)
+RPM_VERSION=$(echo $PKG_VERSION | sed 's/-/_/g')
+
+# RPM package name
+PKG_NAME="python3-astroquery-cli"
+echo "Starting RPM packaging for $PKG_NAME version $PKG_VERSION"
+
+# Detect Python version
+PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+echo "Detected Python version for packaging: $PYTHON_VERSION"
+
+# Create directories for installation
+mkdir -p ./pkg-rpm/usr/lib/python${PYTHON_VERSION}/site-packages
+mkdir -p ./pkg-rpm/usr/bin
+
+# Install the wheel into the package directory
+echo "Installing wheel $WHEEL_FILE to ./pkg-rpm/usr/lib/python${PYTHON_VERSION}/site-packages"
+pip install --target=./pkg-rpm/usr/lib/python${PYTHON_VERSION}/site-packages "$WHEEL_FILE"
+
+# Create the launcher script
+echo "Creating launcher script at ./pkg-rpm/usr/bin/aqc"
+cat > ./pkg-rpm/usr/bin/aqc << 'EOF'
+#!/bin/bash
+exec python3 -m astroquery_cli "$@"
+EOF
+chmod +x ./pkg-rpm/usr/bin/aqc
+
+# Package description
+PKG_DESC="CLI for astroquery modules with autocompletion."
+echo "Using package description: $PKG_DESC"
+
+# Build the package
+echo "Building RPM package for $PKG_NAME version $PKG_VERSION"
+fpm -s dir -t rpm \
+    -p "${PKG_NAME}-${RPM_VERSION}-1.x86_64.rpm" \
+    -n "${PKG_NAME}" \
+    -v "${RPM_VERSION}" \
+    --iteration 1 \
+    --architecture x86_64 \
+    --description "${PKG_DESC}" \
+    --maintainer "Developer <dev@example.com>" \
+    -C ./pkg-rpm \
+    usr/
+
+# Verify the package was created
+ls -l "${PKG_NAME}-${RPM_VERSION}-1.x86_64.rpm" || { echo "Error: RPM package not created"; exit 1; }
+
+# Set output variables for GitHub Actions
+echo "package_name=${PKG_NAME}-${RPM_VERSION}-1.x86_64.rpm" >> $GITHUB_OUTPUT
+echo "package_path=${PKG_NAME}-${RPM_VERSION}-1.x86_64.rpm" >> $GITHUB_OUTPUT
 

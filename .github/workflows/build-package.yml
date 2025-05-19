@@ -3,10 +3,10 @@ name: Build Packages
 on:
   push:
     branches:
-      - main 
+      - main # Or your default branch
     tags:
-      - 'v*' 
-  workflow_dispatch: 
+      - 'v*' # Trigger on tags like v1.0, v2.3.4
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
   determine_version:
@@ -48,7 +48,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' 
+          python-version: '3.11' # Specify your desired Python version
 
       - name: Install Python build dependencies and build wheel
         id: build_the_wheel
@@ -92,10 +92,10 @@ jobs:
           name: python-wheel-${{ needs.determine_version.outputs.pkg_version }}
           path: dist
 
-      - name: Install FPM
+      - name: Install FPM and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ruby ruby-dev build-essential rpm
+          sudo apt-get install -y ruby ruby-dev build-essential rpm libarchive-tools
           sudo gem install fpm --no-document
 
       - name: Run Pacman packaging script
@@ -243,45 +243,8 @@ jobs:
           path: ${{ steps.package_script.outputs.package_path }}
           retention-days: 7
 
-  build_macos:
-    needs: [determine_version, build_wheel]
-    runs-on: macos-latest
-    outputs:
-      package_name: ${{ steps.package_script.outputs.package_name }}
-      package_path: ${{ steps.package_script.outputs.package_path }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Download wheel artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: python-wheel-${{ needs.determine_version.outputs.pkg_version }}
-          path: dist
-
-      - name: Run macOS packaging script
-        id: package_script
-        env:
-          PKG_VERSION_OVERRIDE: ${{ needs.determine_version.outputs.pkg_version }}
-          WHEEL_FILENAME_ENV: ${{ needs.build_wheel.outputs.wheel_filename }}
-        run: |
-          chmod +x .github/scripts/build-macos.sh
-          .github/scripts/build-macos.sh
-
-      - name: Upload macOS package artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-package-${{ needs.determine_version.outputs.pkg_version }}
-          path: ${{ steps.package_script.outputs.package_path }}
-          retention-days: 7
-
   create_release:
-    needs: [determine_version, build_pacman, build_deb, build_rpm, build_windows, build_macos]
+    needs: [determine_version, build_pacman, build_deb, build_rpm, build_windows]
     if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
     permissions:
@@ -310,12 +273,6 @@ jobs:
         with:
           name: windows-package-${{ needs.determine_version.outputs.pkg_version }}
           path: ./windows-artifact
-          
-      - name: Download macOS package artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-package-${{ needs.determine_version.outputs.pkg_version }}
-          path: ./macos-artifact
 
       - name: Create GitHub Release and Upload Assets
         uses: softprops/action-gh-release@v2
@@ -327,7 +284,6 @@ jobs:
             ./deb-artifact/${{ needs.build_deb.outputs.package_name }}
             ./rpm-artifact/${{ needs.build_rpm.outputs.package_name }}
             ./windows-artifact/${{ needs.build_windows.outputs.package_name }}
-            ./macos-artifact/${{ needs.build_macos.outputs.package_path }}
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: |
@@ -338,12 +294,8 @@ jobs:
             ### Linux
             - Pacman (Arch): `${{ needs.build_pacman.outputs.package_name }}`
             - Debian/Ubuntu: `${{ needs.build_deb.outputs.package_name }}`
-            - RPM (Fedora/RHEL): `${{ needs.build_rpm.outputs.package_name }}`
+            - RPM (Fedora/CentOS/RHEL): `${{ needs.build_rpm.outputs.package_name }}`
             
             ### Windows
-            - Windows: `${{ needs.build_windows.outputs.package_name }}`
-            Includes a standalone executable that can be directly run in PowerShell/CMD
-            
-            ### macOS
-            - macOS: `${{ needs.build_macos.outputs.package_name }}`
+            - Windows Installer: `${{ needs.build_windows.outputs.package_name }}`
 
