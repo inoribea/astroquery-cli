@@ -11,8 +11,14 @@ PKG_NAME="python3-astroquery-cli"
 PKG_DESC="CLI for astroquery modules with autocompletion."
 RPM_VERSION=$(echo $PKG_VERSION | sed 's/-/_/g')
 
-# 启动脚本
+PYTHON_VERSION=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+
+rm -rf ./pkg-rpm
+PY_SITE_PACKAGES="./pkg-rpm/usr/lib/python${PYTHON_VERSION}/site-packages"
+mkdir -p "${PY_SITE_PACKAGES}"
 mkdir -p ./pkg-rpm/usr/bin
+
+pip3 install . --no-deps --target "${PY_SITE_PACKAGES}"
 
 cat > ./pkg-rpm/usr/bin/aqc << EOF
 #!/bin/bash
@@ -37,4 +43,3 @@ fpm -s dir -t rpm \
 
 echo "package_name=${PKG_NAME}-${RPM_VERSION}-1.x86_64.rpm" >> $GITHUB_OUTPUT
 echo "package_path=${PKG_NAME}-${RPM_VERSION}-1.x86_64.rpm" >> $GITHUB_OUTPUT
-
