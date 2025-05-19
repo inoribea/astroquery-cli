@@ -5,8 +5,9 @@ description = "CLI for astroquery modules with autocompletion."
 authors = ["inoribea <inoribea@outlook.com>"]
 readme = "README.md"
 
-[tool.poetry.packages]
-include = "astroquery_cli"
+packages = [
+  { include = "astroquery_cli" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.11" 

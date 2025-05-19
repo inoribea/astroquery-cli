@@ -52,6 +52,7 @@ jobs:
         id: build_the_wheel
         run: |
           python -m pip install --upgrade pip build
+          ls -l "${PY_SITE_PACKAGES}/astroquery_cli"
           python -m build --wheel
           # Find the generated wheel file (assuming one py3-none-any wheel)
           BUILT_WHEEL_FILE=$(ls dist/*-py3-none-any.whl 2>/dev/null | head -n 1)
