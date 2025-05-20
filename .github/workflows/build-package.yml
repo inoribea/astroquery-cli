@@ -57,6 +57,13 @@ jobs:
           if [ ! -f astroquery_cli/__init__.py ]; then
             echo "::error file=astroquery_cli/__init__.py::Main package module missing __init__.py"
           fi
+      
+      - name: Compile translations (.po -> .mo)
+        run: |
+    find astroquery_cli/locales -name "*.po" | while read po; do
+            mo="${po%.po}.mo"
+            msgfmt "$po" -o "$mo"
+          done
 
       - name: Build wheel
         id: build_the_wheel
