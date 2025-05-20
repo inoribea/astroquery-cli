@@ -60,7 +60,7 @@ jobs:
       
       - name: Compile translations (.po -> .mo)
         run: |
-          find astroquery_cli/locales -name "*.po" | while read po; do
+          find locales/*/LC_MESSAGES -name "*.po" | while read po; do
             mo="${po%.po}.mo"
             msgfmt "$po" -o "$mo"
           done
