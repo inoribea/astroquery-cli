@@ -8,11 +8,14 @@ from rich.console import Console
 
 from ..utils import display_table, handle_astroquery_exception
 from ..i18n import get_translator
+console = Console()
 
-def get_app(_):
+def get_app():
+    import builtins
+    _ = builtins._
     app = typer.Typer(
         name="jplhorizons",
-        help=_("Query JPL Horizons ephemeris service."),
+        help=builtins._("Query JPL Horizons ephemeris service."),
         no_args_is_help=True
     )
 
@@ -55,15 +58,23 @@ def get_app(_):
         VECTORS = "VECTORS"
         ELEMENTS = "ELEMENTS"
 
-    def get_common_locations():
+    def get_common_locations(ctx: typer.Context,):
+
+        lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
+
+        _ = i18n.get_translator(lang)
         return ["500", "geo", "010", "F51", "G84"]
 
-    def get_default_quantities_ephem():
+    def get_default_quantities_ephem(ctx: typer.Context,):
+
+        lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
+
+        _ = i18n.get_translator(lang)
         return "1,2,4,8,9,10,12,13,14,19,20,21,23,24,31"
 
-    @app.command(name="query", help=_("Query ephemerides, orbital elements, or vectors for a target object."))
-    def query_object(
-        target: str = typer.Argument(..., help=_("Object ID (e.g., 'Mars', 'Ceres', '2000NM', '@10'). Use '@' prefix for spacecraft ID.")),
+    @app.command(name="query", help=builtins._("Query ephemerides, orbital elements, or vectors for a target object."))
+    def query_object(ctx: typer.Context,
+        target: str = typer.Argument(..., help=builtins._("Object ID (e.g., 'Mars', 'Ceres', '2000NM', '@10'). Use '@' prefix for spacecraft ID.")),
         epochs: Optional[str] = typer.Option(
             None,
             help=_(
@@ -73,36 +84,40 @@ def get_app(_):
                 "If None, uses current time for single epoch queries like elements/vectors."
             )
         ),
-        start_time: Optional[str] = typer.Option(None, "--start", help=_("Start time for ephemeris range (YYYY-MM-DD [HH:MM]). Overrides 'epochs' if 'end_time' is also set.")),
-        end_time: Optional[str] = typer.Option(None, "--end", help=_("End time for ephemeris range (YYYY-MM-DD [HH:MM]).")),
-        step: Optional[str] = typer.Option("1d", "--step", help=_("Time step for ephemeris range (e.g., '1d', '1h', '10m'). Used if 'start_time' and 'end_time' are set.")),
+        start_time: Optional[str] = typer.Option(None, "--start", help=builtins._("Start time for ephemeris range (YYYY-MM-DD [HH:MM]). Overrides 'epochs' if 'end_time' is also set.")),
+        end_time: Optional[str] = typer.Option(None, "--end", help=builtins._("End time for ephemeris range (YYYY-MM-DD [HH:MM]).")),
+        step: Optional[str] = typer.Option("1d", "--step", help=builtins._("Time step for ephemeris range (e.g., '1d', '1h', '10m'). Used if 'start_time' and 'end_time' are set.")),
         location: str = typer.Option(
             "500",
-            help=_("Observatory code (e.g., '500' for Geocenter, 'geo' is alias for '500'). Try common codes or find specific ones."),
+            help=builtins._("Observatory code (e.g., '500' for Geocenter, 'geo' is alias for '500'). Try common codes or find specific ones."),
             autocompletion=get_common_locations
         ),
         id_type: Optional[IDType] = typer.Option(
             None,
             case_sensitive=False,
-            help=_("Type of the target identifier. If None, Horizons will try to guess.")
+            help=builtins._("Type of the target identifier. If None, Horizons will try to guess.")
         ),
         ephem_type: EphemType = typer.Option(
             EphemType.OBSERVER,
             case_sensitive=False,
-            help=_("Type of ephemeris to retrieve.")
+            help=builtins._("Type of ephemeris to retrieve.")
         ),
         quantities: Optional[str] = typer.Option(
             None,
-            help=_("Comma-separated string of quantity codes (e.g., '1,2,19,20'). Relevant for OBSERVER and VECTORS. See JPL Horizons docs for codes. Uses sensible defaults if None.")
+            help=builtins._("Comma-separated string of quantity codes (e.g., '1,2,19,20'). Relevant for OBSERVER and VECTORS. See JPL Horizons docs for codes. Uses sensible defaults if None.")
         ),
-        max_rows: int = typer.Option(20, help=_("Maximum number of rows to display. Use -1 for all rows.")),
-        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=_("Show all columns in the output table, even if wide.")),
+        max_rows: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
+        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table, even if wide.")),
         jpl_server: str = typer.Option(
             "nasa",
-            help=_("JPL Horizons server to use. Choices: {server_list}").format(server_list=list(JPL_SERVERS.keys())),
+            help=builtins._("JPL Horizons server to use. Choices: {server_list}").format(server_list=list(JPL_SERVERS.keys())),
             autocompletion=lambda: list(JPL_SERVERS.keys())
-        )
+        ),
+        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
     ):
+        import time
+        start = time.perf_counter() if test else None
+
         console.print(_("[cyan]Querying JPL Horizons for '{target}'...[/cyan]").format(target=target))
 
         current_server = JPL_SERVERS.get(jpl_server.lower(), jpl_conf.horizons_server)
@@ -172,5 +187,10 @@ def get_app(_):
         except Exception as e:
             handle_astroquery_exception(e, _("JPL Horizons"))
             raise typer.Exit(code=1)
+
+        if test:
+            elapsed = time.perf_counter() - start
+            print(f"Elapsed: {elapsed:.3f} s")
+            raise typer.Exit()
 
     return app

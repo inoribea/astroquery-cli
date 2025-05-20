@@ -12,10 +12,12 @@ from ..utils import (
 )
 import os
 
-def get_app(_):
+def get_app():
+    import builtins
+    _ = builtins._
     app = typer.Typer(
         name="nasa_ads",
-        help=_("Query the NASA Astrophysics Data System (ADS)."),
+        help=builtins._("Query the NASA Astrophysics Data System (ADS)."),
         no_args_is_help=True
     )
 
@@ -35,18 +37,22 @@ def get_app(_):
 
     ADS.ROW_LIMIT = 25
 
-    @app.command(name="query", help=_("Perform a query on NASA ADS."))
-    def query_ads(
+    @app.command(name="query", help=builtins._("Perform a query on NASA ADS."))
+    def query_ads(ctx: typer.Context,
         query_string: str = typer.Argument(..., help=_("ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', 'bibcode:1998AJ....116.1009R').")),
-        fields: Optional[List[str]] = typer.Option(["bibcode", "title", "author", "year", "citation_count"], "--field", help=_("Fields to return.")),
-        sort_by: Optional[str] = typer.Option("citation_count", help=_("Sort results by (e.g., 'date', 'citation_count', 'score').")),
-        max_pages: int = typer.Option(1, help=_("Maximum number of pages to retrieve.")),
-        rows_per_page: int = typer.Option(25, help=_("Number of results per page (max 200 for ADS API).")),
+        fields: Optional[List[str]] = typer.Option(["bibcode", "title", "author", "year", "citation_count"], "--field", help=builtins._("Fields to return.")),
+        sort_by: Optional[str] = typer.Option("citation_count", help=builtins._("Sort results by (e.g., 'date', 'citation_count', 'score').")),
+        max_pages: int = typer.Option(1, help=builtins._("Maximum number of pages to retrieve.")),
+        rows_per_page: int = typer.Option(25, help=builtins._("Number of results per page (max 200 for ADS API).")),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
-        max_rows_display: int = typer.Option(25, help=_("Maximum number of rows to display. Use -1 for all rows.")),
-        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=_("Show all columns in the output table."))
+        max_rows_display: int = typer.Option(25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
+        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
+        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
     ):
+        import time
+        start = time.perf_counter() if test else None
+
         console.print(_("[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]").format(query_string=query_string))
         if not ADS.TOKEN and "ADS_DEV_KEY" not in os.environ:
             console.print(_("[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be rate-limited.[/yellow]"))
@@ -72,11 +78,20 @@ def get_app(_):
             handle_astroquery_exception(e, _("NASA ADS query"))
             raise typer.Exit(code=1)
 
-    @app.command(name="get-bibtex", help=_("Retrieve BibTeX entries for given bibcodes."))
-    def get_bibtex(
-        bibcodes: List[str] = typer.Argument(..., help=_("List of ADS bibcodes.")),
-        output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=_("File to save BibTeX entries (e.g., refs.bib)."))
+        if test:
+            elapsed = time.perf_counter() - start
+            print(f"Elapsed: {elapsed:.3f} s")
+            raise typer.Exit()
+
+    @app.command(name="get-bibtex", help=builtins._("Retrieve BibTeX entries for given bibcodes."))
+    def get_bibtex(ctx: typer.Context,
+        bibcodes: List[str] = typer.Argument(..., help=builtins._("List of ADS bibcodes.")),
+        output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=builtins._("File to save BibTeX entries (e.g., refs.bib).")),
+        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
     ):
+        import time
+        start = time.perf_counter() if test else None
+
         console.print(_("[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]").format(bibcode_list=', '.join(bibcodes)))
         if not ADS.TOKEN and "ADS_DEV_KEY" not in os.environ:
             console.print(_("[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be rate-limited.[/yellow]"))
@@ -104,5 +119,10 @@ def get_app(_):
         except Exception as e:
             handle_astroquery_exception(e, _("NASA ADS get_bibtex"))
             raise typer.Exit(code=1)
+
+        if test:
+            elapsed = time.perf_counter() - start
+            print(f"Elapsed: {elapsed:.3f} s")
+            raise typer.Exit()
         
     return app

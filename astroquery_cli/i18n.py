@@ -10,10 +10,7 @@ current_lang_code = "en"
 
 def init_translation(lang_code: str = "en"):
     global _, current_lang_code
-    current_lang_code = lang_code
-    if not lang_code:
-        current_lang_code = "en"
-
+    current_lang_code = lang_code or "en"
     try:
         translation_instance = gettext.translation(
             TEXT_DOMAIN,
@@ -23,17 +20,22 @@ def init_translation(lang_code: str = "en"):
         )
         translation_instance.install()
         _ = translation_instance.gettext
-    except FileNotFoundError:
-        null_trans = gettext.NullTranslations()
-        null_trans.install()
-        _ = null_trans.gettext
     except Exception:
         null_trans = gettext.NullTranslations()
         null_trans.install()
         _ = null_trans.gettext
 
-def get_translator():
-    return _
+def get_translator(lang: str = "en"):
+    try:
+        translation_instance = gettext.translation(
+            TEXT_DOMAIN,
+            localedir=LOCALE_DIR,
+            languages=[lang],
+            fallback=True
+        )
+        return translation_instance.gettext
+    except Exception:
+        return lambda s: s
 
 def get_current_language():
     return current_lang_code
