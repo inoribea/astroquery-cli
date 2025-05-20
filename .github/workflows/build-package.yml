@@ -57,7 +57,11 @@ jobs:
           if [ ! -f astroquery_cli/__init__.py ]; then
             echo "::error file=astroquery_cli/__init__.py::Main package module missing __init__.py"
           fi
-      
+
+      - name: Install gettext (for msgfmt)
+        run: sudo apt-get update && sudo apt-get install -y gettext
+
+
       - name: Compile translations (.po -> .mo)
         run: |
           find locales/*/LC_MESSAGES -name "*.po" | while read po; do
