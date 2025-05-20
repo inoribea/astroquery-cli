@@ -28,3 +28,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 aqc = "astroquery_cli.main:app"
+
+[tool.setuptools]
+package-data = { "astroquery_cli" = ["locales/*/*.mo"] }
