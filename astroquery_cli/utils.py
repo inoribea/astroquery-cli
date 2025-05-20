@@ -7,10 +7,27 @@ import astropy.units as u
 from rich.console import Console
 from rich.table import Table as RichTable
 from rich.padding import Padding
+import shutil
 import os
 import re
 
 console = Console()
+
+def is_narrow_terminal(min_width=100):
+    terminal_size = shutil.get_terminal_size((80, 20))
+    return terminal_size.columns < min_width
+def suggest_web_view(result_url: str, reason: str = ""):
+
+    suggestion = _('Terminal too narrow or content too complex, please open in browser:')
+    if reason:
+        console.print(f"[cyan]{reason}[/cyan]")
+    console.print(f"[bold green]{suggestion}[/bold green]\n[blue underline]{result_url}[/blue underline]")
+    try:
+        import webbrowser
+        webbrowser.open_new_tab(result_url)
+    except Exception:
+        pass
+
 
 def parse_coordinates(coords_str: str) -> Optional[SkyCoord]:
     """

@@ -3,7 +3,6 @@ import os
 import sys
 
 from . import i18n
-
 _ = i18n.get_translator()
 
 from .modules import (
@@ -21,6 +20,15 @@ from .modules import (
     splatalogue_cli,
     vizier_cli
 )
+
+if __name__ == "__main__":
+    try:
+        app()
+    except KeyboardInterrupt:
+        from rich.console import Console
+        console = Console()
+        console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
+        raise typer.Exit(130)
 
 app = typer.Typer(
     name="aqc",
