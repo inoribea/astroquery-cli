@@ -38,10 +38,14 @@ Thumbs.db
 *.sql
 *.sqlite3
 
-# translation tmp
+# translation files
 untranslated_fr.tmp
 untranslated_ja.tmp
 untranslated_zh.tmp
+
+locales/fr/LC_MESSAGES/messages.po.bak
+locales/ja/LC_MESSAGES/messages.po.bak
+locales/zh/LC_MESSAGES/messages.po.bak
 
 # aur
 PKGBUILD
