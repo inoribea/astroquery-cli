@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-20 17:57+0800\n"
+"POT-Creation-Date: 2025-05-20 18:24+0800\n"
 "PO-Revision-Date: 2025-05-18 20:49+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -16,19 +16,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
-#: astroquery_cli/main.py:30
-msgid "User interrupted the query. Exiting safely."
-msgstr "ユーザーによってクエリが中断されました。安全に終了します。"
-
-#: astroquery_cli/main.py:35 astroquery_cli/main.py:47
+#: astroquery_cli/main.py:26 astroquery_cli/main.py:38
 msgid ""
 "Astroquery Command Line Interface. Provides access to various "
 "astronomical data services."
 msgstr "Astroquery コマンドラインインターフェース。様々な天文データサービスへのアクセスを提供します。"
 
-#: astroquery_cli/main.py:53
+#: astroquery_cli/main.py:44
 #, fuzzy
 msgid ""
 "\n"
@@ -45,72 +41,72 @@ msgstr ""
 "    例: aqc -l ja simbad query-object M31\n"
 "    "
 
-#: astroquery_cli/main.py:71
+#: astroquery_cli/main.py:62
 #, fuzzy
 msgid ""
 "Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
 msgstr "出力メッセージの言語を設定します（例: 'en', 'ja'）。ヘルプテキストと出力に影響します。"
 
-#: astroquery_cli/main.py:92
+#: astroquery_cli/main.py:83
 #, python-brace-format
 msgid "Language active: {lang_code}"
 msgstr "現在の言語: {lang_code}"
 
-#: astroquery_cli/main.py:93
+#: astroquery_cli/main.py:84
 #, python-brace-format
 msgid "Run '{prog_name} --help' or '{prog_name} -h' to see available commands."
 msgstr "利用可能なコマンドを確認するには '{prog_name} --help' または '{prog_name} -h' を実行してください。"
 
-#: astroquery_cli/main.py:102
+#: astroquery_cli/main.py:93
 msgid "SIMBAD astronomical database."
 msgstr "SIMBAD 天文データベース。"
 
-#: astroquery_cli/main.py:103
+#: astroquery_cli/main.py:94
 msgid "Query the ALMA archive."
 msgstr "ALMA アーカイブを照会します。"
 
-#: astroquery_cli/main.py:104
+#: astroquery_cli/main.py:95
 msgid "Query the ESA Sky archive."
 msgstr "ESA Sky アーカイブを照会します。"
 
-#: astroquery_cli/main.py:105
+#: astroquery_cli/main.py:96
 msgid "Query the Gaia archive."
 msgstr "Gaia アーカイブを照会します。"
 
-#: astroquery_cli/main.py:106 astroquery_cli/modules/irsa_cli.py:19
+#: astroquery_cli/main.py:97 astroquery_cli/modules/irsa_cli.py:19
 msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
 msgstr "NASA/IPAC 赤外線科学アーカイブ (IRSA) を照会します。"
 
-#: astroquery_cli/main.py:107
+#: astroquery_cli/main.py:98
 msgid "Query IRSA dust maps."
 msgstr "IRSA ダストマップを照会します。"
 
-#: astroquery_cli/main.py:108
+#: astroquery_cli/main.py:99
 msgid "Query JPL Horizons ephemeris service."
 msgstr "JPL Horizons 天体暦サービスを照会します。"
 
-#: astroquery_cli/main.py:109 astroquery_cli/modules/jplsbdb_cli.py:18
+#: astroquery_cli/main.py:100 astroquery_cli/modules/jplsbdb_cli.py:18
 msgid "Query JPL Small-Body Database (SBDB)."
 msgstr "JPL 小天体データベース (SBDB) を照会します。"
 
-#: astroquery_cli/main.py:110 astroquery_cli/modules/mast_cli.py:20
+#: astroquery_cli/main.py:101 astroquery_cli/modules/mast_cli.py:20
 msgid "Query the Mikulski Archive for Space Telescopes (MAST)."
 msgstr "Mikulski Archive for Space Telescopes (MAST) を照会します。"
 
-#: astroquery_cli/main.py:111
+#: astroquery_cli/main.py:102
 msgid "Query the NASA Astrophysics Data System (ADS)."
 msgstr "NASA 天体物理データシステム (ADS) を照会します。"
 
-#: astroquery_cli/main.py:112
+#: astroquery_cli/main.py:103
 msgid "Query the NASA/IPAC Extragalactic Database (NED)."
 msgstr "NASA/IPAC 銀河系外データベース (NED) を照会します。"
 
-#: astroquery_cli/main.py:113 astroquery_cli/modules/splatalogue_cli.py:19
+#: astroquery_cli/main.py:104 astroquery_cli/modules/splatalogue_cli.py:19
 msgid "Query the Splatalogue spectral line database."
 msgstr "Splatalogue スペクトル線データベースを照会します。"
 
-#: astroquery_cli/main.py:114
+#: astroquery_cli/main.py:105
 msgid "Query the VizieR astronomical catalog service."
 msgstr "VizieR 天文カタログサービスを照会します。"
 
@@ -825,7 +821,7 @@ msgstr ""
 "天体ID (例: 'Mars' (火星), 'Ceres' (ケレス), '2000NM', '@10')。宇宙機のIDには '@' "
 "プレフィックスを使用します。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:70
+#: astroquery_cli/modules/jplhorizons_cli.py:71
 #, python-brace-format
 msgid ""
 "Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 "
@@ -1969,4 +1965,7 @@ msgstr "VizieR query_constraints"
 
 #~ msgid "Run 'aq --help' to see available commands."
 #~ msgstr "利用可能なコマンドを確認するには 'aq --help' を実行してください。"
+
+#~ msgid "User interrupted the query. Exiting safely."
+#~ msgstr "ユーザーによってクエリが中断されました。安全に終了します。"
 

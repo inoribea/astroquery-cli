@@ -21,15 +21,6 @@ from .modules import (
     vizier_cli
 )
 
-if __name__ == "__main__":
-    try:
-        app()
-    except KeyboardInterrupt:
-        from rich.console import Console
-        console = Console()
-        console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
-        raise typer.Exit(130)
-
 app = typer.Typer(
     name="aqc",
     help=_("Astroquery Command Line Interface. Provides access to various astronomical data services."),
@@ -114,4 +105,10 @@ app.add_typer(splatalogue_cli.app, name="splatalogue", help=_("Query the Splatal
 app.add_typer(vizier_cli.app, name="vizier", help=_("Query the VizieR astronomical catalog service."))
 
 if __name__ == "__main__":
-    app()
+    try:
+        app()
+    except KeyboardInterrupt:
+        from rich.console import Console
+        console = Console()
+        console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
+        raise typer.Exit(130)

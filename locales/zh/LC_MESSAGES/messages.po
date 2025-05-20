@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-20 17:57+0800\n"
+"POT-Creation-Date: 2025-05-20 18:24+0800\n"
 "PO-Revision-Date: 2025-05-18 20:48+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -16,19 +16,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
-#: astroquery_cli/main.py:30
-msgid "User interrupted the query. Exiting safely."
-msgstr "用户中断了查询。安全退出。"
-
-#: astroquery_cli/main.py:35 astroquery_cli/main.py:47
+#: astroquery_cli/main.py:26 astroquery_cli/main.py:38
 msgid ""
 "Astroquery Command Line Interface. Provides access to various "
 "astronomical data services."
 msgstr "Astroquery 命令行界面。提供对各种天文数据服务的访问。"
 
-#: astroquery_cli/main.py:53
+#: astroquery_cli/main.py:44
 msgid ""
 "\n"
 "    Astroquery CLI: Your gateway to astronomical data. 🌠\n"
@@ -38,75 +34,77 @@ msgid ""
 "    "
 msgstr "Astroquery CLI：一站式天文台数据质询 🌠\n"
 
-#: astroquery_cli/main.py:71
+#: astroquery_cli/main.py:62
 msgid ""
 "Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
 msgstr "设置输出信息的语言（例如，'en'，'zh'）。影响帮助文本和输出。"
 
-#: astroquery_cli/main.py:92
+#: astroquery_cli/main.py:83
+#, python-brace-format
 msgid "Language active: {lang_code}"
 msgstr "当前语言：{lang_code}"
 
-#: astroquery_cli/main.py:93
+#: astroquery_cli/main.py:84
+#, python-brace-format
 msgid "Run '{prog_name} --help' or '{prog_name} -h' to see available commands."
 msgstr "运行“{prog_name} --help”或“{prog_name} -h”以查看可用命令。"
 
-#: astroquery_cli/main.py:102
+#: astroquery_cli/main.py:93
 #, fuzzy
 msgid "SIMBAD astronomical database."
 msgstr "查询 SIMBAD 天文数据库。🆔"
 
-#: astroquery_cli/main.py:103
+#: astroquery_cli/main.py:94
 #, fuzzy
 msgid "Query the ALMA archive."
 msgstr "查询 ALMA 科学档案库。"
 
-#: astroquery_cli/main.py:104
+#: astroquery_cli/main.py:95
 #, fuzzy
 msgid "Query the ESA Sky archive."
 msgstr "查询 ALMA 科学档案库。"
 
-#: astroquery_cli/main.py:105
+#: astroquery_cli/main.py:96
 #, fuzzy
 msgid "Query the Gaia archive."
 msgstr "查询 ALMA 科学档案库。"
 
-#: astroquery_cli/main.py:106 astroquery_cli/modules/irsa_cli.py:19
+#: astroquery_cli/main.py:97 astroquery_cli/modules/irsa_cli.py:19
 msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
 msgstr "查询 NASA/IPAC 红外科学档案库 (IRSA)。"
 
-#: astroquery_cli/main.py:107
+#: astroquery_cli/main.py:98
 msgid "Query IRSA dust maps."
 msgstr "查询IRSA尘埃图。"
 
-#: astroquery_cli/main.py:108
+#: astroquery_cli/main.py:99
 msgid "Query JPL Horizons ephemeris service."
 msgstr "查询JPL Horizons星历服务。"
 
-#: astroquery_cli/main.py:109 astroquery_cli/modules/jplsbdb_cli.py:18
+#: astroquery_cli/main.py:100 astroquery_cli/modules/jplsbdb_cli.py:18
 msgid "Query JPL Small-Body Database (SBDB)."
 msgstr "查询 JPL 小天体数据库 (SBDB)。"
 
-#: astroquery_cli/main.py:110 astroquery_cli/modules/mast_cli.py:20
+#: astroquery_cli/main.py:101 astroquery_cli/modules/mast_cli.py:20
 msgid "Query the Mikulski Archive for Space Telescopes (MAST)."
 msgstr "查询 Mikulski 空间望远镜档案库 (MAST)。"
 
-#: astroquery_cli/main.py:111
+#: astroquery_cli/main.py:102
 #, fuzzy
 msgid "Query the NASA Astrophysics Data System (ADS)."
 msgstr "查询 NASA 天体物理数据系统 (ADS)。"
 
-#: astroquery_cli/main.py:112
+#: astroquery_cli/main.py:103
 #, fuzzy
 msgid "Query the NASA/IPAC Extragalactic Database (NED)."
 msgstr "查询 NASA/IPAC 河外星系数据库 (NED)。"
 
-#: astroquery_cli/main.py:113 astroquery_cli/modules/splatalogue_cli.py:19
+#: astroquery_cli/main.py:104 astroquery_cli/modules/splatalogue_cli.py:19
 msgid "Query the Splatalogue spectral line database."
 msgstr "查询 Splatalogue 谱线数据库。"
 
-#: astroquery_cli/main.py:114
+#: astroquery_cli/main.py:105
 #, fuzzy
 msgid "Query the VizieR astronomical catalog service."
 msgstr "查询 VizieR 天文星表数据库。📖"
@@ -814,7 +812,7 @@ msgid ""
 "spacecraft ID."
 msgstr "天体编号（例如，'火星' (Mars)，'谷神星' (Ceres)，'2000NM'，'@10'）。航天器编号使用 '@' 前缀。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:70
+#: astroquery_cli/modules/jplhorizons_cli.py:71
 #, python-brace-format
 msgid ""
 "Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 "
@@ -2001,4 +1999,7 @@ msgstr "VizieR query_constraints"
 
 #~ msgid "ESA Sky query string."
 #~ msgstr "ADQL 查询字符串。"
+
+#~ msgid "User interrupted the query. Exiting safely."
+#~ msgstr "用户中断了查询。安全退出。"
 
