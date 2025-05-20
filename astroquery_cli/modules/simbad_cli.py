@@ -18,30 +18,13 @@ app = typer.Typer(
 
 Simbad.ROW_LIMIT = 50
 Simbad.TIMEOUT = 60
-# ================== VOTABLE_FIELDS =========================
-VOTABLE_FIELDS = [
-    "ra(d)", "dec(d)", "plx", "plx_error",
-    "rvz_nature", "rv_error",
-    "pmra", "pmdec", "pm_err_maj", "pm_err_min",
-    "sptype", "fe_h",
-    "flux(V)", "flux_error(V)",
-    "flux(B)", "flux_error(B)",
-    "flux(R)", "flux_error(R)",
-    "flux(I)", "flux_error(I)",
-    "flux(J)", "flux_error(J)",
-    "flux(H)", "flux_error(H)",
-    "flux(K)", "flux_error(K)",
-    "otype(V)",
-    "id(HD)", "id(HIP)", "id(TYC)", "id(Gaia)"
+# ================== SIMBAD_FIELDS =========================
+SIMBAD_FIELDS = [
+    "main_id", "ra", "dec", "otype", "B", "V", "J", "H", "K", "G"
+    #...
 ]
 # ===========================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in VOTABLE_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
 
 @app.command(name="query-object", help=_("Query basic data for an astronomical object."))
 def query_object(

@@ -34,14 +34,6 @@ NASA_ADS_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in NASA_ADS_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
-
 ADS.ROW_LIMIT = 25
 
 @app.command(name="query", help=_("Perform a query on NASA ADS."))

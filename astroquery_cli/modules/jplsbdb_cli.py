@@ -44,13 +44,6 @@ JPL_SBDB_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in JPL_SBDB_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
 
 
 @app.command(name="query", help=_("Query JPL SBDB for a small body."))

@@ -34,13 +34,6 @@ VIZIER_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in VIZIER_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
 
 def parse_angle_str_to_quantity(angle_str: Optional[str]) -> Optional[u.Quantity]:
     if angle_str is None:

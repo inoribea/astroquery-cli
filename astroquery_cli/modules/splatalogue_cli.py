@@ -33,12 +33,6 @@ SPLATALOGUE_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in SPLATALOGUE_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
 
 Splatalogue.TIMEOUT = 120
 

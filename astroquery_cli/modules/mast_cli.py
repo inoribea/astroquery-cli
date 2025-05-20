@@ -44,14 +44,6 @@ MAST_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in MAST_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
-
 Observations.TIMEOUT = 120
 Observations.PAGESIZE = 2000
 

@@ -32,13 +32,6 @@ IRSA_DUST_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in IRSA_DUST_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
 
 @app.command(name="get-extinction", help=_("Get E(B-V) dust extinction values for one or more coordinates."))
 def get_extinction(

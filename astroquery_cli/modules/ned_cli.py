@@ -34,14 +34,6 @@ NED_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in NED_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
-
 Ned.TIMEOUT = 120
 
 @app.command(name="query-object", help=_("Query NED for an object by name."))

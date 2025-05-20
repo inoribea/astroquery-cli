@@ -43,13 +43,6 @@ ESASKY_FIELDS = [
 # ============================================================
 
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in ESASKY_CATALOGS + ESASKY_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
 
 @app.command(name="query-object-catalogs", help=_("Query ESASky catalogs for an object."))
 def query_object_catalogs(

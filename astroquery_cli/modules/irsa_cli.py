@@ -36,13 +36,6 @@ IRSA_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    for field in IRSA_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
 
 Irsa.ROW_LIMIT = 500
 

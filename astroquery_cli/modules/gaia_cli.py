@@ -43,13 +43,6 @@ GAIA_VOTABLE_FIELDS = [
 ]
 # ============================================================
 
-def add_common_fields(simbad_instance: Simbad):
-    ffor field in list(GAIA_TABLES.values()) + GAIA_VOTABLE_FIELDS:
-        try:
-            simbad_instance.add_votable_fields(field)
-        except ValueError:
-            pass
-
 
 @app.command(name="cone-search", help=_("Perform a cone search around a coordinate."))
 def cone_search(
