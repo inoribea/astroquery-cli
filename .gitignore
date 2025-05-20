@@ -38,6 +38,11 @@ Thumbs.db
 *.sql
 *.sqlite3
 
+# translation tmp
+untranslated_fr.tmp
+untranslated_ja.tmp
+untranslated_zh.tmp
+
 # aur
 PKGBUILD
 .SRCINFO

@@ -42,11 +42,11 @@ def lang_callback(ctx: typer.Context, value: str):
             app.help = current_help
 
         current_docstring = _("""
-    Astroquery CLI: Your gateway to astronomical data. 🌠
+Astroquery CLI: Your gateway to astronomical data. 🌠
 
-    Use '--lang' or '-l' to set the interface language.
-    Example: aqc -l zh simbad query-object M31
-    """)
+Use '--lang' or '-l' to set the interface language.
+Example: aqc -l zh simbad query-object M31
+""")
         if main_callback.__doc__:
             main_callback.__doc__ = current_docstring
     return value
@@ -66,7 +66,6 @@ def main_callback(
         show_default=False 
     )
 ):
-
     if ctx.invoked_subcommand is None:
         lang_option_flags = ["-l", "--lang", "--language"]
         is_only_lang_option = False
@@ -84,12 +83,10 @@ def main_callback(
             typer.echo(_("Run '{prog_name} --help' or '{prog_name} -h' to see available commands.").format(prog_name=ctx.find_root().info_name))
             raise typer.Exit(code=0)
         else:
-            
             if not ctx.args and not any(arg for arg in sys.argv[1:] if not arg.startswith('-') and arg not in lang_option_flags and arg != lang):
-                
-                 pass 
+                pass 
 
-
+# 注册所有子命令（只做一次）
 app.add_typer(simbad_cli.app, name="simbad", help=_("SIMBAD astronomical database."))
 app.add_typer(alma_cli.app, name="alma", help=_("Query the ALMA archive."))
 app.add_typer(esasky_cli.app, name="esasky", help=_("Query the ESA Sky archive."))
@@ -104,11 +101,15 @@ app.add_typer(ned_cli.app, name="ned", help=_("Query the NASA/IPAC Extragalactic
 app.add_typer(splatalogue_cli.app, name="splatalogue", help=_("Query the Splatalogue spectral line database."))
 app.add_typer(vizier_cli.app, name="vizier", help=_("Query the VizieR astronomical catalog service."))
 
+def main():
+    app()
+
 if __name__ == "__main__":
     try:
-        app()
+        main()
     except KeyboardInterrupt:
         from rich.console import Console
         console = Console()
         console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
-        raise typer.Exit(130)
+        import sys
+        sys.exit(130)
