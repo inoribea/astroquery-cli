@@ -7,12 +7,18 @@ import astropy.units as u
 from rich.console import Console
 from rich.table import Table as RichTable
 from rich.padding import Padding
+from astroquery_cli.i18n import get_translator
+_ = get_translator()
 import shutil
 import os
 import re
 
 console = Console()
 
+def add_common_fields(simbad_instance):
+    fields = ["otype", "sptype", "flux(V)", "flux(B)", "flux(J)", "flux(H)", "flux(K)", "flux(G)"]
+    for field in fields:
+        simbad_instance.add_votable_fields(field)
 def is_narrow_terminal(min_width=100):
     terminal_size = shutil.get_terminal_size((80, 20))
     return terminal_size.columns < min_width

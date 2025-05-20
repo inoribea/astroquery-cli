@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-20 20:03+0800\n"
+"POT-Creation-Date: 2025-05-20 20:38+0800\n"
 "PO-Revision-Date: 2025-05-18 20:48+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: astroquery_cli/main.py:19 astroquery_cli/modules/simbad_cli.py:15
+#: astroquery_cli/main.py:19 astroquery_cli/modules/simbad_cli.py:14
 msgid "SIMBAD astronomical database."
 msgstr "查询 SIMBAD 天文数据库。"
 
@@ -70,7 +70,11 @@ msgstr "查询 Splatalogue 谱线数据库。"
 msgid "Query the VizieR astronomical catalog service."
 msgstr "查询 VizieR 天文星表数据库。"
 
-#: astroquery_cli/utils.py:21
+#: astroquery_cli/main.py:67
+msgid "User interrupted the query. Exiting safely."
+msgstr "用户中断了查询。正在安全退出。"
+
+#: astroquery_cli/utils.py:27
 msgid "Terminal too narrow or content too complex, please open in browser:"
 msgstr "终端宽度不足或内容过于复杂，请在浏览器中打开："
 
@@ -109,9 +113,9 @@ msgstr "指定要查询的载荷字段（例如，'band_list'，'target_name'）
 #: astroquery_cli/modules/mast_cli.py:57 astroquery_cli/modules/mast_cli.py:95
 #: astroquery_cli/modules/mast_cli.py:131
 #: astroquery_cli/modules/nasa_ads_cli.py:47
-#: astroquery_cli/modules/ned_cli.py:68 astroquery_cli/modules/simbad_cli.py:38
-#: astroquery_cli/modules/simbad_cli.py:78
-#: astroquery_cli/modules/simbad_cli.py:104
+#: astroquery_cli/modules/ned_cli.py:68 astroquery_cli/modules/simbad_cli.py:37
+#: astroquery_cli/modules/simbad_cli.py:77
+#: astroquery_cli/modules/simbad_cli.py:103
 #: astroquery_cli/modules/splatalogue_cli.py:66
 #: astroquery_cli/modules/splatalogue_cli.py:105
 msgid "Maximum number of rows to display. Use -1 for all rows."
@@ -126,8 +130,8 @@ msgstr "最大显示行数。使用 -1 表示所有行。"
 #: astroquery_cli/modules/mast_cli.py:132
 #: astroquery_cli/modules/nasa_ads_cli.py:48
 #: astroquery_cli/modules/ned_cli.py:44 astroquery_cli/modules/ned_cli.py:69
-#: astroquery_cli/modules/ned_cli.py:99 astroquery_cli/modules/simbad_cli.py:39
-#: astroquery_cli/modules/simbad_cli.py:105
+#: astroquery_cli/modules/ned_cli.py:99 astroquery_cli/modules/simbad_cli.py:38
+#: astroquery_cli/modules/simbad_cli.py:104
 #: astroquery_cli/modules/splatalogue_cli.py:67
 #: astroquery_cli/modules/vizier_cli.py:92
 #: astroquery_cli/modules/vizier_cli.py:145
@@ -147,7 +151,7 @@ msgid "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]
 msgstr "[yellow]载荷项 '{item}' 不是键值对格式。已忽略。[/yellow]"
 
 #: astroquery_cli/modules/alma_cli.py:64
-#: astroquery_cli/modules/simbad_cli.py:61
+#: astroquery_cli/modules/simbad_cli.py:60
 #, python-brace-format
 msgid "[green]Found {count} match(es) for '{object_name}'.[/green]"
 msgstr "[green]找到 {count} 条关于 '{object_name}' 的匹配记录。[/green]"
@@ -162,7 +166,7 @@ msgid "ALMA object query"
 msgstr "ALMA 天体查询"
 
 #: astroquery_cli/modules/alma_cli.py:69 astroquery_cli/modules/ned_cli.py:56
-#: astroquery_cli/modules/simbad_cli.py:66
+#: astroquery_cli/modules/simbad_cli.py:65
 #, python-brace-format
 msgid "[yellow]No information found for object '{object_name}'.[/yellow]"
 msgstr "[yellow]未找到关于天体 '{object_name}' 的信息。[/yellow]"
@@ -1351,109 +1355,109 @@ msgstr "[yellow]未找到关于天体 '{object_name}' 的图像条目。[/yellow
 msgid "NED get_images"
 msgstr "NED get_images"
 
-#: astroquery_cli/modules/simbad_cli.py:29
+#: astroquery_cli/modules/simbad_cli.py:28
 msgid "Query basic data for an astronomical object."
 msgstr "查询某个天体的基本数据。"
 
-#: astroquery_cli/modules/simbad_cli.py:31
+#: astroquery_cli/modules/simbad_cli.py:30
 msgid "Name of the object to query (e.g., 'M101', 'HD12345')."
 msgstr "要查询的天体名称（例如，'M101'，'HD12345'）。"
 
-#: astroquery_cli/modules/simbad_cli.py:32
+#: astroquery_cli/modules/simbad_cli.py:31
 msgid "Enable wildcard searching for the object name."
 msgstr "对天体名称启用通配符搜索。"
 
-#: astroquery_cli/modules/simbad_cli.py:33
+#: astroquery_cli/modules/simbad_cli.py:32
 msgid ""
 "Additional VOTable fields to retrieve (e.g., 'otype', 'sptype'). Can be "
 "specified multiple times."
 msgstr "要检索的额外 VOTable 字段（例如，'otype'（天体类型），'sptype'（光谱型））。可多次指定。"
 
-#: astroquery_cli/modules/simbad_cli.py:34
+#: astroquery_cli/modules/simbad_cli.py:33
 msgid ""
 "Default VOTable fields to remove (e.g., 'coo_bibcode'). Can be specified "
 "multiple times."
 msgstr "要移除的默认 VOTable 字段（例如，'coo_bibcode'）。可多次指定。"
 
-#: astroquery_cli/modules/simbad_cli.py:35
+#: astroquery_cli/modules/simbad_cli.py:34
 msgid "Automatically include a set of common useful fields."
 msgstr "自动包含一组常用的有用字段。"
 
-#: astroquery_cli/modules/simbad_cli.py:46
+#: astroquery_cli/modules/simbad_cli.py:45
 #, python-brace-format
 msgid "[cyan]Querying SIMBAD for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 SIMBAD 中关于天体 '{object_name}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/simbad_cli.py:62
+#: astroquery_cli/modules/simbad_cli.py:61
 #, python-brace-format
 msgid "SIMBAD Data for {object_name}"
 msgstr "{object_name} 的 SIMBAD 数据"
 
-#: astroquery_cli/modules/simbad_cli.py:64
+#: astroquery_cli/modules/simbad_cli.py:63
 msgid "SIMBAD object query"
 msgstr "SIMBAD 天体查询"
 
-#: astroquery_cli/modules/simbad_cli.py:69
+#: astroquery_cli/modules/simbad_cli.py:68
 msgid "SIMBAD query_object"
 msgstr "SIMBAD query_object"
 
-#: astroquery_cli/modules/simbad_cli.py:73
+#: astroquery_cli/modules/simbad_cli.py:72
 msgid "Query all identifiers for an astronomical object."
 msgstr "查询某个天体的所有标识符。"
 
-#: astroquery_cli/modules/simbad_cli.py:75
+#: astroquery_cli/modules/simbad_cli.py:74
 msgid "Name of the object (e.g., 'Polaris')."
 msgstr "天体名称（例如，'北极星' (Polaris)）。"
 
-#: astroquery_cli/modules/simbad_cli.py:84
+#: astroquery_cli/modules/simbad_cli.py:83
 #, python-brace-format
 msgid "[cyan]Querying SIMBAD for identifiers of: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 SIMBAD 中 '{object_name}' 的标识符...[/cyan]"
 
-#: astroquery_cli/modules/simbad_cli.py:89
+#: astroquery_cli/modules/simbad_cli.py:88
 #, python-brace-format
 msgid "SIMBAD Identifiers for {object_name}"
 msgstr "{object_name} 的 SIMBAD 标识符"
 
-#: astroquery_cli/modules/simbad_cli.py:91
+#: astroquery_cli/modules/simbad_cli.py:90
 msgid "SIMBAD ID query"
 msgstr "SIMBAD ID 查询"
 
-#: astroquery_cli/modules/simbad_cli.py:93
+#: astroquery_cli/modules/simbad_cli.py:92
 #, python-brace-format
 msgid "[yellow]No identifiers found for object '{object_name}'.[/yellow]"
 msgstr "[yellow]未找到天体 '{object_name}' 的标识符。[/yellow]"
 
-#: astroquery_cli/modules/simbad_cli.py:95
+#: astroquery_cli/modules/simbad_cli.py:94
 msgid "SIMBAD query_objectids"
 msgstr "SIMBAD query_objectids"
 
-#: astroquery_cli/modules/simbad_cli.py:99
+#: astroquery_cli/modules/simbad_cli.py:98
 msgid "Query objects associated with a bibcode or bibcode list."
 msgstr "查询与某个文献编码 (bibcode) 或文献编码列表相关的天体。"
 
-#: astroquery_cli/modules/simbad_cli.py:101
+#: astroquery_cli/modules/simbad_cli.py:100
 msgid "Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple."
 msgstr "要查询的文献编码 (bibcode)（例如，'2003A&A...409..581H'）。可指定多个。"
 
-#: astroquery_cli/modules/simbad_cli.py:113
+#: astroquery_cli/modules/simbad_cli.py:112
 #, python-brace-format
 msgid "[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]"
 msgstr "[cyan]正在查询 SIMBAD 中文献编码 {bibcodes_list} 包含的天体...[/cyan]"
 
-#: astroquery_cli/modules/simbad_cli.py:119
+#: astroquery_cli/modules/simbad_cli.py:118
 msgid "SIMBAD Objects for Bibcode(s)"
 msgstr "文献编码 (bibcode) 对应的 SIMBAD 天体"
 
-#: astroquery_cli/modules/simbad_cli.py:121
+#: astroquery_cli/modules/simbad_cli.py:120
 msgid "SIMBAD bibcode query"
 msgstr "SIMBAD bibcode 查询"
 
-#: astroquery_cli/modules/simbad_cli.py:123
+#: astroquery_cli/modules/simbad_cli.py:122
 msgid "[yellow]No objects found for the given bibcode(s).[/yellow]"
 msgstr "[yellow]未找到给定文献编码 (bibcode) 对应的天体。[/yellow]"
 
-#: astroquery_cli/modules/simbad_cli.py:125
+#: astroquery_cli/modules/simbad_cli.py:124
 msgid "SIMBAD query_bibcode"
 msgstr "SIMBAD query_bibcode"
 

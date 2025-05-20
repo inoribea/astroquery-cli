@@ -64,6 +64,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         from rich.console import Console
         _ = i18n.get_translator()
+        _("User interrupted the query. Exiting safely.")
         console = Console()
         console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
         sys.exit(130)

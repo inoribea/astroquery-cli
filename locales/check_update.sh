@@ -26,32 +26,54 @@ for tmp in "$LOCALES_DIR"/untranslated_*.tmp; do
 
     # Update po file using awk
     awk -v TMP="$tmp" '
+        function trim(s) { sub(/^[ \t\r\n]+/, "", s); sub(/[ \t\r\n]+$/, "", s); return s }
         BEGIN {
+            replaced = 0;
+            not_replaced = 0;
             while ((getline < TMP) > 0) {
-                split($0, arr, "|||");
-                untranslated[arr[1]] = arr[2];
+                if ($0 ~ /^\/\//) continue;
+                split($0, arr, /\|\|\|/);
+                key = trim(arr[1]);
+                val = trim(arr[2]);
+                untranslated[key] = val;
             }
             close(TMP)
         }
         /^msgid / {
             msgid=substr($0,8,length($0)-8);
-            inmsgid=1; inmsgstr=0;
+            msgid=trim(msgid);
+            pmsgid_list[++msgid_count] = msgid;
             print $0;
             next
         }
         /^msgstr / {
-            inmsgid=0; inmsgstr=1;
             if (msgid in untranslated && untranslated[msgid] != "") {
                 print "msgstr \"" untranslated[msgid] "\"";
-                skip=1;
+                printf("[Replaced] Original: %s\nTranslation: %s\n", msgid, untranslated[msgid]) > "/dev/stderr";
+                replaced++;
             } else {
                 print $0;
-                skip=0;
+                if (msgid != "") {
+                    printf("[Not replaced] Original: %s\n", msgid) > "/dev/stderr";
+                    not_replaced++;
+                }
             }
+            msgid = "";
             next
         }
-        {
-            if (!skip) print $0;
+        !/^msgid / && !/^msgstr / {
+            print $0;
+        }
+        END {
+            print "\n[DEBUG] All keys loaded from tmp:" > "/dev/stderr";
+            for (k in untranslated) {
+                printf("  [%s]\n", k) > "/dev/stderr";
+            }
+            print "\n[DEBUG] All msgid encountered:" > "/dev/stderr";
+            for (i in msgid_list) {
+                printf("  [%s]\n", msgid_list[i]) > "/dev/stderr";
+            }
+            printf("\nTotal replaced: %d, not replaced: %d\n", replaced, not_replaced) > "/dev/stderr";
         }
     ' "$po.bak" > "$po"
     echo "Updated: $po"
