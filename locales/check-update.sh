@@ -13,7 +13,6 @@ for tmp in "$LOCALES_DIR"/untranslated_*.tmp; do
         continue
     fi
 
-    # Check format
     while IFS= read -r line; do
         if [[ ! "$line" =~ \|\|\| ]]; then
             echo "Format error: missing '|||' in $tmp: $line"
@@ -21,10 +20,8 @@ for tmp in "$LOCALES_DIR"/untranslated_*.tmp; do
         fi
     done < "$tmp"
 
-    # Backup original file
     cp "$po" "$po.bak"
 
-    # Update po file using awk
     awk -v TMP="$tmp" '
         function trim(s) { sub(/^[ \t\r\n]+/, "", s); sub(/[ \t\r\n]+$/, "", s); return s }
         BEGIN {
@@ -78,3 +75,7 @@ for tmp in "$LOCALES_DIR"/untranslated_*.tmp; do
     ' "$po.bak" > "$po"
     echo "Updated: $po"
 done
+
+pybabel compile -d "$LOCALES_DIR"
+
+echo "Compiled all .po files to .mo."

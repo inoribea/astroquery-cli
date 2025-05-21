@@ -8,23 +8,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-21 03:37+0800\n"
+"POT-Creation-Date: 2025-05-21 11:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.15.0\n"
 
-#: astroquery_cli/main.py:132
+#: astroquery_cli/main.py:124
 msgid ""
 "Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
 msgstr ""
 
-#: astroquery_cli/main.py:141
+#: astroquery_cli/main.py:133
 msgid "Set the default language for this session (e.g., 'en', 'zh')."
+msgstr ""
+
+#: astroquery_cli/main.py:139
+msgid "Test connectivity to major services (only available at top-level command)."
+msgstr ""
+
+#: astroquery_cli/main.py:145
+msgid "Test field validity for modules (only available at top-level command)."
+msgstr ""
+
+#: astroquery_cli/main.py:174
+msgid "User interrupted the query. Exiting safely."
 msgstr ""
 
 #: astroquery_cli/utils.py:37
@@ -43,7 +55,7 @@ msgid ""
 " Overrides inference from filename extension."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:21
+#: astroquery_cli/modules/alma_cli.py:20
 msgid ""
 "Query the ALMA archive.\n"
 "\n"
@@ -121,23 +133,19 @@ msgid "Show all columns in the output table."
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:56
-#, python-brace-format
 msgid "[cyan]Querying ALMA for object: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:66
-#, python-brace-format
 msgid "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:75
 #: astroquery_cli/modules/simbad_cli.py:66
-#, python-brace-format
 msgid "[green]Found {count} match(es) for '{object_name}'.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:76
-#, python-brace-format
 msgid "ALMA Data for {object_name}"
 msgstr ""
 
@@ -147,7 +155,6 @@ msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:80 astroquery_cli/modules/ned_cli.py:62
 #: astroquery_cli/modules/simbad_cli.py:71
-#, python-brace-format
 msgid "[yellow]No information found for object '{object_name}'.[/yellow]"
 msgstr ""
 
@@ -170,14 +177,12 @@ msgid "Search radius (e.g., '0.1deg', '5arcmin')."
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:108
-#, python-brace-format
 msgid ""
 "[cyan]Querying ALMA for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:122
-#, python-brace-format
 msgid "[green]Found {count} match(es) in the region.[/green]"
 msgstr ""
 
@@ -212,32 +217,26 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:62
-#, python-brace-format
 msgid "[cyan]Querying ESASky catalogs for object: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:67
-#, python-brace-format
 msgid "[green]Found data for '{object_name}' in {count} catalog(s).[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:71
-#, python-brace-format
 msgid "ESASky: {cat_name} for {object_name}"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:73
-#, python-brace-format
 msgid "ESASky {cat_name} object query"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:75
-#, python-brace-format
 msgid "[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:77
-#, python-brace-format
 msgid "[yellow]No catalog information found for object '{object_name}'.[/yellow]"
 msgstr ""
 
@@ -259,29 +258,24 @@ msgid "Specify catalogs to query."
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:102
-#, python-brace-format
 msgid ""
 "[cyan]Querying ESASky catalogs for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:108
-#, python-brace-format
 msgid "[green]Found data in {count} catalog(s) for the region.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:112
-#, python-brace-format
 msgid "ESASky: {cat_name} for region"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:114
-#, python-brace-format
 msgid "ESASky {cat_name} region query"
 msgstr ""
 
 #: astroquery_cli/modules/esasky_cli.py:116
-#, python-brace-format
 msgid "[yellow]No results from catalog '{cat_name}' for the region.[/yellow]"
 msgstr ""
 
@@ -338,12 +332,10 @@ msgid "Columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'parallax')."
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:85
-#, python-brace-format
 msgid "[yellow]Resolved '{target}' to coordinates via SIMBAD: {ra} {dec}[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:87
-#, python-brace-format
 msgid "[red]Could not resolve '{target}' to coordinates via SIMBAD.[/red]"
 msgstr ""
 
@@ -352,12 +344,10 @@ msgid "[bold red]Invalid radius provided.[/bold red]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:100
-#, python-brace-format
 msgid "[cyan]Querying Gaia for object: '{target}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:107
-#, python-brace-format
 msgid "Gaia Main Source for '{target}'"
 msgstr ""
 
@@ -366,7 +356,6 @@ msgid "Gaia object query"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:112
-#, python-brace-format
 msgid "[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
 msgstr ""
 
@@ -389,7 +378,6 @@ msgid "Search radius (e.g., '5arcmin', '0.1deg')."
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:129
-#, python-brace-format
 msgid "Gaia table to query. Common choices: {choices} or specify full table name."
 msgstr ""
 
@@ -417,7 +405,6 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:146
-#, python-brace-format
 msgid ""
 "[cyan]Performing Gaia cone search on '{table_name}' around '{target}' "
 "with radius {radius}...[/cyan]"
@@ -430,13 +417,11 @@ msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:152
 #: astroquery_cli/modules/gaia_cli.py:227
-#, python-brace-format
 msgid "[dim]Logging into Gaia archive as '{user}'...[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:156
 #: astroquery_cli/modules/gaia_cli.py:231
-#, python-brace-format
 msgid "[bold red]Gaia login failed: {error}[/bold red]"
 msgstr ""
 
@@ -447,7 +432,6 @@ msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:159
 #: astroquery_cli/modules/gaia_cli.py:234
-#, python-brace-format
 msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
 msgstr ""
 
@@ -461,18 +445,15 @@ msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:176
-#, python-brace-format
 msgid "[dim]Executing ADQL query (first {row_limit} rows):[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:183
-#, python-brace-format
 msgid "Gaia Cone Search Results ({table_name})"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:185
 #: astroquery_cli/modules/gaia_cli.py:243
-#, python-brace-format
 msgid " (User: {user})"
 msgstr ""
 
@@ -485,7 +466,6 @@ msgid "[yellow]No results found from Gaia for this cone search.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:193
-#, python-brace-format
 msgid "Gaia cone search on {table_name}"
 msgstr ""
 
@@ -520,7 +500,6 @@ msgid "[yellow]ADQL query returned no results or an empty table.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:253
-#, python-brace-format
 msgid ""
 "[bold red]ADQL Query Error Details from server:\n"
 "{error_details}[/bold red]"
@@ -559,36 +538,30 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:60
-#, python-brace-format
 msgid ""
 "[cyan]Querying IRSA catalog '{catalog}' via Gator for region: "
 "'{coordinates}' with radius '{radius}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:92
-#, python-brace-format
 msgid "[green]Found {count} match(es) in '{catalog}'.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:93
-#, python-brace-format
 msgid "IRSA Gator: {catalog}"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:95
-#, python-brace-format
 msgid "IRSA Gator {catalog} query"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:97
-#, python-brace-format
 msgid ""
 "[yellow]No information found in '{catalog}' for the specified "
 "region.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:99
-#, python-brace-format
 msgid "IRSA Gator query for catalog {catalog}"
 msgstr ""
 
@@ -601,14 +574,12 @@ msgid "Filter catalogs by mission code (e.g., 'WISE', 'SPITZER')."
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:111
-#, python-brace-format
 msgid ""
 "[cyan]Fetching list of available IRSA Gator catalogs "
 "{mission_info}...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:111
-#, python-brace-format
 msgid "for mission {mission}"
 msgstr ""
 
@@ -649,14 +620,12 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:132
-#, python-brace-format
 msgid ""
 "[cyan]Performing IRSA cone search for region: '{coordinates}' with radius"
 " '{radius}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:162
-#, python-brace-format
 msgid "[green]Found {count} match(es) in IRSA holdings.[/green]"
 msgstr ""
 
@@ -669,14 +638,12 @@ msgid "IRSA cone search query"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:167
-#, python-brace-format
 msgid ""
 "[yellow]No information found in IRSA for the specified "
 "region{collection_info}.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_cli.py:167
-#, python-brace-format
 msgid " in collection {collection}"
 msgstr ""
 
@@ -705,7 +672,6 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:48
-#, python-brace-format
 msgid ""
 "[cyan]Querying IRSA Dust ({map_name}) for extinction at: "
 "{targets_str}...[/cyan]"
@@ -720,12 +686,10 @@ msgid "[dim]Fetching extinction for each target individually...[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:68
-#, python-brace-format
 msgid "[dim]  Processing target {current_num}/{total_num}: {target_name}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:76
-#, python-brace-format
 msgid "[yellow]Could not get extinction for '{target_name}': {error}[/yellow]"
 msgstr ""
 
@@ -734,22 +698,18 @@ msgid "[yellow]No extinction data retrieved for any target.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:86
-#, python-brace-format
 msgid "IRSA Dust Extinction ({map_name})"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:88
-#, python-brace-format
 msgid "IRSA Dust {map_name} extinction"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:90
-#, python-brace-format
 msgid "[yellow]No extinction data returned by IRSA Dust ({map_name}).[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:93
-#, python-brace-format
 msgid "IRSA Dust ({map_name}) get_extinction_table"
 msgstr ""
 
@@ -774,36 +734,30 @@ msgid "Prefix for the output FITS filename(s)."
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:113
-#, python-brace-format
 msgid ""
 "[cyan]Querying IRSA Dust ({map_name}) for map around '{target}' with "
 "radius {radius}...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:119
-#, python-brace-format
 msgid "[bold red]Error parsing input: {error}[/bold red]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:124
-#, python-brace-format
 msgid "[dim]Created output directory: {output_dir}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:130
-#, python-brace-format
 msgid ""
 "[yellow]No map images returned by IRSA Dust ({map_name}) for this "
 "region.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:142
-#, python-brace-format
 msgid "[green]Saved dust map: {filename}[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/irsa_dust_cli.py:146
-#, python-brace-format
 msgid "IRSA Dust ({map_name}) get_images"
 msgstr ""
 
@@ -821,8 +775,7 @@ msgid ""
 "spacecraft ID."
 msgstr ""
 
-#: astroquery_cli/modules/jplhorizons_cli.py:81
-#, python-brace-format
+#: astroquery_cli/modules/jplhorizons_cli.py:80
 msgid ""
 "Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 "
 "12:00'), a list of times separated by commas (e.g., "
@@ -873,32 +826,26 @@ msgid "Show all columns in the output table, even if wide."
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:113
-#, python-brace-format
 msgid "JPL Horizons server to use. Choices: {server_list}"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:121
-#, python-brace-format
 msgid "[cyan]Querying JPL Horizons for '{target}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:125
-#, python-brace-format
 msgid "[dim]Using JPL server: {server}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:131
-#, python-brace-format
 msgid "[dim]Using epoch range: {start} to {end} with step {step}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:137
-#, python-brace-format
 msgid "[dim]Using epoch dict: {epoch_dict}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:139
-#, python-brace-format
 msgid "[bold red]Error parsing --epochs as dict: {error}[/bold red]"
 msgstr ""
 
@@ -909,17 +856,14 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:144
-#, python-brace-format
 msgid "[dim]Using epoch list: {epoch_list}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:147
-#, python-brace-format
 msgid "[dim]Using single epoch: {epoch}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:150
-#, python-brace-format
 msgid ""
 "[dim]No epoch specified for {ephem_type}, using current time: "
 "{epoch}[/dim]"
@@ -932,22 +876,18 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:167
-#, python-brace-format
 msgid "{ephem_type} for {target}"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:172
-#, python-brace-format
 msgid "[dim]Requesting quantities: {quantities}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:177
-#, python-brace-format
 msgid "[dim]Requesting quantities for vectors: {quantities}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:182
-#, python-brace-format
 msgid "[dim]Requesting quantities for elements: {quantities}[/dim]"
 msgstr ""
 
@@ -996,71 +936,58 @@ msgid "Show all columns in output tables."
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:67
-#, python-brace-format
 msgid "[cyan]Querying JPL SBDB for target: '{target}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:80
-#, python-brace-format
 msgid "[green]Data found for '{target}'.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:82
-#, python-brace-format
 msgid "JPL SBDB Data for {target}"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:84
-#, python-brace-format
 msgid "JPL SBDB query for {target}"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:88
-#, python-brace-format
 msgid "[bold magenta]SBDB Data for: {fullname}[/bold magenta]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:92
-#, python-brace-format
 msgid ""
 "\n"
 "[bold underline]Table: {key}[/bold underline]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:93
-#, python-brace-format
 msgid "{key} for {target}"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:95
-#, python-brace-format
 msgid "JPL SBDB {key} for {target}"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:97
-#, python-brace-format
 msgid ""
 "\n"
 "[bold]{key}:[/bold]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:101
-#, python-brace-format
 msgid "[bold]{key}:[/bold] {value}"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:110
-#, python-brace-format
 msgid "[green]Primary data saved to {file_path}[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:112
-#, python-brace-format
 msgid "[red]Could not save non-table data as JSON: {error}[/red]"
 msgstr ""
 
 #: astroquery_cli/modules/jplsbdb_cli.py:117
-#, python-brace-format
 msgid "[yellow]No information found for target '{target}'.[/yellow]"
 msgstr ""
 
@@ -1089,17 +1016,14 @@ msgid "Instrument name (e.g., 'WFC3', 'ACS')."
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:66
-#, python-brace-format
 msgid "[cyan]Querying MAST for object: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:83
-#, python-brace-format
 msgid "[green]Found {count} observation(s) for '{object_name}'.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:84
-#, python-brace-format
 msgid "MAST Observations for {object_name}"
 msgstr ""
 
@@ -1108,7 +1032,6 @@ msgid "MAST object query"
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:88
-#, python-brace-format
 msgid ""
 "[yellow]No observations found for object '{object_name}' with specified "
 "criteria.[/yellow]"
@@ -1127,14 +1050,12 @@ msgid "Instrument name."
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:113
-#, python-brace-format
 msgid ""
 "[cyan]Querying MAST for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:130
-#, python-brace-format
 msgid "[green]Found {count} observation(s) in the region.[/green]"
 msgstr ""
 
@@ -1169,12 +1090,10 @@ msgid "Product type(s) (e.g., 'SCIENCE', 'PREVIEW')."
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:158
-#, python-brace-format
 msgid "[cyan]Fetching product list for obs ID(s): {obs_id_list}...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/mast_cli.py:165
-#, python-brace-format
 msgid "[green]Found {count} data products.[/green]"
 msgstr ""
 
@@ -1233,7 +1152,6 @@ msgid "Number of results per page (max 200 for ADS API)."
 msgstr ""
 
 #: astroquery_cli/modules/nasa_ads_cli.py:56
-#, python-brace-format
 msgid "[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]"
 msgstr ""
 
@@ -1245,7 +1163,6 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/nasa_ads_cli.py:70
-#, python-brace-format
 msgid "[green]Found {count} result(s) from ADS.[/green]"
 msgstr ""
 
@@ -1275,12 +1192,10 @@ msgid "File to save BibTeX entries (e.g., refs.bib)."
 msgstr ""
 
 #: astroquery_cli/modules/nasa_ads_cli.py:95
-#, python-brace-format
 msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/nasa_ads_cli.py:105
-#, python-brace-format
 msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
 msgstr ""
 
@@ -1289,7 +1204,6 @@ msgid "[green]BibTeX entries retrieved:[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/nasa_ads_cli.py:115
-#, python-brace-format
 msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
 msgstr ""
 
@@ -1318,17 +1232,14 @@ msgid "Maximum number of objects to display (usually 1 for direct name)."
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:52
-#, python-brace-format
 msgid "[cyan]Querying NED for object: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:57
-#, python-brace-format
 msgid "[green]Found information for '{object_name}'.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:58
-#, python-brace-format
 msgid "NED Data for {object_name}"
 msgstr ""
 
@@ -1349,14 +1260,12 @@ msgid "Equinox of coordinates (e.g., 'J2000', 'B1950')."
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:86
-#, python-brace-format
 msgid ""
 "[cyan]Querying NED for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:98
-#, python-brace-format
 msgid "[green]Found {count} object(s) in the region.[/green]"
 msgstr ""
 
@@ -1385,17 +1294,14 @@ msgid "Maximum number of image entries to display. Use -1 for all rows."
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:125
-#, python-brace-format
 msgid "[cyan]Fetching image list from NED for object: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:129
-#, python-brace-format
 msgid "[green]Found {count} image entries for '{object_name}'.[/green]"
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:130
-#, python-brace-format
 msgid "NED Image List for {object_name}"
 msgstr ""
 
@@ -1404,7 +1310,6 @@ msgid "NED image list query"
 msgstr ""
 
 #: astroquery_cli/modules/ned_cli.py:134
-#, python-brace-format
 msgid "[yellow]No image entries found for object '{object_name}'.[/yellow]"
 msgstr ""
 
@@ -1445,12 +1350,10 @@ msgid "Automatically include a set of common useful fields."
 msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:51
-#, python-brace-format
 msgid "[cyan]Querying SIMBAD for object: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:67
-#, python-brace-format
 msgid "SIMBAD Data for {object_name}"
 msgstr ""
 
@@ -1471,12 +1374,10 @@ msgid "Name of the object (e.g., 'Polaris')."
 msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:98
-#, python-brace-format
 msgid "[cyan]Querying SIMBAD for identifiers of: '{object_name}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:103
-#, python-brace-format
 msgid "SIMBAD Identifiers for {object_name}"
 msgstr ""
 
@@ -1485,7 +1386,6 @@ msgid "SIMBAD ID query"
 msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:107
-#, python-brace-format
 msgid "[yellow]No identifiers found for object '{object_name}'.[/yellow]"
 msgstr ""
 
@@ -1502,7 +1402,6 @@ msgid "Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple."
 msgstr ""
 
 #: astroquery_cli/modules/simbad_cli.py:136
-#, python-brace-format
 msgid "[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]"
 msgstr ""
 
@@ -1527,7 +1426,6 @@ msgid "Query the Splatalogue spectral line database."
 msgstr ""
 
 #: astroquery_cli/modules/splatalogue_cli.py:43
-#, python-brace-format
 msgid ""
 "[red]Error: Frequency range '{freq_str}' must be in 'min-max' format "
 "(e.g., '100GHz-110GHz').[/red]"
@@ -1540,7 +1438,6 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/splatalogue_cli.py:53
-#, python-brace-format
 msgid "[red]Error parsing frequency range '{freq_str}': {error_message}[/red]"
 msgstr ""
 
@@ -1575,14 +1472,12 @@ msgid "Species to exclude (e.g., 'HDO')."
 msgstr ""
 
 #: astroquery_cli/modules/splatalogue_cli.py:74
-#, python-brace-format
 msgid ""
 "[cyan]Querying Splatalogue for lines in range "
 "'{frequency_range}'...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/splatalogue_cli.py:96
-#, python-brace-format
 msgid "[green]Found {count} spectral line(s).[/green]"
 msgstr ""
 
@@ -1631,7 +1526,6 @@ msgid "Query the VizieR astronomical catalog service."
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:45
-#, python-brace-format
 msgid ""
 "[bold red]Error parsing angle string '{angle_str}': {error_message}[/bold"
 " red]"
@@ -1642,7 +1536,6 @@ msgid "[yellow]Hint: Use format like '5arcmin', '0.5deg', '10arcsec'.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:64
-#, python-brace-format
 msgid ""
 "[bold red]Error parsing coordinates '{coords_str}': {error_message}[/bold"
 " red]"
@@ -1653,7 +1546,6 @@ msgid "[yellow]Hint: Try 'M31', '10.68h +41.26d', or '160.32 41.45'.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:75
-#, python-brace-format
 msgid ""
 "[bold red]Invalid constraint format: '{item}'. Expected "
 "'column=condition'.[/bold red]"
@@ -1683,7 +1575,6 @@ msgstr ""
 #: astroquery_cli/modules/vizier_cli.py:159
 #: astroquery_cli/modules/vizier_cli.py:213
 #: astroquery_cli/modules/vizier_cli.py:278
-#, python-brace-format
 msgid "VizieR server to use. Choices: {server_list}"
 msgstr ""
 
@@ -1692,22 +1583,18 @@ msgid "[cyan]Searching for VizieR catalogs...[/cyan]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:107
-#, python-brace-format
 msgid "[dim]Using VizieR server: {server_url}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:112
-#, python-brace-format
 msgid "[dim]Keywords: {keywords_list}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:115
-#, python-brace-format
 msgid "[dim]UCD: {ucd_val}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:118
-#, python-brace-format
 msgid "[dim]Source Name: {source_val}[/dim]"
 msgstr ""
 
@@ -1774,7 +1661,6 @@ msgid "Maximum number of rows to display per table. Use -1 for all rows."
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:163
-#, python-brace-format
 msgid ""
 "[cyan]Querying VizieR for object '{target_name}' in catalog(s): "
 "{catalog_list}...[/cyan]"
@@ -1783,7 +1669,6 @@ msgstr ""
 #: astroquery_cli/modules/vizier_cli.py:166
 #: astroquery_cli/modules/vizier_cli.py:220
 #: astroquery_cli/modules/vizier_cli.py:285
-#, python-brace-format
 msgid "[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]"
 msgstr ""
 
@@ -1794,21 +1679,18 @@ msgid "[yellow]No results returned from VizieR for this query.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:187
-#, python-brace-format
 msgid "Results from {catalog_name} for {target_name}"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:192
 #: astroquery_cli/modules/vizier_cli.py:260
 #: astroquery_cli/modules/vizier_cli.py:320
-#, python-brace-format
 msgid ""
 "[yellow]No data found in catalog '{catalog_name}' for the given "
 "criteria.[/yellow]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:195
-#, python-brace-format
 msgid "VizieR query_object for {target_name}"
 msgstr ""
 
@@ -1853,7 +1735,6 @@ msgid "Column filters (e.g., 'Imag<15'). Can be specified multiple times."
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:217
-#, python-brace-format
 msgid ""
 "[cyan]Querying VizieR region around '{coords_str}' in catalog(s): "
 "{catalog_list}...[/cyan]"
@@ -1878,12 +1759,10 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:255
-#, python-brace-format
 msgid "Results from {catalog_name} for region around {coords_str}"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:263
-#, python-brace-format
 msgid "VizieR query_region for {coords_str}"
 msgstr ""
 
@@ -1904,7 +1783,6 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:282
-#, python-brace-format
 msgid ""
 "[cyan]Querying VizieR with constraints in catalog(s): "
 "{catalog_list}...[/cyan]"
@@ -1917,17 +1795,14 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:295
-#, python-brace-format
 msgid "[dim]Using constraints: {constraints_dict}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:298
-#, python-brace-format
 msgid "[dim]Using keywords: {keywords_str}[/dim]"
 msgstr ""
 
 #: astroquery_cli/modules/vizier_cli.py:315
-#, python-brace-format
 msgid "Constraint Query Results from {catalog_name}"
 msgstr ""
 

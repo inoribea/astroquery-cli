@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-21 03:37+0800\n"
+"POT-Creation-Date: 2025-05-21 11:18+0800\n"
 "PO-Revision-Date: 2025-05-18 20:48+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -16,17 +16,29 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.15.0\n"
 
-#: astroquery_cli/main.py:132
+#: astroquery_cli/main.py:124
 msgid ""
 "Set the language for output messages (e.g., 'en', 'zh'). Affects help "
 "texts and outputs."
 msgstr ""
 
-#: astroquery_cli/main.py:141
+#: astroquery_cli/main.py:133
 msgid "Set the default language for this session (e.g., 'en', 'zh')."
 msgstr "设置本次会话的默认语言（例如，'en'，'zh'）。"
+
+#: astroquery_cli/main.py:139
+msgid "Test connectivity to major services (only available at top-level command)."
+msgstr "测试与主要服务的连接（仅在顶级命令下可用）。"
+
+#: astroquery_cli/main.py:145
+msgid "Test field validity for modules (only available at top-level command)."
+msgstr "测试模块字段的有效性（仅在顶级命令下可用）。"
+
+#: astroquery_cli/main.py:174
+msgid "User interrupted the query. Exiting safely."
+msgstr "用户中断了查询。安全退出。"
 
 #: astroquery_cli/utils.py:37
 msgid "Terminal too narrow or content too complex, please open in browser:"
@@ -44,7 +56,7 @@ msgid ""
 " Overrides inference from filename extension."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:21
+#: astroquery_cli/modules/alma_cli.py:20
 msgid ""
 "Query the ALMA archive.\n"
 "\n"
@@ -341,7 +353,7 @@ msgstr "要检索的列（例如，'source_id'，'ra'，'dec'，'parallax'）。
 #: astroquery_cli/modules/gaia_cli.py:85
 #, python-brace-format
 msgid "[yellow]Resolved '{target}' to coordinates via SIMBAD: {ra} {dec}[/yellow]"
-msgstr ""
+msgstr "[yellow]Resolved '{target}' 通过SIMBAD转换为坐标： {ra} {dec}[/yellow]"
 
 #: astroquery_cli/modules/gaia_cli.py:87
 #, python-brace-format
@@ -832,7 +844,7 @@ msgid ""
 "spacecraft ID."
 msgstr "天体编号（例如，'火星' (Mars)，'谷神星' (Ceres)，'2000NM'，'@10'）。航天器编号使用 '@' 前缀。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:81
+#: astroquery_cli/modules/jplhorizons_cli.py:80
 #, python-brace-format
 msgid ""
 "Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 "

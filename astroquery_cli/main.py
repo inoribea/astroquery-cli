@@ -20,6 +20,20 @@ def load_default_lang():
         pass
     return None
 
+def set_builtin_translation(lang):
+    import builtins
+    if lang == "en":
+        builtins._ = lambda x: x
+    else:
+        i18n.init_translation(lang)
+        import gettext
+        try:
+            t = gettext.translation(i18n.TEXT_DOMAIN, localedir=i18n.LOCALE_DIR, languages=[lang])
+            builtins._ = t.gettext
+        except FileNotFoundError:
+            # fallback to English if translation file not found
+            builtins._ = lambda x: x
+
 lang = i18n.INITIAL_LANG
 default_lang = None
 set_default_lang = None
@@ -38,23 +52,12 @@ if not default_lang:
         if arg in ("-l", "--lang", "--language") and idx + 1 < len(sys.argv):
             lang = sys.argv[idx + 1]
             break
-    i18n.init_translation(lang)
-    import gettext
-    import builtins
-    t = gettext.translation(i18n.TEXT_DOMAIN, localedir=i18n.LOCALE_DIR, languages=[lang])
-    builtins._ = t.gettext
+    set_builtin_translation(lang)
 else:
-    i18n.init_translation(default_lang)
-    import gettext
-    import builtins
-    t = gettext.translation(i18n.TEXT_DOMAIN, localedir=i18n.LOCALE_DIR, languages=[default_lang])
-    builtins._ = t.gettext
-
-
+    set_builtin_translation(default_lang)
 
 import builtins
 import typer
-
 
 def main():
     completion_keywords = {
@@ -78,20 +81,9 @@ def main():
             if arg in ("-l", "--lang", "--language") and idx + 1 < len(sys.argv):
                 lang = sys.argv[idx + 1]
                 break
-        i18n.init_translation(lang)
-        import gettext
-        import builtins
-        t = gettext.translation(i18n.TEXT_DOMAIN, localedir=i18n.LOCALE_DIR, languages=[lang])
-        builtins._ = t.gettext
+        set_builtin_translation(lang)
     else:
-        i18n.init_translation(default_lang)
-        import gettext
-        import builtins
-        t = gettext.translation(i18n.TEXT_DOMAIN, localedir=i18n.LOCALE_DIR, languages=[default_lang])
-        builtins._ = t.gettext
-
-
-    import builtins
+        set_builtin_translation(default_lang)
 
     app = typer.Typer(
         name="aqc",
@@ -144,13 +136,13 @@ def main():
             False,
             "-p",
             "--ping",
-            help="Test connectivity to major services (only available at top-level command)."
+            help=builtins._("Test connectivity to major services (only available at top-level command).")
         ),
         field: bool = typer.Option(
             False,
             "-f",
             "--field",
-            help="Test field validity for modules (only available at top-level command)."
+            help=builtins._("Test field validity for modules (only available at top-level command).")
         )
     ):
         ctx.obj = ctx.obj or {}

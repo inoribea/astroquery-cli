@@ -1,194 +1,256 @@
+# astroquery-cli
 
-# astroquery-cli 
+A command-line interface (CLI) for [astroquery](https://astroquery.readthedocs.io/) modules, with autocompletion and multi-language support.
 
-[![PyPI version](https://badge.fury.io/py/astroquery-cli.svg)](https://badge.fury.io/py/astroquery-cli)
-[![Python Version](https://img.shields.io/pypi/pyversions/astroquery-cli.svg)](https://pypi.org/project/astroquery-cli/)
-<!-- Add other badges like license, build status if you have them -->
-
-**Astroquery Command Line Interface (aqc)** provides convenient command-line access to various astronomical data services powered by the [Astroquery](https://astroquery.readthedocs.io/) Python package. This tool is built using [Typer](https://typer.tiangolo.com/) and supports internationalization for a user-friendly experience in multiple languages.
+---
 
 ## Features
 
-*   **Access to Multiple Astronomical Services:** Query well-known astronomical databases and archives directly from your terminal.
-*   **Modular Design:** Each Astroquery service is implemented as a subcommand.
-*   **User-Friendly CLI:** Powered by Typer, offering helpful messages, auto-completion (shell-dependent), and clear command structures.
-*   **Internationalization (i18n):** Supports multiple languages for UI messages and help text. Current translations include English, French (fr), Japanese (ja), and Simplified Chinese (zh).
-*   **Easy Language Switching:** Change the interface language on-the-fly using the `--lang` option.
+- Unified CLI for querying multiple astronomical data services (ALMA, Gaia, MAST, NED, SIMBAD, VizieR, IRSA, TAP, SIA, SSA, SCS, VO Registry, VO Table, etc.)
+- Autocompletion for commands and options (see below for installation)
+- Internationalization (i18n): supports Chinese, French, Japanese
+- Output formatting with [rich](https://github.com/Textualize/rich)
+- Easy packaging for Linux (wheel, deb, rpm, pacman) and Windows
+
+---
 
 ## Installation
 
-You can install `astroquery-cli` using pip:
+### From PyPI (when available)
 
 ```bash
 pip install astroquery-cli
 ```
 
-Alternatively, for development or to install from source:
+### From Source
 
 ```bash
-git clone https://your-repo-url/astroquery-cli.git
+git clone https://github.com/yourusername/astroquery-cli.git
 cd astroquery-cli
-poetry install
-# or with pip:
-# pip install .
+pip install .
 ```
 
-## Dependencies
+Or build a wheel:
 
-*   **Astroquery:** The core library providing access to astronomical services.
-*   **Typer:** For building the command-line interface.
-*   Other common scientific Python packages (Astropy, NumPy, Pandas, etc., usually as dependencies of Astroquery).
-*   **Babel:** For internationalization (required for adding/updating translations).
+```bash
+pip install poetry
+poetry build
+pip install dist/astroquery_cli-*.whl
+```
+
+---
+
+## Shell Autocompletion
+
+To enable shell autocompletion for `aqc`, run:
+
+**Bash:**
+```bash
+aqc --install-completion bash
+```
+
+**Zsh:**
+```bash
+aqc --install-completion zsh
+```
+
+**Fish:**
+```bash
+aqc --install-completion fish
+```
+
+Restart your shell or source the printed script to activate completion.
+
+---
 
 ## Usage
 
-The basic command structure is:
-
 ```bash
-aqc [OPTIONS] COMMAND [ARGS]...
+aqc --help
+aqc <module> <command> [options]
 ```
 
-Or, if you have a shell alias or it's directly on your PATH, you might use `astroquery-cli` instead of `aqc`.
+### Common Options
 
-**Getting Help:**
+- `-d`, `--default` : Set the default language for this session (e.g., 'en', 'zh'). 
+- `-l`, `--lang` : Set the language for output messages (e.g., 'en', 'zh'). 
+- `-p`, `--ping` : Test connectivity to major services (only available at top-level command). 
+- `-f`, `--field` : Test field validity for modules (only available at top-level command).
+- `--install-completion` ：Install completion for the current shell.    
+---
 
-*   For a list of all available services (main commands):
-    ```bash
-    aqc --help
-    ```
-*   For help with a specific service (e.g., `simbad`):
-    ```bash
-    aqc simbad --help
-    ```
-*   For help with a specific command within a service (e.g., `query-object` in `simbad`):
-    ```bash
-    aqc simbad query-object --help
-    ```
+## Internationalization (i18n)
 
-**Changing Language:**
+- **Chinese (简体中文)**: All CLI messages and help texts are available in Simplified Chinese.
+- **French (Français)**: All CLI messages and help texts are available in French.
+- **Japanese (日本語)**: All CLI messages and help texts are available in Japanese.
+- Language files are in `locales/<lang>/LC_MESSAGES/messages.po` and compiled to `.mo` files.
+- Only compiled `.mo` files are included in the package.
 
-Use the `-l` or `--lang` option to specify the language for the interface and output. This option can be used with any command.
+### Update or Add Translations
 
-```bash
-aqc --lang <language_code> <service> <command> [arguments]
-```
+You can update and compile translations in **two ways**:
 
-Example: Querying M31 using Simbad with output in Simplified Chinese:
+**1. Manual pybabel commands**
 
-```bash
-aqc --lang zh simbad query-object M31
-```
+- Extract new messages and update translation files:
+  ```bash
+  pybabel extract -F babel.cfg -o locales/messages.pot .
+  pybabel update -i locales/messages.pot -d locales
+  ```
+- Edit the `.po` files in `locales/*` as needed.
+- Compile translations:
+  ```bash
+  pybabel compile -d locales
+  ```
 
-To see which language is currently active:
-```bash
-aqc --lang <language_code>
-# Example:
-aqc --lang fr
-# Output: Language active: fr
-#         Run 'aqc --help' or 'aqc -h' to see available commands.
-```
-The language preference can also be set using the `AQ_LANG` environment variable.
+**2. Use project helper scripts**
 
-## Supported Astroquery Services
+`locales/` directory contains the following scripts for translation workflow:
 
-`astroquery-cli` currently provides command-line interfaces for the following Astroquery modules:
+#### 1. update-po.sh
 
-*   **`alma`**: Query the ALMA (Atacama Large Millimeter/submillimeter Array) archive.
-*   **`esasky`**: Query the ESA Sky archive.
-*   **`gaia`**: Query the Gaia archive.
-*   **`irsa`**: Query NASA/IPAC Infrared Science Archive (IRSA).
-*   **`irsa_dust`**: Query IRSA dust maps.
-*   **`jplhorizons`**: Query JPL Horizons ephemeris service for solar system objects.
-*   **`jplsbdb`**: Query JPL Small-Body Database (SBDB).
-*   **`mast`**: Query the Mikulski Archive for Space Telescopes (MAST) (e.g., Hubble, TESS, JWST).
-*   **`nasa_ads`**: Query the NASA Astrophysics Data System (ADS).
-*   **`ned`**: Query the NASA/IPAC Extragalactic Database (NED).
-*   **`simbad`**: Query the SIMBAD astronomical database.
-*   **`splatalogue`**: Query the Splatalogue spectral line database.
-*   **`vizier`**: Query the VizieR astronomical catalog service.
-
-Example: Querying Simbad for object 'M31':
+Extracts translatable strings from the source code and updates all `.po` files using the template.
 
 ```bash
-aqc simbad query-object M31
+bash locales/update-po.sh
 ```
 
-Example: Getting ephemerides for Mars from JPL Horizons:
+#### 2. extract-untranslated.sh
+
+Extracts untranslated strings from each `.po` file and generates `untranslated_*.tmp` files for easier collaborative translation.
 
 ```bash
-aqc jplhorizons query-object Mars --epochs "2024-01-01" --location "@sun"
+bash locales/extract-untranslated.sh
 ```
 
-## Contributing
+#### 3. check-update.sh
 
-Contributions are welcome, especially for adding new features, fixing bugs, or improving translations!
+Applies translations from `untranslated_*.tmp` files back into the corresponding `.po` files for batch translation updates.
+Then Compiled all .po files to .mo files.
 
-### Internationalization (i18n) - Adding/Updating Translations
-
-This project uses `PyBabel` for handling translations. The translatable strings are defined in the Python code (e.g., `_("Some text")`).
-
-**Prerequisites:**
-Ensure `Babel` is installed:
 ```bash
-pip install Babel
+bash locales/check-update.sh
 ```
 
-**Workflow for adding a new language or updating existing translations:**
+#### 4. clean-dedupe.sh
 
-1.  **Extract Translatable Strings:**
-    This command scans the source code (as defined in `babel.cfg`) and creates/updates a template file `locales/messages.pot`.
-    ```bash
-    pybabel extract -F babel.cfg -o locales/messages.pot .
-    ```
+Cleans and deduplicates translation entries in `.po` files.
 
-2.  **Initialize a New Language (if adding a new one):**
-    For example, to add Spanish (`es`):
-    ```bash
-    pybabel init -i locales/messages.pot -d locales -l es
-    ```
-    This will create a new file: `locales/es/LC_MESSAGES/messages.po`.
+```bash
+bash locales/clean-dedupe.sh
+```
 
-3.  **Update Existing Language Files:**
-    If you've added new translatable strings to the code and want to update existing `.po` files (e.g., for `fr`, `ja`, `zh`):
-    ```bash
-    pybabel update -i locales/messages.pot -d locales
-    ```
+## Modules and Languages
 
-4.  **Translate the Messages:**
-    Edit the `.po` file for the language you are working on (e.g., `locales/es/LC_MESSAGES/messages.po`). For each `msgid` (original string), provide the translation in the `msgstr` field.
-    Example snippet from a `.po` file:
-    ```po
-    #: astroquery_cli/main.py:12
-    msgid "Astroquery Command Line Interface. Provides access to various astronomical data services."
-    msgstr "Interfaz de Línea de Comandos de Astroquery. Proporciona acceso a varios servicios de datos astronómicos."
-    ```
+### ALMA
+- [x] query
+- [ ] advanced options
 
-5.  **Compile Translations:**
-    After translating, compile the `.po` files into `.mo` files, which are binary files used by the application at runtime.
-    ```bash
-    pybabel compile -d locales
-    ```
-    This will create/update `.mo` files (e.g., `locales/es/LC_MESSAGES/messages.mo`).
+### Gaia
+- [x] cone-search
+- [ ] cross-match
 
-6.  **Test:**
-    Run the application with the new/updated language:
-    ```bash
-    aqc --lang es <some-command> --help
-    ```
+### MAST
+- [x] query
+- [ ] download
 
-7.  **Commit Changes:**
-    Add the updated/new `.po` and `.mo` files, as well as the `messages.pot` file, to your Git commit.
-    ```bash
-    git add locales/
-    git commit -m "Add/Update Spanish translation"
-    ```
+### NED
+- [x] name-resolve
+- [ ] batch-query
+
+### SIMBAD
+- [x] query
+- [ ] custom-fields
+
+### VizieR
+- [x] find-catalogs
+- [x] query
+- [ ] advanced search
+
+### IRSA
+- [ ] query
+
+### TAP
+- [x] query
+
+### SIA
+- [ ] query
+
+### SSA
+- [ ] query
+
+### SCS
+- [ ] query
+
+### VO Registry
+- [ ] search
+
+### VO Table
+- [ ] parse
+
+### Languages
+- [x] zh-CN
+- [x] ja-JP
+- [ ] fr-FR
+---
+
+## Development
+
+### Project Structure
+
+```
+astroquery_cli/         # Main CLI package
+  modules/              # Submodules for each data service
+  i18n.py               # i18n utilities
+  main.py               # CLI entrypoint
+  utils.py              # Shared utilities
+locales/                # Translation files (.po/.mo), scripts
+.github/                # CI/CD workflows and packaging scripts
+pyproject.toml          # Poetry configuration
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Building Packages
+
+- Wheel: `poetry build`
+- Other formats: see `.github/workflows/build-package.yml`
+
+---
+
+## TODO
+
+- [ ] ALMA: implement advanced query options and output formatting
+- [ ] Gaia: add cross-match and batch cone search
+- [ ] MAST: implement download and filtering
+- [ ] NED: add batch query support
+- [ ] SIMBAD: support custom output fields
+- [ ] VizieR: enhance advanced search and result parsing
+- [ ] IRSA: implement query command
+- [ ] TAP: add more query options
+- [ ] SIA/SSA/SCS: implement query commands
+- [ ] VO Registry: implement search
+- [ ] VO Table: implement parsing
+- [ ] Add unit tests for each module's CLI commands
+- [ ] Expand i18n coverage and keep translations up to date (zh, fr, ja)
+- [ ] Improve error handling and user feedback in all modules
+- [ ] Refactor shared utilities for code reuse across modules
+
+---
 
 ## License
 
-This project is licensed under the MIT License. (Consider adding a `LICENSE` file to your project root).
+MIT License (see `LICENSE` file).
+
+---
 
 ## Acknowledgements
 
-*   The [Astroquery](https://astroquery.readthedocs.io/) developers for creating and maintaining the core library.
-*   The [Typer](https://typer.tiangolo.com/) team for the excellent CLI framework.
-```
+- [Astroquery](https://astroquery.readthedocs.io/) developers
+- [Typer](https://typer.tiangolo.com/) team
+- [Rich](https://github.com/Textualize/rich) for output formatting
