@@ -140,6 +140,7 @@ Cleans and deduplicates translation entries in `.po` files.
 ```bash
 bash locales/clean-dedupe.sh
 ```
+**Do not forget to delete entries that may be marked with #, fuzzy, and do not delete the example entries.**
 
 ## Modules and Languages
 
