@@ -22,7 +22,7 @@ class Translator:
                 mo_file_path = lang_specific_path
             # If language-specific file doesn't exist, fall back to default English path
 
-        print("Trying to load:", mo_file_path)  # 现在 mo_file_path 已经有值
+        # print("Trying to load:", mo_file_path)  
 
         try:
             with open(mo_file_path, 'rb') as mo_file:
