@@ -76,6 +76,6 @@ for tmp in "$LOCALES_DIR"/untranslated_*.tmp; do
     echo "Updated: $po"
 done
 
-pybabel compile -d "$LOCALES_DIR"
+pybabel compile -d "../astroquery_cli/locales"
 
 echo "Compiled all .po files to .mo."

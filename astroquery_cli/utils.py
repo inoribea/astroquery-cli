@@ -7,34 +7,31 @@ import astropy.units as u
 from rich.console import Console
 from rich.table import Table as RichTable
 from rich.padding import Padding
-from astroquery_cli.i18n import get_translator
-from astroquery_cli import i18n
-_ = get_translator()
 import shutil
 import os
 import re
 import builtins
+from astroquery_cli import i18n
+
+builtins._ = i18n._
 
 console = Console()
 
-def add_common_fields(ctx: typer.Context,simbad_instance):
-
+def add_common_fields(ctx: typer.Context, simbad_instance):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-
-    _ = i18n.get_translator(lang)
+    # 这里如果需要临时切换语言，可以用 i18n.get_translator(lang)，否则直接用 builtins._
     fields = ["otype", "sptype", "flux(V)", "flux(B)", "flux(J)", "flux(H)", "flux(K)", "flux(G)"]
     for field in fields:
         simbad_instance.add_votable_fields(field)
-def is_narrow_terminal(ctx: typer.Context,min_width=100):
+
+def is_narrow_terminal(ctx: typer.Context, min_width=100):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-    _ = i18n.get_translator(lang)
     terminal_size = shutil.get_terminal_size((80, 20))
     return terminal_size.columns < min_width
-def suggest_web_view(ctx: typer.Context,result_url: str, reason: str = ""):
-    lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-    _ = i18n.get_translator(lang)
 
-    suggestion = _('Terminal too narrow or content too complex, please open in browser:')
+def suggest_web_view(ctx: typer.Context, result_url: str, reason: str = ""):
+    lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
+    suggestion = builtins._('Terminal too narrow or content too complex, please open in browser:')
     if reason:
         console.print(f"[cyan]{reason}[/cyan]")
     console.print(f"[bold green]{suggestion}[/bold green]\n[blue underline]{result_url}[/blue underline]")
@@ -44,8 +41,7 @@ def suggest_web_view(ctx: typer.Context,result_url: str, reason: str = ""):
     except Exception:
         pass
 
-
-def parse_coordinates(ctx: typer.Context,coords_str: str) -> Optional[SkyCoord]:
+def parse_coordinates(ctx: typer.Context, coords_str: str) -> Optional[SkyCoord]:
     """
     Parses a coordinate string into an Astropy SkyCoord object.
     Handles various common formats including decimal degrees and HMS/DMS.
@@ -68,7 +64,7 @@ def parse_coordinates(ctx: typer.Context,coords_str: str) -> Optional[SkyCoord]:
         console.print(f"[yellow]Ensure format is recognized by Astropy (e.g., '10.68h +41.26d', '10d30m0s 20d0m0s', '150.0 2.0' for deg).[/yellow]")
         raise typer.Exit(code=1)
 
-def parse_angle_str_to_quantity(ctx: typer.Context,angle_str: str) -> u.Quantity:
+def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: str) -> u.Quantity:
     """
     Parses a string representing an angle with units (e.g., "10arcsec", "0.5deg")
     into an astropy Quantity object.
@@ -129,20 +125,15 @@ def parse_angle_str_to_quantity(ctx: typer.Context,angle_str: str) -> u.Quantity
         console.print(f"[bold red]Error parsing angle string '{angle_str}': {e}[/bold red]")
         raise typer.Exit(code=1)
 
-
-def display_table(ctx: typer.Context,
+def display_table(
+    ctx: typer.Context,
     astro_table: Optional[AstropyTable],
     title: str = "",
     max_rows: int = 20,
     show_all_columns: bool = False,
     max_col_width: Optional[int] = 30
 ):
-
-
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-
-
-    _ = i18n.get_translator(lang)
     if astro_table is None or len(astro_table) == 0:
         console.print(Padding(f"[yellow]No data returned for '{title if title else 'query'}'.[/yellow]", (0,2)))
         return
@@ -156,7 +147,6 @@ def display_table(ctx: typer.Context,
 
     for col_name in displayed_columns:
         rich_table.add_column(col_name, overflow="fold" if max_col_width else "ellipsis", max_width=max_col_width if max_col_width and max_col_width > 0 else None)
-
 
     num_rows_to_display = len(astro_table)
     show_ellipsis = False
@@ -173,11 +163,8 @@ def display_table(ctx: typer.Context,
         console.print(f"... and {len(astro_table) - max_rows} more rows. Use --max-rows -1 to display all rows.")
     console.print(Padding(f"Total rows: {len(astro_table)}", (0,2)))
 
-def handle_astroquery_exception(ctx: typer.Context,e: Exception, service_name: str):
-
+def handle_astroquery_exception(ctx: typer.Context, e: Exception, service_name: str):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-
-    _ = i18n.get_translator(lang)
     console.print(f"[bold red]Error querying {service_name}:[/bold red]")
     console.print(f"{type(e).__name__}: {e}")
     if hasattr(e, 'response') and e.response is not None:
@@ -195,18 +182,20 @@ common_output_options = {
         "-o",
         help=builtins._("Path to save the output table (e.g., data.csv, results.ecsv, table.fits). Format inferred from extension.")
     ),
-    "output_format": typer.Option(None, "--output-format", "-f", help=builtins._("Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable'). Overrides inference from filename extension.")),
+    "output_format": typer.Option(
+        None,
+        "--output-format",
+        "-f",
+        help=builtins._("Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable'). Overrides inference from filename extension.")
+    ),
     # max_rows and show_all_columns are display-specific, so they are usually defined per command
     # However, if you want them to be truly "common output options" for saving behavior,
     # they could be here, but their primary use is for `display_table`.
     # For now, I'll keep them in the command definitions for display control.
 }
 
-def save_table_to_file(ctx: typer.Context,table: AstropyTable, output_file: str, output_format: Optional[str], query_type: str):
-
+def save_table_to_file(ctx: typer.Context, table: AstropyTable, output_file: str, output_format: Optional[str], query_type: str):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-
-    _ = i18n.get_translator(lang)
     if not output_file:
         return
     filename = os.path.expanduser(output_file)

@@ -1,47 +1,71 @@
 import gettext
 import os
 import sys
+import builtins
 
 TEXT_DOMAIN = "messages"
-LOCALE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'locales'))
+# Base directory for locales, containing language subdirectories and the default English messages.mo
+LOCALE_BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'locales'))
 
-_ = lambda s: s
-current_lang_code = "en"
+class Translator:
+    def __init__(self):
+        self._translator = gettext.NullTranslations()
+        self.current_lang_code = "en"
 
+    def load_translation_file(self, lang_code: str):
+        mo_file_path = os.path.join(LOCALE_BASE_DIR, f"{TEXT_DOMAIN}.mo")  # Default English path
+
+        if lang_code != "en":
+            # For non-English, look in the language/LC_MESSAGES subdirectory
+            lang_specific_path = os.path.join(LOCALE_BASE_DIR, lang_code, "LC_MESSAGES", f"{TEXT_DOMAIN}.mo")
+            if os.path.exists(lang_specific_path):
+                mo_file_path = lang_specific_path
+            # If language-specific file doesn't exist, fall back to default English path
+
+        print("Trying to load:", mo_file_path)  # 现在 mo_file_path 已经有值
+
+        try:
+            with open(mo_file_path, 'rb') as mo_file:
+                translation = gettext.GNUTranslations(mo_file)
+            return translation
+        except FileNotFoundError:
+            return gettext.NullTranslations()
+        except Exception:
+            return gettext.NullTranslations()
+
+    def init_translation(self, lang_code: str = "en"):
+        """Initialize the translator for the given language code."""
+        self._translator = self.load_translation_file(lang_code)
+        self.current_lang_code = lang_code
+
+    def gettext(self, message):
+        """Translate a message using the current translator."""
+        return self._translator.gettext(message)
+
+    def get_current_language(self):
+        return self.current_lang_code
+
+# Create a single instance of the Translator
+translator_instance = Translator()
+
+# Alias the gettext method to _ for convenience
+_ = translator_instance.gettext
+builtins._ = _
+
+# Function to initialize translation (called from main)
 def init_translation(lang_code: str = "en"):
-    global _, current_lang_code
-    current_lang_code = lang_code or "en"
-    try:
-        translation_instance = gettext.translation(
-            TEXT_DOMAIN,
-            localedir=LOCALE_DIR,
-            languages=[current_lang_code],
-            fallback=True
-        )
-        translation_instance.install()
-        _ = translation_instance.gettext
-    except Exception:
-        null_trans = gettext.NullTranslations()
-        null_trans.install()
-        _ = null_trans.gettext
+    translator_instance.init_translation(lang_code)
+    global _
+    _ = translator_instance.gettext
+    builtins._ = _
 
 def get_translator(lang: str = "en"):
-    try:
-        translation_instance = gettext.translation(
-            TEXT_DOMAIN,
-            localedir=LOCALE_DIR,
-            languages=[lang],
-            fallback=True
-        )
-        return translation_instance.gettext
-    except Exception:
-        return lambda s: s
-
-def get_current_language():
-    return current_lang_code
+    """Return a gettext function for the specified language (one-off use)."""
+    temp_translator = translator_instance.load_translation_file(lang)
+    return temp_translator.gettext
 
 def _parse_lang_from_argv():
-    lang = os.getenv("AQ_LANG", "en")
+    lang = os.getenv("AQC_LANG", None)
     try:
         args_to_check = ["-l", "--lang", "--language"]
         for i, arg in enumerate(sys.argv[:-1]):
@@ -52,7 +76,15 @@ def _parse_lang_from_argv():
                     break
     except Exception:
         pass
+    if lang is None:
+        config_path = os.path.expanduser("~/.aqc_config")
+        if os.path.exists(config_path):
+            with open(config_path) as f:
+                lang = f.read().strip()
+        else:
+            lang = "en"
     return lang
 
+# Initialize with the initial language determined from args/env
 INITIAL_LANG = _parse_lang_from_argv()
-init_translation(INITIAL_LANG)
+init_translation(INITIAL_LANG)  # Initialize the translator instance

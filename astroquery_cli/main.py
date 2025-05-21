@@ -1,8 +1,22 @@
 import sys
 import os
-from astroquery_cli import i18n
-import builtins
 import typer
+import builtins
+from astroquery_cli import i18n
+
+CONFIG_PATH = os.path.expanduser("~/.aqc_config")
+
+def save_default_lang(lang):
+    with open(CONFIG_PATH, "w") as f:
+        f.write(lang.strip())
+
+def load_default_lang():
+    if os.path.exists(CONFIG_PATH):
+        with open(CONFIG_PATH) as f:
+            return f.read().strip()
+    return None
+
+builtins._ = i18n._
 
 app = typer.Typer(
     name="aqc",
@@ -11,8 +25,6 @@ app = typer.Typer(
     add_completion=True,
     context_settings={"help_option_names": ["-h", "--help"]}
 )
-
-# ... 你的 set_builtin_translation、save_default_lang、load_default_lang 等函数 ...
 
 def setup_subcommands():
     from .modules import (
@@ -34,7 +46,7 @@ def setup_subcommands():
     app.add_typer(splatalogue_cli.get_app(), name="splatalogue")
     app.add_typer(vizier_cli.get_app(), name="vizier")
 
-@ app.callback()
+@app.callback()
 def main_callback(
     ctx: typer.Context,
     lang: str = typer.Option(
@@ -42,7 +54,7 @@ def main_callback(
         "-l",
         "--lang",
         "--language",
-        help=builtins._("Set the language for output messages (e.g., 'en', 'zh'). Affects help texts and outputs."),
+        help=i18n._("Set the language for output messages (e.g., 'en', 'zh'). Affects help texts and outputs."),
         is_eager=True,
         envvar="AQC_LANG",
         show_default=False
@@ -51,23 +63,36 @@ def main_callback(
         None,
         "-d",
         "--default",
-        help=builtins._("Set the default language for this session (e.g., 'en', 'zh').")
+        help=i18n._("Set the default language for this session (e.g., 'en', 'zh').")
     ),
     ping: bool = typer.Option(
         False,
         "-p",
         "--ping",
-        help=builtins._("Test connectivity to major services (only available at top-level command).")
+        help=i18n._("Test connectivity to major services (only available at top-level command).")
     ),
     field: bool = typer.Option(
         False,
         "-f",
         "--field",
-        help=builtins._("Test field validity for modules (only available at top-level command).")
+        help=i18n._("Test field validity for modules (only available at top-level command).")
     )
 ):
     ctx.obj = ctx.obj or {}
-    ctx.obj["lang"] = default_lang or lang
+
+    # 仅当-d传入时，写入配置文件
+    if default_lang:
+        ctx.obj["default_lang"] = default_lang
+        save_default_lang(default_lang)
+        lang = default_lang 
+
+    # 优先级：-l > ctx.obj["default_lang"] > 配置文件 > i18n.INITIAL_LANG
+    config_lang = load_default_lang()
+    selected_lang = lang or ctx.obj.get("default_lang") or config_lang or i18n.INITIAL_LANG
+    ctx.obj["lang"] = selected_lang
+
+    # 初始化翻译
+    i18n.init_translation(selected_lang)
 
     # Handle options
     if ping:
