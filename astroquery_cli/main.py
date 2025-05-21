@@ -80,21 +80,17 @@ def main_callback(
 ):
     ctx.obj = ctx.obj or {}
 
-    # 仅当-d传入时，写入配置文件
     if default_lang:
         ctx.obj["default_lang"] = default_lang
         save_default_lang(default_lang)
         lang = default_lang 
 
-    # 优先级：-l > ctx.obj["default_lang"] > 配置文件 > i18n.INITIAL_LANG
     config_lang = load_default_lang()
     selected_lang = lang or ctx.obj.get("default_lang") or config_lang or i18n.INITIAL_LANG
     ctx.obj["lang"] = selected_lang
 
-    # 初始化翻译
     i18n.init_translation(selected_lang)
 
-    # Handle options
     if ping:
         from astroquery_cli.options.ping import run_ping
         run_ping()

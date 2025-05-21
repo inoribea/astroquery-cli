@@ -4,7 +4,6 @@ import sys
 import builtins
 
 TEXT_DOMAIN = "messages"
-# Base directory for locales, containing language subdirectories and the default English messages.mo
 LOCALE_BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'locales'))
 
 class Translator:
@@ -13,16 +12,13 @@ class Translator:
         self.current_lang_code = "en"
 
     def load_translation_file(self, lang_code: str):
-        mo_file_path = os.path.join(LOCALE_BASE_DIR, f"{TEXT_DOMAIN}.mo")  # Default English path
+        mo_file_path = os.path.join(LOCALE_BASE_DIR, f"{TEXT_DOMAIN}.mo")
 
         if lang_code != "en":
-            # For non-English, look in the language/LC_MESSAGES subdirectory
             lang_specific_path = os.path.join(LOCALE_BASE_DIR, lang_code, "LC_MESSAGES", f"{TEXT_DOMAIN}.mo")
             if os.path.exists(lang_specific_path):
                 mo_file_path = lang_specific_path
-            # If language-specific file doesn't exist, fall back to default English path
 
-        # print("Trying to load:", mo_file_path)  
 
         try:
             with open(mo_file_path, 'rb') as mo_file:
@@ -45,14 +41,11 @@ class Translator:
     def get_current_language(self):
         return self.current_lang_code
 
-# Create a single instance of the Translator
 translator_instance = Translator()
 
-# Alias the gettext method to _ for convenience
 _ = translator_instance.gettext
 builtins._ = _
 
-# Function to initialize translation (called from main)
 def init_translation(lang_code: str = "en"):
     translator_instance.init_translation(lang_code)
     global _
@@ -85,6 +78,5 @@ def _parse_lang_from_argv():
             lang = "en"
     return lang
 
-# Initialize with the initial language determined from args/env
 INITIAL_LANG = _parse_lang_from_argv()
-init_translation(INITIAL_LANG)  # Initialize the translator instance
+init_translation(INITIAL_LANG)

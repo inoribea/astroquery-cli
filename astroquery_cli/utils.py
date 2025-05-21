@@ -19,7 +19,6 @@ console = Console()
 
 def add_common_fields(ctx: typer.Context, simbad_instance):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
-    # 这里如果需要临时切换语言，可以用 i18n.get_translator(lang)，否则直接用 builtins._
     fields = ["otype", "sptype", "flux(V)", "flux(B)", "flux(J)", "flux(H)", "flux(K)", "flux(G)"]
     for field in fields:
         simbad_instance.add_votable_fields(field)
@@ -50,10 +49,7 @@ def parse_coordinates(ctx: typer.Context, coords_str: str) -> Optional[SkyCoord]
         console.print("[bold red]Error: Coordinate string cannot be empty.[/bold red]")
         raise typer.Exit(code=1)
     try:
-        # Try parsing directly with SkyCoord, which handles many formats
-        # including decimal degrees and HMS/DMS if separated by space
-        # and units are implicitly understood or common (deg for decimal)
-        if re.match(r"^\s*[\d\.\-+]+\s+[\d\.\-+]+\s*$", coords_str): # Likely decimal degrees
+        if re.match(r"^\s*[\d\.\-+]+\s+[\d\.\-+]+\s*$", coords_str):
              parts = coords_str.split()
              if len(parts) == 2:
                  return SkyCoord(ra=float(parts[0]), dec=float(parts[1]), unit=(u.deg, u.deg), frame='icrs')
@@ -73,13 +69,9 @@ def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: str) -> u.Quantit
         console.print("[bold red]Error: Angle string cannot be empty.[/bold red]")
         raise typer.Exit(code=1)
     try:
-        # Common units and their abbreviations for parsing
-        # Astropy's u.Quantity.from_string is quite good but can be strict.
-        # This helper tries to make it more robust for common CLI inputs.
         original_str = angle_str
         angle_str = angle_str.lower().strip()
 
-        # Replace common full names with astropy abbreviations if Quantity struggles
         replacements = {
             "degrees": "deg", "degree": "deg",
             "arcminutes": "arcmin", "arcminute": "arcmin",
@@ -88,14 +80,12 @@ def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: str) -> u.Quantit
         for full, abb in replacements.items():
             if angle_str.endswith(full):
                 angle_str = angle_str.replace(full, abb)
-                break # Avoid multiple replacements like arcsecond -> arcsec -> arcsec
+                break
 
-        # Separate number and unit
         match = re.match(r"([+-]?\d*\.?\d+)\s*([a-z]+)", angle_str, re.IGNORECASE)
         if match:
             value_str, unit_str = match.groups()
             value = float(value_str)
-            # Check if unit_str is a valid astropy unit
             try:
                 unit = u.Unit(unit_str)
                 if unit.physical_type == 'angle':
@@ -103,12 +93,11 @@ def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: str) -> u.Quantit
                 else:
                     console.print(f"[bold red]Error: Invalid unit '{unit_str}' for an angle in '{original_str}'. Must be an angular unit.[/bold red]")
                     raise typer.Exit(code=1)
-            except ValueError: # If u.Unit(unit_str) fails
+            except ValueError:
                 console.print(f"[bold red]Error: Unknown unit '{unit_str}' in angle string '{original_str}'.[/bold red]")
                 console.print(f"[yellow]Use common units like 'deg', 'arcmin', 'arcsec'.[/yellow]")
                 raise typer.Exit(code=1)
-        else: # If regex doesn't match (e.g., no unit provided, or malformed)
-            # Try parsing directly with astropy, it might catch some cases
+        else:
             try:
                 q = u.Quantity(original_str)
                 if q.unit.physical_type == 'angle':
@@ -116,12 +105,12 @@ def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: str) -> u.Quantit
                 else:
                     console.print(f"[bold red]Error: Value '{original_str}' parsed but is not an angle.[/bold red]")
                     raise typer.Exit(code=1)
-            except Exception: # Catch broad exception from Quantity parsing
+            except Exception:
                 console.print(f"[bold red]Error: Could not parse angle string '{original_str}'.[/bold red]")
                 console.print(f"[yellow]Please provide a value and an angular unit (e.g., '10arcsec', '0.5 deg', '15 arcmin').[/yellow]")
                 raise typer.Exit(code=1)
 
-    except Exception as e: # General fallback, though specific errors above should handle most
+    except Exception as e:
         console.print(f"[bold red]Error parsing angle string '{angle_str}': {e}[/bold red]")
         raise typer.Exit(code=1)
 
@@ -150,7 +139,7 @@ def display_table(
 
     num_rows_to_display = len(astro_table)
     show_ellipsis = False
-    if max_rows > 0 and len(astro_table) > max_rows : # Check max_rows > 0 for "show all"
+    if max_rows > 0 and len(astro_table) > max_rows :
         num_rows_to_display = max_rows
         show_ellipsis = True
 
@@ -170,7 +159,7 @@ def handle_astroquery_exception(ctx: typer.Context, e: Exception, service_name: 
     if hasattr(e, 'response') and e.response is not None:
         try:
             content = e.response.text
-            if "Error" in content or "Fail" in content or "ERROR" in content: # Added ERROR for TAP query errors
+            if "Error" in content or "Fail" in content or "ERROR" in content:
                  console.print(f"[italic]Server response details: {content[:500]}...[/italic]")
         except Exception:
             pass
@@ -188,10 +177,6 @@ common_output_options = {
         "-f",
         help=builtins._("Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable'). Overrides inference from filename extension.")
     ),
-    # max_rows and show_all_columns are display-specific, so they are usually defined per command
-    # However, if you want them to be truly "common output options" for saving behavior,
-    # they could be here, but their primary use is for `display_table`.
-    # For now, I'll keep them in the command definitions for display control.
 }
 
 def save_table_to_file(ctx: typer.Context, table: AstropyTable, output_file: str, output_format: Optional[str], query_type: str):
@@ -203,7 +188,7 @@ def save_table_to_file(ctx: typer.Context, table: AstropyTable, output_file: str
     if not file_format:
         _, ext = os.path.splitext(filename)
         if ext:
-            file_format = ext[1:].lower() # ensure lowercase for matching
+            file_format = ext[1:].lower()
         else:
             file_format = 'ecsv'
             filename += f".{file_format}"
@@ -220,7 +205,6 @@ def save_table_to_file(ctx: typer.Context, table: AstropyTable, output_file: str
         console.print(f"[green]Successfully saved to '{filename}'.[/green]")
     except Exception as e:
         console.print(f"[bold red]Error saving table to '{filename}' (format: {file_format}): {e}[/bold red]")
-        # Check if it's an astropy unknown format error
         if "No writer defined for format" in str(e) or "Unknown format" in str(e):
             available_formats = list(AstropyTable.write.formats.keys())
             console.print(f"[yellow]Tip: Ensure the format '{file_format}' is supported by Astropy.[/yellow]")
