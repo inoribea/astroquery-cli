@@ -17,13 +17,7 @@ def get_app():
     import builtins
     app = typer.Typer(
         name="alma",
-        help=builtins._(
-            "Query the ALMA archive.\n\n"
-            "Common ALMA query fields (for use with --payload-field):\n"
-            "  project_code, obs_collection, science_observation, spatial_resolution, frequency, band_list, data_rights, instrument_name, pol, public, science, target_name, proposal_abstract, proposal_title, proposal_authors, obs_release_date, obs_creator_name, obs_publisher_did, s_region, t_min, t_max, em_min, em_max, calib_level, instrument, facility, etc.\n"
-            "Example: --payload-field band_list=Band_6 --payload-field project_code=2019.1.00001.S\n"
-            "For more details, see: https://astroquery.readthedocs.io/en/latest/alma/alma.html"
-        ),
+        help=builtins._("Query the ALMA archive."),
         no_args_is_help=True
     )
 

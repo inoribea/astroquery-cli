@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-21 11:18+0800\n"
+"POT-Creation-Date: 2025-05-21 11:56+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,44 +56,32 @@ msgid ""
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:20
-msgid ""
-"Query the ALMA archive.\n"
-"\n"
-"Common ALMA query fields (for use with --payload-field):\n"
-"  project_code, obs_collection, science_observation, spatial_resolution, "
-"frequency, band_list, data_rights, instrument_name, pol, public, science,"
-" target_name, proposal_abstract, proposal_title, proposal_authors, "
-"obs_release_date, obs_creator_name, obs_publisher_did, s_region, t_min, "
-"t_max, em_min, em_max, calib_level, instrument, facility, etc.\n"
-"Example: --payload-field band_list=Band_6 --payload-field "
-"project_code=2019.1.00001.S\n"
-"For more details, see: "
-"https://astroquery.readthedocs.io/en/latest/alma/alma.html"
+msgid "Query the ALMA archive."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:38
+#: astroquery_cli/modules/alma_cli.py:32
 msgid "Query ALMA for observations of an object."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:41
+#: astroquery_cli/modules/alma_cli.py:35
 #: astroquery_cli/modules/esasky_cli.py:51
 #: astroquery_cli/modules/mast_cli.py:53
 msgid "Name of the astronomical object."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:42 astroquery_cli/modules/alma_cli.py:95
+#: astroquery_cli/modules/alma_cli.py:36 astroquery_cli/modules/alma_cli.py:89
 msgid "Query only public data."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:43 astroquery_cli/modules/alma_cli.py:96
+#: astroquery_cli/modules/alma_cli.py:37 astroquery_cli/modules/alma_cli.py:90
 msgid "Query only science data."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:44
+#: astroquery_cli/modules/alma_cli.py:38
 msgid "Specify payload fields to query (e.g., 'band_list', 'target_name')."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:47 astroquery_cli/modules/alma_cli.py:99
+#: astroquery_cli/modules/alma_cli.py:41 astroquery_cli/modules/alma_cli.py:93
 #: astroquery_cli/modules/esasky_cli.py:55
 #: astroquery_cli/modules/esasky_cli.py:95
 #: astroquery_cli/modules/gaia_cli.py:61 astroquery_cli/modules/gaia_cli.py:136
@@ -111,7 +99,7 @@ msgstr ""
 msgid "Maximum number of rows to display. Use -1 for all rows."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:48 astroquery_cli/modules/alma_cli.py:100
+#: astroquery_cli/modules/alma_cli.py:42 astroquery_cli/modules/alma_cli.py:94
 #: astroquery_cli/modules/esasky_cli.py:56
 #: astroquery_cli/modules/esasky_cli.py:96
 #: astroquery_cli/modules/gaia_cli.py:62 astroquery_cli/modules/gaia_cli.py:137
@@ -132,73 +120,73 @@ msgstr ""
 msgid "Show all columns in the output table."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:56
+#: astroquery_cli/modules/alma_cli.py:50
 msgid "[cyan]Querying ALMA for object: '{object_name}'...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:66
+#: astroquery_cli/modules/alma_cli.py:60
 msgid "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:75
+#: astroquery_cli/modules/alma_cli.py:69
 #: astroquery_cli/modules/simbad_cli.py:66
 msgid "[green]Found {count} match(es) for '{object_name}'.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:76
+#: astroquery_cli/modules/alma_cli.py:70
 msgid "ALMA Data for {object_name}"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:78
+#: astroquery_cli/modules/alma_cli.py:72
 msgid "ALMA object query"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:80 astroquery_cli/modules/ned_cli.py:62
+#: astroquery_cli/modules/alma_cli.py:74 astroquery_cli/modules/ned_cli.py:62
 #: astroquery_cli/modules/simbad_cli.py:71
 msgid "[yellow]No information found for object '{object_name}'.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:82
+#: astroquery_cli/modules/alma_cli.py:76
 msgid "ALMA query_object"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:90
+#: astroquery_cli/modules/alma_cli.py:84
 msgid "Query ALMA for observations in a sky region."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:93
+#: astroquery_cli/modules/alma_cli.py:87
 msgid "Coordinates (e.g., '10.68h +41.26d', '150.0 2.0')."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:94
+#: astroquery_cli/modules/alma_cli.py:88
 #: astroquery_cli/modules/esasky_cli.py:91
 #: astroquery_cli/modules/mast_cli.py:101
 msgid "Search radius (e.g., '0.1deg', '5arcmin')."
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:108
+#: astroquery_cli/modules/alma_cli.py:102
 msgid ""
 "[cyan]Querying ALMA for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:122
+#: astroquery_cli/modules/alma_cli.py:116
 msgid "[green]Found {count} match(es) in the region.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:123
+#: astroquery_cli/modules/alma_cli.py:117
 msgid "ALMA Data for Region"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:125
+#: astroquery_cli/modules/alma_cli.py:119
 msgid "ALMA region query"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:127
+#: astroquery_cli/modules/alma_cli.py:121
 msgid "[yellow]No information found for the specified region.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/alma_cli.py:129
+#: astroquery_cli/modules/alma_cli.py:123
 msgid "ALMA query_region"
 msgstr ""
 
@@ -332,7 +320,7 @@ msgid "Columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'parallax')."
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:85
-msgid "[yellow]Resolved '{target}' to coordinates via SIMBAD: {ra} {dec}[/yellow]"
+msgid "to coordinates via SIMBAD:"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:87

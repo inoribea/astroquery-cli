@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-21 11:18+0800\n"
+"POT-Creation-Date: 2025-05-21 11:56+0800\n"
 "PO-Revision-Date: 2025-05-18 20:49+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -20,8 +20,8 @@ msgstr ""
 
 #: astroquery_cli/main.py:124
 msgid ""
-"Set the language for output messages (e.g., 'en', 'zh'). Affects help "
-"texts and outputs."
+"Set the language for output messages (e.g., 'en', 'zh'). Affects help texts "
+"and outputs."
 msgstr ""
 
 #: astroquery_cli/main.py:133
@@ -29,12 +29,16 @@ msgid "Set the default language for this session (e.g., 'en', 'zh')."
 msgstr "このセッションのデフォルト言語を設定します（例: 'en', 'zh'）。"
 
 #: astroquery_cli/main.py:139
-msgid "Test connectivity to major services (only available at top-level command)."
-msgstr "主要サービスへの接続をテストします（トップレベルコマンドでのみ利用可能）。"
+msgid ""
+"Test connectivity to major services (only available at top-level command)."
+msgstr ""
+"主要サービスへの接続をテストします（トップレベルコマンドでのみ利用可能）。"
 
 #: astroquery_cli/main.py:145
 msgid "Test field validity for modules (only available at top-level command)."
-msgstr "モジュールのフィールドの有効性をテストします（トップレベルコマンドでのみ利用可能）。"
+msgstr ""
+"モジュールのフィールドの有効性をテストします（トップレベルコマンドでのみ利用"
+"可能）。"
 
 #: astroquery_cli/main.py:174
 msgid "User interrupted the query. Exiting safely."
@@ -42,59 +46,51 @@ msgstr "ユーザーがクエリを中断しました。安全に終了します
 
 #: astroquery_cli/utils.py:37
 msgid "Terminal too narrow or content too complex, please open in browser:"
-msgstr "ターミナルの幅が足りないか、内容が複雑すぎます。ブラウザで開いてください："
+msgstr ""
+"ターミナルの幅が足りないか、内容が複雑すぎます。ブラウザで開いてください："
 
 #: astroquery_cli/utils.py:196
 msgid ""
-"Path to save the output table (e.g., data.csv, results.ecsv, table.fits)."
-" Format inferred from extension."
-msgstr "出力テーブルを保存するパス（例：data.csv、results.ecsv、table.fits）。拡張子からフォーマットが推測されます。"
+"Path to save the output table (e.g., data.csv, results.ecsv, table.fits). "
+"Format inferred from extension."
+msgstr ""
+"出力テーブルを保存するパス（例：data.csv、results.ecsv、table.fits）。拡張子"
+"からフォーマットが推測されます。"
 
 #: astroquery_cli/utils.py:198
 msgid ""
-"Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable')."
-" Overrides inference from filename extension."
+"Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable'). "
+"Overrides inference from filename extension."
 msgstr ""
 
 #: astroquery_cli/modules/alma_cli.py:20
-msgid ""
-"Query the ALMA archive.\n"
-"\n"
-"Common ALMA query fields (for use with --payload-field):\n"
-"  project_code, obs_collection, science_observation, spatial_resolution, "
-"frequency, band_list, data_rights, instrument_name, pol, public, science,"
-" target_name, proposal_abstract, proposal_title, proposal_authors, "
-"obs_release_date, obs_creator_name, obs_publisher_did, s_region, t_min, "
-"t_max, em_min, em_max, calib_level, instrument, facility, etc.\n"
-"Example: --payload-field band_list=Band_6 --payload-field "
-"project_code=2019.1.00001.S\n"
-"For more details, see: "
-"https://astroquery.readthedocs.io/en/latest/alma/alma.html"
-msgstr ""
+msgid "Query the ALMA archive."
+msgstr "アルマアーカイブを検索します。"
 
-#: astroquery_cli/modules/alma_cli.py:38
+#: astroquery_cli/modules/alma_cli.py:32
 msgid "Query ALMA for observations of an object."
 msgstr "ALMA で天体の観測データを照会します。"
 
-#: astroquery_cli/modules/alma_cli.py:41
+#: astroquery_cli/modules/alma_cli.py:35
 #: astroquery_cli/modules/esasky_cli.py:51
 #: astroquery_cli/modules/mast_cli.py:53
 msgid "Name of the astronomical object."
 msgstr "天体名。"
 
-#: astroquery_cli/modules/alma_cli.py:42 astroquery_cli/modules/alma_cli.py:95
+#: astroquery_cli/modules/alma_cli.py:36 astroquery_cli/modules/alma_cli.py:89
 msgid "Query only public data."
 msgstr "公開データのみを照会します。"
 
-#: astroquery_cli/modules/alma_cli.py:43 astroquery_cli/modules/alma_cli.py:96
+#: astroquery_cli/modules/alma_cli.py:37 astroquery_cli/modules/alma_cli.py:90
 msgid "Query only science data."
 msgstr "科学データのみを照会します。"
 
-#: astroquery_cli/modules/alma_cli.py:44
+#: astroquery_cli/modules/alma_cli.py:38
 msgid "Specify payload fields to query (e.g., 'band_list', 'target_name')."
-msgstr "照会する payload フィールドを指定します (例: 'band_list', 'target_name')。"
+msgstr ""
+"照会する payload フィールドを指定します (例: 'band_list', 'target_name')。"
 
-#: astroquery_cli/modules/alma_cli.py:47 astroquery_cli/modules/alma_cli.py:99
+#: astroquery_cli/modules/alma_cli.py:41 astroquery_cli/modules/alma_cli.py:93
 #: astroquery_cli/modules/esasky_cli.py:55
 #: astroquery_cli/modules/esasky_cli.py:95
 #: astroquery_cli/modules/gaia_cli.py:61 astroquery_cli/modules/gaia_cli.py:136
@@ -112,7 +108,7 @@ msgstr "照会する payload フィールドを指定します (例: 'band_list'
 msgid "Maximum number of rows to display. Use -1 for all rows."
 msgstr "表示する最大行数。すべての行を表示するには -1 を使用します。"
 
-#: astroquery_cli/modules/alma_cli.py:48 astroquery_cli/modules/alma_cli.py:100
+#: astroquery_cli/modules/alma_cli.py:42 astroquery_cli/modules/alma_cli.py:94
 #: astroquery_cli/modules/esasky_cli.py:56
 #: astroquery_cli/modules/esasky_cli.py:96
 #: astroquery_cli/modules/gaia_cli.py:62 astroquery_cli/modules/gaia_cli.py:137
@@ -133,80 +129,84 @@ msgstr "表示する最大行数。すべての行を表示するには -1 を�
 msgid "Show all columns in the output table."
 msgstr "出力テーブルにすべての列を表示します。"
 
-#: astroquery_cli/modules/alma_cli.py:56
+#: astroquery_cli/modules/alma_cli.py:50
 #, python-brace-format
 msgid "[cyan]Querying ALMA for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]天体 '{object_name}' のALMAデータを照会中...[/cyan]"
 
-#: astroquery_cli/modules/alma_cli.py:66
+#: astroquery_cli/modules/alma_cli.py:60
 #, python-brace-format
-msgid "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
-msgstr "[yellow]payload 項目 '{item}' は key=value のペアではありません。無視します。[/yellow]"
+msgid ""
+"[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
+msgstr ""
+"[yellow]payload 項目 '{item}' は key=value のペアではありません。無視します。"
+"[/yellow]"
 
-#: astroquery_cli/modules/alma_cli.py:75
+#: astroquery_cli/modules/alma_cli.py:69
 #: astroquery_cli/modules/simbad_cli.py:66
 #, python-brace-format
 msgid "[green]Found {count} match(es) for '{object_name}'.[/green]"
 msgstr "[green]'{object_name}' に {count} 件一致しました。[/green]"
 
-#: astroquery_cli/modules/alma_cli.py:76
+#: astroquery_cli/modules/alma_cli.py:70
 #, python-brace-format
 msgid "ALMA Data for {object_name}"
 msgstr "{object_name} のALMAデータ"
 
-#: astroquery_cli/modules/alma_cli.py:78
+#: astroquery_cli/modules/alma_cli.py:72
 msgid "ALMA object query"
 msgstr "ALMA 天体照会"
 
-#: astroquery_cli/modules/alma_cli.py:80 astroquery_cli/modules/ned_cli.py:62
+#: astroquery_cli/modules/alma_cli.py:74 astroquery_cli/modules/ned_cli.py:62
 #: astroquery_cli/modules/simbad_cli.py:71
 #, python-brace-format
 msgid "[yellow]No information found for object '{object_name}'.[/yellow]"
 msgstr "[yellow]天体 '{object_name}' の情報は見つかりませんでした。[/yellow]"
 
-#: astroquery_cli/modules/alma_cli.py:82
+#: astroquery_cli/modules/alma_cli.py:76
 msgid "ALMA query_object"
 msgstr "ALMA query_object"
 
-#: astroquery_cli/modules/alma_cli.py:90
+#: astroquery_cli/modules/alma_cli.py:84
 msgid "Query ALMA for observations in a sky region."
 msgstr "指定した天域のALMA観測データを照会します。"
 
-#: astroquery_cli/modules/alma_cli.py:93
+#: astroquery_cli/modules/alma_cli.py:87
 msgid "Coordinates (e.g., '10.68h +41.26d', '150.0 2.0')."
 msgstr "座標 (例: '10.68h +41.26d', '150.0 2.0')。"
 
-#: astroquery_cli/modules/alma_cli.py:94
+#: astroquery_cli/modules/alma_cli.py:88
 #: astroquery_cli/modules/esasky_cli.py:91
 #: astroquery_cli/modules/mast_cli.py:101
 msgid "Search radius (e.g., '0.1deg', '5arcmin')."
 msgstr "検索半径 (例: '0.1deg', '5arcmin')。"
 
-#: astroquery_cli/modules/alma_cli.py:108
+#: astroquery_cli/modules/alma_cli.py:102
 #, python-brace-format
 msgid ""
-"[cyan]Querying ALMA for region: '{coordinates}' with radius "
-"'{radius}'...[/cyan]"
-msgstr "[cyan]領域 '{coordinates}'、半径 '{radius}' のALMAデータを照会中...[/cyan]"
+"[cyan]Querying ALMA for region: '{coordinates}' with radius '{radius}'...[/"
+"cyan]"
+msgstr ""
+"[cyan]領域 '{coordinates}'、半径 '{radius}' のALMAデータを照会中...[/cyan]"
 
-#: astroquery_cli/modules/alma_cli.py:122
+#: astroquery_cli/modules/alma_cli.py:116
 #, python-brace-format
 msgid "[green]Found {count} match(es) in the region.[/green]"
 msgstr "[green]領域内で {count} 件一致しました。[/green]"
 
-#: astroquery_cli/modules/alma_cli.py:123
+#: astroquery_cli/modules/alma_cli.py:117
 msgid "ALMA Data for Region"
 msgstr "領域のALMAデータ"
 
-#: astroquery_cli/modules/alma_cli.py:125
+#: astroquery_cli/modules/alma_cli.py:119
 msgid "ALMA region query"
 msgstr "ALMA 領域照会"
 
-#: astroquery_cli/modules/alma_cli.py:127
+#: astroquery_cli/modules/alma_cli.py:121
 msgid "[yellow]No information found for the specified region.[/yellow]"
 msgstr "[yellow]指定された領域の情報は見つかりませんでした。[/yellow]"
 
-#: astroquery_cli/modules/alma_cli.py:129
+#: astroquery_cli/modules/alma_cli.py:123
 msgid "ALMA query_region"
 msgstr "ALMA query_region"
 
@@ -232,7 +232,9 @@ msgstr "[cyan]天体 '{object_name}' のESASkyカタログを照会中...[/cyan]
 #: astroquery_cli/modules/esasky_cli.py:67
 #, python-brace-format
 msgid "[green]Found data for '{object_name}' in {count} catalog(s).[/green]"
-msgstr "[green]'{object_name}' のデータが {count} 件のカタログで見つかりました。[/green]"
+msgstr ""
+"[green]'{object_name}' のデータが {count} 件のカタログで見つかりました。[/"
+"green]"
 
 #: astroquery_cli/modules/esasky_cli.py:71
 #, python-brace-format
@@ -246,13 +248,18 @@ msgstr "ESASky {cat_name} 天体照会"
 
 #: astroquery_cli/modules/esasky_cli.py:75
 #, python-brace-format
-msgid "[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]"
-msgstr "[yellow]カタログ '{cat_name}' には '{object_name}' の結果がありません。[/yellow]"
+msgid ""
+"[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]"
+msgstr ""
+"[yellow]カタログ '{cat_name}' には '{object_name}' の結果がありません。[/"
+"yellow]"
 
 #: astroquery_cli/modules/esasky_cli.py:77
 #, python-brace-format
-msgid "[yellow]No catalog information found for object '{object_name}'.[/yellow]"
-msgstr "[yellow]天体 '{object_name}' のカタログ情報は見つかりませんでした。[/yellow]"
+msgid ""
+"[yellow]No catalog information found for object '{object_name}'.[/yellow]"
+msgstr ""
+"[yellow]天体 '{object_name}' のカタログ情報は見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/esasky_cli.py:80
 msgid "ESASky query_object_catalogs"
@@ -276,7 +283,9 @@ msgstr "照会するカタログを指定します。"
 msgid ""
 "[cyan]Querying ESASky catalogs for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
-msgstr "[cyan]領域 '{coordinates}'、半径 '{radius}' のESASkyカタログを照会中...[/cyan]"
+msgstr ""
+"[cyan]領域 '{coordinates}'、半径 '{radius}' のESASkyカタログを照会中...[/"
+"cyan]"
 
 #: astroquery_cli/modules/esasky_cli.py:108
 #, python-brace-format
@@ -320,7 +329,8 @@ msgstr "利用可能なESASkyミッション/カタログ"
 
 #: astroquery_cli/modules/esasky_cli.py:141
 msgid "[yellow]Could not retrieve mission list or list is empty.[/yellow]"
-msgstr "[yellow]ミッションリストを取得できなかったか、リストが空です。[/yellow]"
+msgstr ""
+"[yellow]ミッションリストを取得できなかったか、リストが空です。[/yellow]"
 
 #: astroquery_cli/modules/esasky_cli.py:143
 msgid "ESASky list_catalogs"
@@ -351,9 +361,8 @@ msgid "Columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'parallax')."
 msgstr "取得する列（例: 'source_id', 'ra', 'dec', 'parallax'）。"
 
 #: astroquery_cli/modules/gaia_cli.py:85
-#, python-brace-format
-msgid "[yellow]Resolved '{target}' to coordinates via SIMBAD: {ra} {dec}[/yellow]"
-msgstr "[yellow]Resolved '{target}' SIMBADを介して座標へ： {ra} {dec}[/yellow]"
+msgid "to coordinates via SIMBAD:"
+msgstr "SIMBADを介して座標へ"
 
 #: astroquery_cli/modules/gaia_cli.py:87
 #, python-brace-format
@@ -380,8 +389,10 @@ msgstr "ALMA 天体照会"
 
 #: astroquery_cli/modules/gaia_cli.py:112
 #, python-brace-format
-msgid "[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
-msgstr "[yellow]指定されたbibcodeに一致する天体は見つかりませんでした。[/yellow]"
+msgid ""
+"[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
+msgstr ""
+"[yellow]指定されたbibcodeに一致する天体は見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/gaia_cli.py:115
 msgid "Gaia query_object"
@@ -403,17 +414,21 @@ msgstr "検索半径 (例: '5arcmin', '0.1deg')。"
 
 #: astroquery_cli/modules/gaia_cli.py:129
 #, python-brace-format
-msgid "Gaia table to query. Common choices: {choices} or specify full table name."
-msgstr "照会するGaiaテーブル。一般的な選択肢: {choices} または完全なテーブル名を指定します。"
+msgid ""
+"Gaia table to query. Common choices: {choices} or specify full table name."
+msgstr ""
+"照会するGaiaテーブル。一般的な選択肢: {choices} または完全なテーブル名を指定"
+"します。"
 
 #: astroquery_cli/modules/gaia_cli.py:132
 msgid ""
 "Specific columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'pmra'). "
-"Default: all columns from the table for a small radius, or a default set "
-"for larger radii."
+"Default: all columns from the table for a small radius, or a default set for "
+"larger radii."
 msgstr ""
-"取得する特定の列 (例: 'source_id', 'ra' (赤経), 'dec' (赤緯), 'pmra' "
-"(赤経方向の固有運動))。デフォルト: 小さな半径の場合はテーブルのすべての列、大きな半径の場合はデフォルトセット。"
+"取得する特定の列 (例: 'source_id', 'ra' (赤経), 'dec' (赤緯), 'pmra' (赤経方"
+"向の固有運動))。デフォルト: 小さな半径の場合はテーブルのすべての列、大きな半"
+"径の場合はデフォルトセット。"
 
 #: astroquery_cli/modules/gaia_cli.py:133
 msgid "Maximum number of rows to return from the server."
@@ -427,20 +442,20 @@ msgstr "Gaia アーカイブのユーザー名 (または GAIA_USER 環境変数
 #: astroquery_cli/modules/gaia_cli.py:139
 #: astroquery_cli/modules/gaia_cli.py:214
 msgid ""
-"Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set "
-"but no password."
+"Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set but "
+"no password."
 msgstr ""
-"Gaia アーカイブのパスワード (または GAIA_PASSWORD "
-"環境変数を設定)。ユーザーが設定されていてパスワードがない場合はプロンプトを表示します。"
+"Gaia アーカイブのパスワード (または GAIA_PASSWORD 環境変数を設定)。ユーザーが"
+"設定されていてパスワードがない場合はプロンプトを表示します。"
 
 #: astroquery_cli/modules/gaia_cli.py:146
 #, python-brace-format
 msgid ""
-"[cyan]Performing Gaia cone search on '{table_name}' around '{target}' "
-"with radius {radius}...[/cyan]"
+"[cyan]Performing Gaia cone search on '{table_name}' around '{target}' with "
+"radius {radius}...[/cyan]"
 msgstr ""
-"[cyan]'{table_name}' テーブルで '{target}' の周囲 (半径 {radius}) "
-"のGaiaコーンサーチを実行中...[/cyan]"
+"[cyan]'{table_name}' テーブルで '{target}' の周囲 (半径 {radius}) のGaiaコー"
+"ンサーチを実行中...[/cyan]"
 
 #: astroquery_cli/modules/gaia_cli.py:149
 #: astroquery_cli/modules/gaia_cli.py:224
@@ -468,7 +483,8 @@ msgstr "[yellow]可能であれば匿名アクセスを続行します。[/yello
 #: astroquery_cli/modules/gaia_cli.py:234
 #, python-brace-format
 msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
-msgstr "[dim]ユーザー '{user}' として既にGaiaアーカイブにログインしています。[/dim]"
+msgstr ""
+"[dim]ユーザー '{user}' として既にGaiaアーカイブにログインしています。[/dim]"
 
 #: astroquery_cli/modules/gaia_cli.py:159
 #: astroquery_cli/modules/gaia_cli.py:234
@@ -477,7 +493,9 @@ msgstr "不明なユーザー"
 
 #: astroquery_cli/modules/gaia_cli.py:161
 msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
-msgstr "[dim]Gaiaのログイン資格情報が提供されていません。匿名アクセスを使用します。[/dim]"
+msgstr ""
+"[dim]Gaiaのログイン資格情報が提供されていません。匿名アクセスを使用します。[/"
+"dim]"
 
 #: astroquery_cli/modules/gaia_cli.py:176
 #, python-brace-format
@@ -501,7 +519,8 @@ msgstr "Gaia コーンサーチ"
 
 #: astroquery_cli/modules/gaia_cli.py:190
 msgid "[yellow]No results found from Gaia for this cone search.[/yellow]"
-msgstr "[yellow]このコーンサーチではGaiaから結果が見つかりませんでした。[/yellow]"
+msgstr ""
+"[yellow]このコーンサーチではGaiaから結果が見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/gaia_cli.py:193
 #, python-brace-format
@@ -536,7 +555,8 @@ msgstr "Gaia ADQLクエリ"
 
 #: astroquery_cli/modules/gaia_cli.py:248
 msgid "[yellow]ADQL query returned no results or an empty table.[/yellow]"
-msgstr "[yellow]ADQLクエリは結果を返さなかったか、空のテーブルを返しました。[/yellow]"
+msgstr ""
+"[yellow]ADQLクエリは結果を返さなかったか、空のテーブルを返しました。[/yellow]"
 
 #: astroquery_cli/modules/gaia_cli.py:253
 #, python-brace-format
@@ -569,14 +589,16 @@ msgstr "検索半径 (例: '10arcsec', '0.5deg')。"
 
 #: astroquery_cli/modules/irsa_cli.py:49 astroquery_cli/modules/irsa_cli.py:125
 msgid ""
-"Specific columns to retrieve (comma separated or multiple use). Use 'all'"
-" for all columns."
-msgstr "取得する特定の列。すべての列を取得するには 'all' を使用します。複数指定可能です。"
+"Specific columns to retrieve (comma separated or multiple use). Use 'all' "
+"for all columns."
+msgstr ""
+"取得する特定の列。すべての列を取得するには 'all' を使用します。複数指定可能で"
+"す。"
 
 #: astroquery_cli/modules/irsa_cli.py:50 astroquery_cli/modules/irsa_cli.py:126
 msgid ""
-"Column filters (e.g., 'w1mpro>10', 'ph_qual=A'). Can be specified "
-"multiple times."
+"Column filters (e.g., 'w1mpro>10', 'ph_qual=A'). Can be specified multiple "
+"times."
 msgstr "列フィルター (例: 'Imag<15')。複数指定可能です。"
 
 #: astroquery_cli/modules/irsa_cli.py:60
@@ -585,8 +607,8 @@ msgid ""
 "[cyan]Querying IRSA catalog '{catalog}' via Gator for region: "
 "'{coordinates}' with radius '{radius}'...[/cyan]"
 msgstr ""
-"[cyan]Gator経由でIRSAカタログ '{catalog}' の領域 '{coordinates}' (半径 '{radius}') "
-"を照会中...[/cyan]"
+"[cyan]Gator経由でIRSAカタログ '{catalog}' の領域 '{coordinates}' (半径 "
+"'{radius}') を照会中...[/cyan]"
 
 #: astroquery_cli/modules/irsa_cli.py:92
 #, python-brace-format
@@ -606,9 +628,10 @@ msgstr "IRSA Gator {catalog} 照会"
 #: astroquery_cli/modules/irsa_cli.py:97
 #, python-brace-format
 msgid ""
-"[yellow]No information found in '{catalog}' for the specified "
-"region.[/yellow]"
-msgstr "[yellow]'{catalog}' に指定された領域の情報は見つかりませんでした。[/yellow]"
+"[yellow]No information found in '{catalog}' for the specified region.[/"
+"yellow]"
+msgstr ""
+"[yellow]'{catalog}' に指定された領域の情報は見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/irsa_cli.py:99
 #, python-brace-format
@@ -621,14 +644,15 @@ msgstr "ミッションに対応するIRSA Gatorで利用可能なカタログ�
 
 #: astroquery_cli/modules/irsa_cli.py:109
 msgid "Filter catalogs by mission code (e.g., 'WISE', 'SPITZER')."
-msgstr "ミッションコードでカタログをフィルタリングします (例: 'WISE', 'SPITZER')。"
+msgstr ""
+"ミッションコードでカタログをフィルタリングします (例: 'WISE', 'SPITZER')。"
 
 #: astroquery_cli/modules/irsa_cli.py:111
 #, python-brace-format
 msgid ""
-"[cyan]Fetching list of available IRSA Gator catalogs "
-"{mission_info}...[/cyan]"
-msgstr "[cyan]利用可能なIRSA Gatorカタログのリストを取得中 {mission_info}...[/cyan]"
+"[cyan]Fetching list of available IRSA Gator catalogs {mission_info}...[/cyan]"
+msgstr ""
+"[cyan]利用可能なIRSA Gatorカタログのリストを取得中 {mission_info}...[/cyan]"
 
 #: astroquery_cli/modules/irsa_cli.py:111
 #, python-brace-format
@@ -639,21 +663,25 @@ msgstr "ミッション {mission} 用"
 msgid ""
 "[yellow]Listing all Gator catalogs programmatically is complex via "
 "astroquery.irsa directly.[/yellow]"
-msgstr "[yellow]astroquery.irsa経由でプログラムによって全てのGatorカタログを一覧表示するのは複雑です。[/yellow]"
+msgstr ""
+"[yellow]astroquery.irsa経由でプログラムによって全てのGatorカタログを一覧表示"
+"するのは複雑です。[/yellow]"
 
 #: astroquery_cli/modules/irsa_cli.py:114
 msgid ""
-"[yellow]Please refer to the IRSA Gator website for a comprehensive list "
-"of catalogs.[/yellow]"
-msgstr "[yellow]カタログの包括的なリストについては、IRSA Gatorのウェブサイトを参照してください。[/yellow]"
+"[yellow]Please refer to the IRSA Gator website for a comprehensive list of "
+"catalogs.[/yellow]"
+msgstr ""
+"[yellow]カタログの包括的なリストについては、IRSA Gatorのウェブサイトを参照し"
+"てください。[/yellow]"
 
 #: astroquery_cli/modules/irsa_cli.py:115
 msgid ""
 "[yellow]Common catalog examples: 'allwise_p3as_psd', 'ptf_lightcurves', "
 "'fp_psc' (2MASS).[/yellow]"
 msgstr ""
-"[yellow]一般的なカタログの例: 'allwise_p3as_psd', 'ptf_lightcurves', 'fp_psc' "
-"(2MASS)。[/yellow]"
+"[yellow]一般的なカタログの例: 'allwise_p3as_psd', 'ptf_lightcurves', "
+"'fp_psc' (2MASS)。[/yellow]"
 
 #: astroquery_cli/modules/irsa_cli.py:117
 msgid "IRSA list_gator_catalogs"
@@ -669,16 +697,20 @@ msgstr "座標 (例: '10.68h +41.26d', 'M31')。"
 
 #: astroquery_cli/modules/irsa_cli.py:124
 msgid ""
-"Specify a collection (e.g., 'allwise', '2MASS'). Leave blank for a "
-"general search."
-msgstr "コレクションを指定します (例: 'allwise', '2MASS')。一般的な検索の場合は空白のままにします。"
+"Specify a collection (e.g., 'allwise', '2MASS'). Leave blank for a general "
+"search."
+msgstr ""
+"コレクションを指定します (例: 'allwise', '2MASS')。一般的な検索の場合は空白の"
+"ままにします。"
 
 #: astroquery_cli/modules/irsa_cli.py:132
 #, python-brace-format
 msgid ""
-"[cyan]Performing IRSA cone search for region: '{coordinates}' with radius"
-" '{radius}'...[/cyan]"
-msgstr "[cyan]領域 '{coordinates}'、半径 '{radius}' のIRSAコーンサーチを実行中...[/cyan]"
+"[cyan]Performing IRSA cone search for region: '{coordinates}' with radius "
+"'{radius}'...[/cyan]"
+msgstr ""
+"[cyan]領域 '{coordinates}'、半径 '{radius}' のIRSAコーンサーチを実行中...[/"
+"cyan]"
 
 #: astroquery_cli/modules/irsa_cli.py:162
 #, python-brace-format
@@ -698,7 +730,9 @@ msgstr "IRSA コーンサーチ照会"
 msgid ""
 "[yellow]No information found in IRSA for the specified "
 "region{collection_info}.[/yellow]"
-msgstr "[yellow]IRSAに指定された領域{collection_info}の情報は見つかりませんでした。[/yellow]"
+msgstr ""
+"[yellow]IRSAに指定された領域{collection_info}の情報は見つかりませんでした。[/"
+"yellow]"
 
 #: astroquery_cli/modules/irsa_cli.py:167
 #, python-brace-format
@@ -721,21 +755,23 @@ msgstr "1つ以上の座標における E(B-V) ダスト吸収値を取得しま
 msgid ""
 "Object name(s) or coordinate(s) (e.g., 'M31', '10.68h +41.26d', '160.32 "
 "41.45'). Can be specified multiple times."
-msgstr "天体名または座標 (例: 'M31', '10.68h +41.26d', '160.32 41.45')。複数指定可能です。"
+msgstr ""
+"天体名または座標 (例: 'M31', '10.68h +41.26d', '160.32 41.45')。複数指定可能"
+"です。"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:40
 msgid ""
-"Dust map to query ('SFD', 'Planck', 'IRIS'). SFD is Schlegel, Finkbeiner "
-"& Davis (1998)."
+"Dust map to query ('SFD', 'Planck', 'IRIS'). SFD is Schlegel, Finkbeiner & "
+"Davis (1998)."
 msgstr ""
-"照会するダストマップ ('SFD', 'Planck', 'IRIS')。SFD は Schlegel, Finkbeiner & Davis "
-"(1998) です。"
+"照会するダストマップ ('SFD', 'Planck', 'IRIS')。SFD は Schlegel, Finkbeiner "
+"& Davis (1998) です。"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:48
 #, python-brace-format
 msgid ""
-"[cyan]Querying IRSA Dust ({map_name}) for extinction at: "
-"{targets_str}...[/cyan]"
+"[cyan]Querying IRSA Dust ({map_name}) for extinction at: {targets_str}...[/"
+"cyan]"
 msgstr "[cyan]IRSA Dust ({map_name}) で {targets_str} の吸収を照会中...[/cyan]"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:58
@@ -749,7 +785,8 @@ msgstr "[dim]各ターゲットの吸収を個別に取得中...[/dim]"
 #: astroquery_cli/modules/irsa_dust_cli.py:68
 #, python-brace-format
 msgid "[dim]  Processing target {current_num}/{total_num}: {target_name}[/dim]"
-msgstr "[dim]  ターゲット {current_num}/{total_num}: {target_name} を処理中[/dim]"
+msgstr ""
+"[dim]  ターゲット {current_num}/{total_num}: {target_name} を処理中[/dim]"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:76
 #, python-brace-format
@@ -773,7 +810,8 @@ msgstr "IRSA Dust {map_name} 吸収"
 #: astroquery_cli/modules/irsa_dust_cli.py:90
 #, python-brace-format
 msgid "[yellow]No extinction data returned by IRSA Dust ({map_name}).[/yellow]"
-msgstr "[yellow]IRSA Dust ({map_name}) から吸収データが返されませんでした。[/yellow]"
+msgstr ""
+"[yellow]IRSA Dust ({map_name}) から吸収データが返されませんでした。[/yellow]"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:93
 #, python-brace-format
@@ -803,11 +841,11 @@ msgstr "出力FITSファイル名のプレフィックス。"
 #: astroquery_cli/modules/irsa_dust_cli.py:113
 #, python-brace-format
 msgid ""
-"[cyan]Querying IRSA Dust ({map_name}) for map around '{target}' with "
-"radius {radius}...[/cyan]"
+"[cyan]Querying IRSA Dust ({map_name}) for map around '{target}' with radius "
+"{radius}...[/cyan]"
 msgstr ""
-"[cyan]IRSA Dust ({map_name}) で '{target}' の周囲 (半径 {radius}) "
-"のマップを照会中...[/cyan]"
+"[cyan]IRSA Dust ({map_name}) で '{target}' の周囲 (半径 {radius}) のマップを"
+"照会中...[/cyan]"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:119
 #, python-brace-format
@@ -822,9 +860,11 @@ msgstr "[dim]出力ディレクトリを作成しました: {output_dir}[/dim]"
 #: astroquery_cli/modules/irsa_dust_cli.py:130
 #, python-brace-format
 msgid ""
-"[yellow]No map images returned by IRSA Dust ({map_name}) for this "
-"region.[/yellow]"
-msgstr "[yellow]この領域について、IRSA Dust ({map_name}) からマップ画像が返されませんでした。[/yellow]"
+"[yellow]No map images returned by IRSA Dust ({map_name}) for this region.[/"
+"yellow]"
+msgstr ""
+"[yellow]この領域について、IRSA Dust ({map_name}) からマップ画像が返されません"
+"でした。[/yellow]"
 
 #: astroquery_cli/modules/irsa_dust_cli.py:142
 #, python-brace-format
@@ -849,28 +889,31 @@ msgid ""
 "Object ID (e.g., 'Mars', 'Ceres', '2000NM', '@10'). Use '@' prefix for "
 "spacecraft ID."
 msgstr ""
-"天体ID (例: 'Mars' (火星), 'Ceres' (ケレス), '2000NM', '@10')。宇宙機のIDには '@' "
-"プレフィックスを使用します。"
+"天体ID (例: 'Mars' (火星), 'Ceres' (ケレス), '2000NM', '@10')。宇宙機のIDに"
+"は '@' プレフィックスを使用します。"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:80
 #, python-brace-format
 msgid ""
-"Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 "
-"12:00'), a list of times separated by commas (e.g., "
-"'2023-01-01,2023-01-02'), or a start,stop,step dict-like string (e.g., "
-"\"{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}\"). If None, "
-"uses current time for single epoch queries like elements/vectors."
+"Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 12:00'), a "
+"list of times separated by commas (e.g., '2023-01-01,2023-01-02'), or a "
+"start,stop,step dict-like string (e.g., \"{'start':'2023-01-01', "
+"'stop':'2023-01-05', 'step':'1d'}\"). If None, uses current time for single "
+"epoch queries like elements/vectors."
 msgstr ""
-"照会の元期。単一のISO時刻 (例: '2023-01-01 12:00')、カンマ区切りの時刻リスト (例: "
-"'2023-01-01,2023-01-02')、または start,stop,step 形式の辞書風文字列 (例: "
-"\"{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}\") "
-"が指定できます。None の場合、要素/ベクトルなどの単一元期照会には現在時刻が使用されます。"
+"照会の元期。単一のISO時刻 (例: '2023-01-01 12:00')、カンマ区切りの時刻リスト "
+"(例: '2023-01-01,2023-01-02')、または start,stop,step 形式の辞書風文字列 "
+"(例: \"{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}\") が指定でき"
+"ます。None の場合、要素/ベクトルなどの単一元期照会には現在時刻が使用されま"
+"す。"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:87
 msgid ""
-"Start time for ephemeris range (YYYY-MM-DD [HH:MM]). Overrides 'epochs' "
-"if 'end_time' is also set."
-msgstr "天体暦範囲の開始時刻 (YYYY-MM-DD [HH:MM])。'end_time' も設定されている場合、'epochs' を上書きします。"
+"Start time for ephemeris range (YYYY-MM-DD [HH:MM]). Overrides 'epochs' if "
+"'end_time' is also set."
+msgstr ""
+"天体暦範囲の開始時刻 (YYYY-MM-DD [HH:MM])。'end_time' も設定されている場"
+"合、'epochs' を上書きします。"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:88
 msgid "End time for ephemeris range (YYYY-MM-DD [HH:MM])."
@@ -886,9 +929,11 @@ msgstr ""
 
 #: astroquery_cli/modules/jplhorizons_cli.py:92
 msgid ""
-"Observatory code (e.g., '500' for Geocenter, 'geo' is alias for '500'). "
-"Try common codes or find specific ones."
-msgstr "観測所コード (例: 地心の場合は '500'、'geo' は '500' のエイリアス)。一般的なコードを試すか、特定のコードを検索してください。"
+"Observatory code (e.g., '500' for Geocenter, 'geo' is alias for '500'). Try "
+"common codes or find specific ones."
+msgstr ""
+"観測所コード (例: 地心の場合は '500'、'geo' は '500' のエイリアス)。一般的な"
+"コードを試すか、特定のコードを検索してください。"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:98
 msgid "Type of the target identifier. If None, Horizons will try to guess."
@@ -900,12 +945,13 @@ msgstr "取得する天体暦のタイプ。"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:107
 msgid ""
-"Comma-separated string of quantity codes (e.g., '1,2,19,20'). Relevant "
-"for OBSERVER and VECTORS. See JPL Horizons docs for codes. Uses sensible "
+"Comma-separated string of quantity codes (e.g., '1,2,19,20'). Relevant for "
+"OBSERVER and VECTORS. See JPL Horizons docs for codes. Uses sensible "
 "defaults if None."
 msgstr ""
-"カンマ区切りの物理量コード文字列 (例: '1,2,19,20')。OBSERVER および VECTORS に関連します。コードについては "
-"JPL Horizons のドキュメントを参照してください。None の場合は適切なデフォルト値が使用されます。"
+"カンマ区切りの物理量コード文字列 (例: '1,2,19,20')。OBSERVER および VECTORS "
+"に関連します。コードについては JPL Horizons のドキュメントを参照してくださ"
+"い。None の場合は適切なデフォルト値が使用されます。"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:110
 msgid "Show all columns in the output table, even if wide."
@@ -962,17 +1008,18 @@ msgstr "[dim]単一元期を使用中: {epoch}[/dim]"
 #: astroquery_cli/modules/jplhorizons_cli.py:150
 #, python-brace-format
 msgid ""
-"[dim]No epoch specified for {ephem_type}, using current time: "
-"{epoch}[/dim]"
-msgstr "[dim]{ephem_type} の元期が指定されていません。現在時刻を使用します: {epoch}[/dim]"
+"[dim]No epoch specified for {ephem_type}, using current time: {epoch}[/dim]"
+msgstr ""
+"[dim]{ephem_type} の元期が指定されていません。現在時刻を使用します: {epoch}[/"
+"dim]"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:152
 msgid ""
-"[bold red]Error: For ephemeris type OBSERVER, you must specify --epochs "
-"or (--start, --end, --step).[/bold red]"
+"[bold red]Error: For ephemeris type OBSERVER, you must specify --epochs or "
+"(--start, --end, --step).[/bold red]"
 msgstr ""
-"[bold red]エラー: 天体暦タイプ OBSERVER の場合、--epochs または (--start, --end, --step) "
-"を指定する必要があります。[/bold red]"
+"[bold red]エラー: 天体暦タイプ OBSERVER の場合、--epochs または (--start, --"
+"end, --step) を指定する必要があります。[/bold red]"
 
 #: astroquery_cli/modules/jplhorizons_cli.py:167
 #, python-brace-format
@@ -1008,7 +1055,8 @@ msgstr "JPL SBDB で小天体を照会します。"
 
 #: astroquery_cli/modules/jplsbdb_cli.py:52
 msgid "Target small body (e.g., 'Ceres', '1P', '2023 BU')."
-msgstr "ターゲット小天体 (例: 'Ceres' (ケレス), '1P' (ハレー彗星), '2023 BU')。"
+msgstr ""
+"ターゲット小天体 (例: 'Ceres' (ケレス), '1P' (ハレー彗星), '2023 BU')。"
 
 #: astroquery_cli/modules/jplsbdb_cli.py:53
 msgid "Type of target identifier ('name', 'des', 'moid', 'spk', 'auto')."
@@ -1104,7 +1152,8 @@ msgstr "[green]主要データを {file_path} に保存しました[/green]"
 #: astroquery_cli/modules/jplsbdb_cli.py:112
 #, python-brace-format
 msgid "[red]Could not save non-table data as JSON: {error}[/red]"
-msgstr "[red]テーブル以外のデータをJSONとして保存できませんでした: {error}[/red]"
+msgstr ""
+"[red]テーブル以外のデータをJSONとして保存できませんでした: {error}[/red]"
 
 #: astroquery_cli/modules/jplsbdb_cli.py:117
 #, python-brace-format
@@ -1143,7 +1192,8 @@ msgstr "[cyan]天体 '{object_name}' のMASTデータを照会中...[/cyan]"
 #: astroquery_cli/modules/mast_cli.py:83
 #, python-brace-format
 msgid "[green]Found {count} observation(s) for '{object_name}'.[/green]"
-msgstr "[green]'{object_name}' の観測データが {count} 件見つかりました。[/green]"
+msgstr ""
+"[green]'{object_name}' の観測データが {count} 件見つかりました。[/green]"
 
 #: astroquery_cli/modules/mast_cli.py:84
 #, python-brace-format
@@ -1159,7 +1209,9 @@ msgstr "MAST 天体照会"
 msgid ""
 "[yellow]No observations found for object '{object_name}' with specified "
 "criteria.[/yellow]"
-msgstr "[yellow]指定された基準では、天体 '{object_name}' の観測データは見つかりませんでした。[/yellow]"
+msgstr ""
+"[yellow]指定された基準では、天体 '{object_name}' の観測データは見つかりません"
+"でした。[/yellow]"
 
 #: astroquery_cli/modules/mast_cli.py:98
 msgid "Query MAST for observations in a sky region."
@@ -1176,9 +1228,10 @@ msgstr "装置名。"
 #: astroquery_cli/modules/mast_cli.py:113
 #, python-brace-format
 msgid ""
-"[cyan]Querying MAST for region: '{coordinates}' with radius "
-"'{radius}'...[/cyan]"
-msgstr "[cyan]領域 '{coordinates}'、半径 '{radius}' のMASTデータを照会中...[/cyan]"
+"[cyan]Querying MAST for region: '{coordinates}' with radius '{radius}'...[/"
+"cyan]"
+msgstr ""
+"[cyan]領域 '{coordinates}'、半径 '{radius}' のMASTデータを照会中...[/cyan]"
 
 #: astroquery_cli/modules/mast_cli.py:130
 #, python-brace-format
@@ -1195,9 +1248,11 @@ msgstr "MAST 領域照会"
 
 #: astroquery_cli/modules/mast_cli.py:135
 msgid ""
-"[yellow]No observations found for the specified region with given "
-"criteria.[/yellow]"
-msgstr "[yellow]指定された基準では、指定された領域の観測データは見つかりませんでした。[/yellow]"
+"[yellow]No observations found for the specified region with given criteria.[/"
+"yellow]"
+msgstr ""
+"[yellow]指定された基準では、指定された領域の観測データは見つかりませんでし"
+"た。[/yellow]"
 
 #: astroquery_cli/modules/mast_cli.py:137
 msgid "MAST query_region"
@@ -1239,13 +1294,16 @@ msgid ""
 "'astroquery.mast.Observations.download_products()' to download.[/info]"
 msgstr ""
 "[info]ダウンロードするには 'aqc mast download-products <obs_id> ...' または "
-"'astroquery.mast.Observations.download_products()' を使用してください。[/info]"
+"'astroquery.mast.Observations.download_products()' を使用してください。[/"
+"info]"
 
 #: astroquery_cli/modules/mast_cli.py:171
 msgid ""
-"[yellow]No data products found for the given observation ID(s) and "
-"criteria.[/yellow]"
-msgstr "[yellow]指定された観測IDおよび基準に一致するデータプロダクトは見つかりませんでした。[/yellow]"
+"[yellow]No data products found for the given observation ID(s) and criteria."
+"[/yellow]"
+msgstr ""
+"[yellow]指定された観測IDおよび基準に一致するデータプロダクトは見つかりません"
+"でした。[/yellow]"
 
 #: astroquery_cli/modules/mast_cli.py:173
 msgid "MAST get_product_urls"
@@ -1273,7 +1331,9 @@ msgstr "返すフィールド。"
 
 #: astroquery_cli/modules/nasa_ads_cli.py:44
 msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
-msgstr "結果のソート順 (例: 'date' (日付), 'citation_count' (引用数), 'score' (スコア))。"
+msgstr ""
+"結果のソート順 (例: 'date' (日付), 'citation_count' (引用数), 'score' (スコ"
+"ア))。"
 
 #: astroquery_cli/modules/nasa_ads_cli.py:45
 msgid "Maximum number of pages to retrieve."
@@ -1291,9 +1351,11 @@ msgstr "[cyan]'{query_string}' でNASA ADSを照会中...[/cyan]"
 #: astroquery_cli/modules/nasa_ads_cli.py:58
 #: astroquery_cli/modules/nasa_ads_cli.py:97
 msgid ""
-"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be"
-" rate-limited.[/yellow]"
-msgstr "[yellow]警告: ADS_DEV_KEY 環境変数が設定されていません。クエリがレート制限される可能性があります。[/yellow]"
+"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
+"rate-limited.[/yellow]"
+msgstr ""
+"[yellow]警告: ADS_DEV_KEY 環境変数が設定されていません。クエリがレート制限さ"
+"れる可能性があります。[/yellow]"
 
 #: astroquery_cli/modules/nasa_ads_cli.py:70
 #, python-brace-format
@@ -1402,9 +1464,10 @@ msgstr "座標の元期 (例: 'J2000', 'B1950')。"
 #: astroquery_cli/modules/ned_cli.py:86
 #, python-brace-format
 msgid ""
-"[cyan]Querying NED for region: '{coordinates}' with radius "
-"'{radius}'...[/cyan]"
-msgstr "[cyan]領域 '{coordinates}'、半径 '{radius}' のNEDデータを照会中...[/cyan]"
+"[cyan]Querying NED for region: '{coordinates}' with radius '{radius}'...[/"
+"cyan]"
+msgstr ""
+"[cyan]領域 '{coordinates}'、半径 '{radius}' のNEDデータを照会中...[/cyan]"
 
 #: astroquery_cli/modules/ned_cli.py:98
 #, python-brace-format
@@ -1433,17 +1496,20 @@ msgstr "NEDから天体の画像メタデータを取得します。"
 
 #: astroquery_cli/modules/ned_cli.py:118
 msgid "Maximum number of image entries to display. Use -1 for all rows."
-msgstr "表示する画像エントリの最大数。すべての行を表示するには -1 を使用します。"
+msgstr ""
+"表示する画像エントリの最大数。すべての行を表示するには -1 を使用します。"
 
 #: astroquery_cli/modules/ned_cli.py:125
 #, python-brace-format
-msgid "[cyan]Fetching image list from NED for object: '{object_name}'...[/cyan]"
+msgid ""
+"[cyan]Fetching image list from NED for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]天体 '{object_name}' のNED画像リストを取得中...[/cyan]"
 
 #: astroquery_cli/modules/ned_cli.py:129
 #, python-brace-format
 msgid "[green]Found {count} image entries for '{object_name}'.[/green]"
-msgstr "[green]'{object_name}' の画像エントリが {count} 件見つかりました。[/green]"
+msgstr ""
+"[green]'{object_name}' の画像エントリが {count} 件見つかりました。[/green]"
 
 #: astroquery_cli/modules/ned_cli.py:130
 #, python-brace-format
@@ -1457,7 +1523,8 @@ msgstr "NED 画像リスト照会"
 #: astroquery_cli/modules/ned_cli.py:134
 #, python-brace-format
 msgid "[yellow]No image entries found for object '{object_name}'.[/yellow]"
-msgstr "[yellow]天体 '{object_name}' の画像エントリは見つかりませんでした。[/yellow]"
+msgstr ""
+"[yellow]天体 '{object_name}' の画像エントリは見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/ned_cli.py:136
 msgid "NED get_images"
@@ -1483,13 +1550,16 @@ msgstr "天体名のワイルドカード検索を有効にします。"
 msgid ""
 "Additional VOTable fields to retrieve (e.g., 'otype', 'sptype'). Can be "
 "specified multiple times."
-msgstr "取得する追加のVOTableフィールド (例: 'otype' (天体種別), 'sptype' (スペクトル型))。複数指定可能です。"
+msgstr ""
+"取得する追加のVOTableフィールド (例: 'otype' (天体種別), 'sptype' (スペクトル"
+"型))。複数指定可能です。"
 
 #: astroquery_cli/modules/simbad_cli.py:35
 msgid ""
 "Default VOTable fields to remove (e.g., 'coo_bibcode'). Can be specified "
 "multiple times."
-msgstr "削除するデフォルトのVOTableフィールド (例: 'coo_bibcode')。複数指定可能です。"
+msgstr ""
+"削除するデフォルトのVOTableフィールド (例: 'coo_bibcode')。複数指定可能です。"
 
 #: astroquery_cli/modules/simbad_cli.py:36
 msgid "Automatically include a set of common useful fields."
@@ -1549,12 +1619,14 @@ msgid "Query objects associated with a bibcode or bibcode list."
 msgstr "bibcode または bibcode リストに関連付けられた天体を照会します。"
 
 #: astroquery_cli/modules/simbad_cli.py:120
-msgid "Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple."
+msgid ""
+"Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple."
 msgstr "照会するbibcode (例: '2003A&A...409..581H')。複数指定可能です。"
 
 #: astroquery_cli/modules/simbad_cli.py:136
 #, python-brace-format
-msgid "[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]"
+msgid ""
+"[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]"
 msgstr "[cyan]bibcode {bibcodes_list} 内の天体をSIMBADで照会中...[/cyan]"
 
 #: astroquery_cli/modules/simbad_cli.py:142
@@ -1567,7 +1639,8 @@ msgstr "SIMBAD bibcode照会"
 
 #: astroquery_cli/modules/simbad_cli.py:146
 msgid "[yellow]No objects found for the given bibcode(s).[/yellow]"
-msgstr "[yellow]指定されたbibcodeに一致する天体は見つかりませんでした。[/yellow]"
+msgstr ""
+"[yellow]指定されたbibcodeに一致する天体は見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/simbad_cli.py:148
 msgid "SIMBAD query_bibcode"
@@ -1580,16 +1653,15 @@ msgstr "Splatalogue スペクトル線データベースを照会します。"
 #: astroquery_cli/modules/splatalogue_cli.py:43
 #, python-brace-format
 msgid ""
-"[red]Error: Frequency range '{freq_str}' must be in 'min-max' format "
-"(e.g., '100GHz-110GHz').[/red]"
+"[red]Error: Frequency range '{freq_str}' must be in 'min-max' format (e.g., "
+"'100GHz-110GHz').[/red]"
 msgstr ""
-"[red]エラー: 周波数範囲 '{freq_str}' は '最小値-最大値' 形式である必要があります (例: '100GHz-"
-"110GHz')。[/red]"
+"[red]エラー: 周波数範囲 '{freq_str}' は '最小値-最大値' 形式である必要があり"
+"ます (例: '100GHz-110GHz')。[/red]"
 
 #: astroquery_cli/modules/splatalogue_cli.py:49
 msgid ""
-"[red]Error: Frequencies must have units of frequency (e.g., GHz, "
-"MHz).[/red]"
+"[red]Error: Frequencies must have units of frequency (e.g., GHz, MHz).[/red]"
 msgstr "[red]エラー: 周波数には周波数の単位が必要です (例: GHz, MHz)。[/red]"
 
 #: astroquery_cli/modules/splatalogue_cli.py:53
@@ -1621,7 +1693,9 @@ msgstr "エネルギータイプ ('el' (E_lower) または 'eu' (E_upper))。"
 msgid ""
 "Line strength units (e.g., 'ls1', 'ls2', 'ls4', 'ls5' for CDMS/JPL or "
 "TopModel)."
-msgstr "線強度単位 (例: CDMS/JPL または TopModel の場合は 'ls1', 'ls2', 'ls4', 'ls5')。"
+msgstr ""
+"線強度単位 (例: CDMS/JPL または TopModel の場合は 'ls1', 'ls2', 'ls4', "
+"'ls5')。"
 
 #: astroquery_cli/modules/splatalogue_cli.py:64
 msgid "Species to exclude (e.g., 'HDO')."
@@ -1630,9 +1704,10 @@ msgstr "除外する化学種 (例: 'HDO')。"
 #: astroquery_cli/modules/splatalogue_cli.py:74
 #, python-brace-format
 msgid ""
-"[cyan]Querying Splatalogue for lines in range "
-"'{frequency_range}'...[/cyan]"
-msgstr "[cyan]周波数範囲 '{frequency_range}' のスペクトル線をSplatalogueで照会中...[/cyan]"
+"[cyan]Querying Splatalogue for lines in range '{frequency_range}'...[/cyan]"
+msgstr ""
+"[cyan]周波数範囲 '{frequency_range}' のスペクトル線をSplatalogueで照会中...[/"
+"cyan]"
 
 #: astroquery_cli/modules/splatalogue_cli.py:96
 #, python-brace-format
@@ -1649,7 +1724,8 @@ msgstr "Splatalogue スペクトル線照会"
 
 #: astroquery_cli/modules/splatalogue_cli.py:101
 msgid "[yellow]No spectral lines found for the given criteria.[/yellow]"
-msgstr "[yellow]指定された基準に一致するスペクトル線は見つかりませんでした。[/yellow]"
+msgstr ""
+"[yellow]指定された基準に一致するスペクトル線は見つかりませんでした。[/yellow]"
 
 #: astroquery_cli/modules/splatalogue_cli.py:103
 msgid "Splatalogue query_lines"
@@ -1660,7 +1736,8 @@ msgid "Get the table of NRAO recommended species."
 msgstr "NRAO推奨化学種のテーブルを取得します。"
 
 #: astroquery_cli/modules/splatalogue_cli.py:121
-msgid "[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"
+msgid ""
+"[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"
 msgstr "[cyan]SplatalogueからNRAO推奨化学種のテーブルを取得中...[/cyan]"
 
 #: astroquery_cli/modules/splatalogue_cli.py:125
@@ -1686,33 +1763,38 @@ msgstr "VizieR 天文カタログサービスを照会します。"
 #: astroquery_cli/modules/vizier_cli.py:45
 #, python-brace-format
 msgid ""
-"[bold red]Error parsing angle string '{angle_str}': {error_message}[/bold"
-" red]"
-msgstr "[bold red]角度文字列 '{angle_str}' の解析エラー: {error_message}[/bold red]"
+"[bold red]Error parsing angle string '{angle_str}': {error_message}[/bold "
+"red]"
+msgstr ""
+"[bold red]角度文字列 '{angle_str}' の解析エラー: {error_message}[/bold red]"
 
 #: astroquery_cli/modules/vizier_cli.py:46
 msgid "[yellow]Hint: Use format like '5arcmin', '0.5deg', '10arcsec'.[/yellow]"
-msgstr "[yellow]ヒント: '5arcmin', '0.5deg', '10arcsec' のような形式を使用してください。[/yellow]"
+msgstr ""
+"[yellow]ヒント: '5arcmin', '0.5deg', '10arcsec' のような形式を使用してくださ"
+"い。[/yellow]"
 
 #: astroquery_cli/modules/vizier_cli.py:64
 #, python-brace-format
 msgid ""
-"[bold red]Error parsing coordinates '{coords_str}': {error_message}[/bold"
-" red]"
+"[bold red]Error parsing coordinates '{coords_str}': {error_message}[/bold "
+"red]"
 msgstr "[bold red]座標 '{coords_str}' の解析エラー: {error_message}[/bold red]"
 
 #: astroquery_cli/modules/vizier_cli.py:65
 msgid "[yellow]Hint: Try 'M31', '10.68h +41.26d', or '160.32 41.45'.[/yellow]"
 msgstr ""
-"[yellow]ヒント: 'M31', '10.68h +41.26d', または '160.32 41.45' "
-"を試してください。[/yellow]"
+"[yellow]ヒント: 'M31', '10.68h +41.26d', または '160.32 41.45' を試してくださ"
+"い。[/yellow]"
 
 #: astroquery_cli/modules/vizier_cli.py:75
 #, python-brace-format
 msgid ""
-"[bold red]Invalid constraint format: '{item}'. Expected "
-"'column=condition'.[/bold red]"
-msgstr "[bold red]無効な制約形式: '{item}'。'column=condition' が期待されます。[/bold red]"
+"[bold red]Invalid constraint format: '{item}'. Expected 'column=condition'.[/"
+"bold red]"
+msgstr ""
+"[bold red]無効な制約形式: '{item}'。'column=condition' が期待されます。[/"
+"bold red]"
 
 #: astroquery_cli/modules/vizier_cli.py:88
 msgid "Find VizieR catalogs based on keywords, UCDs, or source names."
@@ -1770,7 +1852,9 @@ msgstr "[dim]ソース名: {source_val}[/dim]"
 msgid ""
 "[yellow]Please provide at least one search criterion (keyword, ucd, or "
 "source name).[/yellow]"
-msgstr "[yellow]少なくとも1つの検索基準 (キーワード、UCD、またはソース名) を指定してください。[/yellow]"
+msgstr ""
+"[yellow]少なくとも1つの検索基準 (キーワード、UCD、またはソース名) を指定して"
+"ください。[/yellow]"
 
 #: astroquery_cli/modules/vizier_cli.py:122
 msgid "Example: `aqc vizier find-catalogs --keyword photometry --keyword M31`"
@@ -1794,23 +1878,27 @@ msgstr "天体名または特定の座標周辺のカタログを照会します
 
 #: astroquery_cli/modules/vizier_cli.py:149
 msgid ""
-"Object name (e.g., 'M31') or coordinates (e.g., '10.68h +41.26d' or "
-"'160.32 41.45')."
-msgstr "天体名 (例: 'M31') または座標 (例: '10.68h +41.26d' または '160.32 41.45')。"
+"Object name (e.g., 'M31') or coordinates (e.g., '10.68h +41.26d' or '160.32 "
+"41.45')."
+msgstr ""
+"天体名 (例: 'M31') または座標 (例: '10.68h +41.26d' または '160.32 41.45')。"
 
 #: astroquery_cli/modules/vizier_cli.py:151
 msgid ""
-"VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). "
-"Can be specified multiple times."
-msgstr "VizieR カタログ識別子 (例: 'I/261/gaiadr3', 'J/ApJ/710/1776')。複数指定可能です。"
+"VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). Can "
+"be specified multiple times."
+msgstr ""
+"VizieR カタログ識別子 (例: 'I/261/gaiadr3', 'J/ApJ/710/1776')。複数指定可能で"
+"す。"
 
 #: astroquery_cli/modules/vizier_cli.py:152
 msgid ""
-"Specific columns to retrieve (e.g., 'RAJ2000', 'DEJ2000', 'pmRA'). Use "
-"'all' for all columns. Can be specified multiple times."
+"Specific columns to retrieve (e.g., 'RAJ2000', 'DEJ2000', 'pmRA'). Use 'all' "
+"for all columns. Can be specified multiple times."
 msgstr ""
 "取得する特定の列 (例: 'RAJ2000' (J2000赤経), 'DEJ2000' (J2000赤緯), 'pmRA' "
-"(赤経方向の固有運動))。すべての列を取得するには 'all' を使用します。複数指定可能です。"
+"(赤経方向の固有運動))。すべての列を取得するには 'all' を使用します。複数指定"
+"可能です。"
 
 #: astroquery_cli/modules/vizier_cli.py:153
 msgid ""
@@ -1830,14 +1918,17 @@ msgstr "カタログごとに返す最大行数。"
 #: astroquery_cli/modules/vizier_cli.py:209
 #: astroquery_cli/modules/vizier_cli.py:274
 msgid "Maximum number of rows to display per table. Use -1 for all rows."
-msgstr "テーブルごとに表示する最大行数。すべての行を表示するには -1 を使用します。"
+msgstr ""
+"テーブルごとに表示する最大行数。すべての行を表示するには -1 を使用します。"
 
 #: astroquery_cli/modules/vizier_cli.py:163
 #, python-brace-format
 msgid ""
 "[cyan]Querying VizieR for object '{target_name}' in catalog(s): "
 "{catalog_list}...[/cyan]"
-msgstr "[cyan]天体 '{target_name}' のデータをカタログ {catalog_list} でVizieR照会中...[/cyan]"
+msgstr ""
+"[cyan]天体 '{target_name}' のデータをカタログ {catalog_list} でVizieR照会"
+"中...[/cyan]"
 
 #: astroquery_cli/modules/vizier_cli.py:166
 #: astroquery_cli/modules/vizier_cli.py:220
@@ -1862,9 +1953,11 @@ msgstr "{catalog_name} からの {target_name} の結果"
 #: astroquery_cli/modules/vizier_cli.py:320
 #, python-brace-format
 msgid ""
-"[yellow]No data found in catalog '{catalog_name}' for the given "
-"criteria.[/yellow]"
-msgstr "[yellow]カタログ '{catalog_name}' に指定された基準のデータは見つかりませんでした。[/yellow]"
+"[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/"
+"yellow]"
+msgstr ""
+"[yellow]カタログ '{catalog_name}' に指定された基準のデータは見つかりませんで"
+"した。[/yellow]"
 
 #: astroquery_cli/modules/vizier_cli.py:195
 #, python-brace-format
@@ -1883,9 +1976,11 @@ msgstr "領域の中心座標 (例: '10.68h +41.26d' または '160.32 41.45')�
 
 #: astroquery_cli/modules/vizier_cli.py:202
 msgid ""
-"Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying "
-"width/height."
-msgstr "コーンサーチ半径 (例: '5arcmin', '0.1deg')。幅/高さを指定しない場合に使用します。"
+"Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying width/"
+"height."
+msgstr ""
+"コーンサーチ半径 (例: '5arcmin', '0.1deg')。幅/高さを指定しない場合に使用しま"
+"す。"
 
 #: astroquery_cli/modules/vizier_cli.py:203
 msgid "Width of a box region (e.g., '10arcmin', '0.5deg'). Requires --height."
@@ -1903,9 +1998,11 @@ msgstr "VizieR カタログ識別子。複数指定可能です。"
 #: astroquery_cli/modules/vizier_cli.py:206
 #: astroquery_cli/modules/vizier_cli.py:272
 msgid ""
-"Specific columns to retrieve. Use 'all' for all columns. Can be specified"
-" multiple times."
-msgstr "取得する特定の列。すべての列を取得するには 'all' を使用します。複数指定可能です。"
+"Specific columns to retrieve. Use 'all' for all columns. Can be specified "
+"multiple times."
+msgstr ""
+"取得する特定の列。すべての列を取得するには 'all' を使用します。複数指定可能で"
+"す。"
 
 #: astroquery_cli/modules/vizier_cli.py:207
 msgid "Column filters (e.g., 'Imag<15'). Can be specified multiple times."
@@ -1916,29 +2013,34 @@ msgstr "列フィルター (例: 'Imag<15')。複数指定可能です。"
 msgid ""
 "[cyan]Querying VizieR region around '{coords_str}' in catalog(s): "
 "{catalog_list}...[/cyan]"
-msgstr "[cyan]座標 '{coords_str}' 周辺の領域をカタログ {catalog_list} でVizieR照会中...[/cyan]"
+msgstr ""
+"[cyan]座標 '{coords_str}' 周辺の領域をカタログ {catalog_list} でVizieR照会"
+"中...[/cyan]"
 
 #: astroquery_cli/modules/vizier_cli.py:228
 msgid ""
-"[bold red]Error: Specify either --radius (for cone search) OR (--width "
-"and --height) (for box search), not both.[/bold red]"
+"[bold red]Error: Specify either --radius (for cone search) OR (--width and --"
+"height) (for box search), not both.[/bold red]"
 msgstr ""
-"[bold red]エラー: --radius (コーンサーチ用) または (--width および --height) (ボックスサーチ用) "
-"のいずれかを指定してください。両方は指定できません。[/bold red]"
+"[bold red]エラー: --radius (コーンサーチ用) または (--width および --height) "
+"(ボックスサーチ用) のいずれかを指定してください。両方は指定できません。[/"
+"bold red]"
 
 #: astroquery_cli/modules/vizier_cli.py:231
 msgid ""
 "[bold red]Error: For a box search, both --width and --height must be "
 "specified.[/bold red]"
-msgstr "[bold red]エラー: ボックスサーチの場合、--width と --height の両方を指定する必要があります。[/bold red]"
+msgstr ""
+"[bold red]エラー: ボックスサーチの場合、--width と --height の両方を指定する"
+"必要があります。[/bold red]"
 
 #: astroquery_cli/modules/vizier_cli.py:234
 msgid ""
-"[bold red]Error: You must specify search dimensions: either --radius OR "
-"(--width and --height).[/bold red]"
+"[bold red]Error: You must specify search dimensions: either --radius OR (--"
+"width and --height).[/bold red]"
 msgstr ""
-"[bold red]エラー: 検索範囲を指定する必要があります: --radius または (--width および "
-"--height)。[/bold red]"
+"[bold red]エラー: 検索範囲を指定する必要があります: --radius または (--width "
+"および --height)。[/bold red]"
 
 #: astroquery_cli/modules/vizier_cli.py:255
 #, python-brace-format
@@ -1966,13 +2068,14 @@ msgstr ""
 msgid ""
 "Keywords to filter results within the catalog (different from finding "
 "catalogs)."
-msgstr "カタログ内の結果をフィルタリングするキーワード (カタログ検索とは異なります)。"
+msgstr ""
+"カタログ内の結果をフィルタリングするキーワード (カタログ検索とは異なります)。"
 
 #: astroquery_cli/modules/vizier_cli.py:282
 #, python-brace-format
 msgid ""
-"[cyan]Querying VizieR with constraints in catalog(s): "
-"{catalog_list}...[/cyan]"
+"[cyan]Querying VizieR with constraints in catalog(s): {catalog_list}...[/"
+"cyan]"
 msgstr "[cyan]制約付きでカタログ {catalog_list} をVizieR照会中...[/cyan]"
 
 #: astroquery_cli/modules/vizier_cli.py:289
@@ -1980,8 +2083,8 @@ msgid ""
 "[yellow]Please provide at least --constraint(s) or --keyword(s) for this "
 "query type.[/yellow]"
 msgstr ""
-"[yellow]この照会タイプには、少なくとも --constraint(s) または --keyword(s) "
-"を指定してください。[/yellow]"
+"[yellow]この照会タイプには、少なくとも --constraint(s) または --keyword(s) を"
+"指定してください。[/yellow]"
 
 #: astroquery_cli/modules/vizier_cli.py:295
 #, python-brace-format
@@ -2001,4 +2104,3 @@ msgstr "{catalog_name} からの制約クエリ結果"
 #: astroquery_cli/modules/vizier_cli.py:323
 msgid "VizieR query_constraints"
 msgstr "VizieR query_constraints"
-

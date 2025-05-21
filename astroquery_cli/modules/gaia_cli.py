@@ -82,7 +82,7 @@ def get_app():
                     dec = simbad_result["dec"][0]
                     from astropy.coordinates import SkyCoord
                     coords_obj = SkyCoord(f"{ra} {dec}", unit=(u.hourangle, u.deg))
-                    console.print(_("[yellow]Resolved '{target}' to coordinates via SIMBAD: {ra} {dec}[/yellow]").format(target=target, ra=ra, dec=dec))
+                    console.print(f"[yellow]Resolved '{target}' { _('to coordinates via SIMBAD:') } {ra} {dec}[/yellow]")
                 else:
                     console.print(_("[red]Could not resolve '{target}' to coordinates via SIMBAD.[/red]").format(target=target))
                     raise typer.Exit(code=1)
