@@ -1,5 +1,6 @@
 # Python
-__pycache__/
+astroquery_cli/__pycache__/
+astroquery_cli/modules/__pycache__/
 *.py[cod]
 *$py.class
 *.so
