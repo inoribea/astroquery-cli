@@ -10,6 +10,7 @@ from ..utils import (
     handle_astroquery_exception,
     common_output_options,
     save_table_to_file,
+    global_keyboard_interrupt_handler,
 )
 
 def get_app():
@@ -37,7 +38,7 @@ def get_app():
 
     Splatalogue.TIMEOUT = 120
 
-    def parse_frequency_range(ctx: typer.Context,freq_str: str) -> Tuple[u.Quantity, u.Quantity]:
+    def parse_frequency_range(freq_str: str) -> Tuple[u.Quantity, u.Quantity]:
         parts = freq_str.split('-')
         if len(parts) != 2:
             console.print(_("[red]Error: Frequency range '{freq_str}' must be in 'min-max' format (e.g., '100GHz-110GHz').[/red]").format(freq_str=freq_str))
@@ -54,7 +55,8 @@ def get_app():
             raise typer.Exit(code=1)
 
 
-    @app.command(name="query-lines", help=builtins._("Query spectral lines from Splatalogue."))
+    @app.command(name="lines", help=builtins._("Query spectral lines from Splatalogue."))
+    @global_keyboard_interrupt_handler
     def query_lines(ctx: typer.Context,
         frequency_range: str = typer.Argument(..., help=builtins._("Frequency range (e.g., '100GHz-110GHz', '2100MHz-2200MHz').")),
         chemical_name: Optional[str] = typer.Option(None, "--chemical", help=builtins._("Chemical name pattern (e.g., 'CO', '%H2O%').")),
@@ -94,13 +96,13 @@ def get_app():
 
             if result_table and len(result_table) > 0:
                 console.print(_("[green]Found {count} spectral line(s).[/green]").format(count=len(result_table)))
-                display_table(result_table, title=_("Splatalogue Lines"), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=_("Splatalogue Lines"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
                     save_table_to_file(result_table, output_file, output_format, _("Splatalogue line query"))
             else:
                 console.print(_("[yellow]No spectral lines found for the given criteria.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("Splatalogue query_lines"))
+            handle_astroquery_exception(ctx, e, _("Splatalogue lines"))
             raise typer.Exit(code=1)
 
         if test:
@@ -108,7 +110,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="get-species-table", help=builtins._("Get the table of NRAO recommended species."))
+    @app.command(name="species-table", help=builtins._("Get the table of NRAO recommended species."))
+    @global_keyboard_interrupt_handler
     def get_species_table(ctx: typer.Context,
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
@@ -122,13 +125,13 @@ def get_app():
         try:
             species_table: Optional[AstropyTable] = Splatalogue.get_species_table()
             if species_table and len(species_table) > 0:
-                display_table(species_table, title=_("Splatalogue NRAO Recommended Species"), max_rows=max_rows_display, show_all_columns=True)
+                display_table(ctx, species_table, title=_("Splatalogue NRAO Recommended Species"), max_rows=max_rows_display, show_all_columns=True)
                 if output_file:
                     save_table_to_file(species_table, output_file, output_format, _("Splatalogue species table"))
             else:
                 console.print(_("[yellow]Could not retrieve species table or it is empty.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("Splatalogue get_species_table"))
+            handle_astroquery_exception(ctx, e, _("Splatalogue species-table"))
             raise typer.Exit(code=1)
 
         if test:

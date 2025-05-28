@@ -11,6 +11,7 @@ from ..utils import (
     save_table_to_file,
     parse_coordinates,
     parse_angle_str_to_quantity,
+    global_keyboard_interrupt_handler,
 )
 
 def get_app():
@@ -37,7 +38,8 @@ def get_app():
 
     Ned.TIMEOUT = 120
 
-    @app.command(name="query-object", help=builtins._("Query NED for an object by name."))
+    @app.command(name="object", help=builtins._("Query NED for an object by name."))
+    @global_keyboard_interrupt_handler
     def query_object(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the extragalactic object.")),
         output_file: Optional[str] = common_output_options["output_file"],
@@ -55,13 +57,13 @@ def get_app():
 
             if result_table and len(result_table) > 0:
                 console.print(_("[green]Found information for '{object_name}'.[/green]").format(object_name=object_name))
-                display_table(result_table, title=_("NED Data for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=_("NED Data for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("NED object query"))
+                    save_table_to_file(result_table, output_file, output_format, _( "NED object query"))
             else:
                 console.print(_("[yellow]No information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:
-            handle_astroquery_exception(e, _("NED query_object"))
+            handle_astroquery_exception(ctx, e, _("NED object"))
             raise typer.Exit(code=1)
 
         if test:
@@ -69,7 +71,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="query-region", help=builtins._("Query NED for objects in a sky region."))
+    @app.command(name="region", help=builtins._("Query NED for objects in a sky region."))
+    @global_keyboard_interrupt_handler
     def query_region(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M101').")),
         radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '5arcmin', '0.1deg').")),
@@ -96,13 +99,13 @@ def get_app():
 
             if result_table and len(result_table) > 0:
                 console.print(_("[green]Found {count} object(s) in the region.[/green]").format(count=len(result_table)))
-                display_table(result_table, title=_("NED Objects in Region"), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=_("NED Objects in Region"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("NED region query"))
+                    save_table_to_file(result_table, output_file, output_format, _( "NED region query"))
             else:
                 console.print(_("[yellow]No objects found in the specified region.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("NED query_region"))
+            handle_astroquery_exception(ctx, e, _("NED region"))
             raise typer.Exit(code=1)
 
         if test:
@@ -110,7 +113,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="get-images", help=builtins._("Get image metadata for an object from NED."))
+    @app.command(name="images", help=builtins._("Get image metadata for an object from NED."))
+    @global_keyboard_interrupt_handler
     def get_images(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the extragalactic object.")),
         output_file: Optional[str] = common_output_options["output_file"],
@@ -127,13 +131,13 @@ def get_app():
             images_table: Optional[AstropyTable] = Ned.get_images(object_name)
             if images_table and len(images_table) > 0:
                 console.print(_("[green]Found {count} image entries for '{object_name}'.[/green]").format(count=len(images_table), object_name=object_name))
-                display_table(images_table, title=_("NED Image List for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, images_table, title=_("NED Image List for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(images_table, output_file, output_format, _("NED image list query"))
+                    save_table_to_file(images_table, output_file, output_format, _( "NED image list query"))
             else:
                 console.print(_("[yellow]No image entries found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:
-            handle_astroquery_exception(e, _("NED get_images"))
+            handle_astroquery_exception(ctx, e, _("NED images"))
             raise typer.Exit(code=1)
 
         if test:

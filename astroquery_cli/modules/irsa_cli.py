@@ -10,6 +10,7 @@ from ..utils import (
     save_table_to_file,
     parse_coordinates,
     parse_angle_str_to_quantity,
+    global_keyboard_interrupt_handler
 )
 from ..i18n import get_translator
 
@@ -41,7 +42,8 @@ def get_app():
 
     Irsa.ROW_LIMIT = 500
 
-    @app.command(name="query-gator", help=builtins._("Query a specific catalog in IRSA using Gator."))
+    @app.command(name="gator", help=builtins._("Query a specific catalog in IRSA using Gator."))
+    @global_keyboard_interrupt_handler
     def query_gator(ctx: typer.Context,
         catalog: str = typer.Argument(..., help=builtins._("Name of the IRSA catalog (e.g., 'allwise_p3as_psd').")),
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M51').")),
@@ -96,7 +98,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No information found in '{catalog}' for the specified region.[/yellow]").format(catalog=catalog))
         except Exception as e:
-            handle_astroquery_exception(e, _("IRSA Gator query for catalog {catalog}").format(catalog=catalog))
+            handle_astroquery_exception(ctx, e, _("IRSA Gator query for catalog {catalog}").format(catalog=catalog))
             raise typer.Exit(code=1)
 
         if test_mode:
@@ -114,10 +116,11 @@ def get_app():
             console.print(_("[yellow]Please refer to the IRSA Gator website for a comprehensive list of catalogs.[/yellow]"))
             console.print(_("[yellow]Common catalog examples: 'allwise_p3as_psd', 'ptf_lightcurves', 'fp_psc' (2MASS).[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("IRSA list_gator_catalogs"))
+            handle_astroquery_exception(ctx, e, _("IRSA list_gator_catalogs"))
             raise typer.Exit(code=1)
 
-    @app.command(name="query-region", help=builtins._("Perform a cone search across multiple IRSA collections."))
+    @app.command(name="region", help=builtins._("Perform a cone search across multiple IRSA collections."))
+    @global_keyboard_interrupt_handler
     def query_region(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M31').")),
         radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '10arcsec', '0.5deg').")),
@@ -167,7 +170,7 @@ def get_app():
                 console.print(_("[yellow]No information found in IRSA for the specified region{collection_info}.[/yellow]").format(collection_info=_(" in collection {collection}").format(collection=collection) if collection else ''))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("IRSA query_region"))
+            handle_astroquery_exception(ctx, e, _("IRSA query_region"))
             raise typer.Exit(code=1)
 
     return app

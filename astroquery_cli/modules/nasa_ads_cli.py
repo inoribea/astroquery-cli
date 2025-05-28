@@ -9,6 +9,7 @@ from ..utils import (
     handle_astroquery_exception,
     common_output_options,
     save_table_to_file,
+    global_keyboard_interrupt_handler,
 )
 import os
 
@@ -38,6 +39,7 @@ def get_app():
     ADS.ROW_LIMIT = 25
 
     @app.command(name="query", help=builtins._("Perform a query on NASA ADS."))
+    @global_keyboard_interrupt_handler
     def query_ads(ctx: typer.Context,
         query_string: str = typer.Argument(..., help=_("ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', 'bibcode:1998AJ....116.1009R').")),
         fields: Optional[List[str]] = typer.Option(["bibcode", "title", "author", "year", "citation_count"], "--field", help=builtins._("Fields to return.")),
@@ -83,7 +85,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="get-bibtex", help=builtins._("Retrieve BibTeX entries for given bibcodes."))
+    @app.command(name="get-bibtex", help=builtins._("Get BibTeX for a NASA ADS bibcode."))
+    @global_keyboard_interrupt_handler
     def get_bibtex(ctx: typer.Context,
         bibcodes: List[str] = typer.Argument(..., help=builtins._("List of ADS bibcodes.")),
         output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=builtins._("File to save BibTeX entries (e.g., refs.bib).")),

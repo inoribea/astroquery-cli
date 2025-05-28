@@ -6,6 +6,7 @@ import astropy.units as u
 from rich.console import Console
 
 from ..utils import display_table, handle_astroquery_exception, parse_coordinates, parse_angle_str_to_quantity, common_output_options, save_table_to_file
+from ..utils import global_keyboard_interrupt_handler
 from ..i18n import get_translator
 
 def get_app():
@@ -44,8 +45,10 @@ def get_app():
     ]
     # ============================================================
 
+    console = Console()
 
-    @app.command(name="query-object", help=builtins._("Query Gaia main source for a given object name or coordinates."))
+    @app.command(name="object", help=builtins._("Query Gaia main source for a given object name or coordinates."))
+    @global_keyboard_interrupt_handler
     def query_object(
         ctx: typer.Context,
         target: str = typer.Argument(..., help=builtins._("Object name or coordinates (e.g., 'M31', '10.68h +41.26d').")),
@@ -67,7 +70,6 @@ def get_app():
 
         resolved_table_name = GAIA_TABLES.get(table_name, table_name)
         _ = get_translator(ctx.obj.get("lang", "en") if ctx.obj else "en")
-        console = Console()
         try:
             try:
                 coords_obj = parse_coordinates(ctx, target)
@@ -80,9 +82,14 @@ def get_app():
                 if simbad_result is not None and len(simbad_result) > 0:
                     ra = simbad_result["ra"][0]
                     dec = simbad_result["dec"][0]
-                    from astropy.coordinates import SkyCoord
-                    coords_obj = SkyCoord(f"{ra} {dec}", unit=(u.hourangle, u.deg))
-                    console.print(f"[yellow]Resolved '{target}' { _('to coordinates via SIMBAD:') } {ra} {dec}[/yellow]")
+                    try:
+                        ra_float = float(ra)
+                        dec_float = float(dec)
+                        coords_obj = SkyCoord(ra_float, dec_float, unit="deg")
+                        console.print(f"[yellow]Resolved '{target}' {_('to coordinates via SIMBAD:')} {ra_float} {dec_float}[/yellow]")
+                    except Exception:
+                        coords_obj = SkyCoord(f"{ra} {dec}", unit=(u.hourangle, u.deg))
+                        console.print(f"[yellow]Resolved '{target}' {_('to coordinates via SIMBAD:')} {ra} {dec}[/yellow]")
                 else:
                     console.print(_("[red]Could not resolve '{target}' to coordinates via SIMBAD.[/red]").format(target=target))
                     raise typer.Exit(code=1)
@@ -112,7 +119,7 @@ def get_app():
                 console.print(_("[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]").format(target=target))
 
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("Gaia query_object"))
+            handle_astroquery_exception(ctx, e, "Gaia query_object")
             raise typer.Exit(code=1)
 
         if test:
@@ -121,6 +128,7 @@ def get_app():
             raise typer.Exit()
 
     @app.command(name="cone-search", help=builtins._("Perform a cone search around a coordinate."))
+    @global_keyboard_interrupt_handler
     def cone_search(ctx: typer.Context,
         target: str = typer.Argument(..., help=builtins._("Central object name or coordinates (e.g., 'M31', '10.68h +41.26d').")),
         radius: str = typer.Option("10arcsec", help=builtins._("Search radius (e.g., '5arcmin', '0.1deg').")),
@@ -190,7 +198,7 @@ def get_app():
                 console.print(_("[yellow]No results found from Gaia for this cone search.[/yellow]"))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("Gaia cone search on {table_name}").format(table_name=resolved_table_name))
+            handle_astroquery_exception(ctx, e, _("Gaia cone search on {table_name}").format(table_name=resolved_table_name))
             raise typer.Exit(code=1)
         finally:
             if login_user and Gaia.authenticated():
@@ -204,6 +212,7 @@ def get_app():
 
 
     @app.command(name="adql-query", help=builtins._("Execute a raw ADQL query (synchronous)."))
+    @global_keyboard_interrupt_handler
     def adql_query(ctx: typer.Context,
         query: str = typer.Argument(..., help=builtins._("The ADQL query string.")),
         output_file: Optional[str] = common_output_options["output_file"],

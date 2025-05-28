@@ -11,6 +11,7 @@ from ..utils import (
     save_table_to_file,
     parse_coordinates,
     parse_angle_str_to_quantity,
+    global_keyboard_interrupt_handler,
 )
 
 def get_app():
@@ -48,7 +49,8 @@ def get_app():
     Observations.TIMEOUT = 120
     Observations.PAGESIZE = 2000
 
-    @app.command(name="query-object", help=builtins._("Query MAST for observations of an object."))
+    @app.command(name="object", help=builtins._("Query MAST for observations of an object."))
+    @global_keyboard_interrupt_handler
     def query_object(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object.")),
         radius: Optional[str] = typer.Option("0.2 deg", help=builtins._("Search radius around the object.")),
@@ -87,7 +89,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No observations found for object '{object_name}' with specified criteria.[/yellow]").format(object_name=object_name))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, "MAST query_object")
+            handle_astroquery_exception(ctx, e, "MAST object")
             raise typer.Exit(code=1)
 
         if test:
@@ -95,7 +97,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="query-region", help=builtins._("Query MAST for observations in a sky region."))
+    @app.command(name="region", help=builtins._("Query MAST for observations in a sky region."))
+    @global_keyboard_interrupt_handler
     def query_region(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M101').")),
         radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '0.1deg', '5arcmin').")),
@@ -134,7 +137,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No observations found for the specified region with given criteria.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("MAST query_region"))
+            handle_astroquery_exception(ctx, e, _("MAST region"))
             raise typer.Exit(code=1)
 
         if test:
@@ -170,7 +173,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No data products found for the given observation ID(s) and criteria.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("MAST get_product_urls"))
+            handle_astroquery_exception(ctx, e, _("MAST get_product_urls"))
             raise typer.Exit(code=1)
 
         if test:

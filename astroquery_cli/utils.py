@@ -1,4 +1,5 @@
 from typing import Optional, Dict, Any
+import functools
 
 import typer
 from astropy.table import Table as AstropyTable
@@ -155,12 +156,21 @@ def display_table(
 def handle_astroquery_exception(ctx: typer.Context, e: Exception, service_name: str):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
     console.print(f"[bold red]Error querying {service_name}:[/bold red]")
-    console.print(f"{type(e).__name__}: {e}")
+    try:
+        console.print(f"{type(e).__name__}: {e}")
+    except KeyError as ke:
+        console.print(f"[red]KeyError in error message: {ke}. Some translation or error string is missing a key.[/red]")
+        console.print(f"[red]Original exception type: {type(e).__name__}[/red]")
+    # 打印异常链，便于定位隐藏的 format 错误
+    if hasattr(e, '__context__') and e.__context__:
+        console.print(f"[dim]Exception context: {type(e.__context__).__name__}: {e.__context__}[/dim]")
+    if hasattr(e, '__cause__') and e.__cause__:
+        console.print(f"[dim]Exception cause: {type(e.__cause__).__name__}: {e.__cause__}[/dim]")
     if hasattr(e, 'response') and e.response is not None:
         try:
             content = e.response.text
             if "Error" in content or "Fail" in content or "ERROR" in content:
-                 console.print(f"[italic]Server response details: {content[:500]}...[/italic]")
+                console.print(f"[italic]Server response details: {content[:500]}...[/italic]")
         except Exception:
             pass
 
@@ -211,3 +221,19 @@ def save_table_to_file(ctx: typer.Context, table: AstropyTable, output_file: str
             console.print(f"[yellow]Available astropy table write formats include: {', '.join(available_formats)}[/yellow]")
         elif file_format not in AstropyTable.write.formats and file_format not in ['pickle', 'pkl']:
              console.print(f"[yellow]Available astropy table write formats: {list(AstropyTable.write.formats.keys())}[/yellow]")
+
+def global_keyboard_interrupt_handler(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except KeyboardInterrupt:
+            from rich.console import Console
+            from astroquery_cli import i18n
+            _ = i18n.get_translator()
+            console = Console()
+            console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
+            # 直接退出主进程，避免 Typer/Click traceback
+            import os
+            os._exit(130)
+    return wrapper

@@ -10,6 +10,7 @@ from ..utils import (
     save_table_to_file,
     parse_coordinates,
     parse_angle_str_to_quantity,
+    global_keyboard_interrupt_handler,
 )
 from .. import i18n
 
@@ -29,7 +30,8 @@ def get_app():
         # ...
     ]
 
-    @app.command(name="query-object", help=builtins._("Query ALMA for observations of an object."))
+    @app.command(name="object", help=builtins._("Query ALMA for observations of an object."))
+    @global_keyboard_interrupt_handler
     def query_object(
         ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object.")),
@@ -73,7 +75,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("ALMA query_object"))
+            handle_astroquery_exception(ctx, e, _("ALMA object"))
             raise typer.Exit(code=1)
 
         if test:
@@ -81,7 +83,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="query-region", help=builtins._("Query ALMA for observations in a sky region."))
+    @app.command(name="region", help=builtins._("Query ALMA for observations in a sky region."))
+    @global_keyboard_interrupt_handler
     def query_region(
         ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', '150.0 2.0').")),
@@ -120,7 +123,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No information found for the specified region.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("ALMA query_region"))
+            handle_astroquery_exception(ctx, e, _("ALMA region"))
             raise typer.Exit(code=1)
 
         if test:

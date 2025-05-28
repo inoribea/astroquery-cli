@@ -6,6 +6,7 @@ from astropy.table import Table
 from rich.console import Console
 from astroquery_cli.utils import display_table, handle_astroquery_exception, common_output_options, save_table_to_file, add_common_fields, console
 from ..i18n import get_translator
+from ..utils import global_keyboard_interrupt_handler
 
 def get_app():
     import builtins
@@ -27,7 +28,8 @@ def get_app():
     # ===========================================================
 
 
-    @app.command(name="query-object", help=builtins._("Query basic data for an astronomical object."))
+    @app.command(name="object", help=builtins._("Query basic data for an astronomical object."))
+    @global_keyboard_interrupt_handler
     def query_object(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the object to query (e.g., 'M101', 'HD12345').")),
         wildcard: bool = typer.Option(False, "--wildcard", "-w", help=builtins._("Enable wildcard searching for the object name.")),
@@ -71,7 +73,7 @@ def get_app():
                 console.print(_("[yellow]No information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
 
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("SIMBAD query_object"))
+            handle_astroquery_exception(ctx, e, _("SIMBAD object"))
             raise typer.Exit(code=1)
 
         if test:
@@ -80,8 +82,9 @@ def get_app():
             raise typer.Exit()
 
 
-    @app.command(name="query-ids", help=builtins._("Query all identifiers for an astronomical object."))
-    def query_ids(ctx: typer.Context,
+    @app.command(name="ids", help=builtins._("Query all identifiers for an astronomical object."))
+    @global_keyboard_interrupt_handler
+    def query_objectids(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the object (e.g., 'Polaris').")),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
@@ -106,7 +109,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No identifiers found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("SIMBAD query_objectids"))
+            handle_astroquery_exception(ctx, e, _("SIMBAD ids"))
             raise typer.Exit(code=1)
 
         if test:
@@ -115,7 +118,8 @@ def get_app():
             raise typer.Exit()
 
 
-    @app.command(name="query-bibcode", help=builtins._("Query objects associated with a bibcode or bibcode list."))
+    @app.command(name="bibcode", help=builtins._("Query objects associated with a bibcode or bibcode list."))
+    @global_keyboard_interrupt_handler
     def query_bibcode(ctx: typer.Context,
         bibcodes: List[str] = typer.Argument(..., help=builtins._("Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple.")),
         output_file: Optional[str] = common_output_options["output_file"],
@@ -145,7 +149,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No objects found for the given bibcode(s).[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("SIMBAD query_bibcode"))
+            handle_astroquery_exception(ctx, e, _("SIMBAD bibcode"))
             raise typer.Exit(code=1)
 
         if test:

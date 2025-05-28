@@ -9,6 +9,7 @@ from ..utils import (
     handle_astroquery_exception,
     common_output_options,
     save_table_to_file,
+    global_keyboard_interrupt_handler
 )
 
 def get_app():
@@ -47,10 +48,11 @@ def get_app():
 
 
 
-    @app.command(name="query", help=builtins._("Query JPL SBDB for a small body."))
+    @app.command(name="object", help=builtins._("Query JPL SBDB for a small body."))
+    @global_keyboard_interrupt_handler
     def query_sbdb(ctx: typer.Context,
         target: str = typer.Argument(..., help=builtins._("Target small body (e.g., 'Ceres', '1P', '2023 BU').")),
-        id_type: Optional[str] = typer.Option("auto", help=builtins._("Type of target identifier ('name', 'des', 'moid', 'spk', 'auto').")),
+        id_type: Optional[str] = typer.Option(None, help=builtins._("Type of target identifier ('name', 'des', 'moid', 'spk') (default: let SBDB auto-detect).")),
         phys_par: bool = typer.Option(False, "--phys-par", help=builtins._("Include physical parameters.")),
         orb_el: bool = typer.Option(False, "--orb-el", help=builtins._("Include orbital elements.")),
         close_approach: bool = typer.Option(False, "--ca-data", help=builtins._("Include close-approach data.")),
@@ -66,13 +68,12 @@ def get_app():
 
         console.print(_("[cyan]Querying JPL SBDB for target: '{target}'...[/cyan]").format(target=target))
         try:
+            query_kwargs = {}
+            if id_type:
+                query_kwargs['id_type'] = id_type
             sbdb_query = SBDB.query(
                 target,
-                id_type=id_type,
-                phys_par=phys_par,
-                orb_el=orb_el,
-                ca_data=close_approach,
-                radar_obs=radar_obs,
+                **query_kwargs,
                 full_precision=True
             )
 
@@ -90,7 +91,7 @@ def get_app():
                     for key, value in sbdb_query.items():
                         if isinstance(value, AstropyTable):
                             console.print(_("\n[bold underline]Table: {key}[/bold underline]").format(key=key))
-                            display_table(value, title=_("{key} for {target}").format(key=key, target=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                            display_table(ctx, value, title=_("{key} for {target}").format(key=key, target=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
                             if output_file:
                                 save_table_to_file(value, output_file.replace(".", f"_{key}."), output_format, _("JPL SBDB {key} for {target}").format(key=key, target=target))
                         elif isinstance(value, dict) or isinstance(value, list):
@@ -117,7 +118,7 @@ def get_app():
                 console.print(_("[yellow]No information found for target '{target}'.[/yellow]").format(target=target))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("JPL SBDB query"))
+            handle_astroquery_exception(ctx, e, _("JPL SBDB object"))
             raise typer.Exit(code=1)
 
         if test:

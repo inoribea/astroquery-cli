@@ -6,7 +6,7 @@ from astropy.coordinates import SkyCoord
 import astropy.units as u
 
 from ..i18n import get_translator
-from ..utils import console, display_table, handle_astroquery_exception
+from ..utils import console, display_table, handle_astroquery_exception, global_keyboard_interrupt_handler
 
 def get_app():
     import builtins
@@ -144,7 +144,8 @@ def get_app():
             raise typer.Exit()
 
 
-    @app.command(name="query-object", help=builtins._("Query catalogs around an object name or specific coordinates."))
+    @app.command(name="object", help=builtins._("Query catalogs around an object name or specific coordinates."))
+    @global_keyboard_interrupt_handler
     def query_object(ctx: typer.Context,
         target: str = typer.Argument(..., help=builtins._("Object name (e.g., 'M31') or coordinates (e.g., '10.68h +41.26d' or '160.32 41.45').")),
         radius: str = typer.Option("2arcmin", help=builtins._("Search radius (e.g., '5arcmin', '0.1deg').")),
@@ -182,21 +183,17 @@ def get_app():
 
             for table_name, table_data in result_tables.items():
                 if table_data is not None and len(table_data) > 0:
-                    display_table(
-                        table_data,
-                        title=_("Results from {catalog_name} for {target_name}").format(catalog_name=table_name, target_name=target),
-                        max_rows=max_rows_display,
-                        show_all_columns=show_all_columns
-                    )
+                    display_table(ctx, table_data, title=_("Results from {catalog_name} for {target_name}").format(catalog_name=table_name, target_name=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 else:
                     console.print(_("[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/yellow]").format(catalog_name=table_name))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("VizieR query_object for {target_name}").format(target_name=target))
+            handle_astroquery_exception(ctx, e, _("Vizier object"))
             raise typer.Exit(code=1)
 
 
-    @app.command(name="query-region", help=builtins._("Query catalogs within a sky region (cone or box)."))
+    @app.command(name="region", help=builtins._("Query catalogs within a sky region (cone or box)."))
+    @global_keyboard_interrupt_handler
     def query_region(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Central coordinates for the region (e.g., '10.68h +41.26d' or '160.32 41.45').")),
         radius: Optional[str] = typer.Option(None, help=builtins._("Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying width/height.")),
@@ -250,21 +247,17 @@ def get_app():
 
             for table_name, table_data in result_tables.items():
                 if table_data is not None and len(table_data) > 0:
-                    display_table(
-                        table_data,
-                        title=_("Results from {catalog_name} for region around {coords_str}").format(catalog_name=table_name, coords_str=coordinates),
-                        max_rows=max_rows_display,
-                        show_all_columns=show_all_columns
-                    )
+                    display_table(ctx, table_data, title=_("Results from {catalog_name} for region around {coords_str}").format(catalog_name=table_name, coords_str=coordinates), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 else:
                     console.print(_("[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/yellow]").format(catalog_name=table_name))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("VizieR query_region for {coords_str}").format(coords_str=coordinates))
+            handle_astroquery_exception(ctx, e, _("Vizier region"))
             raise typer.Exit(code=1)
 
 
-    @app.command(name="query-constraints", help=builtins._("Query catalogs based on specific column constraints or keywords."))
+    @app.command(name="constraints", help=builtins._("Query catalogs based on specific column constraints or keywords."))
+    @global_keyboard_interrupt_handler
     def query_constraints(ctx: typer.Context,
         catalogs: List[str] = typer.Option(..., "--catalog", "-c", help=builtins._("VizieR catalog identifier(s). Can be specified multiple times.")),
         constraints: Optional[List[str]] = typer.Option(None, "--constraint", help=builtins._("Constraints on column values (e.g., 'Vmag=<10', 'B-V=0.5..1.0'). Can be specified multiple times. Format: 'column_name=condition'.")),
@@ -310,17 +303,12 @@ def get_app():
 
             for table_name, table_data in result_tables.items():
                 if table_data is not None and len(table_data) > 0:
-                    display_table(
-                        table_data,
-                        title=_("Constraint Query Results from {catalog_name}").format(catalog_name=table_name),
-                        max_rows=max_rows_display,
-                        show_all_columns=show_all_columns
-                    )
+                    display_table(ctx, table_data, title=_("Constraint Query Results from {catalog_name}").format(catalog_name=table_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 else:
                     console.print(_("[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/yellow]").format(catalog_name=table_name))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("VizieR query_constraints"))
+            handle_astroquery_exception(ctx, e, _("Vizier constraints"))
             raise typer.Exit(code=1)
 
     return app

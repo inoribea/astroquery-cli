@@ -13,69 +13,70 @@ for tmp in "$LOCALES_DIR"/untranslated_*.tmp; do
         continue
     fi
 
-    while IFS= read -r line; do
-        if [[ ! "$line" =~ \|\|\| ]]; then
-            echo "Format error: missing '|||' in $tmp: $line"
-            exit 1
-        fi
-    done < "$tmp"
-
     cp "$po" "$po.bak"
 
     awk -v TMP="$tmp" '
         function trim(s) { sub(/^[ \t\r\n]+/, "", s); sub(/[ \t\r\n]+$/, "", s); return s }
         BEGIN {
-            replaced = 0;
-            not_replaced = 0;
             while ((getline < TMP) > 0) {
-                if ($0 ~ /^\/\//) continue;
+                if ($0 ~ /^\//) continue;
                 split($0, arr, /\|\|\|/);
                 key = trim(arr[1]);
                 val = trim(arr[2]);
                 untranslated[key] = val;
             }
             close(TMP)
+            msgid = ""; msgstr = ""; inmsgid = 0; inmsgstr = 0; lines = "";
         }
         /^msgid / {
-            msgid=substr($0,8,length($0)-8);
-            msgid=trim(msgid);
-            pmsgid_list[++msgid_count] = msgid;
-            print $0;
+            inmsgid = 1; inmsgstr = 0;
+            msgid = substr($0,8,length($0)-8);
+            lines = $0 "\n";
             next
         }
         /^msgstr / {
+            inmsgid = 0; inmsgstr = 1;
+            msgstr = substr($0,9,length($0)-9);
             if (msgid in untranslated && untranslated[msgid] != "") {
-                print "msgstr \"" untranslated[msgid] "\"";
-                printf("[Replaced] Original: %s\nTranslation: %s\n", msgid, untranslated[msgid]) > "/dev/stderr";
-                replaced++;
-            } else {
-                print $0;
-                if (msgid != "") {
-                    printf("[Not replaced] Original: %s\n", msgid) > "/dev/stderr";
-                    not_replaced++;
+                n = split(untranslated[msgid], arr, /\n/);
+                if (n == 1) {
+                    lines = lines "msgstr \"" arr[1] "\"\n";
+                } else {
+                    lines = lines "msgstr \"\"\n";
+                    for (i = 1; i <= n; i++) {
+                        if (arr[i] != "")
+                            lines = lines "\"" arr[i] "\"\n";
+                    }
                 }
+            } else {
+                lines = lines $0 "\n";
             }
-            msgid = "";
+            print lines;
+            msgid = ""; msgstr = ""; lines = "";
             next
         }
-        !/^msgid / && !/^msgstr / {
-            print $0;
+        /^"/ {
+            if (inmsgid) {
+                msgid = msgid substr($0,2,length($0)-2);
+            }
+            if (inmsgstr) {
+                msgstr = msgstr substr($0,2,length($0)-2);
+            }
+            lines = lines $0 "\n";
+            next
         }
-        END {
-            print "\n[DEBUG] All keys loaded from tmp:" > "/dev/stderr";
-            for (k in untranslated) {
-                printf("  [%s]\n", k) > "/dev/stderr";
+        {
+            lines = lines $0 "\n";
+            if ($0 == "") {
+                print lines;
+                msgid = ""; msgstr = ""; inmsgid = 0; inmsgstr = 0; lines = "";
             }
-            print "\n[DEBUG] All msgid encountered:" > "/dev/stderr";
-            for (i in msgid_list) {
-                printf("  [%s]\n", msgid_list[i]) > "/dev/stderr";
-            }
-            printf("\nTotal replaced: %d, not replaced: %d\n", replaced, not_replaced) > "/dev/stderr";
         }
     ' "$po.bak" > "$po"
+
+    msgattrib --clear-fuzzy "$po" -o "$po"
     echo "Updated: $po"
 done
 
-pybabel compile -d "../astroquery_cli/locales"
-
+pybabel compile -d "./locales"
 echo "Compiled all .po files to .mo."

@@ -6,7 +6,7 @@ from astroquery.jplhorizons import Horizons, conf as jpl_conf
 from astropy.time import Time
 from rich.console import Console
 
-from ..utils import display_table, handle_astroquery_exception
+from ..utils import display_table, handle_astroquery_exception, global_keyboard_interrupt_handler
 from ..i18n import get_translator
 console = Console()
 
@@ -73,7 +73,8 @@ def get_app():
         return "1,2,4,8,9,10,12,13,14,19,20,21,23,24,31"
 
     @app.command(name="query", help=builtins._("Query ephemerides, orbital elements, or vectors for a target object."))
-    def query_object(ctx: typer.Context,
+    @global_keyboard_interrupt_handler
+    def query(ctx: typer.Context,
         target: str = typer.Argument(..., help=builtins._("Object ID (e.g., 'Mars', 'Ceres', '2000NM', '@10'). Use '@' prefix for spacecraft ID.")),
         epochs: Optional[str] = typer.Option(
             None,
@@ -149,8 +150,10 @@ def get_app():
             epoch_dict = Time.now().iso
             console.print(_("[dim]No epoch specified for {ephem_type}, using current time: {epoch}[/dim]").format(ephem_type=ephem_type.value, epoch=epoch_dict))
         elif ephem_type == EphemType.OBSERVER:
-            console.print(_("[bold red]Error: For ephemeris type OBSERVER, you must specify --epochs or (--start, --end, --step).[/bold red]"))
-            raise typer.Exit(code=1)
+            import datetime
+            today = datetime.datetime.now().strftime('%Y-%m-%d')
+            epoch_dict = {'start': today, 'stop': today, 'step': '1d'}
+            console.print(_("[yellow]No epoch specified for OBSERVER, using today as default: {epoch_dict}[/yellow]").format(epoch_dict=epoch_dict))
 
         query_params = {
             "id": target,
@@ -182,10 +185,10 @@ def get_app():
                 if q: console.print(_("[dim]Requesting quantities for elements: {quantities}[/dim]").format(quantities=q))
                 result_table = obj.elements(quantities=q, get_raw_response=False) if q else obj.elements(get_raw_response=False)
 
-            display_table(result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
+            display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
 
         except Exception as e:
-            handle_astroquery_exception(e, _("JPL Horizons"))
+            handle_astroquery_exception(ctx, e, _("JPL Horizons object"))
             raise typer.Exit(code=1)
 
         if test:

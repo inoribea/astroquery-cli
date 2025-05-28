@@ -10,6 +10,7 @@ from ..utils import (
     save_table_to_file,
     parse_coordinates,
     parse_angle_str_to_quantity,
+    global_keyboard_interrupt_handler,
 )
 from ..i18n import get_translator
 
@@ -46,7 +47,8 @@ def get_app():
 
 
 
-    @app.command(name="query-object-catalogs", help=builtins._("Query ESASky catalogs for an object."))
+    @app.command(name="object-catalogs", help=builtins._("Query ESASky catalogs for an object."))
+    @global_keyboard_interrupt_handler
     def query_object_catalogs(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object.")),
         catalogs: Optional[List[str]] = typer.Option(None, "--catalog", help=builtins._("Specify catalogs to query (e.g., 'Gaia DR3'). Can be specified multiple times.")),
@@ -68,7 +70,7 @@ def get_app():
                 for cat_name, table_list in result_tables_dict.items():
                     if table_list:
                         table = table_list[0]
-                        display_table(table, title=_("ESASky: {cat_name} for {object_name}").format(cat_name=cat_name, object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                        display_table(ctx, table, title=_("ESASky: {cat_name} for {object_name}").format(cat_name=cat_name, object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                         if output_file:
                             save_table_to_file(table, output_file.replace(".", f"_{cat_name}."), output_format, _("ESASky {cat_name} object query").format(cat_name=cat_name))
                     else:
@@ -77,7 +79,7 @@ def get_app():
                 console.print(_("[yellow]No catalog information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
 
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("ESASky query_object_catalogs"))
+            handle_astroquery_exception(ctx, e, _("ESASky object-catalogs"))
             raise typer.Exit(code=1)
 
         if test:
@@ -85,7 +87,8 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="query-region-catalogs", help=builtins._("Query ESASky catalogs in a sky region."))
+    @app.command(name="region-catalogs", help=builtins._("Query ESASky catalogs in a sky region."))
+    @global_keyboard_interrupt_handler
     def query_region_catalogs(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M101').")),
         radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '0.1deg', '5arcmin').")),
@@ -109,7 +112,7 @@ def get_app():
                 for cat_name, table_list in result_tables_dict.items():
                     if table_list:
                         table = table_list[0]
-                        display_table(table, title=_("ESASky: {cat_name} for region").format(cat_name=cat_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                        display_table(ctx, table, title=_("ESASky: {cat_name} for region").format(cat_name=cat_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                         if output_file:
                             save_table_to_file(table, output_file.replace(".", f"_{cat_name}."), output_format, _("ESASky {cat_name} region query").format(cat_name=cat_name))
                     else:
@@ -117,7 +120,7 @@ def get_app():
             else:
                 console.print(_("[yellow]No catalog information found for the specified region.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("ESASky query_region_catalogs"))
+            handle_astroquery_exception(ctx, e, _("ESASky region-catalogs"))
             raise typer.Exit(code=1)
 
         if test:
@@ -126,6 +129,7 @@ def get_app():
             raise typer.Exit()
 
     @app.command(name="list-catalogs", help=builtins._("List available missions/catalogs in ESASky."))
+    @global_keyboard_interrupt_handler
     def list_catalogs(ctx: typer.Context,
         test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
     ):
@@ -140,7 +144,7 @@ def get_app():
             else:
                 console.print(_("[yellow]Could not retrieve mission list or list is empty.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(e, _("ESASky list_catalogs"))
+            handle_astroquery_exception(ctx, e, _("ESASky list_catalogs"))
             raise typer.Exit(code=1)
 
         if test:
