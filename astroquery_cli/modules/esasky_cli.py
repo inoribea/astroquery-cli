@@ -87,11 +87,11 @@ def get_app():
     @app.command(name="object-catalogs", help=builtins._("Query ESASky catalogs for an object."))
     @global_keyboard_interrupt_handler
     def query_object_catalogs(ctx: typer.Context,
-        object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object.")),
+        object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object (e.g., 'M31', 'Vega', 'NGC 5194').")),
         catalogs: Optional[List[str]] = typer.Option(
             None,
             "--catalog",
-            help=builtins._("Specify catalogs to query. Use 'list-catalogs' command to see all available catalogs. Examples: 'GAIA-DR3', 'TYCHO-2', 'ALLWISE'. Can be specified multiple times. Default: GAIA-DR3")
+            help=builtins._("Specify catalogs to query (e.g., 'GAIA-DR3', '2MASS', 'ALLWISE'). Can be specified multiple times. Use 'list-catalogs' command to see all available catalogs. Default: GAIA-DR3.")
         ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
@@ -136,9 +136,13 @@ def get_app():
     @app.command(name="region-catalogs", help=builtins._("Query ESASky catalogs in a sky region."))
     @global_keyboard_interrupt_handler
     def query_region_catalogs(ctx: typer.Context,
-        coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M101').")),
-        radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '0.1deg', '5arcmin').")),
-        catalogs: Optional[List[str]] = typer.Option(None, "--catalog", help=builtins._("Specify catalogs to query.")),
+        coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M101', '299.86808 -14.67788').")),
+        radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '0.1deg', '5arcmin', '10s').")),
+        catalogs: Optional[List[str]] = typer.Option(
+            None,
+            "--catalog",
+            help=builtins._("Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). Can be specified multiple times. Use 'list-catalogs' command to see all available catalogs.")
+        ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),

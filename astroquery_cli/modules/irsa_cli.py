@@ -2,6 +2,7 @@ import typer
 from typing import Optional, List
 from astropy.table import Table as AstropyTable
 from astroquery.irsa import Irsa
+from astroquery.ipac.irsa import Irsa as IrsaGator
 from ..utils import (
     console,
     display_table,
@@ -45,9 +46,9 @@ def get_app():
     @app.command(name="gator", help=builtins._("Query a specific catalog in IRSA using Gator."))
     @global_keyboard_interrupt_handler
     def query_gator(ctx: typer.Context,
-        catalog: str = typer.Argument(..., help=builtins._("Name of the IRSA catalog (e.g., 'allwise_p3as_psd').")),
-        coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M51').")),
-        radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '10arcsec', '0.5deg').")),
+        catalog: str = typer.Argument(..., help=builtins._("Name of the IRSA catalog (e.g., 'allwise_p3as_psd', 'fp_psc').")),
+        coordinates: Optional[str] = typer.Argument(None, help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M51'). If not provided, returns first 500 rows.")),
+        radius: Optional[str] = typer.Argument(None, help=builtins._("Search radius (e.g., '10arcsec', '0.5deg'). Required if coordinates provided.")),
         columns: Optional[List[str]] = typer.Option(None, "--col", help=builtins._("Specific columns to retrieve (comma separated or multiple use). Use 'all' for all columns.")),
         column_filters: Optional[List[str]] = typer.Option(None, "--filter", help=builtins._("Column filters (e.g., 'w1mpro>10', 'ph_qual=A'). Can be specified multiple times.")),
         output_file: Optional[str] = common_output_options["output_file"],
@@ -59,16 +60,38 @@ def get_app():
         test_mode = ctx.obj.get("test") if ctx.obj else False
         start = time.perf_counter() if test_mode else None
 
-        console.print(_("[cyan]Querying IRSA catalog '{catalog}' via Gator for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(catalog=catalog, coordinates=coordinates, radius=radius))
         try:
-            coord = parse_coordinates(coordinates)
-            rad_quantity = parse_angle_str_to_quantity(radius)
+            if coordinates and radius:
+                console.print(_("[cyan]Querying IRSA catalog '{catalog}' via Gator for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(catalog=catalog, coordinates=coordinates, radius=radius))
+                coord = parse_coordinates(ctx, coordinates)
+                rad_quantity = parse_angle_str_to_quantity(ctx, radius)
 
-            result_table: Optional[AstropyTable] = Irsa.query_gator(
-                catalog=catalog,
-                coordinates=coord,
-                radius=rad_quantity
-            )
+                # Use query_region with catalog parameter for Gator-like functionality
+                result_table: Optional[AstropyTable] = Irsa.query_region(
+                    coordinates=coord,
+                    radius=rad_quantity,
+                    catalog=catalog
+                )
+            elif coordinates and not radius:
+                console.print(_("[red]Error: Radius is required when coordinates are provided.[/red]"))
+                raise typer.Exit(code=1)
+            else:
+                console.print(_("[cyan]Browsing IRSA catalog '{catalog}' (first {limit} rows)...[/cyan]").format(catalog=catalog, limit=Irsa.ROW_LIMIT))
+                # For browsing without coordinates, we can use a wide search or try to get schema info
+                # Since IRSA Gator typically requires coordinates, we'll use a fallback approach
+                from astropy.coordinates import SkyCoord
+                import astropy.units as u
+                
+                # Use galactic center as default coordinates for browsing
+                coord = SkyCoord("17h45m40.04s", "-29d00m28.1s", frame='icrs')
+                rad_quantity = 180 * u.deg  # Very wide search to get representative data
+                
+                # Use query_region with catalog parameter for browsing
+                result_table: Optional[AstropyTable] = Irsa.query_region(
+                    coordinates=coord,
+                    radius=rad_quantity,
+                    catalog=catalog
+                )
 
             # Apply column selection
             if result_table and columns and columns != ["all"]:
@@ -92,9 +115,9 @@ def get_app():
 
             if result_table and len(result_table) > 0:
                 console.print(_("[green]Found {count} match(es) in '{catalog}'.[/green]").format(count=len(result_table), catalog=catalog))
-                display_table(result_table, title=_("IRSA Gator: {catalog}").format(catalog=catalog), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=_("IRSA Gator: {catalog}").format(catalog=catalog), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("IRSA Gator {catalog} query").format(catalog=catalog))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("IRSA Gator {catalog} query").format(catalog=catalog))
             else:
                 console.print(_("[yellow]No information found in '{catalog}' for the specified region.[/yellow]").format(catalog=catalog))
         except Exception as e:
@@ -134,8 +157,8 @@ def get_app():
     ):
         console.print(_("[cyan]Performing IRSA cone search for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(coordinates=coordinates, radius=radius))
         try:
-            coord = parse_coordinates(coordinates)
-            rad_quantity = parse_angle_str_to_quantity(radius)
+            coord = parse_coordinates(ctx, coordinates)
+            rad_quantity = parse_angle_str_to_quantity(ctx, radius)
 
             result_table: Optional[AstropyTable] = Irsa.query_region(
                 coordinates=coord,
@@ -163,9 +186,9 @@ def get_app():
 
             if result_table and len(result_table) > 0:
                 console.print(_("[green]Found {count} match(es) in IRSA holdings.[/green]").format(count=len(result_table)))
-                display_table(result_table, title=_("IRSA Cone Search Results"), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=_("IRSA Cone Search Results"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("IRSA cone search query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("IRSA cone search query"))
             else:
                 console.print(_("[yellow]No information found in IRSA for the specified region{collection_info}.[/yellow]").format(collection_info=_(" in collection {collection}").format(collection=collection) if collection else ''))
 
