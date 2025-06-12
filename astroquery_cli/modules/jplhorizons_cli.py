@@ -171,7 +171,7 @@ def get_app():
             result_table = None
 
             if ephem_type == EphemType.OBSERVER:
-                q = quantities or get_default_quantities_ephem()
+                q = quantities or get_default_quantities_ephem(ctx)
                 console.print(_("[dim]Requesting quantities: {quantities}[/dim]").format(quantities=q))
                 result_table = obj.ephemerides(quantities=q, get_raw_response=False)
 

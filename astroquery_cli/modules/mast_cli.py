@@ -85,7 +85,7 @@ def get_app():
                 console.print(_("[green]Found {count} observation(s) for '{object_name}'.[/green]").format(count=len(result_table), object_name=object_name))
                 display_table(ctx, result_table, title=_("MAST Observations for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("MAST object query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("MAST object query"))
             else:
                 console.print(_("[yellow]No observations found for object '{object_name}' with specified criteria.[/yellow]").format(object_name=object_name))
         except Exception as e:
@@ -115,8 +115,8 @@ def get_app():
 
         console.print(_("[cyan]Querying MAST for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(coordinates=coordinates, radius=radius))
         try:
-            coord = parse_coordinates(coordinates)
-            rad_quantity = parse_angle_str_to_quantity(radius)
+            coord = parse_coordinates(ctx, coordinates)
+            rad_quantity = parse_angle_str_to_quantity(ctx, radius)
 
             result_table: Optional[AstropyTable] = Observations.query_region(
                 coord,
@@ -133,7 +133,7 @@ def get_app():
                 console.print(_("[green]Found {count} observation(s) in the region.[/green]").format(count=len(result_table)))
                 display_table(ctx, result_table, title=_("MAST Observations for Region"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("MAST region query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("MAST region query"))
             else:
                 console.print(_("[yellow]No observations found for the specified region with given criteria.[/yellow]"))
         except Exception as e:
@@ -168,7 +168,7 @@ def get_app():
                 console.print(_("[green]Found {count} data products.[/green]").format(count=len(products_table)))
                 display_table(ctx, products_table, title=_("MAST Data Products"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(products_table, output_file, output_format, _("MAST products list"))
+                    save_table_to_file(ctx, products_table, output_file, output_format, _("MAST products list"))
                 console.print(_("[info]Use 'aqc mast download-products <obs_id> ...' or 'astroquery.mast.Observations.download_products()' to download.[/info]"))
             else:
                 console.print(_("[yellow]No data products found for the given observation ID(s) and criteria.[/yellow]"))

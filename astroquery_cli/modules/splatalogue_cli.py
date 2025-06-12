@@ -98,7 +98,7 @@ def get_app():
                 console.print(_("[green]Found {count} spectral line(s).[/green]").format(count=len(result_table)))
                 display_table(ctx, result_table, title=_("Splatalogue Lines"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("Splatalogue line query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("Splatalogue line query"))
             else:
                 console.print(_("[yellow]No spectral lines found for the given criteria.[/yellow]"))
         except Exception as e:
@@ -127,7 +127,7 @@ def get_app():
             if species_table and len(species_table) > 0:
                 display_table(ctx, species_table, title=_("Splatalogue NRAO Recommended Species"), max_rows=max_rows_display, show_all_columns=True)
                 if output_file:
-                    save_table_to_file(species_table, output_file, output_format, _("Splatalogue species table"))
+                    save_table_to_file(ctx, species_table, output_file, output_format, _("Splatalogue species table"))
             else:
                 console.print(_("[yellow]Could not retrieve species table or it is empty.[/yellow]"))
         except Exception as e:

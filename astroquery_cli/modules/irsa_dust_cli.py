@@ -50,7 +50,7 @@ def get_app():
         coordinates_list = []
         for target_str in targets:
             try:
-                coordinates_list.append(parse_coordinates(target_str))
+                coordinates_list.append(parse_coordinates(ctx, target_str))
             except typer.Exit:
                 raise
 
@@ -90,7 +90,7 @@ def get_app():
                 console.print(_("[yellow]No extinction data returned by IRSA Dust ({map_name}).[/yellow]").format(map_name=map_name))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("IRSA Dust ({map_name}) get_extinction_table").format(map_name=map_name))
+            handle_astroquery_exception(ctx, e, _("IRSA Dust ({map_name}) get_extinction_table").format(map_name=map_name))
             raise typer.Exit(code=1)
 
         if test:
@@ -113,7 +113,7 @@ def get_app():
         console.print(_("[cyan]Querying IRSA Dust ({map_name}) for map around '{target}' with radius {radius}...[/cyan]").format(map_name=map_name, target=target, radius=radius))
 
         try:
-            coords = parse_coordinates(target)
+            coords = parse_coordinates(ctx, target)
             rad_quantity = u.Quantity(radius)
         except Exception as e:
             console.print(_("[bold red]Error parsing input: {error}[/bold red]").format(error=e))
@@ -143,7 +143,7 @@ def get_app():
                 hdul.close()
 
         except Exception as e:
-            handle_astroquery_exception(e, _("IRSA Dust ({map_name}) get_images").format(map_name=map_name))
+            handle_astroquery_exception(ctx, e, _("IRSA Dust ({map_name}) get_images").format(map_name=map_name))
             raise typer.Exit(code=1)
 
         if test:

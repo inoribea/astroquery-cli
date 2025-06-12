@@ -94,9 +94,9 @@ def get_app():
             if all_ads_results and len(all_ads_results) > 0:
                 result_table = all_ads_results
                 console.print(_("[green]Found {count} result(s) from ADS.[/green]").format(count=len(result_table)))
-                display_table(result_table, title=_("ADS Query Results"), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=_("ADS Query Results"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("NASA ADS query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("NASA ADS query"))
             else:
                 console.print(_("[yellow]No results found for your ADS query.[/yellow]"))
 

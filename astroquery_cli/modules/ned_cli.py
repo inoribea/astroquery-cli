@@ -59,7 +59,7 @@ def get_app():
                 console.print(_("[green]Found information for '{object_name}'.[/green]").format(object_name=object_name))
                 display_table(ctx, result_table, title=_("NED Data for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _( "NED object query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _( "NED object query"))
             else:
                 console.print(_("[yellow]No information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:
@@ -88,8 +88,8 @@ def get_app():
 
         console.print(_("[cyan]Querying NED for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(coordinates=coordinates, radius=radius))
         try:
-            coord = parse_coordinates(coordinates)
-            rad_quantity = parse_angle_str_to_quantity(radius)
+            coord = parse_coordinates(ctx, coordinates)
+            rad_quantity = parse_angle_str_to_quantity(ctx, radius)
 
             result_table: Optional[AstropyTable] = Ned.query_region(
                 coord,
@@ -101,7 +101,7 @@ def get_app():
                 console.print(_("[green]Found {count} object(s) in the region.[/green]").format(count=len(result_table)))
                 display_table(ctx, result_table, title=_("NED Objects in Region"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _( "NED region query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _( "NED region query"))
             else:
                 console.print(_("[yellow]No objects found in the specified region.[/yellow]"))
         except Exception as e:
@@ -133,7 +133,7 @@ def get_app():
                 console.print(_("[green]Found {count} image entries for '{object_name}'.[/green]").format(count=len(images_table), object_name=object_name))
                 display_table(ctx, images_table, title=_("NED Image List for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(images_table, output_file, output_format, _( "NED image list query"))
+                    save_table_to_file(ctx, images_table, output_file, output_format, _( "NED image list query"))
             else:
                 console.print(_("[yellow]No image entries found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:

@@ -36,7 +36,7 @@ def get_app():
     # ============================================================
 
 
-    def parse_angle_str_to_quantity(ctx: typer.Context,angle_str: Optional[str]) -> Optional[u.Quantity]:
+    def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: Optional[str]) -> Optional[u.Quantity]:
         if angle_str is None:
             return None
         try:
@@ -46,7 +46,7 @@ def get_app():
             console.print(_("[yellow]Hint: Use format like '5arcmin', '0.5deg', '10arcsec'.[/yellow]"))
             raise typer.Exit(code=1)
 
-    def parse_coordinates(ctx: typer.Context,coords_str: str) -> SkyCoord:
+    def parse_coordinates(ctx: typer.Context, coords_str: str) -> SkyCoord:
         try:
             if ',' in coords_str and ('h' in coords_str or 'd' in coords_str or ':' in coords_str):
                 return SkyCoord(coords_str, frame='icrs', unit=(u.hourangle, u.deg))
@@ -66,7 +66,7 @@ def get_app():
                 raise typer.Exit(code=1)
 
 
-    def parse_constraints_list(ctx: typer.Context,constraints_list: Optional[List[str]]) -> Optional[dict]:
+    def parse_constraints_list(ctx: typer.Context, constraints_list: Optional[List[str]]) -> Optional[dict]:
         if not constraints_list:
             return None
         parsed_constraints = {}
@@ -126,6 +126,7 @@ def get_app():
             result_tables = Vizier.find_catalogs(**query_params)
             if result_tables:
                 display_table(
+                    ctx,
                     result_tables[0],
                     title=_("Found VizieR Catalogs"),
                     max_rows=max_catalogs,
@@ -135,7 +136,7 @@ def get_app():
                 console.print(_("[yellow]No catalogs found matching your criteria.[/yellow]"))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("VizieR find_catalogs"))
+            handle_astroquery_exception(ctx, e, _("VizieR find_catalogs"))
             raise typer.Exit(code=1)
 
         if test:
@@ -216,10 +217,10 @@ def get_app():
         vizier_conf.row_limit = row_limit
         console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
 
-        coords_obj = parse_coordinates(coordinates)
-        rad_quantity = parse_angle_str_to_quantity(radius)
-        width_quantity = parse_angle_str_to_quantity(width)
-        height_quantity = parse_angle_str_to_quantity(height)
+        coords = parse_coordinates(ctx, target)
+        rad_quantity = parse_angle_str_to_quantity(ctx, radius)
+        width_quantity = parse_angle_str_to_quantity(ctx, width)
+        height_quantity = parse_angle_str_to_quantity(ctx, height)
 
         if rad_quantity and (width_quantity or height_quantity):
             console.print(_("[bold red]Error: Specify either --radius (for cone search) OR (--width and --height) (for box search), not both.[/bold red]"))
@@ -277,7 +278,7 @@ def get_app():
         vizier_conf.row_limit = row_limit
         console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
 
-        parsed_constraints = parse_constraints_list(constraints)
+        parsed_constraints = parse_constraints_list(ctx, constraints)
         if not parsed_constraints and not keywords:
             console.print(_("[yellow]Please provide at least --constraint(s) or --keyword(s) for this query type.[/yellow]"))
             raise typer.Exit(code=1)

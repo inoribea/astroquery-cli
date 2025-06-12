@@ -68,7 +68,7 @@ def get_app():
                 console.print(_("[green]Found {count} match(es) for '{object_name}'.[/green]").format(count=len(result_table), object_name=object_name))
                 display_table(ctx, result_table, title=_("SIMBAD Data for {object_name}").format(object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("SIMBAD object query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("SIMBAD object query"))
             else:
                 console.print(_("[yellow]No information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
 
@@ -105,7 +105,7 @@ def get_app():
             if result_table:
                 display_table(ctx, result_table, title=_("SIMBAD Identifiers for {object_name}").format(object_name=object_name), max_rows=max_rows_display)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("SIMBAD ID query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("SIMBAD ID query"))
             else:
                 console.print(_("[yellow]No identifiers found for object '{object_name}'.[/yellow]").format(object_name=object_name))
         except Exception as e:
@@ -145,7 +145,7 @@ def get_app():
             if result_table:
                 display_table(ctx, result_table, title=_("SIMBAD Objects for Bibcode(s)"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("SIMBAD bibcode query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("SIMBAD bibcode query"))
             else:
                 console.print(_("[yellow]No objects found for the given bibcode(s).[/yellow]"))
         except Exception as e:

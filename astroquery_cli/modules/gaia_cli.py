@@ -148,8 +148,8 @@ def get_app():
             console.print(_("[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"))
 
         try:
-            coords_obj = parse_coordinates(target)
-            rad_quantity = parse_angle_str_to_quantity(radius)
+            coords_obj = parse_coordinates(ctx, target)
+            rad_quantity = parse_angle_str_to_quantity(ctx, radius)
             if rad_quantity is None:
                 console.print(_("[bold red]Invalid radius provided.[/bold red]"))
                 raise typer.Exit(code=1)
@@ -170,9 +170,9 @@ def get_app():
                 title = _("Gaia Cone Search Results ({table_name})").format(table_name=resolved_table_name)
                 if Gaia.authenticated() and Gaia.credentials:
                     title += _(" (User: {user})").format(user=Gaia.credentials.username)
-                display_table(result_table, title=title, max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=title, max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("Gaia cone search"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("Gaia cone search"))
             else:
                 console.print(_("[yellow]No results found from Gaia for this cone search.[/yellow]"))
 
@@ -229,14 +229,14 @@ def get_app():
                 title = _("Gaia ADQL Query Results")
                 if Gaia.authenticated() and Gaia.credentials:
                     title += _(" (User: {user})").format(user=Gaia.credentials.username)
-                display_table(result_table, title=title, max_rows=max_rows_display, show_all_columns=show_all_columns)
+                display_table(ctx, result_table, title=title, max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("Gaia ADQL query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("Gaia ADQL query"))
             else:
                 console.print(_("[yellow]ADQL query returned no results or an empty table.[/yellow]"))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("Gaia ADQL query"))
+            handle_astroquery_exception(ctx, e, _("Gaia ADQL query"))
             if "ERROR:" in str(e):
                 console.print(_("[bold red]ADQL Query Error Details from server:\n{error_details}[/bold red]").format(error_details=str(e)))
             raise typer.Exit(code=1)

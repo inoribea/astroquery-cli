@@ -80,9 +80,9 @@ def get_app():
             if sbdb_query:
                 console.print(_("[green]Data found for '{target}'.[/green]").format(target=target))
                 if isinstance(sbdb_query, AstropyTable) and len(sbdb_query) > 0 :
-                    display_table(sbdb_query, title=_("JPL SBDB Data for {target}").format(target=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                    display_table(ctx, sbdb_query, title=_("JPL SBDB Data for {target}").format(target=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
                     if output_file:
-                        save_table_to_file(sbdb_query, output_file, output_format, _("JPL SBDB query for {target}").format(target=target))
+                        save_table_to_file(ctx, sbdb_query, output_file, output_format, _("JPL SBDB query for {target}").format(target=target))
 
                 elif hasattr(sbdb_query, 'items'):
                     object_fullname = sbdb_query.get('object', {}).get('fullname', target)
@@ -93,7 +93,7 @@ def get_app():
                             console.print(_("\n[bold underline]Table: {key}[/bold underline]").format(key=key))
                             display_table(ctx, value, title=_("{key} for {target}").format(key=key, target=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
                             if output_file:
-                                save_table_to_file(value, output_file.replace(".", f"_{key}."), output_format, _("JPL SBDB {key} for {target}").format(key=key, target=target))
+                                save_table_to_file(ctx, value, output_file.replace(".", f"_{key}."), output_format, _("JPL SBDB {key} for {target}").format(key=key, target=target))
                         elif isinstance(value, dict) or isinstance(value, list):
                             console.print(_("\n[bold]{key}:[/bold]").format(key=key))
                             # Convert Quantity objects to serializable format
