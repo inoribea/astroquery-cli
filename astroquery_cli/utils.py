@@ -232,7 +232,7 @@ def global_keyboard_interrupt_handler(func):
             from astroquery_cli import i18n
             _ = i18n.get_translator()
             console = Console()
-            console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
+            console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[bold yellow]")
             # 直接退出主进程，避免 Typer/Click traceback
             import os
             os._exit(130)

@@ -18,9 +18,8 @@ def get_app():
         no_args_is_help=True
     )
 
-    gaia_conf.show_server_messages = False
+    gaia_conf.show_server_messages = True
 
-    # ================== GAIA_TABLES =============================
     GAIA_TABLES = {
         "main_source": "gaiadr3.gaia_source",
         "dr2_source": "gaiadr2.gaia_source",
@@ -71,29 +70,7 @@ def get_app():
         resolved_table_name = GAIA_TABLES.get(table_name, table_name)
         _ = get_translator(ctx.obj.get("lang", "en") if ctx.obj else "en")
         try:
-            try:
-                coords_obj = parse_coordinates(ctx, target)
-            except Exception:
-                # fallback: resolve name via Simbad
-                from astroquery.simbad import Simbad
-                simbad = Simbad()
-                simbad.add_votable_fields("ra", "dec")
-                simbad_result = simbad.query_object(target)
-                if simbad_result is not None and len(simbad_result) > 0:
-                    ra = simbad_result["ra"][0]
-                    dec = simbad_result["dec"][0]
-                    try:
-                        ra_float = float(ra)
-                        dec_float = float(dec)
-                        coords_obj = SkyCoord(ra_float, dec_float, unit="deg")
-                        console.print(f"[yellow]Resolved '{target}' {_('to coordinates via SIMBAD:')} {ra_float} {dec_float}[/yellow]")
-                    except Exception:
-                        coords_obj = SkyCoord(f"{ra} {dec}", unit=(u.hourangle, u.deg))
-                        console.print(f"[yellow]Resolved '{target}' {_('to coordinates via SIMBAD:')} {ra} {dec}[/yellow]")
-                else:
-                    console.print(_("[red]Could not resolve '{target}' to coordinates via SIMBAD.[/red]").format(target=target))
-                    raise typer.Exit(code=1)
-
+            coords_obj = parse_coordinates(ctx, target)
             rad_quantity = parse_angle_str_to_quantity(ctx, radius)
             if rad_quantity is None:
                 console.print(_("[bold red]Invalid radius provided.[/bold red]"))
@@ -104,11 +81,12 @@ def get_app():
             FROM {resolved_table_name}
             WHERE 1=CONTAINS(POINT('ICRS', ra, dec), CIRCLE('ICRS', {coords_obj.ra.deg}, {coords_obj.dec.deg}, {rad_quantity.to(u.deg).value}))
             """
-            console.print(_("[cyan]Querying Gaia for object: '{target}'...[/cyan]").format(target=target))
-            console.print(f"[dim]{query.strip()}[/dim]")
+            console.print(f"[cyan]Querying Gaia for object: {target}...[/cyan]")
 
             job = Gaia.launch_job(query, dump_to_file=False)
+            console.print("[dim]Job launched. Getting results...[/dim]")
             result_table = job.get_results()
+            console.print(f"[dim]Results retrieved. Table length: {len(result_table) if result_table is not None else 0}[/dim]")
 
             if result_table is not None and len(result_table) > 0:
                 title = _("Gaia Main Source for '{target}'").format(target=target)
