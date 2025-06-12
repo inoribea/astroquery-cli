@@ -25,14 +25,51 @@ def get_app():
     
     # ================== ESASKY_CATALOGS =========================
     ESASKY_CATALOGS = [
-        "Gaia DR3",
-        "Gaia DR2",
-        "Hipparcos",
-        "AllWISE",
-        "2MASS",
-        "Messier",
-        "NGC",
-        # ...
+        "TYCHO-2",
+        "2RXS",
+        "ALLWISE",
+        "PLANCK-PSZ2",
+        "PLANCK-PCCS2-LFI",
+        "PLANCK-PCCS2-HFI",
+        "XMM-SLEW",
+        "GAIA-DR3",
+        "PLANCK-PGCC",
+        "INTEGRAL",
+        "HIPPARCOS-2",
+        "PLANCK-PCCS2E-HFI",
+        "HERSCHEL-SPSC-350",
+        "XMM-EPIC",
+        "HERSCHEL-SPSC-250",
+        "HERSCHEL-HPPSC-160",
+        "HERSCHEL-HPPSC-100",
+        "HERSCHEL-HPPSC-070",
+        "AKARI-IRC-SC",
+        "OU_BLAZARS",
+        "TWOMASS",
+        "HERSCHEL-SPSC-500",
+        "EROSITA-EFEDS-MAIN",
+        "EROSITA-EFEDS-HARD",
+        "EUCLID-MER",
+        "CHANDRA-SC21",
+        "XMM-EPIC-STACK",
+        "XMM-OM",
+        "HCV",
+        "FERMI_3FHL",
+        "FERMI_4FGL-DR2",
+        "EROSITA-ETACHA-MAIN",
+        "SWIFT-2SXPS",
+        "EROSITA-ETACHA-HARD",
+        "FERMI_4LAC-DR2",
+        "ICECUBE",
+        "HSC",
+        "PLATO ASPIC1.1",
+        "2WHSP",
+        "GAIA-FPR",
+        "EROSITA-ERASS-HARD",
+        "EROSITA-ERASS-MAIN",
+        "GLADE+",
+        "LAMOST_MRS",
+        "LAMOST_LRS"
     ]
     # ============================================================
     # ================== ESASKY_FIELDS ===========================
@@ -51,7 +88,11 @@ def get_app():
     @global_keyboard_interrupt_handler
     def query_object_catalogs(ctx: typer.Context,
         object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object.")),
-        catalogs: Optional[List[str]] = typer.Option(None, "--catalog", help=builtins._("Specify catalogs to query (e.g., 'Gaia DR3'). Can be specified multiple times.")),
+        catalogs: Optional[List[str]] = typer.Option(
+            None,
+            "--catalog",
+            help=builtins._("Specify catalogs to query. Use 'list-catalogs' command to see all available catalogs. Examples: 'GAIA-DR3', 'TYCHO-2', 'ALLWISE'. Can be specified multiple times. Default: GAIA-DR3")
+        ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
@@ -63,7 +104,12 @@ def get_app():
 
         console.print(_("[cyan]Querying ESASky catalogs for object: '{object_name}'...[/cyan]").format(object_name=object_name))
         try:
-            result_tables_dict: Optional[dict] = ESASky.query_object_catalogs(object_name, catalogs=catalogs if catalogs else None)
+            # Ensure catalogs_to_query is always a list of strings.
+            # If catalogs is None or empty, use the predefined ESASKY_CATALOGS.
+            # Otherwise, use the catalogs provided by the user.
+            catalogs_to_query = catalogs if catalogs else ["GAIA-DR3"]
+            
+            result_tables_dict: Optional[dict] = ESASky.query_object_catalogs(object_name, catalogs=catalogs_to_query)
 
             if result_tables_dict:
                 console.print(_("[green]Found data for '{object_name}' in {count} catalog(s).[/green]").format(object_name=object_name, count=len(result_tables_dict)))
@@ -138,9 +184,25 @@ def get_app():
 
         console.print(_("[cyan]Fetching list of available ESASky missions/catalogs...[/cyan]"))
         try:
-            missions_table: Optional[AstropyTable] = ESASky.list_catalogs()
+            missions_raw_data = ESASky.list_catalogs()
+            missions_table: Optional[AstropyTable] = None
+
+            if missions_raw_data:
+                if isinstance(missions_raw_data, AstropyTable):
+                    missions_table = missions_raw_data
+                elif isinstance(missions_raw_data, list):
+                    # If it's a list of strings, create a single-column table
+                    if all(isinstance(item, str) for item in missions_raw_data):
+                        missions_table = AstropyTable({'Catalog': missions_raw_data})
+                    else:
+                        console.print(_("[bold red]Unexpected list content from ESASky.list_catalogs(). Expected list of strings or AstropyTable.[/bold red]"))
+                        raise typer.Exit(code=1)
+                else:
+                    console.print(_("[bold red]Unexpected return type from ESASky.list_catalogs(). Expected AstropyTable or list.[/bold red]"))
+                    raise typer.Exit(code=1)
+            
             if missions_table and len(missions_table) > 0:
-                display_table(missions_table, title=_("Available ESASky Missions/Catalogs"), max_rows=-1)
+                display_table(ctx, missions_table, title=_("Available ESASky Missions/Catalogs"), max_rows=-1)
             else:
                 console.print(_("[yellow]Could not retrieve mission list or list is empty.[/yellow]"))
         except Exception as e:
