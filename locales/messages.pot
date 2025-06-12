@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-28 18:08+0800\n"
+"POT-Creation-Date: 2025-06-12 15:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,10 +33,6 @@ msgstr ""
 
 #: astroquery_cli/main.py:78
 msgid "Test field validity for modules (only available at top-level command)."
-msgstr ""
-
-#: astroquery_cli/main.py:112 astroquery_cli/utils.py:235
-msgid "User interrupted the query. Exiting safely."
 msgstr ""
 
 #: astroquery_cli/utils.py:34
@@ -84,13 +80,13 @@ msgstr ""
 #: astroquery_cli/modules/alma_cli.py:43 astroquery_cli/modules/alma_cli.py:96
 #: astroquery_cli/modules/esasky_cli.py:57
 #: astroquery_cli/modules/esasky_cli.py:98
-#: astroquery_cli/modules/gaia_cli.py:64 astroquery_cli/modules/gaia_cli.py:144
-#: astroquery_cli/modules/gaia_cli.py:220 astroquery_cli/modules/irsa_cli.py:55
+#: astroquery_cli/modules/gaia_cli.py:63 astroquery_cli/modules/gaia_cli.py:122
+#: astroquery_cli/modules/gaia_cli.py:198 astroquery_cli/modules/irsa_cli.py:55
 #: astroquery_cli/modules/irsa_cli.py:132
 #: astroquery_cli/modules/jplhorizons_cli.py:110
 #: astroquery_cli/modules/mast_cli.py:61 astroquery_cli/modules/mast_cli.py:109
 #: astroquery_cli/modules/mast_cli.py:154
-#: astroquery_cli/modules/nasa_ads_cli.py:51
+#: astroquery_cli/modules/nasa_ads_cli.py:49
 #: astroquery_cli/modules/ned_cli.py:82 astroquery_cli/modules/simbad_cli.py:41
 #: astroquery_cli/modules/simbad_cli.py:91
 #: astroquery_cli/modules/simbad_cli.py:127
@@ -102,12 +98,12 @@ msgstr ""
 #: astroquery_cli/modules/alma_cli.py:44 astroquery_cli/modules/alma_cli.py:97
 #: astroquery_cli/modules/esasky_cli.py:58
 #: astroquery_cli/modules/esasky_cli.py:99
-#: astroquery_cli/modules/gaia_cli.py:65 astroquery_cli/modules/gaia_cli.py:145
-#: astroquery_cli/modules/gaia_cli.py:221 astroquery_cli/modules/irsa_cli.py:56
+#: astroquery_cli/modules/gaia_cli.py:64 astroquery_cli/modules/gaia_cli.py:123
+#: astroquery_cli/modules/gaia_cli.py:199 astroquery_cli/modules/irsa_cli.py:56
 #: astroquery_cli/modules/irsa_cli.py:133 astroquery_cli/modules/mast_cli.py:62
 #: astroquery_cli/modules/mast_cli.py:110
 #: astroquery_cli/modules/mast_cli.py:155
-#: astroquery_cli/modules/nasa_ads_cli.py:52
+#: astroquery_cli/modules/nasa_ads_cli.py:50
 #: astroquery_cli/modules/ned_cli.py:48 astroquery_cli/modules/ned_cli.py:83
 #: astroquery_cli/modules/ned_cli.py:123
 #: astroquery_cli/modules/simbad_cli.py:42
@@ -317,204 +313,190 @@ msgstr ""
 msgid "Query the Gaia archive."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:50
+#: astroquery_cli/modules/gaia_cli.py:49
 msgid "Query Gaia main source for a given object name or coordinates."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:54
+#: astroquery_cli/modules/gaia_cli.py:53
 msgid "Object name or coordinates (e.g., 'M31', '10.68h +41.26d')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:55
+#: astroquery_cli/modules/gaia_cli.py:54
 msgid "Search radius for matching Gaia source (e.g., '5arcsec', '0.001deg')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:58
+#: astroquery_cli/modules/gaia_cli.py:57
 msgid "Gaia table to query. Default: gaiadr3.gaia_source"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:61
+#: astroquery_cli/modules/gaia_cli.py:60
 msgid "Columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'parallax')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:89 astroquery_cli/modules/gaia_cli.py:92
-msgid "to coordinates via SIMBAD:"
-msgstr ""
-
-#: astroquery_cli/modules/gaia_cli.py:94
-#, python-brace-format
-msgid "[red]Could not resolve '{target}' to coordinates via SIMBAD.[/red]"
-msgstr ""
-
-#: astroquery_cli/modules/gaia_cli.py:99 astroquery_cli/modules/gaia_cli.py:175
+#: astroquery_cli/modules/gaia_cli.py:76 astroquery_cli/modules/gaia_cli.py:153
 msgid "[bold red]Invalid radius provided.[/bold red]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:107
-#, python-brace-format
-msgid "[cyan]Querying Gaia for object: '{target}'...[/cyan]"
-msgstr ""
-
-#: astroquery_cli/modules/gaia_cli.py:114
+#: astroquery_cli/modules/gaia_cli.py:92
 #, python-brace-format
 msgid "Gaia Main Source for '{target}'"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:117
+#: astroquery_cli/modules/gaia_cli.py:95
 msgid "Gaia object query"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:119
+#: astroquery_cli/modules/gaia_cli.py:97
 #, python-brace-format
 msgid "[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:130
+#: astroquery_cli/modules/gaia_cli.py:108
 msgid "Perform a cone search around a coordinate."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:133
+#: astroquery_cli/modules/gaia_cli.py:111
 #: astroquery_cli/modules/irsa_dust_cli.py:103
 msgid "Central object name or coordinates (e.g., 'M31', '10.68h +41.26d')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:134 astroquery_cli/modules/ned_cli.py:78
+#: astroquery_cli/modules/gaia_cli.py:112 astroquery_cli/modules/ned_cli.py:78
 #: astroquery_cli/modules/vizier_cli.py:151
 msgid "Search radius (e.g., '5arcmin', '0.1deg')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:137
+#: astroquery_cli/modules/gaia_cli.py:115
 #, python-brace-format
 msgid "Gaia table to query. Common choices: {choices} or specify full table name."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:140
+#: astroquery_cli/modules/gaia_cli.py:118
 msgid ""
 "Specific columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'pmra'). "
 "Default: all columns from the table for a small radius, or a default set "
 "for larger radii."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:141
+#: astroquery_cli/modules/gaia_cli.py:119
 msgid "Maximum number of rows to return from the server."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:146
-#: astroquery_cli/modules/gaia_cli.py:222
+#: astroquery_cli/modules/gaia_cli.py:124
+#: astroquery_cli/modules/gaia_cli.py:200
 msgid "Gaia archive username (or set GAIA_USER env var)."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:147
-#: astroquery_cli/modules/gaia_cli.py:223
+#: astroquery_cli/modules/gaia_cli.py:125
+#: astroquery_cli/modules/gaia_cli.py:201
 msgid ""
 "Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set "
 "but no password."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:154
+#: astroquery_cli/modules/gaia_cli.py:132
 #, python-brace-format
 msgid ""
 "[cyan]Performing Gaia cone search on '{table_name}' around '{target}' "
 "with radius {radius}...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:157
-#: astroquery_cli/modules/gaia_cli.py:233
+#: astroquery_cli/modules/gaia_cli.py:135
+#: astroquery_cli/modules/gaia_cli.py:211
 msgid "Gaia archive password"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:160
-#: astroquery_cli/modules/gaia_cli.py:236
+#: astroquery_cli/modules/gaia_cli.py:138
+#: astroquery_cli/modules/gaia_cli.py:214
 #, python-brace-format
 msgid "[dim]Logging into Gaia archive as '{user}'...[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:164
-#: astroquery_cli/modules/gaia_cli.py:240
+#: astroquery_cli/modules/gaia_cli.py:142
+#: astroquery_cli/modules/gaia_cli.py:218
 #, python-brace-format
 msgid "[bold red]Gaia login failed: {error}[/bold red]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:165
-#: astroquery_cli/modules/gaia_cli.py:241
+#: astroquery_cli/modules/gaia_cli.py:143
+#: astroquery_cli/modules/gaia_cli.py:219
 msgid "[yellow]Proceeding with anonymous access if possible.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:167
-#: astroquery_cli/modules/gaia_cli.py:243
+#: astroquery_cli/modules/gaia_cli.py:145
+#: astroquery_cli/modules/gaia_cli.py:221
 #, python-brace-format
 msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:167
-#: astroquery_cli/modules/gaia_cli.py:243
+#: astroquery_cli/modules/gaia_cli.py:145
+#: astroquery_cli/modules/gaia_cli.py:221
 msgid "unknown user"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:169
+#: astroquery_cli/modules/gaia_cli.py:147
 msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:184
+#: astroquery_cli/modules/gaia_cli.py:162
 #, python-brace-format
 msgid "[dim]Executing ADQL query (first {row_limit} rows):[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:191
+#: astroquery_cli/modules/gaia_cli.py:169
 #, python-brace-format
 msgid "Gaia Cone Search Results ({table_name})"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:193
-#: astroquery_cli/modules/gaia_cli.py:252
+#: astroquery_cli/modules/gaia_cli.py:171
+#: astroquery_cli/modules/gaia_cli.py:230
 #, python-brace-format
 msgid " (User: {user})"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:196
+#: astroquery_cli/modules/gaia_cli.py:174
 msgid "Gaia cone search"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:198
+#: astroquery_cli/modules/gaia_cli.py:176
 msgid "[yellow]No results found from Gaia for this cone search.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:201
+#: astroquery_cli/modules/gaia_cli.py:179
 #, python-brace-format
 msgid "Gaia cone search on {table_name}"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:206
-#: astroquery_cli/modules/gaia_cli.py:267
+#: astroquery_cli/modules/gaia_cli.py:184
+#: astroquery_cli/modules/gaia_cli.py:245
 msgid "[dim]Logged out from Gaia archive.[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:214
+#: astroquery_cli/modules/gaia_cli.py:192
 msgid "Execute a raw ADQL query (synchronous)."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:217
+#: astroquery_cli/modules/gaia_cli.py:195
 msgid "The ADQL query string."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:229
+#: astroquery_cli/modules/gaia_cli.py:207
 msgid "[cyan]Executing Gaia ADQL query...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:250
+#: astroquery_cli/modules/gaia_cli.py:228
 msgid "Gaia ADQL Query Results"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:255
-#: astroquery_cli/modules/gaia_cli.py:260
+#: astroquery_cli/modules/gaia_cli.py:233
+#: astroquery_cli/modules/gaia_cli.py:238
 msgid "Gaia ADQL query"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:257
+#: astroquery_cli/modules/gaia_cli.py:235
 msgid "[yellow]ADQL query returned no results or an empty table.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:262
+#: astroquery_cli/modules/gaia_cli.py:240
 #, python-brace-format
 msgid ""
 "[bold red]ADQL Query Error Details from server:\n"
@@ -1042,27 +1024,27 @@ msgid ""
 "[bold]{key}:[/bold]"
 msgstr ""
 
-#: astroquery_cli/modules/jplsbdb_cli.py:102
+#: astroquery_cli/modules/jplsbdb_cli.py:113
 #, python-brace-format
 msgid "[bold]{key}:[/bold] {value}"
 msgstr ""
 
-#: astroquery_cli/modules/jplsbdb_cli.py:111
+#: astroquery_cli/modules/jplsbdb_cli.py:130
 #, python-brace-format
 msgid "[green]Primary data saved to {file_path}[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/jplsbdb_cli.py:113
+#: astroquery_cli/modules/jplsbdb_cli.py:132
 #, python-brace-format
 msgid "[red]Could not save non-table data as JSON: {error}[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/jplsbdb_cli.py:118
+#: astroquery_cli/modules/jplsbdb_cli.py:137
 #, python-brace-format
 msgid "[yellow]No information found for target '{target}'.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/jplsbdb_cli.py:121
+#: astroquery_cli/modules/jplsbdb_cli.py:140
 msgid "JPL SBDB object"
 msgstr ""
 
@@ -1204,98 +1186,104 @@ msgstr ""
 msgid "Query the NASA Astrophysics Data System (ADS)."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:41
+#: astroquery_cli/modules/nasa_ads_cli.py:39
 msgid "Perform a query on NASA ADS."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:44
+#: astroquery_cli/modules/nasa_ads_cli.py:42
 msgid ""
 "ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', "
 "'bibcode:1998AJ....116.1009R')."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:45
+#: astroquery_cli/modules/nasa_ads_cli.py:43
 msgid "Fields to return."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:46
+#: astroquery_cli/modules/nasa_ads_cli.py:44
 msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:47
+#: astroquery_cli/modules/nasa_ads_cli.py:45
 msgid "Maximum number of pages to retrieve."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:48
+#: astroquery_cli/modules/nasa_ads_cli.py:46
 msgid "Number of results per page (max 200 for ADS API)."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:58
+#: astroquery_cli/modules/nasa_ads_cli.py:56
 #, python-brace-format
 msgid "[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:60
-#: astroquery_cli/modules/nasa_ads_cli.py:100
+#: astroquery_cli/modules/nasa_ads_cli.py:58
+#: astroquery_cli/modules/nasa_ads_cli.py:124
 msgid ""
 "[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be"
 " rate-limited.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:72
+#: astroquery_cli/modules/nasa_ads_cli.py:91
+msgid ""
+"[yellow]None of the requested fields were found in the ADS query "
+"results.[/yellow]"
+msgstr ""
+
+#: astroquery_cli/modules/nasa_ads_cli.py:96
 #, python-brace-format
 msgid "[green]Found {count} result(s) from ADS.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:73
+#: astroquery_cli/modules/nasa_ads_cli.py:97
 msgid "ADS Query Results"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:75
-#: astroquery_cli/modules/nasa_ads_cli.py:80
+#: astroquery_cli/modules/nasa_ads_cli.py:99
+#: astroquery_cli/modules/nasa_ads_cli.py:104
 msgid "NASA ADS query"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:77
+#: astroquery_cli/modules/nasa_ads_cli.py:101
 msgid "[yellow]No results found for your ADS query.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:88
+#: astroquery_cli/modules/nasa_ads_cli.py:112
 msgid "Get BibTeX for a NASA ADS bibcode."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:91
+#: astroquery_cli/modules/nasa_ads_cli.py:115
 msgid "List of ADS bibcodes."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:92
+#: astroquery_cli/modules/nasa_ads_cli.py:116
 msgid "File to save BibTeX entries (e.g., refs.bib)."
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:98
+#: astroquery_cli/modules/nasa_ads_cli.py:122
 #, python-brace-format
 msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:108
+#: astroquery_cli/modules/nasa_ads_cli.py:138
 #, python-brace-format
 msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:112
+#: astroquery_cli/modules/nasa_ads_cli.py:142
 msgid "[green]BibTeX entries retrieved:[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:118
+#: astroquery_cli/modules/nasa_ads_cli.py:148
 #, python-brace-format
 msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:120
+#: astroquery_cli/modules/nasa_ads_cli.py:150
 msgid "[yellow]No BibTeX entries could be retrieved.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/nasa_ads_cli.py:123
+#: astroquery_cli/modules/nasa_ads_cli.py:153
 msgid "NASA ADS get_bibtex"
 msgstr ""
 

@@ -36,8 +36,6 @@ def get_app():
     ]
     # ============================================================
 
-    ADS.ROW_LIMIT = 25
-
     @app.command(name="query", help=builtins._("Perform a query on NASA ADS."))
     @global_keyboard_interrupt_handler
     def query_ads(ctx: typer.Context,
@@ -59,16 +57,42 @@ def get_app():
         if not ADS.TOKEN and "ADS_DEV_KEY" not in os.environ:
             console.print(_("[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be rate-limited.[/yellow]"))
         try:
-            ads_query = ADS.query_simple(
-                query_string,
-                fl=fields,
-                sort=sort_by,
-                max_pages=max_pages,
-                rows=min(rows_per_page, 200)
-            )
+            # Store original ADS settings
+            original_nrows = ADS.NROWS
+            original_nstart = ADS.NSTART
+            original_sort = ADS.SORT
 
-            if ads_query and len(ads_query) > 0:
-                result_table = ads_query
+            # Set ADS class attributes for query
+            ADS.NROWS = min(rows_per_page, 200)
+            if sort_by:
+                ADS.SORT = sort_by
+
+            all_ads_results = AstropyTable()
+            for page in range(max_pages):
+                ADS.NSTART = page * ADS.NROWS
+                page_results = ADS.query_simple(query_string)
+                
+                if page_results:
+                    all_ads_results = AstropyTable.vstack([all_ads_results, page_results])
+                else:
+                    break # No more results
+
+            # Reset ADS class attributes to original values
+            ADS.NROWS = original_nrows
+            ADS.NSTART = original_nstart
+            ADS.SORT = original_sort
+
+            # Manually filter fields
+            if all_ads_results and fields:
+                existing_fields = [f for f in fields if f in all_ads_results.colnames]
+                if existing_fields:
+                    all_ads_results = all_ads_results[existing_fields]
+                else:
+                    console.print(_("[yellow]None of the requested fields were found in the ADS query results.[/yellow]"))
+                    all_ads_results = AstropyTable() # No relevant data to display
+
+            if all_ads_results and len(all_ads_results) > 0:
+                result_table = all_ads_results
                 console.print(_("[green]Found {count} result(s) from ADS.[/green]").format(count=len(result_table)))
                 display_table(result_table, title=_("ADS Query Results"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
@@ -77,7 +101,7 @@ def get_app():
                 console.print(_("[yellow]No results found for your ADS query.[/yellow]"))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("NASA ADS query"))
+            handle_astroquery_exception(ctx, e, _("NASA ADS query"))
             raise typer.Exit(code=1)
 
         if test:
@@ -101,7 +125,13 @@ def get_app():
         try:
             bibtex_entries = []
             for bibcode in bibcodes:
-                q = ADS.query_simple(f"bibcode:{bibcode}", fl=['bibtex'])
+                # Use ADS.query_simple for bibtex, as it's the only query method
+                # Temporarily set NROWS to 1 to get only the first result for bibcode
+                original_nrows = ADS.NROWS
+                ADS.NROWS = 1
+                q = ADS.query_simple(f"bibcode:{bibcode}")
+                ADS.NROWS = original_nrows # Reset NROWS
+
                 if q and 'bibtex' in q.colnames and q['bibtex'][0]:
                     bibtex_entries.append(q['bibtex'][0])
                 else:
@@ -120,7 +150,7 @@ def get_app():
                 console.print(_("[yellow]No BibTeX entries could be retrieved.[/yellow]"))
 
         except Exception as e:
-            handle_astroquery_exception(e, _("NASA ADS get_bibtex"))
+            handle_astroquery_exception(ctx, e, _("NASA ADS get_bibtex")) # Added 'ctx' argument
             raise typer.Exit(code=1)
 
         if test:

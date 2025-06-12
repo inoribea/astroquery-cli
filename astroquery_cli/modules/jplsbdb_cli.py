@@ -96,8 +96,19 @@ def get_app():
                                 save_table_to_file(value, output_file.replace(".", f"_{key}."), output_format, _("JPL SBDB {key} for {target}").format(key=key, target=target))
                         elif isinstance(value, dict) or isinstance(value, list):
                             console.print(_("\n[bold]{key}:[/bold]").format(key=key))
-                            console.print_json(data=value)
-                            output_data[str(key)] = value
+                            # Convert Quantity objects to serializable format
+                            def process_quantity_objects(obj):
+                                if isinstance(obj, dict):
+                                    return {k: process_quantity_objects(v) for k, v in obj.items()}
+                                elif isinstance(obj, list):
+                                    return [process_quantity_objects(elem) for elem in obj]
+                                elif hasattr(obj, 'value') and hasattr(obj, 'unit'):
+                                    return f"{obj.value} {obj.unit}"
+                                return obj
+
+                            processed_value = process_quantity_objects(value)
+                            console.print_json(data=processed_value)
+                            output_data[str(key)] = processed_value
                         else:
                             console.print(_("[bold]{key}:[/bold] {value}").format(key=key, value=value))
                             output_data[str(key)] = str(value)
@@ -105,9 +116,17 @@ def get_app():
                     if output_file and not any(isinstance(v, AstropyTable) for v in sbdb_query.values()):
                         import json
                         try:
+                            # Custom JSON encoder for Quantity objects
+                            class QuantityEncoder(json.JSONEncoder):
+                                def default(self, obj):
+                                    if hasattr(obj, 'value') and hasattr(obj, 'unit'):
+                                        return f"{obj.value} {obj.unit}"
+                                    return json.JSONEncoder.default(self, obj)
+
                             file_path = output_file if '.json' in output_file else output_file + ".json"
                             with open(file_path, 'w') as f:
-                                json.dump(output_data, f, indent=2)
+                                # Use the custom encoder for the main output_data as well
+                                json.dump(output_data, f, indent=2, cls=QuantityEncoder)
                             console.print(_("[green]Primary data saved to {file_path}[/green]").format(file_path=file_path))
                         except Exception as json_e:
                             console.print(_("[red]Could not save non-table data as JSON: {error}[/red]").format(error=json_e))

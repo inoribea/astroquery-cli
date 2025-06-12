@@ -12,13 +12,11 @@ class Translator:
         self.current_lang_code = "en"
 
     def load_translation_file(self, lang_code: str):
-        mo_file_path = os.path.join(LOCALE_BASE_DIR, f"{TEXT_DOMAIN}.mo")
-
-        if lang_code != "en":
-            lang_specific_path = os.path.join(LOCALE_BASE_DIR, lang_code, "LC_MESSAGES", f"{TEXT_DOMAIN}.mo")
-            if os.path.exists(lang_specific_path):
-                mo_file_path = lang_specific_path
-
+        mo_file_path = os.path.join(LOCALE_BASE_DIR, lang_code, "LC_MESSAGES", f"{TEXT_DOMAIN}.mo")
+        
+        # Fallback to default if language-specific MO file not found
+        if not os.path.exists(mo_file_path):
+            mo_file_path = os.path.join(LOCALE_BASE_DIR, f"{TEXT_DOMAIN}.mo") # Default MO file path
 
         try:
             with open(mo_file_path, 'rb') as mo_file:
@@ -59,7 +57,18 @@ def get_translator(lang: str = "en"):
 
 def _parse_lang_from_argv():
     lang = os.getenv("AQC_LANG", None)
-    try:
+    
+    # Check for --default option
+    default_args_to_check = ["-d", "--default"]
+    for i, arg in enumerate(sys.argv[:-1]):
+        if arg in default_args_to_check:
+            potential_lang = sys.argv[i + 1]
+            if not potential_lang.startswith("-"):
+                lang = potential_lang
+                break
+
+    # Check for --lang or --language option
+    if not lang: # Only check if not already found by --default
         args_to_check = ["-l", "--lang", "--language"]
         for i, arg in enumerate(sys.argv[:-1]):
             if arg in args_to_check:
@@ -67,8 +76,7 @@ def _parse_lang_from_argv():
                 if not potential_lang.startswith("-"):
                     lang = potential_lang
                     break
-    except Exception:
-        pass
+    
     if lang is None:
         config_path = os.path.expanduser("~/.aqc_config")
         if os.path.exists(config_path):
@@ -76,6 +84,7 @@ def _parse_lang_from_argv():
                 lang = f.read().strip()
         else:
             lang = "en"
+    
     return lang
 
 INITIAL_LANG = _parse_lang_from_argv()

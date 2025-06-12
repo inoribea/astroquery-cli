@@ -11,7 +11,7 @@ from ..i18n import get_translator
 
 def get_app():
     import builtins
-    _ = builtins._
+    _ = builtins._ # This line is fine, it just ensures _ is available in this scope
     app = typer.Typer(
         name="gaia",
         help=builtins._("Query the Gaia archive."),
@@ -44,7 +44,7 @@ def get_app():
     ]
     # ============================================================
 
-    console = Console()
+    console = Console() # This console instance is fine
 
     @app.command(name="object", help=builtins._("Query Gaia main source for a given object name or coordinates."))
     @global_keyboard_interrupt_handler
@@ -68,12 +68,13 @@ def get_app():
         start = time.perf_counter() if test else None
 
         resolved_table_name = GAIA_TABLES.get(table_name, table_name)
-        _ = get_translator(ctx.obj.get("lang", "en") if ctx.obj else "en")
+        # Removed: _ = get_translator(ctx.obj.get("lang", "en") if ctx.obj else "en")
+        # This line was overriding the builtins._ set by main.py
         try:
             coords_obj = parse_coordinates(ctx, target)
             rad_quantity = parse_angle_str_to_quantity(ctx, radius)
             if rad_quantity is None:
-                console.print(_("[bold red]Invalid radius provided.[/bold red]"))
+                console.print(builtins._("[bold red]Invalid radius provided.[/bold red]")) # Use builtins._
                 raise typer.Exit(code=1)
 
             query = f"""
@@ -81,7 +82,7 @@ def get_app():
             FROM {resolved_table_name}
             WHERE 1=CONTAINS(POINT('ICRS', ra, dec), CIRCLE('ICRS', {coords_obj.ra.deg}, {coords_obj.dec.deg}, {rad_quantity.to(u.deg).value}))
             """
-            console.print(f"[cyan]Querying Gaia for object: {target}...[/cyan]")
+            console.print(builtins._("[cyan]Querying Gaia for object: {target}...[/cyan]").format(target=target)) # Use builtins._
 
             job = Gaia.launch_job(query, dump_to_file=False)
             console.print("[dim]Job launched. Getting results...[/dim]")

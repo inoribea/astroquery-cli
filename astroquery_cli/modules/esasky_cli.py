@@ -16,7 +16,7 @@ from ..i18n import get_translator
 
 def get_app():
     import builtins
-    _ = builtins._
+    _ = builtins._ # This line is fine, it just ensures _ is available in this scope
     app = typer.Typer(
         name="esasky",
         help=builtins._("Query the ESA Sky archive."),
