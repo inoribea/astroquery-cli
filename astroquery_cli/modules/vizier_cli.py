@@ -79,10 +79,10 @@ def get_app():
         return parsed_constraints
 
     VIZIER_SERVERS = {
-        "vizier_cds": "https://vizier.cds.unistra.fr/viz-bin/",
-        "vizier_eso": "https://vizier.eso.org/viz-bin/",
-        "vizier_nao": "https://vizier.nao.ac.jp/viz-bin/",
-        "vizier_adac": "https://vizier.china-vo.org/viz-bin/",
+        "vizier_cds": "vizier.cds.unistra.fr",
+        "vizier_eso": "vizier.eso.org",
+        "vizier_nao": "vizier.nao.ac.jp",
+        "vizier_adac": "vizier.china-vo.org",
     }
 
     @app.command(name="find-catalogs", help=builtins._("Find VizieR catalogs based on keywords, UCDs, or source names."))
@@ -149,8 +149,8 @@ def get_app():
     @global_keyboard_interrupt_handler
     def query_object(ctx: typer.Context,
         target: str = typer.Argument(..., help=builtins._("Object name (e.g., 'M31') or coordinates (e.g., '10.68h +41.26d' or '160.32 41.45').")),
-        radius: str = typer.Option("2arcmin", help=builtins._("Search radius (e.g., '5arcmin', '0.1deg').")),
-        catalogs: List[str] = typer.Option(..., "--catalog", "-c", help=builtins._("VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). Can be specified multiple times.")),
+        radius: str = typer.Argument(..., help=builtins._("Search radius (e.g., '5arcmin', '0.1deg'). Can be specified as positional argument or with -r/--radius."), rich_help_panel="Arguments", show_default=False),
+        catalogs: Optional[List[str]] = typer.Option(None, "--catalog", "-c", help=builtins._("VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). Can be specified multiple times. Default: 'I/261/gaiadr3'")),
         columns: Optional[List[str]] = typer.Option(None, "--col", help=builtins._("Specific columns to retrieve (e.g., 'RAJ2000', 'DEJ2000', 'pmRA'). Use 'all' for all columns. Can be specified multiple times.")),
         column_filters: Optional[List[str]] = typer.Option(None, "--filter", help=builtins._("Column filters (e.g., 'Imag<15', 'B-V>0.5'). Can be specified multiple times. Format: 'column_name<operator>value'.")),
         row_limit: int = typer.Option(vizier_conf.row_limit, help=builtins._("Maximum number of rows to return per catalog.")),
@@ -162,15 +162,16 @@ def get_app():
             autocompletion=lambda: list(VIZIER_SERVERS.keys())
         )
     ):
-        console.print(_("[cyan]Querying VizieR for object '{target_name}' in catalog(s): {catalog_list}...[/cyan]").format(target_name=target, catalog_list=', '.join(catalogs)))
+        catalogs_to_query = catalogs if catalogs is not None else ['I/261/gaiadr3']
+        console.print(_("[cyan]Querying VizieR for object '{target_name}' in catalog(s): {catalog_list}...[/cyan]").format(target_name=target, catalog_list=', '.join(catalogs_to_query)))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
         console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
 
-        coords = parse_coordinates(target)
-        rad_quantity = parse_angle_str_to_quantity(radius)
+        coords = parse_coordinates(ctx, target)
+        rad_quantity = parse_angle_str_to_quantity(ctx, radius)
 
-        viz = Vizier(columns=columns if columns else ["*"], catalog=catalogs, column_filters=column_filters, row_limit=row_limit)
+        viz = Vizier(columns=columns if columns else ["*"], catalog=catalogs_to_query, column_filters=column_filters, row_limit=row_limit)
 
         try:
             result_tables = viz.query_object(
@@ -197,10 +198,10 @@ def get_app():
     @global_keyboard_interrupt_handler
     def query_region(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Central coordinates for the region (e.g., '10.68h +41.26d' or '160.32 41.45').")),
-        radius: Optional[str] = typer.Option(None, help=builtins._("Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying width/height.")),
-        width: Optional[str] = typer.Option(None, help=builtins._("Width of a box region (e.g., '10arcmin', '0.5deg'). Requires --height.")),
-        height: Optional[str] = typer.Option(None, help=builtins._("Height of a box region (e.g., '10arcmin', '0.5deg'). Requires --width.")),
-        catalogs: List[str] = typer.Option(..., "--catalog", "-c", help=builtins._("VizieR catalog identifier(s). Can be specified multiple times.")),
+        radius: Optional[str] = typer.Argument(None, help=builtins._("Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying width/height. Can be specified as positional argument or with -r/--radius."), rich_help_panel="Arguments", show_default=False),
+        width: Optional[str] = typer.Option(None, "--width", help=builtins._("Width of a box region (e.g., '10arcmin', '0.5deg'). Requires --height.")),
+        height: Optional[str] = typer.Option(None, "--height", help=builtins._("Height of a box region (e.g., '10arcmin', '0.5deg'). Requires --width.")),
+        catalogs: Optional[List[str]] = typer.Option(None, "--catalog", "-c", help=builtins._("VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). Can be specified multiple times. Default: 'I/261/gaiadr3'")),
         columns: Optional[List[str]] = typer.Option(None, "--col", help=builtins._("Specific columns to retrieve. Use 'all' for all columns. Can be specified multiple times.")),
         column_filters: Optional[List[str]] = typer.Option(None, "--filter", help=builtins._("Column filters (e.g., 'Imag<15'). Can be specified multiple times.")),
         row_limit: int = typer.Option(vizier_conf.row_limit, help=builtins._("Maximum number of rows to return per catalog.")),
@@ -212,23 +213,24 @@ def get_app():
             autocompletion=lambda: list(VIZIER_SERVERS.keys())
         )
     ):
-        console.print(_("[cyan]Querying VizieR region around '{coords_str}' in catalog(s): {catalog_list}...[/cyan]").format(coords_str=coordinates, catalog_list=', '.join(catalogs)))
+        catalogs_to_query = catalogs if catalogs is not None else ['I/261/gaiadr3']
+        console.print(_("[cyan]Querying VizieR region around '{coords_str}' in catalog(s): {catalog_list}...[/cyan]").format(coords_str=coordinates, catalog_list=', '.join(catalogs_to_query)))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
         console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
 
-        coords = parse_coordinates(ctx, target)
+        coords_obj = parse_coordinates(ctx, coordinates) # Changed to coords_obj
         rad_quantity = parse_angle_str_to_quantity(ctx, radius)
         width_quantity = parse_angle_str_to_quantity(ctx, width)
         height_quantity = parse_angle_str_to_quantity(ctx, height)
 
-        if rad_quantity and (width_quantity or height_quantity):
+        if rad_quantity is not None and (width_quantity is not None or height_quantity is not None):
             console.print(_("[bold red]Error: Specify either --radius (for cone search) OR (--width and --height) (for box search), not both.[/bold red]"))
             raise typer.Exit(code=1)
-        if (width_quantity and not height_quantity) or (not width_quantity and height_quantity):
+        if (width_quantity is not None and height_quantity is None) or (width_quantity is None and height_quantity is not None):
             console.print(_("[bold red]Error: For a box search, both --width and --height must be specified.[/bold red]"))
             raise typer.Exit(code=1)
-        if not rad_quantity and not (width_quantity and height_quantity):
+        if rad_quantity is None and (width_quantity is None and height_quantity is None):
             console.print(_("[bold red]Error: You must specify search dimensions: either --radius OR (--width and --height).[/bold red]"))
             raise typer.Exit(code=1)
 
