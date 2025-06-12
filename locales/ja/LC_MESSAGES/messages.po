@@ -1505,6 +1505,3 @@ msgstr ""
 
 #~ msgid "User interrupted the query. Exiting safely."
 #~ msgstr "ユーザーがクエリを中断しました。安全に終了します。"
-
-#~ msgid "to coordinates via SIMBAD:"
-#~ msgstr "SIMBADを介して座標へ"

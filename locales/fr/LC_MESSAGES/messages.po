@@ -1606,6 +1606,3 @@ msgstr ""
 
 #~ msgid "User interrupted the query. Exiting safely."
 #~ msgstr "L'utilisateur a interrompu la requête. Sortie sécurisée."
-
-#~ msgid "to coordinates via SIMBAD:"
-#~ msgstr "aux coordonnées via SIMBAD :"
