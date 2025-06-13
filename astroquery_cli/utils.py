@@ -132,7 +132,7 @@ def display_table(
 
     displayed_columns = astro_table.colnames
     if not show_all_columns and len(astro_table.colnames) > 10:
-        console.print(f"[cyan]Table has {len(astro_table.colnames)} columns. Displaying first 10. Use --show-all-columns to see all.[/cyan]")
+        console.print(f"[cyan]Table has {len(astro_table.colnames)} columns. Displaying first 10. Use --show-all-cols to see all.[/cyan]")
         displayed_columns = astro_table.colnames[:10]
 
     for col_name in displayed_columns:
