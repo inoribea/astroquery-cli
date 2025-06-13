@@ -10,7 +10,6 @@ def run_field():
     # Mapping of astroquery_cli.modules to astroquery modules
     # Add more mappings here if the module name in astroquery is different from astroquery_cli.modules
     MODULE_MAP = {
-        "simbad": "simbad",
         "alma": "alma",
         "esasky": "esasky",
         "gaia": "gaia",
@@ -21,6 +20,7 @@ def run_field():
         "mast": "mast",
         "nasa_ads": "nasa_ads",
         "ned": "ned",
+        "simbad": "simbad",
         "splatalogue": "splatalogue",
         "vizier": "vizier",
     }

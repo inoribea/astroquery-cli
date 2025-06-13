@@ -7,9 +7,7 @@ URLS = [
     "https://almascience.org",
     "https://gea.esac.esa.int",
     "https://ssd.jpl.nasa.gov",
-    "https://vizier.cds.unistra.fr",
     "https://vizier.eso.org",
-    "https://vizier.china-vo.org",
 ]
 
 def get_ping(host):

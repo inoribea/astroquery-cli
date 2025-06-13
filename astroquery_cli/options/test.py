@@ -3,18 +3,19 @@ import sys
 import time
 
 DEFAULT_COMMANDS = [
-    ["esasky", "list-catalogs"],
-    ["vizier", "--help"],
-    ["simbad", "--help"],
-    ["irsa", "--help"],
-    ["ned", "--help"],
     ["alma", "--help"],
+    ["esasky", "--help"],
+    ["gaia", "--help"],
+    ["irsa", "--help"],
+    ["irsa-dust", "--help"],
+    ["jplhorizons", "--help"],
+    ["jplsbdb", "--help"],
     ["mast", "--help"],
     ["nasa-ads", "--help"],
-    ["jplsbdb", "--help"],
-    ["jplhorizons", "--help"],
-    ["irsa-dust", "--help"],
+    ["ned", "--help"],
+    ["simbad", "--help"],
     ["splatalogue", "--help"],
+    ["vizier", "--help"],
 ]
 
 def run_test(commands=None):
