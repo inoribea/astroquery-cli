@@ -34,7 +34,7 @@ def get_app():
     @global_keyboard_interrupt_handler
     def query_object(
         ctx: typer.Context,
-        object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object.")),
+        object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object, e.g., 'Orion KL', 'Sgr B2', 'NGC 253'.")),
         public_data: bool = typer.Option(True, help=builtins._("Query only public data.")),
         science_data: bool = typer.Option(True, help=builtins._("Query only science data.")),
         payload: Optional[List[str]] = typer.Option(None, "--payload-field", help=builtins._("Specify payload fields to query (e.g., 'band_list', 'target_name').")),
@@ -107,7 +107,6 @@ def get_app():
             coord = parse_coordinates(ctx, coordinates)
             rad = parse_angle_str_to_quantity(ctx, radius)
             alma = Alma()
-
             result_table: Optional[AstropyTable] = alma.query_region(
                 coord,
                 radius=rad,
