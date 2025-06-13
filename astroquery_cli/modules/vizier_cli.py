@@ -170,11 +170,14 @@ def get_app():
         coords = parse_coordinates(ctx, target)
         rad_quantity = parse_angle_str_to_quantity(ctx, radius)
 
-        viz = Vizier(columns=columns if columns else ["*"], catalog=catalogs_to_query, column_filters=column_filters, row_limit=row_limit)
+        # Process column_filters to be a dictionary as expected by Vizier
+        processed_column_filters = parse_constraints_list(ctx, column_filters)
+
+        viz = Vizier(columns=columns if columns else ["*"], catalog=catalogs_to_query, column_filters=processed_column_filters, row_limit=row_limit)
 
         try:
             result_tables = viz.query_object(
-                object_name_or_coordinates=coords,
+                coords,
                 radius=rad_quantity,
             )
 

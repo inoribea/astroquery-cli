@@ -64,10 +64,12 @@ def get_app():
     def query_lines(ctx: typer.Context,
         chemical_name: str = typer.Argument(
             ...,
-            help=builtins._(
-                "Chemical name pattern (e.g., 'CO', '%H2O%'). "
-                "You can use % for SQL-like wildcards: "
-                "'%CO%' matches any containing CO, 'CO%' matches starting with CO, '%CO' matches ending with CO. "
+            help=(
+                builtins._("Chemical name pattern (e.g., 'CO', '%H2O%'). ") +
+                builtins._("You can use % for SQL-like wildcards: ") +
+                builtins._("'%CO%' matches any containing CO, ") +
+                builtins._("'CO%' matches starting with CO, ") +
+                builtins._("'%CO' matches matches ending with CO. ")
             )
         ),
 wavelength_range: Optional[str] = typer.Argument(

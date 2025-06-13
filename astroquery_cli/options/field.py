@@ -63,12 +63,37 @@ def run_field():
                             print(f"ALMA query failed, skipping field check: {e}")
                             continue
                     elif module_name == "mast":
-                        # According to the provided documentation, MastClass is the main class
-                        official_fields = set(astroquery_module.Mast.get_available_columns())
+                        print(f"Note: Automatic field retrieval for MAST is not directly supported by a simple method like 'list_fields'.")
+                        print(f"Please refer to MAST documentation for available query parameters and result columns.")
+                        continue # Skip field check for MAST
+                    elif module_name == "vizier":
+                        print(f"Note: VizieR fields are catalog-specific. Please specify a catalog to view its fields.")
+                        print(f"Example: `aqc vizier object M31 5arcmin --catalog I/261/gaiadr3 --col all`")
+                        continue # Skip field check for VizieR
+                    elif module_name == "gaia":
+                        try:
+                            # Gaia fields are typically retrieved via TAP queries
+                            # This is a simplified attempt to get some column names
+                            # A more robust solution would involve querying TAP schema
+                            tables = astroquery_module.Gaia.load_tables(only_names=True)
+                            if tables:
+                                # Try to get columns from a known table, e.g., 'gaiadr3.gaia_source'
+                                # This is a placeholder and might need adjustment
+                                # For now, we'll just acknowledge that it's complex
+                                print(f"Note: Gaia fields are extensive and table-specific (TAP service).")
+                                print(f"Please refer to Gaia TAP documentation for specific table columns.")
+                                continue
+                            else:
+                                print(f"Gaia.load_tables() returned no tables, skipping field check.")
+                                continue
+                        except Exception as e:
+                            print(f"Error getting Gaia fields: {e}")
+                            print(f"Skipping field check for GAIA.")
+                            continue
                     else:
-                        # Try common methods to get official fields
+                        # Try common methods to get official fields, including a small query if possible
                         found_fields = False
-                        for attr_name in ["list_fields", "list_votable_fields"]:
+                        for attr_name in ["list_fields", "list_votable_fields", "get_available_columns"]:
                             if hasattr(astroquery_module, attr_name):
                                 try:
                                     method = getattr(astroquery_module, attr_name)
@@ -84,7 +109,30 @@ def run_field():
                                     pass # Continue to next method if one fails
                         
                         if not found_fields:
-                            print(f"Could not determine how to get official fields for {module_name.upper()} using common methods. Skipping.")
+                            # Attempt a small query to get column names from results
+                            try:
+                                if hasattr(astroquery_module, 'query_object'):
+                                    # Generic query_object attempt
+                                    results = astroquery_module.query_object('M31', radius='0.01 deg', maxrec=1)
+                                    if results is not None and len(results) > 0:
+                                        official_fields = set(results.colnames)
+                                        found_fields = True
+                                elif hasattr(astroquery_module, 'query_region'):
+                                    # Generic query_region attempt
+                                    results = astroquery_module.query_region('M31', radius='0.01 deg', maxrec=1)
+                                    if results is not None and len(results) > 0:
+                                        official_fields = set(results.colnames)
+                                        found_fields = True
+                                # Add more specific query attempts for other modules if needed
+                            except Exception as e:
+                                print(f"Attempt with generic query for {module_name.upper()} failed: {e}")
+                                pass # Continue to next method if one fails
+
+                        if not found_fields:
+                            if module_name in ["jplhorizons", "jplsbdb"]:
+                                print(f"Note: {module_name.upper()} fields are dynamic and depend on the specific query. Automatic field retrieval is not applicable.")
+                            else:
+                                print(f"Could not determine how to get official fields for {module_name.upper()} using common methods. Please refer to its documentation. Skipping.")
                             continue
 
                 except Exception as e:

@@ -5,6 +5,7 @@ from astroquery.simbad import Simbad, SimbadClass
 from astropy.table import Table
 from rich.console import Console
 from astroquery_cli.utils import display_table, handle_astroquery_exception, common_output_options, save_table_to_file, add_common_fields, console
+from astroquery_cli.common_options import setup_debug_context
 from ..i18n import get_translator
 from ..utils import global_keyboard_interrupt_handler
 
@@ -17,6 +18,25 @@ def get_app():
         help=help_text,
         no_args_is_help=True
     )
+
+    @app.callback()
+    def simbad_callback(
+        ctx: typer.Context,
+        debug: bool = typer.Option(
+            False,
+            "-t",
+            "--debug",
+            help=_("Enable debug mode with verbose output."),
+            envvar="AQC_DEBUG"
+        ),
+        verbose: bool = typer.Option(
+            False,
+            "-v",
+            "--verbose",
+            help=_("Enable verbose output.")
+        )
+    ):
+        setup_debug_context(ctx, debug, verbose)
 
     Simbad.ROW_LIMIT = 50
     Simbad.TIMEOUT = 60
@@ -40,15 +60,12 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(10, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         """
         Retrieves information about a specific astronomical object from SIMBAD.
         Example: aqc simbad query-object M31
         Example: aqc simbad query-object "HD 1*" --wildcard --add-field sptype
         """
-        import time
-        start = time.perf_counter() if test else None
 
         console.print(_("[cyan]Querying SIMBAD for object: '{object_name}'...[/cyan]").format(object_name=object_name))
         s = Simbad()
@@ -76,11 +93,6 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("SIMBAD object"))
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
-
 
     @app.command(name="ids", help=builtins._("Query all identifiers for an astronomical object."))
     @global_keyboard_interrupt_handler
@@ -88,16 +100,12 @@ def get_app():
         object_name: str = typer.Argument(..., help=builtins._("Name of the object (e.g., 'Polaris').")),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
-        max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
+        max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows."))
     ):
         """
         Retrieves all known identifiers for a given astronomical object.
         Example: aqc simbad query-ids M51
         """
-        import time
-        start = time.perf_counter() if test else None
-
         console.print(_("[cyan]Querying SIMBAD for identifiers of: '{object_name}'...[/cyan]").format(object_name=object_name))
         s = Simbad()
         try:
@@ -112,11 +120,6 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
             handle_astroquery_exception(ctx, e, _("SIMBAD ids"))
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
-
 
     @app.command(name="bibcode", help=builtins._("Query objects associated with a bibcode or bibcode list."))
     @global_keyboard_interrupt_handler
@@ -125,17 +128,13 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(50, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
+        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table."))
     ):
         """
         Retrieves objects from SIMBAD that are cited in the given bibcode(s).
         Example: aqc simbad query-bibcode 1997AJ....113.2104S
         Example: aqc simbad query-bibcode 2003A&A...409..581H 2004A&A...418..989P
         """
-        import time
-        start = time.perf_counter() if test else None
-
         bibcodes_str = ', '.join(bibcodes)
         console.print(_("[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]").format(bibcodes_list=bibcodes_str))
         s = Simbad()
@@ -151,11 +150,6 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("SIMBAD bibcode"))
             raise typer.Exit(code=1)
-
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
 
     # TODO: Add more Simbad functionalities like query_region, query_criteria, list_votable_fields if desired.
 
