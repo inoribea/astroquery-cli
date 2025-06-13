@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-13 20:47+0800\n"
+"POT-Creation-Date: 2025-06-13 21:09+0800\n"
 "PO-Revision-Date: 2025-05-18 20:49+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -44,7 +44,7 @@ msgstr ""
 "Terminal trop étroit ou contenu trop complexe, veuillez ouvrir dans le "
 "navigateur :"
 
-#: astroquery_cli/utils.py:182
+#: astroquery_cli/utils.py:196
 msgid ""
 "Path to save the output table (e.g., data.csv, results.ecsv, table.fits)."
 " Format inferred from extension."
@@ -52,7 +52,7 @@ msgstr ""
 "Chemin pour enregistrer la table de sortie (par exemple, data.csv, "
 "results.ecsv, table.fits). Le format est déduit de l'extension."
 
-#: astroquery_cli/utils.py:188
+#: astroquery_cli/utils.py:202
 msgid ""
 "Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable')."
 " Overrides inference from filename extension."
@@ -100,8 +100,8 @@ msgstr ""
 #: astroquery_cli/modules/ned_cli.py:82 astroquery_cli/modules/simbad_cli.py:41
 #: astroquery_cli/modules/simbad_cli.py:91
 #: astroquery_cli/modules/simbad_cli.py:127
-#: astroquery_cli/modules/splatalogue_cli.py:81
-#: astroquery_cli/modules/splatalogue_cli.py:150
+#: astroquery_cli/modules/splatalogue_cli.py:88
+#: astroquery_cli/modules/splatalogue_cli.py:161
 msgid "Maximum number of rows to display. Use -1 for all rows."
 msgstr "Nombre maximum de lignes à afficher. Utilisez -1 pour toutes les lignes."
 
@@ -118,7 +118,7 @@ msgstr "Nombre maximum de lignes à afficher. Utilisez -1 pour toutes les lignes
 #: astroquery_cli/modules/ned_cli.py:123
 #: astroquery_cli/modules/simbad_cli.py:42
 #: astroquery_cli/modules/simbad_cli.py:128
-#: astroquery_cli/modules/splatalogue_cli.py:82
+#: astroquery_cli/modules/splatalogue_cli.py:89
 #: astroquery_cli/modules/vizier_cli.py:93
 #: astroquery_cli/modules/vizier_cli.py:157
 #: astroquery_cli/modules/vizier_cli.py:209
@@ -145,8 +145,8 @@ msgstr "Afficher toutes les colonnes dans le tableau de sortie."
 #: astroquery_cli/modules/simbad_cli.py:43
 #: astroquery_cli/modules/simbad_cli.py:92
 #: astroquery_cli/modules/simbad_cli.py:129
-#: astroquery_cli/modules/splatalogue_cli.py:83
-#: astroquery_cli/modules/splatalogue_cli.py:151
+#: astroquery_cli/modules/splatalogue_cli.py:90
+#: astroquery_cli/modules/splatalogue_cli.py:162
 #: astroquery_cli/modules/vizier_cli.py:99
 msgid "Enable test mode and print elapsed time."
 msgstr "Activer le mode test et afficher le temps écoulé."
@@ -1847,11 +1847,15 @@ msgstr ""
 "Interroger les raies spectrales de Splatalogue par nom chimique. Filtrer "
 "optionnellement par plage de longueur d'onde (-w) ou de fréquence (-f)."
 
-#: astroquery_cli/modules/splatalogue_cli.py:66
-msgid "Chemical name pattern (e.g., 'CO', '%H2O%')."
-msgstr "Modèle de nom chimique (par exemple, 'CO', '%H2O%')."
+#: astroquery_cli/modules/splatalogue_cli.py:69
+#, python-format
+msgid ""
+"Chemical name pattern (e.g., 'CO', '%H2O%'). You can use % for SQL-like "
+"wildcards: '%CO%' matches any containing CO, 'CO%' matches starting with "
+"CO, '%CO' matches ending with CO. "
+msgstr ""
 
-#: astroquery_cli/modules/splatalogue_cli.py:68
+#: astroquery_cli/modules/splatalogue_cli.py:75
 msgid ""
 "Wavelength range (e.g., '100um-200um'). You can directly input this as "
 "the second argument without -w. Mutually exclusive with frequency_range."
@@ -1860,7 +1864,7 @@ msgstr ""
 "l'entrer directement comme deuxième argument sans -w. Mutuellement "
 "exclusif avec la plage de fréquences."
 
-#: astroquery_cli/modules/splatalogue_cli.py:71
+#: astroquery_cli/modules/splatalogue_cli.py:78
 msgid ""
 "Frequency range (e.g., '100GHz-110GHz'). You can directly input this as "
 "the second argument without -f. Mutually exclusive with wavelength_range."
@@ -1869,15 +1873,15 @@ msgstr ""
 "directement comme deuxième argument sans -f. Mutuellement exclusif avec "
 "la plage de longueurs d'onde."
 
-#: astroquery_cli/modules/splatalogue_cli.py:73
+#: astroquery_cli/modules/splatalogue_cli.py:80
 msgid "Maximum energy in K (E_upper)."
 msgstr "Énergie maximale en K (E_supérieur)."
 
-#: astroquery_cli/modules/splatalogue_cli.py:74
+#: astroquery_cli/modules/splatalogue_cli.py:81
 msgid "Energy type ('el' or 'eu' for E_lower or E_upper)."
 msgstr "Type d'énergie ('el' ou 'eu' pour E_inférieur ou E_supérieur)."
 
-#: astroquery_cli/modules/splatalogue_cli.py:75
+#: astroquery_cli/modules/splatalogue_cli.py:82
 msgid ""
 "Line strength units (e.g., 'ls1', 'ls2', 'ls4', 'ls5' for CDMS/JPL or "
 "TopModel)."
@@ -1885,11 +1889,11 @@ msgstr ""
 "Unités de force de ligne (par exemple, 'ls1', 'ls2', 'ls4', 'ls5' pour "
 "CDMS/JPL ou TopModel)."
 
-#: astroquery_cli/modules/splatalogue_cli.py:76
+#: astroquery_cli/modules/splatalogue_cli.py:83
 msgid "Species to exclude (e.g., 'HDO')."
 msgstr "Espèces à exclure (par exemple, 'HDO')."
 
-#: astroquery_cli/modules/splatalogue_cli.py:79
+#: astroquery_cli/modules/splatalogue_cli.py:86
 msgid ""
 "Astropy table format for saving (e.g. 'csv', 'ecsv', 'fits', 'votable'). "
 "Overrides file extension inference."
@@ -1898,7 +1902,7 @@ msgstr ""
 "'ecsv', 'fits', 'votable'). Annule l'inférence à partir de l'extension du"
 " nom de fichier."
 
-#: astroquery_cli/modules/splatalogue_cli.py:90
+#: astroquery_cli/modules/splatalogue_cli.py:98
 msgid ""
 "[red]You cannot specify both -w/--wavelength-range and -f/--frequency-"
 "range.[/red]"
@@ -1906,16 +1910,7 @@ msgstr ""
 "[red]Vous ne pouvez pas spécifier à la fois -w/--wavelength-range et -f"
 "/--frequency-range.[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:99
-#, python-brace-format
-msgid ""
-"[cyan]Querying Splatalogue for '{chemical_name}' in wavelength range "
-"'{wavelength_range}' ({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]"
-msgstr ""
-"[cyan]Interrogation de Splatalogue pour les raies dans la plage "
-"'{frequency_range}'...[/cyan]"
-
-#: astroquery_cli/modules/splatalogue_cli.py:103
+#: astroquery_cli/modules/splatalogue_cli.py:111
 #, python-brace-format
 msgid ""
 "[cyan]Querying Splatalogue for '{chemical_name}' in frequency range "
@@ -1924,7 +1919,7 @@ msgstr ""
 "[cyan]Interrogation de Splatalogue pour les raies dans la plage "
 "'{frequency_range}'...[/cyan]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:106
+#: astroquery_cli/modules/splatalogue_cli.py:114
 msgid ""
 "[red]Error: You must specify a wavelength or frequency range as the "
 "second argument (e.g., '100um-200um' or '100GHz-110GHz'). No -w or -f "
@@ -1935,58 +1930,68 @@ msgstr ""
 "'100GHz-110GHz'). Aucun drapeau -w ou -f n'est nécessaire ; il suffit de "
 "fournir la plage directement.[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:130
+#: astroquery_cli/modules/splatalogue_cli.py:138
 #, python-brace-format
 msgid "[green]Found {count} spectral line(s).[/green]"
 msgstr "[green]Trouvé {count} raie(s) spectrale(s).[/green]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:131
+#: astroquery_cli/modules/splatalogue_cli.py:139
 msgid "Splatalogue Lines"
 msgstr "Raies de Splatalogue"
 
-#: astroquery_cli/modules/splatalogue_cli.py:133
+#: astroquery_cli/modules/splatalogue_cli.py:141
 msgid "Splatalogue line query"
 msgstr "Requête de raie de Splatalogue"
 
-#: astroquery_cli/modules/splatalogue_cli.py:135
+#: astroquery_cli/modules/splatalogue_cli.py:143
 msgid "[yellow]No spectral lines found for the given criteria.[/yellow]"
 msgstr "[yellow]Aucune raie spectrale trouvée pour les critères donnés.[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:137
+#: astroquery_cli/modules/splatalogue_cli.py:146
+msgid ""
+"[yellow]No matching chemical species found. Please check your "
+"chemical_name pattern and try removing wildcards or using a more specific"
+" name.[/yellow]"
+msgstr ""
+"[yellow]Aucune espèce chimique correspondante trouvée. Veuillez vérifier "
+"votre modèle de nom chimique et essayer de supprimer les caractères "
+"génériques ou d'utiliser un nom plus spécifique.[/yellow]"
+
+#: astroquery_cli/modules/splatalogue_cli.py:148
 msgid "Splatalogue lines"
 msgstr "Raies de Splatalogue"
 
-#: astroquery_cli/modules/splatalogue_cli.py:142
-#: astroquery_cli/modules/splatalogue_cli.py:171
+#: astroquery_cli/modules/splatalogue_cli.py:153
+#: astroquery_cli/modules/splatalogue_cli.py:182
 #, python-brace-format
 msgid "Elapsed: {elapsed:.3f} s"
 msgstr "Temps écoulé : {elapsed:.3f} s"
 
-#: astroquery_cli/modules/splatalogue_cli.py:145
+#: astroquery_cli/modules/splatalogue_cli.py:156
 msgid "Get the table of NRAO recommended species."
 msgstr "Obtenir la table des espèces recommandées par le NRAO."
 
-#: astroquery_cli/modules/splatalogue_cli.py:156
+#: astroquery_cli/modules/splatalogue_cli.py:167
 msgid "[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"
 msgstr ""
 "[cyan]Récupération de la table des espèces recommandées par le NRAO à "
 "partir de Splatalogue...[/cyan]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:160
+#: astroquery_cli/modules/splatalogue_cli.py:171
 msgid "Splatalogue NRAO Recommended Species"
 msgstr "Espèces recommandées par le NRAO de Splatalogue"
 
-#: astroquery_cli/modules/splatalogue_cli.py:162
+#: astroquery_cli/modules/splatalogue_cli.py:173
 msgid "Splatalogue species table"
 msgstr "Table des espèces de Splatalogue"
 
-#: astroquery_cli/modules/splatalogue_cli.py:164
+#: astroquery_cli/modules/splatalogue_cli.py:175
 msgid "[yellow]Could not retrieve species table or it is empty.[/yellow]"
 msgstr ""
 "[yellow]Impossible de récupérer la table des espèces ou celle-ci est "
 "vide.[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:166
+#: astroquery_cli/modules/splatalogue_cli.py:177
 msgid "Splatalogue species-table"
 msgstr "Table des espèces de Splatalogue"
 
@@ -2364,4 +2369,16 @@ msgstr ""
 
 #~ msgid "Frequency range (e.g., '100GHz-110GHz', '2100MHz-2200MHz')."
 #~ msgstr "Plage de fréquences (par exemple, '100GHz-110GHz', '2100MHz-2200MHz')."
+
+#~ msgid "Chemical name pattern (e.g., 'CO', '%H2O%')."
+#~ msgstr "Modèle de nom chimique (par exemple, 'CO', '%H2O%')."
+
+#~ msgid ""
+#~ "[cyan]Querying Splatalogue for '{chemical_name}' "
+#~ "in wavelength range '{wavelength_range}' "
+#~ "({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]"
+#~ msgstr ""
+#~ "[cyan]Interrogation de Splatalogue pour les"
+#~ " raies dans la plage "
+#~ "'{frequency_range}'...[/cyan]"
 

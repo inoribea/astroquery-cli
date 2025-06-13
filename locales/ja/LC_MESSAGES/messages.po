@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-13 20:47+0800\n"
+"POT-Creation-Date: 2025-06-13 21:09+0800\n"
 "PO-Revision-Date: 2025-05-18 20:49+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -36,13 +36,13 @@ msgstr "モジュールのフィールドの有効性をテストします（ト
 msgid "Terminal too narrow or content too complex, please open in browser:"
 msgstr "ターミナルの幅が足りないか、内容が複雑すぎます。ブラウザで開いてください："
 
-#: astroquery_cli/utils.py:182
+#: astroquery_cli/utils.py:196
 msgid ""
 "Path to save the output table (e.g., data.csv, results.ecsv, table.fits)."
 " Format inferred from extension."
 msgstr "出力テーブルを保存するパス（例：data.csv、results.ecsv、table.fits）。拡張子からフォーマットが推測されます。"
 
-#: astroquery_cli/utils.py:188
+#: astroquery_cli/utils.py:202
 msgid ""
 "Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable')."
 " Overrides inference from filename extension."
@@ -85,8 +85,8 @@ msgstr "照会する payload フィールドを指定します (例: 'band_list'
 #: astroquery_cli/modules/ned_cli.py:82 astroquery_cli/modules/simbad_cli.py:41
 #: astroquery_cli/modules/simbad_cli.py:91
 #: astroquery_cli/modules/simbad_cli.py:127
-#: astroquery_cli/modules/splatalogue_cli.py:81
-#: astroquery_cli/modules/splatalogue_cli.py:150
+#: astroquery_cli/modules/splatalogue_cli.py:88
+#: astroquery_cli/modules/splatalogue_cli.py:161
 msgid "Maximum number of rows to display. Use -1 for all rows."
 msgstr "表示する最大行数。すべての行を表示するには -1 を使用します。"
 
@@ -103,7 +103,7 @@ msgstr "表示する最大行数。すべての行を表示するには -1 を�
 #: astroquery_cli/modules/ned_cli.py:123
 #: astroquery_cli/modules/simbad_cli.py:42
 #: astroquery_cli/modules/simbad_cli.py:128
-#: astroquery_cli/modules/splatalogue_cli.py:82
+#: astroquery_cli/modules/splatalogue_cli.py:89
 #: astroquery_cli/modules/vizier_cli.py:93
 #: astroquery_cli/modules/vizier_cli.py:157
 #: astroquery_cli/modules/vizier_cli.py:209
@@ -130,8 +130,8 @@ msgstr "出力テーブルにすべての列を表示します。"
 #: astroquery_cli/modules/simbad_cli.py:43
 #: astroquery_cli/modules/simbad_cli.py:92
 #: astroquery_cli/modules/simbad_cli.py:129
-#: astroquery_cli/modules/splatalogue_cli.py:83
-#: astroquery_cli/modules/splatalogue_cli.py:151
+#: astroquery_cli/modules/splatalogue_cli.py:90
+#: astroquery_cli/modules/splatalogue_cli.py:162
 #: astroquery_cli/modules/vizier_cli.py:99
 msgid "Enable test mode and print elapsed time."
 msgstr "テストモードを有効にし、経過時間を表示します。"
@@ -1674,67 +1674,64 @@ msgid ""
 " by wavelength (-w) or frequency (-f) range."
 msgstr "Splatalogueから化学名でスペクトル線を照会します。オプションで波長 (-w) または周波数 (-f) の範囲でフィルターできます。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:66
-msgid "Chemical name pattern (e.g., 'CO', '%H2O%')."
-msgstr "化学名パターン (例: 'CO', '%H2O%')。"
+#: astroquery_cli/modules/splatalogue_cli.py:69
+#, python-format
+msgid ""
+"Chemical name pattern (e.g., 'CO', '%H2O%'). You can use % for SQL-like "
+"wildcards: '%CO%' matches any containing CO, 'CO%' matches starting with "
+"CO, '%CO' matches ending with CO. "
+msgstr ""
 
-#: astroquery_cli/modules/splatalogue_cli.py:68
+#: astroquery_cli/modules/splatalogue_cli.py:75
 msgid ""
 "Wavelength range (e.g., '100um-200um'). You can directly input this as "
 "the second argument without -w. Mutually exclusive with frequency_range."
 msgstr "波長範囲（例: '100um-200um'）。これを-wなしで2番目の引数として直接入力できます。周波数範囲とは排他的です。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:71
+#: astroquery_cli/modules/splatalogue_cli.py:78
 msgid ""
 "Frequency range (e.g., '100GHz-110GHz'). You can directly input this as "
 "the second argument without -f. Mutually exclusive with wavelength_range."
 msgstr "周波数範囲（例: '100GHz-110GHz'）。これを-fなしで2番目の引数として直接入力できます。波長範囲とは排他的です。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:73
+#: astroquery_cli/modules/splatalogue_cli.py:80
 msgid "Maximum energy in K (E_upper)."
 msgstr "最大エネルギー (K単位) (E_upper)。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:74
+#: astroquery_cli/modules/splatalogue_cli.py:81
 msgid "Energy type ('el' or 'eu' for E_lower or E_upper)."
 msgstr "エネルギータイプ ('el' (E_lower) または 'eu' (E_upper))。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:75
+#: astroquery_cli/modules/splatalogue_cli.py:82
 msgid ""
 "Line strength units (e.g., 'ls1', 'ls2', 'ls4', 'ls5' for CDMS/JPL or "
 "TopModel)."
 msgstr "線強度単位 (例: CDMS/JPL または TopModel の場合は 'ls1', 'ls2', 'ls4', 'ls5')。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:76
+#: astroquery_cli/modules/splatalogue_cli.py:83
 msgid "Species to exclude (e.g., 'HDO')."
 msgstr "除外する化学種 (例: 'HDO')。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:79
+#: astroquery_cli/modules/splatalogue_cli.py:86
 msgid ""
 "Astropy table format for saving (e.g. 'csv', 'ecsv', 'fits', 'votable'). "
 "Overrides file extension inference."
 msgstr "保存するためのAstropyテーブル形式（例：'csv'、'ecsv'、'fits'、'votable'）。ファイル拡張子からの推論を上書きします。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:90
+#: astroquery_cli/modules/splatalogue_cli.py:98
 msgid ""
 "[red]You cannot specify both -w/--wavelength-range and -f/--frequency-"
 "range.[/red]"
 msgstr "[red]-w/--wavelength-range と -f/--frequency-range の両方を指定することはできません。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:99
-#, python-brace-format
-msgid ""
-"[cyan]Querying Splatalogue for '{chemical_name}' in wavelength range "
-"'{wavelength_range}' ({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]"
-msgstr "[cyan]周波数範囲 '{frequency_range}' のスペクトル線をSplatalogueで照会中...[/cyan]"
-
-#: astroquery_cli/modules/splatalogue_cli.py:103
+#: astroquery_cli/modules/splatalogue_cli.py:111
 #, python-brace-format
 msgid ""
 "[cyan]Querying Splatalogue for '{chemical_name}' in frequency range "
 "'{frequency_range}'...[/cyan]"
 msgstr "[cyan]周波数範囲 '{frequency_range}' のスペクトル線をSplatalogueで照会中...[/cyan]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:106
+#: astroquery_cli/modules/splatalogue_cli.py:114
 msgid ""
 "[red]Error: You must specify a wavelength or frequency range as the "
 "second argument (e.g., '100um-200um' or '100GHz-110GHz'). No -w or -f "
@@ -1743,54 +1740,63 @@ msgstr ""
 "[red]エラー: 2番目の引数として波長または周波数範囲を指定する必要があります（例: '100um-200um' または '100GHz-"
 "110GHz'）。-w または -f フラグは不要です。範囲を直接提供してください。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:130
+#: astroquery_cli/modules/splatalogue_cli.py:138
 #, python-brace-format
 msgid "[green]Found {count} spectral line(s).[/green]"
 msgstr "[green]{count} 件のスペクトル線が見つかりました。[/green]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:131
+#: astroquery_cli/modules/splatalogue_cli.py:139
 msgid "Splatalogue Lines"
 msgstr "Splatalogue スペクトル線"
 
-#: astroquery_cli/modules/splatalogue_cli.py:133
+#: astroquery_cli/modules/splatalogue_cli.py:141
 msgid "Splatalogue line query"
 msgstr "Splatalogue スペクトル線照会"
 
-#: astroquery_cli/modules/splatalogue_cli.py:135
+#: astroquery_cli/modules/splatalogue_cli.py:143
 msgid "[yellow]No spectral lines found for the given criteria.[/yellow]"
 msgstr "[yellow]指定された基準に一致するスペクトル線は見つかりませんでした。[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:137
+#: astroquery_cli/modules/splatalogue_cli.py:146
+msgid ""
+"[yellow]No matching chemical species found. Please check your "
+"chemical_name pattern and try removing wildcards or using a more specific"
+" name.[/yellow]"
+msgstr ""
+"[yellow]一致する化学種が見つかりませんでした。chemical_name "
+"パターンを確認し、ワイルドカードを削除するか、より具体的な名前を使用してみてください。[/yellow]"
+
+#: astroquery_cli/modules/splatalogue_cli.py:148
 msgid "Splatalogue lines"
 msgstr "Splatalogue線"
 
-#: astroquery_cli/modules/splatalogue_cli.py:142
-#: astroquery_cli/modules/splatalogue_cli.py:171
+#: astroquery_cli/modules/splatalogue_cli.py:153
+#: astroquery_cli/modules/splatalogue_cli.py:182
 #, python-brace-format
 msgid "Elapsed: {elapsed:.3f} s"
 msgstr "経過時間: {elapsed:.3f} 秒"
 
-#: astroquery_cli/modules/splatalogue_cli.py:145
+#: astroquery_cli/modules/splatalogue_cli.py:156
 msgid "Get the table of NRAO recommended species."
 msgstr "NRAO推奨化学種のテーブルを取得します。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:156
+#: astroquery_cli/modules/splatalogue_cli.py:167
 msgid "[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"
 msgstr "[cyan]SplatalogueからNRAO推奨化学種のテーブルを取得中...[/cyan]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:160
+#: astroquery_cli/modules/splatalogue_cli.py:171
 msgid "Splatalogue NRAO Recommended Species"
 msgstr "Splatalogue NRAO推奨化学種"
 
-#: astroquery_cli/modules/splatalogue_cli.py:162
+#: astroquery_cli/modules/splatalogue_cli.py:173
 msgid "Splatalogue species table"
 msgstr "Splatalogue 化学種テーブル"
 
-#: astroquery_cli/modules/splatalogue_cli.py:164
+#: astroquery_cli/modules/splatalogue_cli.py:175
 msgid "[yellow]Could not retrieve species table or it is empty.[/yellow]"
 msgstr "[yellow]化学種テーブルを取得できなかったか、空です。[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:166
+#: astroquery_cli/modules/splatalogue_cli.py:177
 msgid "Splatalogue species-table"
 msgstr "Splatalogue種テーブル"
 
@@ -2116,4 +2122,13 @@ msgstr ""
 
 #~ msgid "Frequency range (e.g., '100GHz-110GHz', '2100MHz-2200MHz')."
 #~ msgstr "周波数範囲 (例: '100GHz-110GHz', '2100MHz-2200MHz')。"
+
+#~ msgid "Chemical name pattern (e.g., 'CO', '%H2O%')."
+#~ msgstr "化学名パターン (例: 'CO', '%H2O%')。"
+
+#~ msgid ""
+#~ "[cyan]Querying Splatalogue for '{chemical_name}' "
+#~ "in wavelength range '{wavelength_range}' "
+#~ "({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]"
+#~ msgstr "[cyan]周波数範囲 '{frequency_range}' のスペクトル線をSplatalogueで照会中...[/cyan]"
 

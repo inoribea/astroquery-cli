@@ -156,11 +156,25 @@ def display_table(
 def handle_astroquery_exception(ctx: typer.Context, e: Exception, service_name: str):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
     console.print(f"[bold red]Error querying {service_name}:[/bold red]")
+    import traceback
+    console.print(f"[yellow][debug] type(e): {type(e)}[/yellow]")
+    console.print(f"[yellow][debug] e: {e}[/yellow]")
+    console.print(f"[yellow][debug] ctx: {ctx}[/yellow]")
+    console.print(f"[yellow][debug] ctx.params: {getattr(ctx, 'params', None)}[/yellow]")
+    console.print(f"[yellow][debug] traceback:[/yellow]")
+    console.print("".join(traceback.format_exception(type(e), e, e.__traceback__)))
     try:
         console.print(f"{type(e).__name__}: {e}")
     except KeyError as ke:
         console.print(f"[red]KeyError in error message: {ke}. Some translation or error string is missing a key.[/red]")
         console.print(f"[red]Original exception type: {type(e).__name__}[/red]")
+        console.print(f"[red]ctx.params: {getattr(ctx, 'params', None)}[/red]")
+        if hasattr(e, '__traceback__'):
+            console.print("[red]Traceback:[/red]")
+            console.print("".join(traceback.format_tb(e.__traceback__)))
+    except Exception as ee:
+        console.print(f"[red]Unexpected error in error handler: {ee}[/red]")
+        console.print(f"[red]ctx.params: {getattr(ctx, 'params', None)}[/red]")
     # 打印异常链，便于定位隐藏的 format 错误
     if hasattr(e, '__context__') and e.__context__:
         console.print(f"[dim]Exception context: {type(e.__context__).__name__}: {e.__context__}[/dim]")

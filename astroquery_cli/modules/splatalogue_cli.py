@@ -63,7 +63,14 @@ def get_app():
     @app.command(name="lines", help=builtins._("Query spectral lines from Splatalogue by chemical name. Optionally filter by wavelength (-w) or frequency (-f) range."))
     @global_keyboard_interrupt_handler
     def query_lines(ctx: typer.Context,
-        chemical_name: str = typer.Argument(..., help=builtins._("Chemical name pattern (e.g., 'CO', '%H2O%').")),
+        chemical_name: str = typer.Argument(
+            ...,
+            help=builtins._(
+                "Chemical name pattern (e.g., 'CO', '%H2O%'). "
+                "You can use % for SQL-like wildcards: "
+                "'%CO%' matches any containing CO, 'CO%' matches starting with CO, '%CO' matches ending with CO. "
+            )
+        ),
 wavelength_range: Optional[str] = typer.Argument(
             None, help=builtins._("Wavelength range (e.g., '100um-200um'). You can directly input this as the second argument without -w. Mutually exclusive with frequency_range.")
         ),
@@ -82,6 +89,7 @@ frequency_range: Optional[str] = typer.Argument(
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
         test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
+        console.print(f"[debug] ctx.params: {getattr(ctx, 'params', None)}")
         import time
         start = time.perf_counter() if test else None
 
@@ -96,7 +104,7 @@ frequency_range: Optional[str] = typer.Argument(
                 min_wl, max_wl = parse_range(wavelength_range, "wavelength")
                 min_freq = (c / max_wl).to(u.Hz)
                 max_freq = (c / min_wl).to(u.Hz)
-                console.print(_("[cyan]Querying Splatalogue for '{chemical_name}' in wavelength range '{wavelength_range}' ({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]").format(
+                console.print("[cyan]Querying Splatalogue for '{chemical_name}' in wavelength range '{wavelength_range}' ({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]".format(
                     chemical_name=chemical_name, wavelength_range=wavelength_range, min_freq=min_freq.value, max_freq=max_freq.value))
             elif frequency_range:
                 min_freq, max_freq = parse_range(frequency_range, "frequency")
@@ -134,6 +142,9 @@ frequency_range: Optional[str] = typer.Argument(
             else:
                 console.print(_("[yellow]No spectral lines found for the given criteria.[/yellow]"))
         except Exception as e:
+            if isinstance(e, ValueError) and "No matching chemical species found" in str(e):
+                console.print(_("[yellow]No matching chemical species found. Please check your chemical_name pattern and try removing wildcards or using a more specific name.[/yellow]"))
+                raise typer.Exit(code=0)
             handle_astroquery_exception(ctx, e, _("Splatalogue lines"))
             raise typer.Exit(code=1)
 
