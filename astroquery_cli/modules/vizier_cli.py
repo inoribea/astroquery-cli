@@ -66,16 +66,15 @@ def get_app():
                 raise typer.Exit(code=1)
 
 
-    def parse_constraints_list(ctx: typer.Context, constraints_list: Optional[List[str]]) -> Optional[dict]:
-        if not constraints_list:
-            return None
+    def parse_constraints_list(ctx: typer.Context, constraints_list: Optional[List[str]]) -> dict:
         parsed_constraints = {}
-        for item in constraints_list:
-            if '=' not in item:
-                console.print(_("[bold red]Invalid constraint format: '{item}'. Expected 'column=condition'.[/bold red]").format(item=item))
-                raise typer.Exit(code=1)
-            key, value = item.split('=', 1)
-            parsed_constraints[key.strip()] = value.strip()
+        if constraints_list:
+            for item in constraints_list:
+                if '=' not in item:
+                    console.print(_("[bold red]Invalid constraint format: '{item}'. Expected 'column=condition'.[/bold red]").format(item=item))
+                    raise typer.Exit(code=1)
+                key, value = item.split('=', 1)
+                parsed_constraints[key.strip()] = value.strip()
         return parsed_constraints
 
     VIZIER_SERVERS = {
@@ -183,7 +182,8 @@ def get_app():
                 console.print(_("[yellow]No results returned from VizieR for this query.[/yellow]"))
                 return
 
-            for table_name, table_data in result_tables.items():
+            for table_name in result_tables.keys():
+                table_data = result_tables[table_name]
                 if table_data is not None and len(table_data) > 0:
                     display_table(ctx, table_data, title=_("Results from {catalog_name} for {target_name}").format(catalog_name=table_name, target_name=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 else:
@@ -214,10 +214,10 @@ def get_app():
         )
     ):
         catalogs_to_query = catalogs if catalogs is not None else ['I/261/gaiadr3']
-        console.print(_("[cyan]Querying VizieR region around '{coords_str}' in catalog(s): {catalog_list}...[/cyan]").format(coords_str=coordinates, catalog_list=', '.join(catalogs_to_query)))
+        console.print(_(f"[cyan]Querying VizieR region around '{coordinates}' in catalog(s): {', '.join(catalogs_to_query)}...[/cyan]"))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
-        console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
+        console.print(_(f"[dim]Using VizieR server: {vizier_conf.server}, Row limit: {row_limit}[/dim]"))
 
         coords_obj = parse_coordinates(ctx, coordinates) # Changed to coords_obj
         rad_quantity = parse_angle_str_to_quantity(ctx, radius)
@@ -225,16 +225,19 @@ def get_app():
         height_quantity = parse_angle_str_to_quantity(ctx, height)
 
         if rad_quantity is not None and (width_quantity is not None or height_quantity is not None):
-            console.print(_("[bold red]Error: Specify either --radius (for cone search) OR (--width and --height) (for box search), not both.[/bold red]"))
+            console.print(_(f"[bold red]Error: Specify either --radius (for cone search) OR (--width and --height) (for box search), not both.[/bold red]"))
             raise typer.Exit(code=1)
         if (width_quantity is not None and height_quantity is None) or (width_quantity is None and height_quantity is not None):
-            console.print(_("[bold red]Error: For a box search, both --width and --height must be specified.[/bold red]"))
+            console.print(_(f"[bold red]Error: For a box search, both --width and --height must be specified.[/bold red]"))
             raise typer.Exit(code=1)
         if rad_quantity is None and (width_quantity is None and height_quantity is None):
-            console.print(_("[bold red]Error: You must specify search dimensions: either --radius OR (--width and --height).[/bold red]"))
+            console.print(_(f"[bold red]Error: You must specify search dimensions: either --radius OR (--width and --height).[/bold red]"))
             raise typer.Exit(code=1)
 
-        viz = Vizier(columns=columns if columns else ["*"], catalog=catalogs, column_filters=column_filters, row_limit=row_limit)
+        # Process column_filters to be a dictionary as expected by Vizier
+        processed_column_filters = parse_constraints_list(ctx, column_filters)
+
+        viz = Vizier(columns=columns if columns else ["*"], catalog=catalogs, column_filters=processed_column_filters, row_limit=row_limit)
 
         try:
             result_tables = viz.query_region(
@@ -248,11 +251,15 @@ def get_app():
                 console.print(_("[yellow]No results returned from VizieR for this query.[/yellow]"))
                 return
 
-            for table_name, table_data in result_tables.items():
+            max_tables_display = 5
+            for idx, table_name in enumerate(result_tables.keys()):
+                if idx >= max_tables_display:
+                    break
+                table_data = result_tables[table_name]
                 if table_data is not None and len(table_data) > 0:
-                    display_table(ctx, table_data, title=_("Results from {catalog_name} for region around {coords_str}").format(catalog_name=table_name, coords_str=coordinates), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                    display_table(ctx, table_data, title=_(f"Results from {table_name} for region around {coordinates}"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 else:
-                    console.print(_("[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/yellow]").format(catalog_name=table_name))
+                    console.print(_(f"[yellow]No data found in catalog '{table_name}' for the given criteria.[/yellow]"))
 
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("Vizier region"))
@@ -275,10 +282,10 @@ def get_app():
             autocompletion=lambda: list(VIZIER_SERVERS.keys())
         )
     ):
-        console.print(_("[cyan]Querying VizieR with constraints in catalog(s): {catalog_list}...[/cyan]").format(catalog_list=', '.join(catalogs)))
+        console.print(_(f"[cyan]Querying VizieR with constraints in catalog(s): {', '.join(catalogs)}...[/cyan]"))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
-        console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
+        console.print(_(f"[dim]Using VizieR server: {vizier_conf.server}, Row limit: {row_limit}[/dim]"))
 
         parsed_constraints = parse_constraints_list(ctx, constraints)
         if not parsed_constraints and not keywords:
@@ -288,10 +295,10 @@ def get_app():
         query_kwargs = {}
         if parsed_constraints:
             query_kwargs.update(parsed_constraints)
-            console.print(_("[dim]Using constraints: {constraints_dict}[/dim]").format(constraints_dict=query_kwargs))
+            console.print(_(f"[dim]Using constraints: {query_kwargs}[/dim]"))
         if keywords:
             query_kwargs['keywords'] = " ".join(keywords)
-            console.print(_("[dim]Using keywords: {keywords_str}[/dim]").format(keywords_str=query_kwargs['keywords']))
+            console.print(_(f"[dim]Using keywords: {query_kwargs['keywords']}[/dim]"))
 
 
         viz = Vizier(columns=columns if columns else ["*"], row_limit=row_limit)
@@ -304,11 +311,12 @@ def get_app():
                 console.print(_("[yellow]No results returned from VizieR for this query.[/yellow]"))
                 return
 
-            for table_name, table_data in result_tables.items():
+            for table_name in result_tables.keys():
+                table_data = result_tables[table_name]
                 if table_data is not None and len(table_data) > 0:
-                    display_table(ctx, table_data, title=_("Constraint Query Results from {catalog_name}").format(catalog_name=table_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                    display_table(ctx, table_data, title=_(f"Constraint Query Results from {table_name}"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 else:
-                    console.print(_("[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/yellow]").format(catalog_name=table_name))
+                    console.print(_(f"[yellow]No data found in catalog '{table_name}' for the given criteria.[/yellow]"))
 
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("Vizier constraints"))
