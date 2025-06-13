@@ -31,7 +31,6 @@ def get_app():
         "Redshift",
         "Photometry",
         "References",
-        # ...
     ]
 
     Splatalogue.TIMEOUT = 120
@@ -89,10 +88,6 @@ frequency_range: Optional[str] = typer.Argument(
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
         test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
-        console.print(f"[debug] ctx.params: {getattr(ctx, 'params', None)}")
-        import time
-        start = time.perf_counter() if test else None
-
         # Mutually exclusive logic for range
         if wavelength_range and frequency_range:
             console.print(_("[red]You cannot specify both -w/--wavelength-range and -f/--frequency-range.[/red]"))
@@ -148,11 +143,6 @@ frequency_range: Optional[str] = typer.Argument(
             handle_astroquery_exception(ctx, e, _("Splatalogue lines"))
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(_("Elapsed: {elapsed:.3f} s").format(elapsed=elapsed))
-            raise typer.Exit()
-
     @app.command(name="species-table", help=builtins._("Get the table of NRAO recommended species."))
     @global_keyboard_interrupt_handler
     def get_species_table(ctx: typer.Context,
@@ -161,9 +151,6 @@ frequency_range: Optional[str] = typer.Argument(
         max_rows_display: int = typer.Option(50, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
-        import time
-        start = time.perf_counter() if test else None
-
         console.print(_("[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"))
         try:
             species_table: Optional[AstropyTable] = Splatalogue.get_species_table()
@@ -176,10 +163,5 @@ frequency_range: Optional[str] = typer.Argument(
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("Splatalogue species-table"))
             raise typer.Exit(code=1)
-
-        if test:
-            elapsed = time.perf_counter() - start
-            print(_("Elapsed: {elapsed:.3f} s").format(elapsed=elapsed))
-            raise typer.Exit()
 
     return app
