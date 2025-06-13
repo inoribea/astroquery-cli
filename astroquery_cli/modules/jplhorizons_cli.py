@@ -7,7 +7,7 @@ from astropy.time import Time
 from rich.console import Console
 
 from ..utils import display_table, handle_astroquery_exception, global_keyboard_interrupt_handler
-from ..i18n import get_translator
+from .. import i18n
 console = Console()
 
 def get_app():
@@ -99,7 +99,7 @@ def get_app():
             help=builtins._("Type of the target identifier. If None, Horizons will try to guess.")
         ),
         ephem_type: EphemType = typer.Option(
-            EphemType.OBSERVER,
+            EphemType.ELEMENTS,
             case_sensitive=False,
             help=builtins._("Type of ephemeris to retrieve.")
         ),
@@ -147,19 +147,24 @@ def get_app():
                 epoch_dict = epochs
                 console.print(_("[dim]Using single epoch: {epoch}[/dim]").format(epoch=epoch_dict))
         elif ephem_type in [EphemType.ELEMENTS, EphemType.VECTORS]:
-            epoch_dict = Time.now().iso
-            console.print(_("[dim]No epoch specified for {ephem_type}, using current time: {epoch}[/dim]").format(ephem_type=ephem_type.value, epoch=epoch_dict))
+            epoch_dict = Time.now().jd
+            console.print(_("[dim]No epoch specified for {ephem_type}, using current JD: {epoch}[/dim]").format(ephem_type=ephem_type.value, epoch=epoch_dict))
         elif ephem_type == EphemType.OBSERVER:
             import datetime
-            today = datetime.datetime.now().strftime('%Y-%m-%d')
-            epoch_dict = {'start': today, 'stop': today, 'step': '1d'}
+            now = datetime.datetime.now()
+            today = now.strftime('%Y-%m-%d')
+            tomorrow = (now + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+            epoch_dict = {'start': today, 'stop': tomorrow, 'step': '1d'}
             console.print(_("[yellow]No epoch specified for OBSERVER, using today as default: {epoch_dict}[/yellow]").format(epoch_dict=epoch_dict))
 
+        # 针对主星体自动设置 id_type
+        auto_majorbodies = {"sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto", "moon"}
+        auto_id_type = id_type.value if id_type else ("majorbody" if target.strip().lower() in auto_majorbodies else None)
         query_params = {
             "id": target,
             "location": location,
             "epochs": epoch_dict,
-            "id_type": id_type.value if id_type else None,
+            "id_type": auto_id_type,
         }
 
         query_params = {k: v for k, v in query_params.items() if v is not None}
@@ -181,11 +186,25 @@ def get_app():
                 result_table = obj.vectors(quantities=q, get_raw_response=False) if q else obj.vectors(get_raw_response=False)
 
             elif ephem_type == EphemType.ELEMENTS:
-                q = quantities
-                if q: console.print(_("[dim]Requesting quantities for elements: {quantities}[/dim]").format(quantities=q))
-                result_table = obj.elements(quantities=q, get_raw_response=False) if q else obj.elements(get_raw_response=False)
+                # 先输出物理参数
+                try:
+                    result_table = obj.elements(get_raw_response=False)
+                    display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
+                except Exception:
+                    raw = obj.elements(get_raw_response=True)
+                    console.print(str(raw))
+                # 再输出当天的观测表格
+                try:
+                    import datetime
+                    now = datetime.datetime.now()
+                    today = now.strftime('%Y-%m-%d')
+                    eph_table = obj.ephemerides(get_raw_response=False)
+                    display_table(ctx, eph_table, title="Ephemerides for today", max_rows=max_rows, show_all_columns=show_all_columns)
+                except Exception as e:
+                    console.print(f"[red]Ephemerides table error: {e}[/red]")
 
-            display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
+            else:
+                display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
 
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("JPL Horizons object"))
