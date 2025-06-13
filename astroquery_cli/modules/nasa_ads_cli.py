@@ -38,22 +38,70 @@ def get_app():
 
     @app.command(name="query", help=builtins._("Perform a query on NASA ADS."))
     @global_keyboard_interrupt_handler
-    def query_ads(ctx: typer.Context,
-        query_string: str = typer.Argument(..., help=_("ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', 'bibcode:1998AJ....116.1009R').")),
-        fields: Optional[List[str]] = typer.Option(["bibcode", "title", "author", "year", "citation_count"], "--field", help=builtins._("Fields to return.")),
-        sort_by: Optional[str] = typer.Option("citation_count", help=builtins._("Sort results by (e.g., 'date', 'citation_count', 'score').")),
-        max_pages: int = typer.Option(1, help=builtins._("Maximum number of pages to retrieve.")),
-        rows_per_page: int = typer.Option(25, help=builtins._("Number of results per page (max 200 for ADS API).")),
+    def query_ads(
+        ctx: typer.Context,
+        query_string: Optional[str] = typer.Argument(
+            None,
+            help=_("ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', 'bibcode:1998AJ....116.1009R').")
+        ),
+        latest: bool = typer.Option(
+            False,
+            "--latest",
+            help=builtins._("Show latest published papers (sorted by date, most recent first)."),
+        ),
+        review: bool = typer.Option(
+            False,
+            "--review",
+            help=builtins._("Show highly cited review articles (sorted by citation count)."),
+        ),
+        fields: Optional[List[str]] = typer.Option(
+            ["bibcode", "title", "author", "year", "citation_count"],
+            "--field",
+            help=builtins._("Fields to return."),
+        ),
+        sort_by: Optional[str] = typer.Option(
+            None,
+            help=builtins._("Sort results by (e.g., 'date', 'citation_count', 'score')."),
+        ),
+        max_pages: int = typer.Option(
+            1, help=builtins._("Maximum number of pages to retrieve.")
+        ),
+        rows_per_page: int = typer.Option(
+            25, help=builtins._("Number of results per page (max 200 for ADS API).")
+        ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
-        max_rows_display: int = typer.Option(25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        max_rows_display: int = typer.Option(
+            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+        ),
+        show_all_columns: bool = typer.Option(
+            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
+        ),
+        test: bool = typer.Option(
+            False, "--test", "-t", help="Enable test mode and print elapsed time."
+        ),
     ):
         import time
         start = time.perf_counter() if test else None
 
-        console.print(_("[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]").format(query_string=query_string))
+        # Mutually exclusive logic
+        if sum([bool(query_string), latest, review]) != 1:
+            console.print(
+                _("[red]Please specify exactly one of: query_string, --latest, or --review.[/red]")
+            )
+            raise typer.Exit(code=1)
+
+        if latest:
+            query_string = "*"
+            sort_by = sort_by or "date desc"
+            console.print(_("[cyan]Querying NASA ADS for latest papers...[/cyan]"))
+        elif review:
+            query_string = "review:true"
+            sort_by = sort_by or "citation_count desc"
+            console.print(_("[cyan]Querying NASA ADS for highly cited review articles...[/cyan]"))
+        else:
+            console.print(_("[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]").format(query_string=query_string))
+
         if not ADS.TOKEN and "ADS_DEV_KEY" not in os.environ:
             console.print(_("[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be rate-limited.[/yellow]"))
         try:

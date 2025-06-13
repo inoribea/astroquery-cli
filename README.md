@@ -19,10 +19,10 @@ A practical command-line interface (CLI) for selected [astroquery](https://astro
 - **SIMBAD**: Basic query
 - **VizieR**: Catalog search, basic query
 - **IRSA**: Placeholder, under development
-- **TAP**: Basic query
 - **JPLHorizons/JPLSBDB**: Small body queries
 - **Splatalogue**: Molecular line queries
 - **ESASky**: Sky region visualization queries
+- **NASA-ADS**: Literature search and BibTeX retrieval in NASA ADS, Allow simple commands to search for "latest papers" or "highly cited reviews".
 
 _Some modules and commands are not fully implemented. Please refer to `aqc --help` for the latest status._
 
