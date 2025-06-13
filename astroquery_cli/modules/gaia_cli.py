@@ -62,7 +62,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(5, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -124,7 +124,7 @@ def get_app():
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
         login_user: Optional[str] = typer.Option(None, envvar="GAIA_USER", help=builtins._("Gaia archive username (or set GAIA_USER env var).")),
         login_password: Optional[str] = typer.Option(None, envvar="GAIA_PASSWORD", help=builtins._("Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set but no password."), prompt=False, hide_input=True),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -200,7 +200,7 @@ def get_app():
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
         login_user: Optional[str] = typer.Option(None, envvar="GAIA_USER", help=builtins._("Gaia archive username (or set GAIA_USER env var).")),
         login_password: Optional[str] = typer.Option(None, envvar="GAIA_PASSWORD", help=builtins._("Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set but no password."), prompt=False, hide_input=True),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None

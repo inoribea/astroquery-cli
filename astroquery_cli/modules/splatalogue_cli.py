@@ -2,6 +2,7 @@ import typer
 from typing import Optional, List, Tuple
 from astropy.table import Table as AstropyTable
 import astropy.units as u
+from astropy.constants import c
 from astroquery.splatalogue import Splatalogue
 from ..i18n import get_translator
 from ..utils import (
@@ -22,7 +23,6 @@ def get_app():
         no_args_is_help=True
     )
 
-    # ================== NED_FIELDS ==============================
     SPLATALOGUE_FIELDS = [
         "Object Name",
         "Type",
@@ -33,53 +33,80 @@ def get_app():
         "References",
         # ...
     ]
-    # ============================================================
-
 
     Splatalogue.TIMEOUT = 120
 
-    def parse_frequency_range(freq_str: str) -> Tuple[u.Quantity, u.Quantity]:
-        parts = freq_str.split('-')
+    def parse_range(range_str: str, unit_type: str) -> Tuple[u.Quantity, u.Quantity]:
+        parts = range_str.split('-')
         if len(parts) != 2:
-            console.print(_("[red]Error: Frequency range '{freq_str}' must be in 'min-max' format (e.g., '100GHz-110GHz').[/red]").format(freq_str=freq_str))
+            if unit_type == "wavelength":
+                console.print(_("[red]Error: Wavelength range '{range_str}' must be in 'min-max' format (e.g., '100um-200um').[/red]").format(range_str=range_str))
+            else:
+                console.print(_("[red]Error: Frequency range '{range_str}' must be in 'min-max' format (e.g., '100GHz-110GHz').[/red]").format(range_str=range_str))
             raise typer.Exit(code=1)
         try:
-            min_freq = u.Quantity(parts[0].strip())
-            max_freq = u.Quantity(parts[1].strip())
-            if not (min_freq.unit.is_equivalent(u.Hz) and max_freq.unit.is_equivalent(u.Hz)):
-                console.print(_("[red]Error: Frequencies must have units of frequency (e.g., GHz, MHz).[/red]"))
-                raise typer.Exit(code=1)
-            return min_freq, max_freq
+            min_val = u.Quantity(parts[0].strip())
+            max_val = u.Quantity(parts[1].strip())
+            if unit_type == "wavelength":
+                if not (min_val.unit.is_equivalent(u.m) and max_val.unit.is_equivalent(u.m)):
+                    console.print(_("[red]Error: Wavelengths must have units of length (e.g., um, nm, mm).[/red]"))
+                    raise typer.Exit(code=1)
+            else:
+                if not (min_val.unit.is_equivalent(u.Hz) and max_val.unit.is_equivalent(u.Hz)):
+                    console.print(_("[red]Error: Frequencies must have units of frequency (e.g., GHz, MHz).[/red]"))
+                    raise typer.Exit(code=1)
+            return min_val, max_val
         except Exception as e:
-            console.print(_("[red]Error parsing frequency range '{freq_str}': {error_message}[/red]").format(freq_str=freq_str, error_message=e))
+            console.print(_("[red]Error parsing {unit_type} range '{range_str}': {error_message}[/red]").format(unit_type=unit_type, range_str=range_str, error_message=e))
             raise typer.Exit(code=1)
 
-
-    @app.command(name="lines", help=builtins._("Query spectral lines from Splatalogue."))
+    @app.command(name="lines", help=builtins._("Query spectral lines from Splatalogue by chemical name. Optionally filter by wavelength (-w) or frequency (-f) range."))
     @global_keyboard_interrupt_handler
     def query_lines(ctx: typer.Context,
-        frequency_range: str = typer.Argument(..., help=builtins._("Frequency range (e.g., '100GHz-110GHz', '2100MHz-2200MHz').")),
-        chemical_name: Optional[str] = typer.Option(None, "--chemical", help=builtins._("Chemical name pattern (e.g., 'CO', '%H2O%').")),
+        chemical_name: str = typer.Argument(..., help=builtins._("Chemical name pattern (e.g., 'CO', '%H2O%').")),
+wavelength_range: Optional[str] = typer.Argument(
+            None, help=builtins._("Wavelength range (e.g., '100um-200um'). You can directly input this as the second argument without -w. Mutually exclusive with frequency_range.")
+        ),
+frequency_range: Optional[str] = typer.Argument(
+            None, help=builtins._("Frequency range (e.g., '100GHz-110GHz'). You can directly input this as the second argument without -f. Mutually exclusive with wavelength_range.")
+        ),
         energy_max: Optional[float] = typer.Option(None, help=builtins._("Maximum energy in K (E_upper).")),
         energy_type: Optional[str] = typer.Option("el", help=builtins._("Energy type ('el' or 'eu' for E_lower or E_upper).")),
         line_strengths: Optional[str] = typer.Option(None, help=builtins._("Line strength units (e.g., 'ls1', 'ls2', 'ls4', 'ls5' for CDMS/JPL or TopModel).")),
         exclude: Optional[List[str]] = typer.Option(None, "--exclude", help=builtins._("Species to exclude (e.g., 'HDO').")),
         output_file: Optional[str] = common_output_options["output_file"],
-        output_format: Optional[str] = common_output_options["output_format"],
+        output_format: Optional[str] = typer.Option(
+            None, "--output-format", help=builtins._("Astropy table format for saving (e.g. 'csv', 'ecsv', 'fits', 'votable'). Overrides file extension inference.")
+        ),
         max_rows_display: int = typer.Option(50, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
 
-        console.print(_("[cyan]Querying Splatalogue for lines in range '{frequency_range}'...[/cyan]").format(frequency_range=frequency_range))
-        try:
-            min_freq, max_freq = parse_frequency_range(frequency_range)
+        # Mutually exclusive logic for range
+        if wavelength_range and frequency_range:
+            console.print(_("[red]You cannot specify both -w/--wavelength-range and -f/--frequency-range.[/red]"))
+            raise typer.Exit(code=1)
 
-            kwargs = {}
-            if chemical_name:
-                kwargs['chemical_name'] = chemical_name
+        try:
+            min_freq = max_freq = None
+            if wavelength_range:
+                min_wl, max_wl = parse_range(wavelength_range, "wavelength")
+                min_freq = (c / max_wl).to(u.Hz)
+                max_freq = (c / min_wl).to(u.Hz)
+                console.print(_("[cyan]Querying Splatalogue for '{chemical_name}' in wavelength range '{wavelength_range}' ({min_freq:.2e}Hz - {max_freq:.2e}Hz)...[/cyan]").format(
+                    chemical_name=chemical_name, wavelength_range=wavelength_range, min_freq=min_freq.value, max_freq=max_freq.value))
+            elif frequency_range:
+                min_freq, max_freq = parse_range(frequency_range, "frequency")
+                console.print(_("[cyan]Querying Splatalogue for '{chemical_name}' in frequency range '{frequency_range}'...[/cyan]").format(
+                    chemical_name=chemical_name, frequency_range=frequency_range))
+            else:
+                console.print(_("[red]Error: You must specify a wavelength or frequency range as the second argument (e.g., '100um-200um' or '100GHz-110GHz'). No -w or -f flag is needed; just provide the range directly.[/red]"))
+                raise typer.Exit(code=1)
+
+            kwargs = {'chemical_name': chemical_name}
             if energy_max is not None:
                 kwargs['energy_max'] = energy_max
                 kwargs['energy_type'] = energy_type
@@ -88,11 +115,16 @@ def get_app():
             if exclude:
                 kwargs['exclude'] = exclude
 
-            result_table: Optional[AstropyTable] = Splatalogue.query_lines(
-                min_frequency=min_freq,
-                max_frequency=max_freq,
-                **kwargs
-            )
+            if min_freq is not None and max_freq is not None:
+                result_table: Optional[AstropyTable] = Splatalogue.query_lines(
+                    min_frequency=min_freq,
+                    max_frequency=max_freq,
+                    **kwargs
+                )
+            else:
+                result_table: Optional[AstropyTable] = Splatalogue.query_lines(
+                    **kwargs
+                )
 
             if result_table and len(result_table) > 0:
                 console.print(_("[green]Found {count} spectral line(s).[/green]").format(count=len(result_table)))
@@ -107,7 +139,7 @@ def get_app():
 
         if test:
             elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
+            print(_("Elapsed: {elapsed:.3f} s").format(elapsed=elapsed))
             raise typer.Exit()
 
     @app.command(name="species-table", help=builtins._("Get the table of NRAO recommended species."))
@@ -116,7 +148,7 @@ def get_app():
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(50, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -136,7 +168,7 @@ def get_app():
 
         if test:
             elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
+            print(_("Elapsed: {elapsed:.3f} s").format(elapsed=elapsed))
             raise typer.Exit()
 
     return app

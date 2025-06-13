@@ -97,7 +97,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -147,7 +147,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -181,7 +181,7 @@ def get_app():
     @app.command(name="list-catalogs", help=builtins._("List available missions/catalogs in ESASky."))
     @global_keyboard_interrupt_handler
     def list_catalogs(ctx: typer.Context,
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None

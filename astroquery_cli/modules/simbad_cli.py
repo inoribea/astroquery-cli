@@ -40,7 +40,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(10, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         """
         Retrieves information about a specific astronomical object from SIMBAD.
@@ -89,7 +89,7 @@ def get_app():
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
     ):
         """
         Retrieves all known identifiers for a given astronomical object.
@@ -126,7 +126,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(50, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
     ):
         """
         Retrieves objects from SIMBAD that are cited in the given bibcode(s).

@@ -114,7 +114,7 @@ def get_app():
             help=builtins._("JPL Horizons server to use. Choices: {server_list}").format(server_list=list(JPL_SERVERS.keys())),
             autocompletion=lambda: list(JPL_SERVERS.keys())
         ),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None

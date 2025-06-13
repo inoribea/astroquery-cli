@@ -46,7 +46,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(1, help=builtins._("Maximum number of objects to display (usually 1 for direct name).")),
         show_all_columns: bool = typer.Option(True, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -81,7 +81,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -121,7 +121,7 @@ def get_app():
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(10, help=builtins._("Maximum number of image entries to display. Use -1 for all rows.")),
         show_all_columns: bool = typer.Option(True, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None

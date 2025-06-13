@@ -40,7 +40,7 @@ def get_app():
         map_name: str = typer.Option("SFD", help=builtins._("Dust map to query ('SFD', 'Planck', 'IRIS'). SFD is Schlegel, Finkbeiner & Davis (1998).")),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
@@ -105,7 +105,7 @@ def get_app():
         map_name: str = typer.Option("SFD", help=builtins._("Dust map to query ('SFD', 'Planck', 'IRIS').")),
         output_dir: str = typer.Option(".", "--out-dir", help=builtins._("Directory to save the FITS image(s).")),
         filename_prefix: str = typer.Option("dust_map", help=builtins._("Prefix for the output FITS filename(s).")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None

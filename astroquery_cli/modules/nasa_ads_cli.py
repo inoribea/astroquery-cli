@@ -78,7 +78,7 @@ def get_app():
             False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
         ),
         test: bool = typer.Option(
-            False, "--test", "-t", help="Enable test mode and print elapsed time."
+            False, "--test", "-t", help=_("Enable test mode and print elapsed time.")
         ),
     ):
         import time
@@ -162,7 +162,7 @@ def get_app():
     def get_bibtex(ctx: typer.Context,
         bibcodes: List[str] = typer.Argument(..., help=builtins._("List of ADS bibcodes.")),
         output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=builtins._("File to save BibTeX entries (e.g., refs.bib).")),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time.")
+        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
     ):
         import time
         start = time.perf_counter() if test else None
