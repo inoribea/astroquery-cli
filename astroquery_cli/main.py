@@ -1,35 +1,47 @@
-import sys
 import os
+os.environ['LANG'] = 'zh_CN.UTF-8'
+os.environ['LANGUAGE'] = 'zh_CN.UTF-8'
+
+import sys
 import typer
 import builtins
-from astroquery_cli import i18n
-from astroquery_cli.debug import debug_manager
 from io import StringIO
 from contextlib import redirect_stdout
+from astropy.config import get_config_dir, get_config
+from rich.console import Console # Import Console
+from rich.text import Text # Import Text
+import re # Import re
 
-CONFIG_PATH = os.path.expanduser("~/.aqc_config")
+from astroquery_cli import config # Import config first
+# Load configuration from ~/.aqc/config.ini
+config.load_config()
+
+# Force early translation initialization (will be re-initialized in callback)
+from astroquery_cli import i18n
+i18n.init_translation(i18n.INITIAL_LANG)
+builtins._ = i18n._
+
+from astroquery_cli.debug import debug_manager
+
+
 
 def save_default_lang(lang):
-    with open(CONFIG_PATH, "w") as f:
-        f.write(lang.strip())
+    config.set_language(lang.strip())
 
 def load_default_lang():
-    if os.path.exists(CONFIG_PATH):
-        with open(CONFIG_PATH) as f:
-            return f.read().strip()
-    return None
+    return config.get_language()
 
-builtins._ = i18n._
 
 app = typer.Typer(
     name="aqc",
+    help=i18n._("Astroquery CLI"),
     invoke_without_command=True,
-    no_args_is_help=True,
+    no_args_is_help=False,
     add_completion=True,
-    context_settings={"help_option_names": ["-h", "--help"]}
+    context_settings={"help_option_names": ["-h", "--help"]},
 )
 
-_captured_stdout_during_import = "" # Initialize global variable at module level
+_captured_stdout_during_import = ""
 
 def setup_subcommands():
     global _captured_stdout_during_import # Declare global here
@@ -60,18 +72,13 @@ def setup_subcommands():
 def main_callback(
     ctx: typer.Context,
     lang: str = typer.Option(
-        i18n.INITIAL_LANG,
-        "--language", # Removed -l and --lang
+        None,
+        "-l",
+        "--lang",
         help=i18n._("Set the language for output messages (e.g., 'en', 'zh'). Affects help texts and outputs."),
         is_eager=True,
         envvar="AQC_LANG",
         show_default=False
-    ),
-    default_lang: str = typer.Option(
-        None,
-        "-l", # Changed from -d to -l
-        "--default",
-        help=i18n._("Set the default language for this session (e.g., 'en', 'zh').")
     ),
     ping: bool = typer.Option(
         False,
@@ -87,7 +94,7 @@ def main_callback(
     ),
     debug: bool = typer.Option(
         False,
-        "-t",
+        "-d",
         "--debug",
         help=i18n._("Enable debug mode with verbose output."),
         envvar="AQC_DEBUG"
@@ -102,7 +109,10 @@ def main_callback(
     global _captured_stdout_during_import
     _ = builtins._
     ctx.obj = ctx.obj or {}
-    
+
+    # Initialize console for general use
+    console = Console()
+
     # Set debug and verbose flags in context
     ctx.obj["debug"] = debug
     ctx.obj["verbose"] = verbose or debug
@@ -113,14 +123,12 @@ def main_callback(
     if verbose:
         debug_manager.enable_verbose()
 
-    if default_lang:
-        ctx.obj["default_lang"] = default_lang
-        save_default_lang(default_lang)
-        lang = default_lang 
-        debug_manager.verbose(f"Default language set to: {default_lang}")
+    if lang:
+        save_default_lang(lang)
+        debug_manager.verbose(f"Default language set to: {lang}")
 
     config_lang = load_default_lang()
-    selected_lang = lang or ctx.obj.get("default_lang") or config_lang or i18n.INITIAL_LANG
+    selected_lang = lang or config_lang or i18n.INITIAL_LANG
     ctx.obj["lang"] = selected_lang
 
     # Print configuration information
@@ -128,15 +136,17 @@ def main_callback(
         "Debug Mode": debug,
         "Verbose Mode": verbose or debug,
         "Selected Language": selected_lang,
-        "Config Path": CONFIG_PATH,
-        "Config File Exists": os.path.exists(CONFIG_PATH),
+        "Config Path": config.CONFIG_FILE_PATH, # Use the correct config path from astroquery_cli.config
+        "Config File Exists": os.path.exists(config.CONFIG_FILE_PATH),
         "Config Content": config_lang if config_lang else "None"
     }
     debug_manager.print_config_info(config_info)
     debug_manager.print_environment_info()
     debug_manager.print_system_info()
 
+    # Re-initialize translation in callback to handle runtime language changes
     i18n.init_translation(selected_lang)
+    builtins._ = i18n._ # Update builtins._ after re-initialization
     
     # Print translation information
     translation_info = {
@@ -170,8 +180,6 @@ def main_callback(
         
         def custom_gettext(message):
             if debug:
-                from rich.console import Console
-                console = Console()
                 console.print(f"[dim cyan]DEBUG: Click requesting translation for: '{message}'[/dim cyan]")
             
             translated = _(message)
@@ -184,20 +192,15 @@ def main_callback(
                     console.print(f"[dim green]DEBUG: Using our translation: '{translated}'[/dim green]")
                 return translated
             if debug:
-                console = Console()
                 console.print(f"[dim yellow]DEBUG: Using original message: '{message}'[/dim yellow]")
             return message
         
         click.core._ = custom_gettext
         if debug:
-            from rich.console import Console
-            console = Console()
             console.print("[dim green]DEBUG: Replaced Click's gettext function[/dim green]")
         
     except Exception as e:
         if debug:
-            from rich.console import Console
-            console = Console()
             console.print(f"[dim red]DEBUG: Failed to replace Click's gettext function: {e}[/dim red]")
 
     if ping:
@@ -209,20 +212,53 @@ def main_callback(
         run_field()
         raise typer.Exit()
 
-# Dynamically modify the help text for completion commands
-if hasattr(app, 'registered_commands') and isinstance(app.registered_commands, dict):
-    debug_manager.debug("Dynamically modifying help texts for completion commands.")
-    for command_name, command_obj in app.registered_commands.items():
-        original_help = command_obj.help
-        if command_name == "install-completion":
-            command_obj.help = i18n._("Install completion for the current shell.")
-        elif command_name == "show-completion":
-            command_obj.help = i18n._("Show completion for the current shell, to copy it or customize the installation.")
-        elif command_name == "help":
-            command_obj.help = i18n._("Show this message and exit.")
-        
-        if debug_manager.debug_enabled:
-            debug_manager.debug(f"Command '{command_name}': Original help='{original_help}', New help='{command_obj.help}'")
+    # Dynamically modify the help text for completion commands
+    if hasattr(app, 'registered_commands') and isinstance(app.registered_commands, dict):
+        debug_manager.debug("Dynamically modifying help texts for completion commands.")
+        for command_name, command_obj in app.registered_commands.items():
+            original_help = command_obj.help
+            if command_name == "install-completion":
+                command_obj.help = i18n._("Install completion for the current shell.")
+            elif command_name == "show-completion":
+                command_obj.help = i18n._("Show completion for the current shell, to copy it or customize the installation.")
+            elif command_name == "help":
+                command_obj.help = i18n._("Show this message and exit.")
+            
+            if debug_manager.debug_enabled:
+                debug_manager.debug(f"Command '{command_name}': Original help='{original_help}', New help='{command_obj.help}'")
+
+    # If no subcommand is invoked and no explicit help is requested,
+    # display only the "Commands" section.
+    if ctx.invoked_subcommand is None and \
+       not any(arg in ["-h", "--help"] for arg in sys.argv):
+        if not ping and not field:
+            # Capture the full help output by explicitly calling the app with --help
+            help_output_capture = StringIO()
+            with redirect_stdout(help_output_capture):
+                try:
+                    # Call the app with --help to get the full help output
+                    # sys.argv[1:] will be empty if no arguments are passed to the main script
+                    # so this effectively calls app(["--help"])
+                    app(sys.argv[1:] + ["--help"])
+                except SystemExit:
+                    # Typer exits after showing help, catch the SystemExit exception
+                    pass
+            full_help_text = help_output_capture.getvalue()
+
+            # Extract only the "Commands" section using regex, including the full bottom border
+            commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
+            if commands_match:
+                commands_section = commands_match.group(0)
+                # Remove the "Usage:" line if present in the full help text
+                # This is a fallback in case Typer's internal help generation includes it
+                filtered_commands_section = "\n".join([
+                    line for line in commands_section.splitlines() if "Usage:" not in line
+                ])
+                console.print(filtered_commands_section)
+            else:
+                # Fallback: if commands section not found, print full help
+                console.print(full_help_text)
+            raise typer.Exit()
 
 if __name__ == "__main__":
     try:
@@ -232,5 +268,5 @@ if __name__ == "__main__":
         from rich.console import Console
         _ = i18n.get_translator()
         console = Console()
-        console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[/bold yellow]")
+        console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[bold yellow]")
         sys.exit(130)

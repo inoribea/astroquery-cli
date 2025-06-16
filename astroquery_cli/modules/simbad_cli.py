@@ -8,6 +8,9 @@ from astroquery_cli.utils import display_table, handle_astroquery_exception, com
 from astroquery_cli.common_options import setup_debug_context
 from ..i18n import get_translator
 from ..utils import global_keyboard_interrupt_handler
+import re # Import re
+from io import StringIO # Import StringIO
+from contextlib import redirect_stdout # Import redirect_stdout
 
 def get_app():
     import builtins
@@ -16,7 +19,8 @@ def get_app():
     app = typer.Typer(
         name="simbad",
         help=help_text,
-        no_args_is_help=True
+        invoke_without_command=True, # Add this to allow callback to run without subcommand
+        no_args_is_help=False # Set to False for custom handling
     )
 
     @app.callback()
@@ -37,6 +41,34 @@ def get_app():
         )
     ):
         setup_debug_context(ctx, debug, verbose)
+
+        # Custom help display logic
+        if ctx.invoked_subcommand is None and \
+           not any(arg in ["-h", "--help"] for arg in ctx.args): # Use ctx.args for subcommand arguments
+            # Capture the full help output by explicitly calling the app with --help
+            help_output_capture = StringIO()
+            with redirect_stdout(help_output_capture):
+                try:
+                    # Call the app with --help to get the full help output
+                    # Pass the current command's arguments to simulate the help call
+                    app(ctx.args + ["--help"])
+                except SystemExit:
+                    pass # Typer exits after showing help, catch the SystemExit exception
+            full_help_text = help_output_capture.getvalue()
+
+            # Extract only the "Commands" section using regex, including the full bottom border
+            commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
+            if commands_match:
+                commands_section = commands_match.group(0)
+                # Remove the "Usage:" line if present in the full help text
+                filtered_commands_section = "\n".join([
+                    line for line in commands_section.splitlines() if "Usage:" not in line
+                ])
+                console.print(filtered_commands_section)
+            else:
+                # Fallback: if commands section not found, print full help
+                console.print(full_help_text)
+            raise typer.Exit()
 
     Simbad.ROW_LIMIT = 50
     Simbad.TIMEOUT = 60

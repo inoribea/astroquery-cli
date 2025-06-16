@@ -56,7 +56,7 @@ def get_translator(lang: str = "en"):
     return temp_translator.gettext
 
 def _parse_lang_from_argv():
-    lang = os.getenv("AQC_LANG", None)
+    lang = os.environ.get("AQC_LANG", None)
     
     # Check for --default option
     default_args_to_check = ["-d", "--default"]
@@ -78,12 +78,7 @@ def _parse_lang_from_argv():
                     break
     
     if lang is None:
-        config_path = os.path.expanduser("~/.aqc_config")
-        if os.path.exists(config_path):
-            with open(config_path) as f:
-                lang = f.read().strip()
-        else:
-            lang = "en"
+        lang = os.environ.get("AQC_LANG", "en") # Fallback to environment variable or default 'en'
     
     return lang
 
