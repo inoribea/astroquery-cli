@@ -29,7 +29,7 @@ def load_config():
         # Create a default config file for the user
         with open(CONFIG_FILE_PATH, 'w') as f:
             f.write("[Environment]\n")
-            f.write("# ADS_DEV_KEY = your_ads_dev_key\n")
+            f.write("ADS_DEV_KEY = \n") # Add this line
             f.write("# AQC_DEBUG = true\n")
             f.write("# AQC_VERBOSE = true\n")
             f.write("# AQC_LANG = en\n")

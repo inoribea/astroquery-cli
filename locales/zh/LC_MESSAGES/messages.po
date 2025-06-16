@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-13 23:50+0800\n"
+"POT-Creation-Date: 2025-06-16 16:39+0800\n"
 "PO-Revision-Date: 2025-05-18 20:48+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -19,13 +19,13 @@ msgstr "启用调试模式并输出详细信息。"
 msgid "Enable verbose output."
 msgstr "启用详细输出。"
 
+msgid "Astroquery CLI"
+msgstr "MAST 区域查询"
+
 msgid ""
 "Set the language for output messages (e.g., 'en', 'zh'). Affects help texts "
 "and outputs."
 msgstr "设置输出消息的语言（例如'en'、'zh'）。影响帮助文本和输出内容。"
-
-msgid "Set the default language for this session (e.g., 'en', 'zh')."
-msgstr "设置本次会话的默认语言（例如，'en'，'zh'）。"
 
 msgid ""
 "Test connectivity to major services (only available at top-level command)."
@@ -33,14 +33,6 @@ msgstr "测试与主要服务的连接（仅在顶级命令下可用）。"
 
 msgid "Test field validity for modules (only available at top-level command)."
 msgstr "测试模块字段的有效性（仅在顶级命令下可用）。"
-
-msgid ""
-"Please note that the Gaia ESA Archive has been rolled back to version 3.7. "
-"Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/"
-"archive/release-notes"
-msgstr ""
-"请注意，欧洲航天局盖亚（Gaia ESA）档案已回滚到版本3.7。请在 https://"
-"www.cosmos.esa.int/web/gaia-users/archive/release-notes 查找发布说明。"
 
 msgid "Install completion for the current shell."
 msgstr "为当前shell安装自动补全。"
@@ -94,12 +86,6 @@ msgstr "最大显示行数。使用 -1 表示所有行。"
 msgid "Show all columns in the output table."
 msgstr "在输出表中显示所有列。"
 
-msgid "Enable test mode and print elapsed time."
-msgstr "启用测试模式并打印耗时。"
-
-msgid "[cyan]Querying ALMA for object: '{object_name}'...[/cyan]"
-msgstr "[cyan]正在查询 ALMA 中关于天体 '{object_name}' 的数据...[/cyan]"
-
 msgid ""
 "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
 msgstr "[yellow]载荷项 '{item}' 不是键值对格式。已忽略。[/yellow]"
@@ -127,13 +113,6 @@ msgstr "坐标（例如，'10.68h +41.26d'，'150.0 2.0'）。"
 
 msgid "Search radius (e.g., '0.1deg', '5arcmin')."
 msgstr "搜索半径（例如，'0.1deg'，'5arcmin'）。"
-
-msgid ""
-"[cyan]Querying ALMA for region: '{coordinates}' with radius '{radius}'...[/"
-"cyan]"
-msgstr ""
-"[cyan]正在查询 ALMA 中区域 '{coordinates}' （半径 '{radius}'）的数据...[/"
-"cyan]"
 
 msgid "[green]Found {count} match(es) in the region.[/green]"
 msgstr "[green]在该区域找到 {count} 条匹配记录。[/green]"
@@ -164,6 +143,9 @@ msgid ""
 "specified multiple times. Use 'list-catalogs' command to see all available "
 "catalogs. Default: GAIA-DR3."
 msgstr "指定要查询的星表（例如，'Gaia DR3'）。可多次指定。"
+
+msgid "Enable test mode and print elapsed time."
+msgstr "启用测试模式并打印耗时。"
 
 msgid "[cyan]Querying ESASky catalogs for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 ESASky 星表中关于天体 '{object_name}' 的数据...[/cyan]"
@@ -259,6 +241,16 @@ msgstr "ESASky 目录列表"
 
 msgid "Query the Gaia archive."
 msgstr "查询 Gaia 科学档案库。"
+
+msgid ""
+"[yellow]Please note that the Gaia ESA Archive has been rolled back to "
+"version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/"
+"gaia-users/archive/release-notes[/yellow]"
+msgstr ""
+"[yellow]请注意，盖亚ESA档案已回滚到3.7版本。请在以下网址查看发布说明："
+"https://www.cosmos.esa.int/web/gaia-users/archive/release-notes[/yellow]"
+"[yellow]请注意，盖亚ESA档案已回滚到3.7版本。请在以下网址查看发布说明："
+"https://www.cosmos.esa.int/web/gaia-users/archive/release-notes[/yellow]"
 
 msgid "Query Gaia main source for a given object name or coordinates."
 msgstr "查询某个天体名称或特定坐标周围的星表。"
@@ -742,6 +734,11 @@ msgstr "[dim]请求的物理量：{quantities}[/dim]"
 msgid "[dim]Requesting quantities for vectors: {quantities}[/dim]"
 msgstr "[dim]请求矢量的物理量：{quantities}[/dim]"
 
+msgid ""
+"[yellow]No results found for '{target}' with the specified parameters.[/"
+"yellow]"
+msgstr "[yellow]未找到给定文献编码 (bibcode) 对应的天体。[/yellow]"
+
 msgid "JPL Horizons object"
 msgstr "JPL Horizons天体"
 
@@ -969,25 +966,38 @@ msgid "Number of results per page (max 200 for ADS API)."
 msgstr "每页结果数（ADS API 最大为200）。"
 
 msgid ""
-"[red]Please specify exactly one of: query_string, --latest, or --review.[/"
-"red]"
+"[red]Cannot specify both --latest and --review. Please choose only one.[/red]"
 msgstr ""
-"[red]请精确指定以下其中之一：query_string、--latest 或 --review。[/red]"
+"[red]你不能同时指定 -w/--wavelength-range 和 -f/--frequency-range。[/red]"
 
-msgid "[cyan]Querying NASA ADS for latest papers...[/cyan]"
-msgstr "[cyan]正在查询 ALMA 中关于天体 '{object_name}' 的数据...[/cyan]"
+msgid "[red]Please specify a query string, --latest, or --review.[/red]"
+msgstr "[red]请指定查询字符串、--latest或--review。[/red]"
 
-msgid "[cyan]Querying NASA ADS for highly cited review articles...[/cyan]"
-msgstr "[cyan]正在使用查询 '{query_string}' 查询 NASA ADS...[/cyan]"
-
-msgid "[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]"
-msgstr "[cyan]正在使用查询 '{query_string}' 查询 NASA ADS...[/cyan]"
+msgid "Querying NASA ADS for latest papers"
+msgstr "正在查询NASA ADS获取最新论文。"
 
 msgid ""
-"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
-"rate-limited.[/yellow]"
+"Querying NASA ADS for highly cited review articles (using property:review)"
+msgstr "正在查询NASA ADS获取高引用评论文章（使用属性：review）。"
+
+msgid "Querying NASA ADS with: {query_string}"
+msgstr "正在使用以下内容查询NASA ADS："
+
+msgid ""
+"[red]Error: No valid query could be formed. Please check your inputs.[/red]"
+msgstr "[red]错误：无法形成有效的查询。请检查您的输入。[/red]"
+
+msgid ""
+"[red]Error: No NASA ADS API token found! Please get yours from: https://"
+"ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY "
+"environment variable or in your ~/.aqc/config.ini file.[/red]"
 msgstr ""
-"[yellow]警告：未设置 ADS_DEV_KEY 环境变量。查询可能会受到速率限制。[/yellow]"
+"[red]错误：未找到NASA ADS API令牌！请从以下网址获取您的令牌：https://"
+"ui.adsabs.harvard.edu/user/settings/token，并将其设置在ADS_DEV_KEY环境变量中"
+"或您的~/.aqc/config.ini文件中。[/red]"
+
+msgid "[yellow]No results found for your ADS query.[/yellow]"
+msgstr "[yellow]未找到您的 ADS 查询结果。[/yellow]"
 
 msgid ""
 "[yellow]None of the requested fields were found in the ADS query results.[/"
@@ -1003,9 +1013,6 @@ msgstr "ADS 查询结果"
 msgid "NASA ADS query"
 msgstr "NASA ADS 查询"
 
-msgid "[yellow]No results found for your ADS query.[/yellow]"
-msgstr "[yellow]未找到您的 ADS 查询结果。[/yellow]"
-
 msgid "Get BibTeX for a NASA ADS bibcode."
 msgstr "获取NASA ADS文献代码的BibTeX。"
 
@@ -1017,6 +1024,12 @@ msgstr "保存 BibTeX 条目的文件（例如，refs.bib）。"
 
 msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
 msgstr "[cyan]正在获取 {bibcode_list} 的 BibTeX...[/cyan]"
+
+msgid ""
+"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
+"rate-limited.[/yellow]"
+msgstr ""
+"[yellow]警告：未设置 ADS_DEV_KEY 环境变量。查询可能会受到速率限制。[/yellow]"
 
 msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
 msgstr "[yellow]无法检索 {bibcode} 的 BibTeX。[/yellow]"
@@ -1234,8 +1247,8 @@ msgstr ""
 msgid "Chemical name pattern (e.g., 'CO', '%H2O%'). "
 msgstr "源名称或模式（例如，'Gaia DR3'，'2MASS'）。"
 
-msgid "You can use % for SQL-like wildcards: "
-msgstr "您可以使用%作为SQL风格的通配符："
+msgid "You can use cent for SQL-like wildcards: "
+msgstr "您可以使用百分号作为SQL风格的通配符："
 
 msgid "'%CO%' matches any containing CO, "
 msgstr "'%CO%'匹配任何包含CO的字符串，"

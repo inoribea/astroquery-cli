@@ -2,6 +2,7 @@ import typer
 from typing import Optional, List
 from astropy.table import Table as AstropyTable
 from astroquery.alma import Alma
+import logging # Import logging
 from ..utils import (
     console,
     display_table,
@@ -16,6 +17,7 @@ from .. import i18n
 import re # Import re
 from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
+import sys # Import sys
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
 
 def get_app():
@@ -75,6 +77,9 @@ def get_app():
                 console.print(full_help_text)
             raise typer.Exit()
 
+    # Suppress ALMA log messages during import
+    logging.getLogger('astroquery.alma').setLevel(logging.WARNING)
+
     Alma.ROW_LIMIT = 50
     Alma.TIMEOUT = 60
 
@@ -94,17 +99,16 @@ def get_app():
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
+        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table."))
     ):
-        import time
-        start = time.perf_counter() if test else None
-
         lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
         _ = i18n.get_translator(lang)
-        console.print(_("[cyan]Querying ALMA for object: '{object_name}'...[/cyan]").format(object_name=object_name))
         alma = Alma()
         try:
+            # Debugging information
+            console.print(f"DEBUG: query_object - object_name: {object_name}")
+
+            console.print(f"[cyan]{_('Querying ALMA for object: {object_name}').format(object_name=object_name)}[/cyan]")
             query_payload = {'source_name_alma': object_name}
             if payload:
                 for item in payload:
@@ -131,11 +135,6 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("ALMA object"))
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
-
     @app.command(name="region", help=builtins._("Query ALMA for observations in a sky region."))
     @global_keyboard_interrupt_handler
     def query_region(
@@ -147,16 +146,15 @@ def get_app():
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(20, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")),
-        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
-test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))
+        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table."))
     ):
-        import time
-        start = time.perf_counter() if test else None
-
         lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
         _ = i18n.get_translator(lang)
-        console.print(_("[cyan]Querying ALMA for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(coordinates=coordinates, radius=radius))
         try:
+            # Debugging information
+            console.print(f"DEBUG: query_region - coordinates: {coordinates}, radius: {radius}")
+
+            console.print(f"[cyan]{_('Querying ALMA for region: {coordinates} with radius {radius}').format(coordinates=coordinates, radius=radius)}[/cyan]")
             coord = parse_coordinates(ctx, coordinates)
             rad = parse_angle_str_to_quantity(ctx, radius)
             alma = Alma()
@@ -178,9 +176,5 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
             handle_astroquery_exception(ctx, e, _("ALMA region"))
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
 
     return app

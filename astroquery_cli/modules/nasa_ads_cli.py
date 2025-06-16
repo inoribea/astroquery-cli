@@ -1,6 +1,6 @@
 import typer
 from typing import Optional, List
-from astropy.table import Table as AstropyTable
+from astropy.table import Table as AstropyTable, vstack # Import vstack
 from astroquery.nasa_ads import ADS
 from ..i18n import get_translator
 from ..utils import (
@@ -129,33 +129,68 @@ def get_app():
         show_all_columns: bool = typer.Option(
             False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
         ),
-        test: bool = typer.Option(
-            False, "--test", "-t", help=_("Enable test mode and print elapsed time.")
-        ),
     ):
-        import time
-        start = time.perf_counter() if test else None
+        _final_query_string = query_string
+        _final_sort_by = sort_by
 
-        # Mutually exclusive logic
-        if sum([bool(query_string), latest, review]) != 1:
+        # Debugging information
+        if ctx.obj.get("DEBUG"):
+            console.print(f"DEBUG: query_ads - Initial query_string: {query_string}, latest: {latest}, review: {review}, sort_by: {sort_by}")
+            console.print(f"DEBUG: query_ads - _final_query_string: {_final_query_string}, _final_sort_by: {_final_sort_by}")
+
+        # 1. Handle mutual exclusivity of --latest and --review
+        if latest and review:
             console.print(
-                _("[red]Please specify exactly one of: query_string, --latest, or --review.[/red]")
+                _("[red]Cannot specify both --latest and --review. Please choose only one.[/red]")
             )
             raise typer.Exit(code=1)
 
-        if latest:
-            query_string = "*"
-            sort_by = sort_by or "date desc"
-            console.print(_("[cyan]Querying NASA ADS for latest papers...[/cyan]"))
-        elif review:
-            query_string = "review:true"
-            sort_by = sort_by or "citation_count desc"
-            console.print(_("[cyan]Querying NASA ADS for highly cited review articles...[/cyan]"))
-        else:
-            console.print(_("[cyan]Querying NASA ADS with: '{query_string}'...[/cyan]").format(query_string=query_string))
+        # 2. Ensure at least one query method is specified
+        if not _final_query_string and not latest and not review:
+            console.print(
+                _("[red]Please specify a query string, --latest, or --review.[/red]")
+            )
+            raise typer.Exit(code=1)
 
-        if not ADS.TOKEN and not os.getenv("ADS_DEV_KEY"):
-            console.print(_("[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be rate-limited.[/yellow]"))
+        # 3. Apply --latest logic
+        if latest:
+            if not _final_sort_by: # Only set if not already specified by user
+                _final_sort_by = "date desc"
+            if not _final_query_string: # If no query_string provided, default to all
+                _final_query_string = "*"
+            console.print("[cyan]" + builtins._("Querying NASA ADS for latest papers") + "[/cyan]")
+        
+        # 4. Apply --review logic
+        if review:
+            if not _final_sort_by: # Only set if not already specified by user
+                _final_sort_by = "citation_count desc"
+            
+            # Ensure 'property:review' is part of the query string
+            if _final_query_string:
+                if "property:review" not in _final_query_string:
+                    _final_query_string = f"{_final_query_string} property:review"
+            else:
+                _final_query_string = "property:review"
+            console.print("[cyan]" + builtins._("Querying NASA ADS for highly cited review articles (using property:review)") + "[/cyan]")
+
+        # If no specific flag was used, but query_string was provided
+        if not latest and not review and _final_query_string:
+            console.print("[cyan]" + builtins._("Querying NASA ADS with: {query_string}").format(query_string=_final_query_string) + "[/cyan]")
+        
+        # If _final_query_string is still None, it means an error in logic or no query was formed.
+        # This should ideally be caught by the "Ensure at least one query method is specified" check.
+        if _final_query_string is None:
+            console.print(builtins._("[red]Error: No valid query could be formed. Please check your inputs.[/red]"))
+            raise typer.Exit(code=1)
+
+        # Ensure ADS.TOKEN is set from environment variable if available
+        if os.getenv("ADS_DEV_KEY"):
+            ADS.TOKEN = os.getenv("ADS_DEV_KEY")
+        
+        if not ADS.TOKEN:
+            console.print(_("[red]Error: No NASA ADS API token found! Please get yours from: https://ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY environment variable or in your ~/.aqc/config.ini file.[/red]"))
+            raise typer.Exit(code=1) # Exit if no token is found
+        
         try:
             # Store original ADS settings
             original_nrows = ADS.NROWS
@@ -164,18 +199,29 @@ def get_app():
 
             # Set ADS class attributes for query
             ADS.NROWS = min(rows_per_page, 200)
-            if sort_by:
-                ADS.SORT = sort_by
+            if _final_sort_by: # Use _final_sort_by
+                ADS.SORT = _final_sort_by
 
-            all_ads_results = AstropyTable()
+            all_ads_results = AstropyTable() # Initialize as an empty AstropyTable
             for page in range(max_pages):
                 ADS.NSTART = page * ADS.NROWS
-                page_results = ADS.query_simple(query_string)
+                try:
+                    page_results = ADS.query_simple(_final_query_string)
+                except RuntimeError as e:
+                    if str(e) == 'No results returned!':
+                        console.print(_("[yellow]No results found for your ADS query.[/yellow]"))
+                        page_results = None # Explicitly set to None to skip further processing
+                    else:
+                        raise # Re-raise other RuntimeErrors
                 
                 if page_results:
-                    all_ads_results = AstropyTable.vstack([all_ads_results, page_results])
+                    if len(all_ads_results) == 0: # If all_ads_results is empty, assign the first page_results
+                        all_ads_results = page_results
+                    else: # Otherwise, vstack the new page_results
+                        all_ads_results = vstack([all_ads_results, page_results])
                 else:
-                    break # No more results
+                    # If page_results is None (due to RuntimeError) or empty, break
+                    break
 
             # Reset ADS class attributes to original values
             ADS.NROWS = original_nrows
@@ -204,20 +250,14 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("NASA ADS query"))
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
-
     @app.command(name="get-bibtex", help=builtins._("Get BibTeX for a NASA ADS bibcode."))
     @global_keyboard_interrupt_handler
     def get_bibtex(ctx: typer.Context,
         bibcodes: List[str] = typer.Argument(..., help=builtins._("List of ADS bibcodes.")),
-        output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=builtins._("File to save BibTeX entries (e.g., refs.bib).")),
-        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time."))
+        output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=builtins._("File to save BibTeX entries (e.g., refs.bib)."))
     ):
-        import time
-        start = time.perf_counter() if test else None
+        # Debugging information
+        console.print(f"DEBUG: get_bibtex - bibcodes: {bibcodes}")
 
         console.print(_("[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]").format(bibcode_list=', '.join(bibcodes)))
         if not ADS.TOKEN and not os.getenv("ADS_DEV_KEY"):
@@ -253,9 +293,4 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("NASA ADS get_bibtex")) # Added 'ctx' argument
             raise typer.Exit(code=1)
 
-        if test:
-            elapsed = time.perf_counter() - start
-            print(f"Elapsed: {elapsed:.3f} s")
-            raise typer.Exit()
-        
     return app

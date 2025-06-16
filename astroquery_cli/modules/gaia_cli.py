@@ -7,6 +7,9 @@ from rich.console import Console
 
 console = Console()
 
+# Suppress Gaia server messages during import
+gaia_conf.show_server_messages = False
+
 from ..utils import display_table, handle_astroquery_exception, parse_coordinates, parse_angle_str_to_quantity, common_output_options, save_table_to_file
 from ..utils import global_keyboard_interrupt_handler
 from ..i18n import get_translator
@@ -43,6 +46,9 @@ def get_app():
         )
     ):
         setup_debug_context(ctx, debug, verbose)
+        # Re-enable Gaia server messages when the gaia app is actually invoked
+        gaia_conf.show_server_messages = True
+        console.print(builtins._("[yellow]Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes[/yellow]"))
 
         # Custom help display logic
         if ctx.invoked_subcommand is None and \
@@ -71,8 +77,6 @@ def get_app():
                 # Fallback: if commands section not found, print full help
                 console.print(full_help_text)
             raise typer.Exit()
-
-    gaia_conf.show_server_messages = True
 
     GAIA_TABLES = {
         "main_source": "gaiadr3.gaia_source",

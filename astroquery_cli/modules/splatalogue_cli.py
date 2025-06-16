@@ -118,7 +118,7 @@ def get_app():
             ...,
             help=(
                 builtins._("Chemical name pattern (e.g., 'CO', '%H2O%'). ") +
-                builtins._("You can use % for SQL-like wildcards: ") +
+                builtins._("You can use cent for SQL-like wildcards: ") +
                 builtins._("'%CO%' matches any containing CO, ") +
                 builtins._("'CO%' matches starting with CO, ") +
                 builtins._("'%CO' matches matches ending with CO. ")

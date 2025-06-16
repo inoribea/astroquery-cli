@@ -11,6 +11,10 @@ from astropy.config import get_config_dir, get_config
 from rich.console import Console # Import Console
 from rich.text import Text # Import Text
 import re # Import re
+import logging # Import logging
+
+# Suppress astroquery log messages globally (moved to __init__.py for earlier execution)
+# Monkey patch for astroquery.logger._init_log (moved to __init__.py for earlier execution)
 
 from astroquery_cli import config # Import config first
 # Load configuration from ~/.aqc/config.ini
@@ -22,7 +26,6 @@ i18n.init_translation(i18n.INITIAL_LANG)
 builtins._ = i18n._
 
 from astroquery_cli.debug import debug_manager
-
 
 
 def save_default_lang(lang):
@@ -41,18 +44,19 @@ app = typer.Typer(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 
-_captured_stdout_during_import = ""
-
 def setup_subcommands():
-    global _captured_stdout_during_import # Declare global here
-    f = StringIO()
-    with redirect_stdout(f):
-        from .modules import (
-            simbad_cli, alma_cli, esasky_cli, gaia_cli, irsa_cli, irsa_dust_cli,
-            jplhorizons_cli, jplsbdb_cli, mast_cli, nasa_ads_cli, ned_cli,
-            splatalogue_cli, vizier_cli
-        )
-    _captured_stdout_during_import = f.getvalue()
+    import logging
+    # Suppress astroquery log messages during import
+    logging.getLogger('astroquery').setLevel(logging.CRITICAL)
+
+    # Import all subcommands
+    from .modules import (
+        simbad_cli, alma_cli, esasky_cli, gaia_cli, irsa_cli, irsa_dust_cli,
+        jplhorizons_cli, jplsbdb_cli, mast_cli, nasa_ads_cli, ned_cli,
+        splatalogue_cli, vizier_cli
+    )
+    # Restore astroquery log level after import
+    logging.getLogger('astroquery').setLevel(logging.NOTSET)
 
     app.add_typer(simbad_cli.get_app(), name="simbad")
     app.add_typer(alma_cli.get_app(), name="alma")
@@ -106,7 +110,6 @@ def main_callback(
         help=i18n._("Enable verbose output.")
     )
 ):
-    global _captured_stdout_during_import
     _ = builtins._
     ctx.obj = ctx.obj or {}
 
@@ -156,20 +159,6 @@ def main_callback(
         "Current Language": i18n.translator_instance.get_current_language()
     }
     debug_manager.print_translation_info(selected_lang, translation_info)
-
-    # Process captured stdout messages after translation is initialized
-    if _captured_stdout_during_import:
-        lines = _captured_stdout_during_import.splitlines()
-        for line in lines:
-            if "Gaia ESA Archive has been rolled back" in line:
-                translated_message = _(
-                    "Please note that the Gaia ESA Archive has been rolled back to version 3.7. "
-                    "Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes"
-                )
-                print(translated_message)
-            else:
-                print(line)
-        _captured_stdout_during_import = ""
 
     # Try to inject our translations into Click's gettext domain
     try:
@@ -249,7 +238,6 @@ def main_callback(
             commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
             if commands_match:
                 commands_section = commands_match.group(0)
-                # Remove the "Usage:" line if present in the full help text
                 # This is a fallback in case Typer's internal help generation includes it
                 filtered_commands_section = "\n".join([
                     line for line in commands_section.splitlines() if "Usage:" not in line
@@ -261,11 +249,19 @@ def main_callback(
             raise typer.Exit()
 
 def cli():
+    from rich.console import Console # Import Console here
     try:
+        # Check for debug flag early to configure debug_manager before module imports
+        if "--debug" in sys.argv or "-d" in sys.argv:
+            debug_manager.enable_debug()
+            # Print a message indicating debug mode is enabled
+            console = Console()
+            console.print("[bold green]Debug mode enabled.[/bold green]")
+        # Removed the "Debug mode disabled" message as per user request.
+
         setup_subcommands()
         app()
     except KeyboardInterrupt:
-        from rich.console import Console
         _ = i18n.get_translator()
         console = Console()
         console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[bold yellow]")
