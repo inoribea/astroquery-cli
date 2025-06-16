@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-16 17:35+0800\n"
+"POT-Creation-Date: 2025-06-16 17:54+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,6 +77,13 @@ msgstr ""
 
 #: astroquery_cli/main.py:214
 msgid "Show this message and exit."
+msgstr ""
+
+#: astroquery_cli/main.py:239 astroquery_cli/modules/gaia_cli.py:51
+msgid ""
+"Please note that the Gaia ESA Archive has been rolled back to version "
+"3.7. Please find the release notes at https://www.cosmos.esa.int/web"
+"/gaia-users/archive/release-notes"
 msgstr ""
 
 #: astroquery_cli/utils.py:34
@@ -392,13 +399,6 @@ msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:26
 msgid "Query the Gaia archive."
-msgstr ""
-
-#: astroquery_cli/modules/gaia_cli.py:51
-msgid ""
-"Please note that the Gaia ESA Archive has been rolled back to version "
-"3.7. Please find the release notes at https://www.cosmos.esa.int/web"
-"/gaia-users/archive/release-notes"
 msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:108

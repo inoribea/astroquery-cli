@@ -221,10 +221,6 @@ def main_callback(
     if ctx.invoked_subcommand is None and \
        not any(arg in ["-h", "--help"] for arg in sys.argv):
         if not ping and not field:
-            # Display the Gaia ESA Archive rollback message at the top level
-            gaia_message = "Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes"
-            console.print(f"[bold yellow]{gaia_message}[/bold yellow]\n")
-
             # Capture the full help output by explicitly calling the app with --help
             help_output_capture = StringIO()
             with redirect_stdout(help_output_capture):
@@ -237,6 +233,12 @@ def main_callback(
                     # Typer exits after showing help, catch the SystemExit exception
                     pass
             full_help_text = help_output_capture.getvalue()
+
+            # Remove the gaia_message from the captured help text if it's present
+            # This is to prevent duplication if Typer's help also includes it
+            gaia_message_raw = i18n._("Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes")
+            full_help_text = full_help_text.replace(gaia_message_raw + "\n", "") # Remove with newline
+            full_help_text = full_help_text.replace(gaia_message_raw, "") # Remove without newline
 
             # Extract only the "Commands" section using regex, including the full bottom border
             commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
