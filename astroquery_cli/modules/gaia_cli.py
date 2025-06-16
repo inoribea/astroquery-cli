@@ -48,7 +48,8 @@ def get_app():
         setup_debug_context(ctx, debug, verbose)
         # Re-enable Gaia server messages when the gaia app is actually invoked
         gaia_conf.show_server_messages = True
-        console.print(builtins._("[yellow]Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes[/yellow]"))
+        message = builtins._("Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes")
+        console.print(f"[yellow]{message}[/yellow]")
 
         # Custom help display logic
         if ctx.invoked_subcommand is None and \
@@ -132,7 +133,8 @@ def get_app():
             coords_obj = parse_coordinates(ctx, target)
             rad_quantity = parse_angle_str_to_quantity(ctx, radius)
             if rad_quantity is None:
-                console.print(builtins._("[bold red]Invalid radius provided.[/bold red]")) # Use builtins._
+                message = builtins._("Invalid radius provided.")
+                console.print(f"[bold red]{message}[/bold red]")
                 raise typer.Exit(code=1)
 
             query = f"""

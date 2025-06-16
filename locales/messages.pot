@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-16 16:39+0800\n"
+"POT-Creation-Date: 2025-06-16 17:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,9 +123,9 @@ msgstr ""
 #: astroquery_cli/modules/alma_cli.py:148
 #: astroquery_cli/modules/esasky_cli.py:150
 #: astroquery_cli/modules/esasky_cli.py:200
-#: astroquery_cli/modules/gaia_cli.py:121
-#: astroquery_cli/modules/gaia_cli.py:181
-#: astroquery_cli/modules/gaia_cli.py:257
+#: astroquery_cli/modules/gaia_cli.py:122
+#: astroquery_cli/modules/gaia_cli.py:183
+#: astroquery_cli/modules/gaia_cli.py:259
 #: astroquery_cli/modules/irsa_cli.py:108
 #: astroquery_cli/modules/irsa_cli.py:207
 #: astroquery_cli/modules/jplhorizons_cli.py:161
@@ -146,9 +146,9 @@ msgstr ""
 #: astroquery_cli/modules/alma_cli.py:149
 #: astroquery_cli/modules/esasky_cli.py:151
 #: astroquery_cli/modules/esasky_cli.py:201
-#: astroquery_cli/modules/gaia_cli.py:122
-#: astroquery_cli/modules/gaia_cli.py:182
-#: astroquery_cli/modules/gaia_cli.py:258
+#: astroquery_cli/modules/gaia_cli.py:123
+#: astroquery_cli/modules/gaia_cli.py:184
+#: astroquery_cli/modules/gaia_cli.py:260
 #: astroquery_cli/modules/irsa_cli.py:109
 #: astroquery_cli/modules/irsa_cli.py:208
 #: astroquery_cli/modules/mast_cli.py:114
@@ -253,9 +253,9 @@ msgstr ""
 #: astroquery_cli/modules/esasky_cli.py:152
 #: astroquery_cli/modules/esasky_cli.py:202
 #: astroquery_cli/modules/esasky_cli.py:236
-#: astroquery_cli/modules/gaia_cli.py:123
-#: astroquery_cli/modules/gaia_cli.py:185
-#: astroquery_cli/modules/gaia_cli.py:261
+#: astroquery_cli/modules/gaia_cli.py:124
+#: astroquery_cli/modules/gaia_cli.py:187
+#: astroquery_cli/modules/gaia_cli.py:263
 #: astroquery_cli/modules/irsa_dust_cli.py:95
 #: astroquery_cli/modules/irsa_dust_cli.py:160
 #: astroquery_cli/modules/jplhorizons_cli.py:168
@@ -396,200 +396,203 @@ msgstr ""
 
 #: astroquery_cli/modules/gaia_cli.py:51
 msgid ""
-"[yellow]Please note that the Gaia ESA Archive has been rolled back to "
-"version 3.7. Please find the release notes at "
-"https://www.cosmos.esa.int/web/gaia-users/archive/release-notes[/yellow]"
+"Please note that the Gaia ESA Archive has been rolled back to version "
+"3.7. Please find the release notes at https://www.cosmos.esa.int/web"
+"/gaia-users/archive/release-notes"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:107
+#: astroquery_cli/modules/gaia_cli.py:108
 msgid "Query Gaia main source for a given object name or coordinates."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:111
+#: astroquery_cli/modules/gaia_cli.py:112
 msgid "Object name or coordinates (e.g., 'M31', '10.68h +41.26d')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:112
+#: astroquery_cli/modules/gaia_cli.py:113
 msgid "Search radius for matching Gaia source (e.g., '5arcsec', '0.001deg')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:115
+#: astroquery_cli/modules/gaia_cli.py:116
 msgid "Gaia table to query. Default: gaiadr3.gaia_source"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:118
+#: astroquery_cli/modules/gaia_cli.py:119
 msgid "Columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'parallax')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:135
-#: astroquery_cli/modules/gaia_cli.py:212
-msgid "[bold red]Invalid radius provided.[/bold red]"
+#: astroquery_cli/modules/gaia_cli.py:136
+msgid "Invalid radius provided."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:143
+#: astroquery_cli/modules/gaia_cli.py:145
 #, python-brace-format
 msgid "[cyan]Querying Gaia for object: {target}...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:151
+#: astroquery_cli/modules/gaia_cli.py:153
 #, python-brace-format
 msgid "Gaia Main Source for '{target}'"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:154
+#: astroquery_cli/modules/gaia_cli.py:156
 msgid "Gaia object query"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:156
+#: astroquery_cli/modules/gaia_cli.py:158
 #, python-brace-format
 msgid "[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:167
+#: astroquery_cli/modules/gaia_cli.py:169
 msgid "Perform a cone search around a coordinate."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:170
+#: astroquery_cli/modules/gaia_cli.py:172
 #: astroquery_cli/modules/irsa_dust_cli.py:155
 msgid "Central object name or coordinates (e.g., 'M31', '10.68h +41.26d')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:171 astroquery_cli/modules/ned_cli.py:130
+#: astroquery_cli/modules/gaia_cli.py:173 astroquery_cli/modules/ned_cli.py:130
 msgid "Search radius (e.g., '5arcmin', '0.1deg')."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:174
+#: astroquery_cli/modules/gaia_cli.py:176
 #, python-brace-format
 msgid "Gaia table to query. Common choices: {choices} or specify full table name."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:177
+#: astroquery_cli/modules/gaia_cli.py:179
 msgid ""
 "Specific columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'pmra'). "
 "Default: all columns from the table for a small radius, or a default set "
 "for larger radii."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:178
+#: astroquery_cli/modules/gaia_cli.py:180
 msgid "Maximum number of rows to return from the server."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:183
-#: astroquery_cli/modules/gaia_cli.py:259
+#: astroquery_cli/modules/gaia_cli.py:185
+#: astroquery_cli/modules/gaia_cli.py:261
 msgid "Gaia archive username (or set GAIA_USER env var)."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:184
-#: astroquery_cli/modules/gaia_cli.py:260
+#: astroquery_cli/modules/gaia_cli.py:186
+#: astroquery_cli/modules/gaia_cli.py:262
 msgid ""
 "Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set "
 "but no password."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:191
+#: astroquery_cli/modules/gaia_cli.py:193
 #, python-brace-format
 msgid ""
 "[cyan]Performing Gaia cone search on '{table_name}' around '{target}' "
 "with radius {radius}...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:194
-#: astroquery_cli/modules/gaia_cli.py:270
+#: astroquery_cli/modules/gaia_cli.py:196
+#: astroquery_cli/modules/gaia_cli.py:272
 msgid "Gaia archive password"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:197
-#: astroquery_cli/modules/gaia_cli.py:273
+#: astroquery_cli/modules/gaia_cli.py:199
+#: astroquery_cli/modules/gaia_cli.py:275
 #, python-brace-format
 msgid "[dim]Logging into Gaia archive as '{user}'...[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:201
-#: astroquery_cli/modules/gaia_cli.py:277
+#: astroquery_cli/modules/gaia_cli.py:203
+#: astroquery_cli/modules/gaia_cli.py:279
 #, python-brace-format
 msgid "[bold red]Gaia login failed: {error}[/bold red]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:202
-#: astroquery_cli/modules/gaia_cli.py:278
+#: astroquery_cli/modules/gaia_cli.py:204
+#: astroquery_cli/modules/gaia_cli.py:280
 msgid "[yellow]Proceeding with anonymous access if possible.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:204
-#: astroquery_cli/modules/gaia_cli.py:280
+#: astroquery_cli/modules/gaia_cli.py:206
+#: astroquery_cli/modules/gaia_cli.py:282
 #, python-brace-format
 msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:204
-#: astroquery_cli/modules/gaia_cli.py:280
+#: astroquery_cli/modules/gaia_cli.py:206
+#: astroquery_cli/modules/gaia_cli.py:282
 msgid "unknown user"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:206
+#: astroquery_cli/modules/gaia_cli.py:208
 msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:221
+#: astroquery_cli/modules/gaia_cli.py:214
+msgid "[bold red]Invalid radius provided.[/bold red]"
+msgstr ""
+
+#: astroquery_cli/modules/gaia_cli.py:223
 #, python-brace-format
 msgid "[dim]Executing ADQL query (first {row_limit} rows):[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:228
+#: astroquery_cli/modules/gaia_cli.py:230
 #, python-brace-format
 msgid "Gaia Cone Search Results ({table_name})"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:230
-#: astroquery_cli/modules/gaia_cli.py:289
+#: astroquery_cli/modules/gaia_cli.py:232
+#: astroquery_cli/modules/gaia_cli.py:291
 #, python-brace-format
 msgid " (User: {user})"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:233
+#: astroquery_cli/modules/gaia_cli.py:235
 msgid "Gaia cone search"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:235
+#: astroquery_cli/modules/gaia_cli.py:237
 msgid "[yellow]No results found from Gaia for this cone search.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:238
+#: astroquery_cli/modules/gaia_cli.py:240
 #, python-brace-format
 msgid "Gaia cone search on {table_name}"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:243
-#: astroquery_cli/modules/gaia_cli.py:304
+#: astroquery_cli/modules/gaia_cli.py:245
+#: astroquery_cli/modules/gaia_cli.py:306
 msgid "[dim]Logged out from Gaia archive.[/dim]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:251
+#: astroquery_cli/modules/gaia_cli.py:253
 msgid "Execute a raw ADQL query (synchronous)."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:254
+#: astroquery_cli/modules/gaia_cli.py:256
 msgid "The ADQL query string."
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:266
+#: astroquery_cli/modules/gaia_cli.py:268
 msgid "[cyan]Executing Gaia ADQL query...[/cyan]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:287
+#: astroquery_cli/modules/gaia_cli.py:289
 msgid "Gaia ADQL Query Results"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:292
-#: astroquery_cli/modules/gaia_cli.py:297
+#: astroquery_cli/modules/gaia_cli.py:294
+#: astroquery_cli/modules/gaia_cli.py:299
 msgid "Gaia ADQL query"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:294
+#: astroquery_cli/modules/gaia_cli.py:296
 msgid "[yellow]ADQL query returned no results or an empty table.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/gaia_cli.py:299
+#: astroquery_cli/modules/gaia_cli.py:301
 #, python-brace-format
 msgid ""
 "[bold red]ADQL Query Error Details from server:\n"
@@ -1713,7 +1716,6 @@ msgid "Chemical name pattern (e.g., 'CO', '%H2O%'). "
 msgstr ""
 
 #: astroquery_cli/modules/splatalogue_cli.py:121
-#, python-format
 msgid "You can use cent for SQL-like wildcards: "
 msgstr ""
 

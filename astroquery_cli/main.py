@@ -58,7 +58,6 @@ def setup_subcommands():
     # Restore astroquery log level after import
     logging.getLogger('astroquery').setLevel(logging.NOTSET)
 
-    app.add_typer(simbad_cli.get_app(), name="simbad")
     app.add_typer(alma_cli.get_app(), name="alma")
     app.add_typer(esasky_cli.get_app(), name="esasky")
     app.add_typer(gaia_cli.get_app(), name="gaia")
@@ -69,6 +68,7 @@ def setup_subcommands():
     app.add_typer(mast_cli.get_app(), name="mast")
     app.add_typer(nasa_ads_cli.get_app(), name="nasa_ads")
     app.add_typer(ned_cli.get_app(), name="ned")
+    app.add_typer(simbad_cli.get_app(), name="simbad")
     app.add_typer(splatalogue_cli.get_app(), name="splatalogue")
     app.add_typer(vizier_cli.get_app(), name="vizier")
 
@@ -221,6 +221,10 @@ def main_callback(
     if ctx.invoked_subcommand is None and \
        not any(arg in ["-h", "--help"] for arg in sys.argv):
         if not ping and not field:
+            # Display the Gaia ESA Archive rollback message at the top level
+            gaia_message = "Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes"
+            console.print(f"[bold yellow]{gaia_message}[/bold yellow]\n")
+
             # Capture the full help output by explicitly calling the app with --help
             help_output_capture = StringIO()
             with redirect_stdout(help_output_capture):
