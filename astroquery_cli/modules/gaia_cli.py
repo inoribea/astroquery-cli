@@ -93,7 +93,7 @@ def get_app():
                 title = _("Gaia Main Source for '{target}'").format(target=target)
                 display_table(ctx, result_table, title=title, max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(result_table, output_file, output_format, _("Gaia object query"))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("Gaia object query"))
             else:
                 console.print(_("[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]").format(target=target))
 

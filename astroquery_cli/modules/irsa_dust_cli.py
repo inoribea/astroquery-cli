@@ -85,7 +85,7 @@ def get_app():
             if table_result is not None and len(table_result) > 0:
                 display_table(ctx, table_result, title=_("IRSA Dust Extinction ({map_name})").format(map_name=map_name))
                 if output_file:
-                    save_table_to_file(table_result, output_file, output_format, _("IRSA Dust {map_name} extinction").format(map_name=map_name))
+                    save_table_to_file(ctx, table_result, output_file, output_format, _("IRSA Dust {map_name} extinction").format(map_name=map_name))
             else:
                 console.print(_("[yellow]No extinction data returned by IRSA Dust ({map_name}).[/yellow]").format(map_name=map_name))
 

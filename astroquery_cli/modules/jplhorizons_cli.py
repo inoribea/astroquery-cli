@@ -189,7 +189,7 @@ def get_app():
                 # 先输出物理参数
                 try:
                     result_table = obj.elements(get_raw_response=False)
-                    display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
+                    # display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns) # Will be displayed later
                 except Exception:
                     raw = obj.elements(get_raw_response=True)
                     console.print(str(raw))
@@ -202,9 +202,11 @@ def get_app():
                     display_table(ctx, eph_table, title="Ephemerides for today", max_rows=max_rows, show_all_columns=show_all_columns)
                 except Exception as e:
                     console.print(f"[red]Ephemerides table error: {e}[/red]")
-
-            else:
+            
+            if result_table is not None and len(result_table) > 0:
                 display_table(ctx, result_table, title=table_title, max_rows=max_rows, show_all_columns=show_all_columns)
+            else:
+                console.print(_("[yellow]No results found for '{target}' with the specified parameters.[/yellow]").format(target=target))
 
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("JPL Horizons object"))
