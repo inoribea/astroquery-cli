@@ -11,10 +11,10 @@ from ..utils import (
     save_table_to_file,
     global_keyboard_interrupt_handler
 )
-import re # Import re
-from io import StringIO # Import StringIO
-from contextlib import redirect_stdout # Import redirect_stdout
-from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+import re
+from io import StringIO
+from contextlib import redirect_stdout
+from astroquery_cli.common_options import setup_debug_context
 
 def get_app():
     import builtins
@@ -22,8 +22,8 @@ def get_app():
     app = typer.Typer(
         name="jplsbdb",
         help=builtins._("Query JPL Small-Body Database (SBDB)."),
-        invoke_without_command=True, # Add this to allow callback to run without subcommand
-        no_args_is_help=False # Set to False for custom handling
+        invoke_without_command=True,
+        no_args_is_help=False
     )
 
     @app.callback()
@@ -45,60 +45,25 @@ def get_app():
     ):
         setup_debug_context(ctx, debug, verbose)
 
-        # Custom help display logic
         if ctx.invoked_subcommand is None and \
-           not any(arg in ["-h", "--help"] for arg in ctx.args): # Use ctx.args for subcommand arguments
-            # Capture the full help output by explicitly calling the app with --help
+           not any(arg in ["-h", "--help"] for arg in ctx.args):
             help_output_capture = StringIO()
             with redirect_stdout(help_output_capture):
                 try:
-                    # Call the app with --help to get the full help output
-                    # Pass the current command's arguments to simulate the help call
                     app(ctx.args + ["--help"])
                 except SystemExit:
-                    pass # Typer exits after showing help, catch the SystemExit exception
+                    pass
             full_help_text = help_output_capture.getvalue()
-
-            # Extract only the "Commands" section using regex, including the full bottom border
             commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
             if commands_match:
                 commands_section = commands_match.group(0)
-                # Remove the "Usage:" line if present in the full help text
                 filtered_commands_section = "\n".join([
                     line for line in commands_section.splitlines() if "Usage:" not in line
                 ])
                 console.print(filtered_commands_section)
             else:
-                # Fallback: if commands section not found, print full help
                 console.print(full_help_text)
             raise typer.Exit()
-
-    # ================== JPL_SBDB_FIELDS =========================
-    JPL_SBDB_FIELDS = [
-        "spkid",
-        "full_name",
-        "class",
-        "epoch",
-        "a",
-        "e",
-        "i",
-        "per",
-        "node",
-        "om",
-        "w",
-        "ma",
-        "q",
-        "H",
-        "G",
-        "tp",
-        "MOID",
-        "diameter",
-        "albedo",
-        # ...
-    ]
-    # ============================================================
-
-
 
     @app.command(name="object", help=builtins._("Query JPL SBDB for a small body."))
     @global_keyboard_interrupt_handler
@@ -140,35 +105,104 @@ def get_app():
                     object_fullname = sbdb_query.get('object', {}).get('fullname', target)
                     console.print(_("[bold magenta]SBDB Data for: {fullname}[/bold magenta]").format(fullname=object_fullname))
                     output_data = {}
-                    for key, value in sbdb_query.items():
-                        if isinstance(value, AstropyTable):
-                            console.print(_("\n[bold underline]Table: {key}[/bold underline]").format(key=key))
-                            display_table(ctx, value, title=_("{key} for {target}").format(key=key, target=target), max_rows=max_rows_display, show_all_columns=show_all_columns)
-                            if output_file:
-                                save_table_to_file(ctx, value, output_file.replace(".", f"_{key}."), output_format, _("JPL SBDB {key} for {target}").format(key=key, target=target))
-                        elif isinstance(value, dict) or isinstance(value, list):
-                            console.print(_("\n[bold]{key}:[/bold]").format(key=key))
-                            # Convert Quantity objects to serializable format
-                            def process_quantity_objects(obj):
-                                if isinstance(obj, dict):
-                                    return {k: process_quantity_objects(v) for k, v in obj.items()}
-                                elif isinstance(obj, list):
-                                    return [process_quantity_objects(elem) for elem in obj]
-                                elif hasattr(obj, 'value') and hasattr(obj, 'unit'):
-                                    return f"{obj.value} {obj.unit}"
-                                return obj
 
-                            processed_value = process_quantity_objects(value)
-                            console.print_json(data=processed_value)
-                            output_data[str(key)] = processed_value
+                    def process_quantity_objects(obj):
+                        if isinstance(obj, dict):
+                            return {k: process_quantity_objects(v) for k, v in obj.items()}
+                        elif isinstance(obj, list):
+                            return [process_quantity_objects(elem) for elem in obj]
+                        elif hasattr(obj, 'value') and hasattr(obj, 'unit'):
+                            return f"{obj.value} {obj.unit}"
+                        return obj
+
+                    def dict_to_table_rows(d, field_order=None):
+                        rows = []
+                        if field_order:
+                            for k in field_order:
+                                if k in d:
+                                    rows.append([str(k), str(d[k])])
+                            for k in d:
+                                if k not in field_order:
+                                    rows.append([str(k), str(d[k])])
                         else:
-                            console.print(_("[bold]{key}:[/bold] {value}").format(key=key, value=value))
-                            output_data[str(key)] = str(value)
+                            for k, v in d.items():
+                                rows.append([str(k), str(v)])
+                        return rows
+
+                    for key, value in sbdb_query.items():
+                        processed_value = process_quantity_objects(value)
+                        # 定制字段顺序
+                        if key == "object":
+                            field_order = ["spkid", "kind", "fullname", "orbit_id", "neo", "prefix", "des", "pha", "orbit_class"]
+                            if isinstance(processed_value, dict):
+                                rows = dict_to_table_rows(processed_value, field_order)
+                                display_table(ctx, rows, title="Object")
+                                output_data[str(key)] = processed_value
+                            else:
+                                display_table(ctx, [[str(processed_value)]], title="Object")
+                                output_data[str(key)] = processed_value
+                        elif key == "orbit":
+                            field_order = [
+                                "cov_epoch", "elements", "n_dop_obs_used", "last_obs", "soln_date", "not_valid_after",
+                                "n_del_obs_used", "not_valid_before", "epoch", "model_pars", "equinox", "data_arc",
+                                "moid", "moid_jup", "producer", "condition_code", "t_jup", "orbit_id", "source",
+                                "sb_used", "pe_used", "first_obs", "two_body", "rms", "n_obs_used", "comment"
+                            ]
+                            if isinstance(processed_value, dict):
+                                rows = dict_to_table_rows(processed_value, field_order)
+                                display_table(ctx, rows, title="Orbit")
+                                output_data[str(key)] = processed_value
+                            else:
+                                display_table(ctx, [[str(processed_value)]], title="Orbit")
+                                output_data[str(key)] = processed_value
+                        elif key == "model_pars":
+                            field_order = ["A1", "A1_sig", "A1_kind", "A2", "A2_sig", "A2_kind", "S0", "S0_sig", "S0_kind"]
+                            if isinstance(processed_value, dict):
+                                rows = dict_to_table_rows(processed_value, field_order)
+                                display_table(ctx, rows, title="Model Parameters")
+                                output_data[str(key)] = processed_value
+                            else:
+                                display_table(ctx, [[str(processed_value)]], title="Model Parameters")
+                                output_data[str(key)] = processed_value
+                        elif key == "elements":
+                            field_order = [
+                                "e", "e_sig", "a", "a_sig", "q", "q_sig", "i", "i_sig", "om", "om_sig", "w", "w_sig",
+                                "ma", "ma_sig", "tp", "tp_sig", "per", "per_sig", "n", "n_sig", "ad", "ad_sig"
+                            ]
+                            if isinstance(processed_value, dict):
+                                rows = dict_to_table_rows(processed_value, field_order)
+                                display_table(ctx, rows, title="Elements")
+                                output_data[str(key)] = processed_value
+                            else:
+                                display_table(ctx, [[str(processed_value)]], title="Elements")
+                                output_data[str(key)] = processed_value
+                        elif isinstance(processed_value, dict):
+                            rows = dict_to_table_rows(processed_value)
+                            display_table(ctx, rows, title=key)
+                            output_data[str(key)] = processed_value
+                        elif isinstance(processed_value, list):
+                            if all(isinstance(item, dict) for item in processed_value):
+                                headers = set()
+                                for item in processed_value:
+                                    headers.update(item.keys())
+                                headers = list(headers)
+                                table_rows = []
+                                for item in processed_value:
+                                    row = [str(item.get(h, "")) for h in headers]
+                                    table_rows.append(row)
+                                display_table(ctx, table_rows, title=key)
+                                output_data[str(key)] = processed_value
+                            else:
+                                for item in processed_value:
+                                    display_table(ctx, [[str(item)]], title=key)
+                                output_data[str(key)] = processed_value
+                        else:
+                            display_table(ctx, [[str(processed_value)]], title=key)
+                            output_data[str(key)] = processed_value
 
                     if output_file and not any(isinstance(v, AstropyTable) for v in sbdb_query.values()):
                         import json
                         try:
-                            # Custom JSON encoder for Quantity objects
                             class QuantityEncoder(json.JSONEncoder):
                                 def default(self, obj):
                                     if hasattr(obj, 'value') and hasattr(obj, 'unit'):
@@ -177,7 +211,6 @@ def get_app():
 
                             file_path = output_file if '.json' in output_file else output_file + ".json"
                             with open(file_path, 'w') as f:
-                                # Use the custom encoder for the main output_data as well
                                 json.dump(output_data, f, indent=2, cls=QuantityEncoder)
                             console.print(_("[green]Primary data saved to {file_path}[/green]").format(file_path=file_path))
                         except Exception as json_e:

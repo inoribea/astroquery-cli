@@ -14,10 +14,6 @@ from ..utils import (
     global_keyboard_interrupt_handler
 )
 from ..i18n import get_translator
-import re # Import re
-from io import StringIO # Import StringIO
-from contextlib import redirect_stdout # Import redirect_stdout
-from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
 
 def get_app():
     import builtins
@@ -25,56 +21,8 @@ def get_app():
     app = typer.Typer(
         name="irsa",
         help=builtins._("Query NASA/IPAC Infrared Science Archive (IRSA)."),
-        invoke_without_command=True, # Add this to allow callback to run without subcommand
-        no_args_is_help=False # Set to False for custom handling
+        no_args_is_help=True
     )
-
-    @app.callback()
-    def irsa_callback(
-        ctx: typer.Context,
-        debug: bool = typer.Option(
-            False,
-            "-t",
-            "--debug",
-            help=_("Enable debug mode with verbose output."),
-            envvar="AQC_DEBUG"
-        ),
-        verbose: bool = typer.Option(
-            False,
-            "-v",
-            "--verbose",
-            help=_("Enable verbose output.")
-        )
-    ):
-        setup_debug_context(ctx, debug, verbose)
-
-        # Custom help display logic
-        if ctx.invoked_subcommand is None and \
-           not any(arg in ["-h", "--help"] for arg in ctx.args): # Use ctx.args for subcommand arguments
-            # Capture the full help output by explicitly calling the app with --help
-            help_output_capture = StringIO()
-            with redirect_stdout(help_output_capture):
-                try:
-                    # Call the app with --help to get the full help output
-                    # Pass the current command's arguments to simulate the help call
-                    app(ctx.args + ["--help"])
-                except SystemExit:
-                    pass # Typer exits after showing help, catch the SystemExit exception
-            full_help_text = help_output_capture.getvalue()
-
-            # Extract only the "Commands" section using regex, including the full bottom border
-            commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
-            if commands_match:
-                commands_section = commands_match.group(0)
-                # Remove the "Usage:" line if present in the full help text
-                filtered_commands_section = "\n".join([
-                    line for line in commands_section.splitlines() if "Usage:" not in line
-                ])
-                console.print(filtered_commands_section)
-            else:
-                # Fallback: if commands section not found, print full help
-                console.print(full_help_text)
-            raise typer.Exit()
 
     # ================== IRSA_FIELDS =============================
     IRSA_FIELDS = [
@@ -95,12 +43,23 @@ def get_app():
 
     Irsa.ROW_LIMIT = 500
 
-    @app.command(name="gator", help=builtins._("Query a specific catalog in IRSA using Gator."))
+    gator_app = typer.Typer(help=builtins._(
+        "IRSA Gator catalog operations.\n\n"
+        "Example: python -m astroquery_cli.main irsa gator query \"83.822083 -5.391111\" \"30arcsec\" --catalog fp_psc\n"
+        "Use 'python -m astroquery_cli.main irsa gator list' to list all available catalogs."
+    ))
+
+    @gator_app.command("query")
     @global_keyboard_interrupt_handler
     def query_gator(ctx: typer.Context,
-        catalog: str = typer.Argument(..., help=builtins._("Name of the IRSA catalog (e.g., 'allwise_p3as_psd', 'fp_psc').")),
-        coordinates: Optional[str] = typer.Argument(None, help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M51'). If not provided, returns first 500 rows.")),
+        target_input: str = typer.Argument(
+            ...,
+            help=builtins._(
+                "Coordinates (e.g., '00 42 44.3 +41 16 09') or catalog name (e.g., 'fp_psc')."
+            )
+        ),
         radius: Optional[str] = typer.Argument(None, help=builtins._("Search radius (e.g., '10arcsec', '0.5deg'). Required if coordinates provided.")),
+        catalog: Optional[str] = typer.Option(None, "--catalog", "-C", help=builtins._("Explicitly specify the IRSA catalog name (e.g., 'allwise_p3as_psd'). Defaults to 'gaia_dr3_source'.")),
         columns: Optional[List[str]] = typer.Option(None, "--col", help=builtins._("Specific columns to retrieve (comma separated or multiple use). Use 'all' for all columns.")),
         column_filters: Optional[List[str]] = typer.Option(None, "--filter", help=builtins._("Column filters (e.g., 'w1mpro>10', 'ph_qual=A'). Can be specified multiple times.")),
         output_file: Optional[str] = common_output_options["output_file"],
@@ -113,49 +72,55 @@ def get_app():
         start = time.perf_counter() if test_mode else None
 
         try:
-            if coordinates and radius:
-                console.print(_("[cyan]Querying IRSA catalog '{catalog}' via Gator for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(catalog=catalog, coordinates=coordinates, radius=radius))
-                coord = parse_coordinates(ctx, coordinates)
-                rad_quantity = parse_angle_str_to_quantity(ctx, radius)
+            final_catalog = catalog
+            final_coordinates = None
+            final_radius = radius
 
-                # Use query_region with catalog parameter for Gator-like functionality
+            coord_obj = parse_coordinates(ctx, target_input)
+
+            if coord_obj: 
+                final_coordinates = target_input
+                if not final_catalog:
+                    final_catalog = "gaia_dr3_source"
+                    console.print(_("[yellow]No catalog specified with coordinates. Defaulting to 'gaia_dr3_source' catalog.[/yellow]"))
+                if not final_radius:
+                    console.print(_("[red]Error: Radius is required when coordinates are provided.[/red]"))
+                    raise typer.Exit(code=1)
+                console.print(_("[cyan]Querying IRSA catalog '{catalog}' via Gator for region: '{coordinates}' with radius '{radius}'...[/cyan]").format(catalog=final_catalog, coordinates=final_coordinates, radius=final_radius))
+                rad_quantity = parse_angle_str_to_quantity(ctx, final_radius)
                 result_table: Optional[AstropyTable] = Irsa.query_region(
-                    coordinates=coord,
+                    coordinates=coord_obj,
                     radius=rad_quantity,
-                    catalog=catalog
+                    catalog=final_catalog,
+                    columns=",".join(columns) if columns else '*',
                 )
-            elif coordinates and not radius:
-                console.print(_("[red]Error: Radius is required when coordinates are provided.[/red]"))
-                raise typer.Exit(code=1)
-            else:
-                console.print(_("[cyan]Browsing IRSA catalog '{catalog}' (first {limit} rows)...[/cyan]").format(catalog=catalog, limit=Irsa.ROW_LIMIT))
-                # For browsing without coordinates, we can use a wide search or try to get schema info
-                # Since IRSA Gator typically requires coordinates, we'll use a fallback approach
+            else:  
+                if final_catalog and final_catalog != target_input:
+                    console.print(_("[red]Error: Catalog name provided as both positional argument and --catalog option. Please use only one.[/red]"))
+                    raise typer.Exit(code=1)
+                final_catalog = target_input
+                if final_radius:
+                    console.print(_("[red]Error: Catalog name '{target_input}' provided as first argument, but a radius '{radius}' was also provided. Catalog queries do not use radius. Please use 'irsa gator <catalog_name>' without a radius, or provide coordinates and a radius.[/red]").format(target_input=target_input, radius=radius))
+                    raise typer.Exit(code=1)
+                console.print(_("[cyan]Browsing IRSA catalog '{catalog}' (first {limit} rows)...[/cyan]").format(catalog=final_catalog, limit=Irsa.ROW_LIMIT))
                 from astropy.coordinates import SkyCoord
                 import astropy.units as u
-                
-                # Use galactic center as default coordinates for browsing
                 coord = SkyCoord("17h45m40.04s", "-29d00m28.1s", frame='icrs')
-                rad_quantity = 180 * u.deg  # Very wide search to get representative data
-                
-                # Use query_region with catalog parameter for browsing
+                rad_quantity = 180 * u.deg
                 result_table: Optional[AstropyTable] = Irsa.query_region(
                     coordinates=coord,
                     radius=rad_quantity,
-                    catalog=catalog
+                    catalog=final_catalog
                 )
 
-            # Apply column selection
             if result_table and columns and columns != ["all"]:
                 col_set = set(result_table.colnames)
                 selected_cols = [col for col in columns if col in col_set]
                 if selected_cols:
                     result_table = result_table[selected_cols]
 
-            # Apply column filters
             if result_table and column_filters:
                 for filt in column_filters:
-                    # Example: 'w1mpro>10', 'ph_qual==A'
                     import re
                     m = re.match(r"^(\w+)\s*([<>=!]+)\s*([\w\.\-]+)$", filt)
                     if m:
@@ -163,36 +128,44 @@ def get_app():
                         if col in result_table.colnames:
                             expr = f"result_table['{col}'] {op} {repr(type(result_table[col][0])(val))}"
                             result_table = result_table[eval(expr)]
-                    # else: ignore malformed filter
 
             if result_table and len(result_table) > 0:
-                console.print(_("[green]Found {count} match(es) in '{catalog}'.[/green]").format(count=len(result_table), catalog=catalog))
-                display_table(ctx, result_table, title=_("IRSA Gator: {catalog}").format(catalog=catalog), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                console.print(_("[green]Found {count} match(es) in '{catalog}'.[/green]").format(count=len(result_table), catalog=final_catalog))
+                display_table(ctx, result_table, title=_("IRSA Gator: {catalog}").format(catalog=final_catalog), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(ctx, result_table, output_file, output_format, _("IRSA Gator {catalog} query").format(catalog=catalog))
+                    save_table_to_file(ctx, result_table, output_file, output_format, _("IRSA Gator {catalog} query").format(catalog=final_catalog))
             else:
-                console.print(_("[yellow]No information found in '{catalog}' for the specified region.[/yellow]").format(catalog=catalog))
+                console.print(_("[yellow]No information found in '{catalog}' for the specified region.[/yellow]").format(catalog=final_catalog))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("IRSA Gator query for catalog {catalog}").format(catalog=catalog))
+            handle_astroquery_exception(ctx, e, _("IRSA Gator query for catalog {catalog}").format(catalog=final_catalog if final_catalog else "unknown"))
             raise typer.Exit(code=1)
 
         if test_mode:
             elapsed = time.perf_counter() - start
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
-
-    @app.command(name="list-gator-catalogs", help=builtins._("List available catalogs in IRSA Gator for a mission."))
-    def list_gator_catalogs(ctx: typer.Context,
-        mission: Optional[str] = typer.Option(None, help=builtins._("Filter catalogs by mission code (e.g., 'WISE', 'SPITZER').")),
-    ):
-        console.print(_("[cyan]Fetching list of available IRSA Gator catalogs {mission_info}...[/cyan]").format(mission_info=_("for mission {mission}").format(mission=mission) if mission else ''))
+    @gator_app.command("list")
+    def list_gator_catalogs():
+        """
+        List all available IRSA Gator catalogs.
+        """
         try:
-            console.print(_("[yellow]Listing all Gator catalogs programmatically is complex via astroquery.irsa directly.[/yellow]"))
-            console.print(_("[yellow]Please refer to the IRSA Gator website for a comprehensive list of catalogs.[/yellow]"))
-            console.print(_("[yellow]Common catalog examples: 'allwise_p3as_psd', 'ptf_lightcurves', 'fp_psc' (2MASS).[/yellow]"))
+            from astroquery.irsa import Irsa
+            catalogs = list(Irsa.list_catalogs())
+            from rich.table import Table
+            from rich.console import Console
+            cols = 5
+            rows = (len(catalogs) + cols - 1) // cols
+            data = [catalogs[i * rows:(i + 1) * rows] for i in range(cols)]
+            data = [col + [""] * (rows - len(col)) for col in data]
+            table = Table(title="Available IRSA Gator catalogs")
+            for i in range(cols):
+                table.add_column(f"Col{i+1}")
+            for row in zip(*data):
+                table.add_row(*row)
+            Console().print(table)
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("IRSA list_gator_catalogs"))
-            raise typer.Exit(code=1)
+            console.print(f"[red]Failed to fetch catalog list: {e}[/red]")
 
     @app.command(name="region", help=builtins._("Perform a cone search across multiple IRSA collections."))
     @global_keyboard_interrupt_handler
@@ -240,7 +213,7 @@ def get_app():
                 console.print(_("[green]Found {count} match(es) in IRSA holdings.[/green]").format(count=len(result_table)))
                 display_table(ctx, result_table, title=_("IRSA Cone Search Results"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                 if output_file:
-                    save_table_to_file(ctx, result_table, output_file, output_format, _("IRSA cone search query"))
+                    save_table_to_file(ctx, result_table, output_format, _("IRSA cone search query"))
             else:
                 console.print(_("[yellow]No information found in IRSA for the specified region{collection_info}.[/yellow]").format(collection_info=_(" in collection {collection}").format(collection=collection) if collection else ''))
 
@@ -248,4 +221,5 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("IRSA query_region"))
             raise typer.Exit(code=1)
 
+    app.add_typer(gator_app, name="gator")
     return app

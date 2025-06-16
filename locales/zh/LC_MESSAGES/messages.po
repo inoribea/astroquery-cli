@@ -1,9 +1,8 @@
-
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-16 17:52+0800\n"
+"POT-Creation-Date: 2025-06-16 20:34+0800\n"
 "PO-Revision-Date: 2025-05-18 20:48+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -14,587 +13,387 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: astroquery_cli/common_options.py:13 astroquery_cli/common_options.py:48
-#: astroquery_cli/main.py:103 astroquery_cli/modules/alma_cli.py:40
-#: astroquery_cli/modules/esasky_cli.py:38
-#: astroquery_cli/modules/gaia_cli.py:38 astroquery_cli/modules/irsa_cli.py:39
-#: astroquery_cli/modules/irsa_dust_cli.py:34
-#: astroquery_cli/modules/jplhorizons_cli.py:33
-#: astroquery_cli/modules/jplsbdb_cli.py:36
-#: astroquery_cli/modules/mast_cli.py:38
-#: astroquery_cli/modules/nasa_ads_cli.py:37
-#: astroquery_cli/modules/ned_cli.py:38 astroquery_cli/modules/simbad_cli.py:33
-#: astroquery_cli/modules/splatalogue_cli.py:38
-#: astroquery_cli/modules/vizier_cli.py:32
 msgid "Enable debug mode with verbose output."
 msgstr "启用调试模式并输出详细信息。"
 
-#: astroquery_cli/common_options.py:20 astroquery_cli/common_options.py:55
-#: astroquery_cli/main.py:110 astroquery_cli/modules/alma_cli.py:47
-#: astroquery_cli/modules/esasky_cli.py:45
-#: astroquery_cli/modules/gaia_cli.py:45 astroquery_cli/modules/irsa_cli.py:46
-#: astroquery_cli/modules/irsa_dust_cli.py:41
-#: astroquery_cli/modules/jplhorizons_cli.py:40
-#: astroquery_cli/modules/jplsbdb_cli.py:43
-#: astroquery_cli/modules/mast_cli.py:45
-#: astroquery_cli/modules/nasa_ads_cli.py:44
-#: astroquery_cli/modules/ned_cli.py:45 astroquery_cli/modules/simbad_cli.py:40
-#: astroquery_cli/modules/splatalogue_cli.py:45
-#: astroquery_cli/modules/vizier_cli.py:39
 msgid "Enable verbose output."
 msgstr "启用详细输出。"
 
-#: astroquery_cli/main.py:40
 msgid "Astroquery CLI"
 msgstr "MAST 区域查询"
 
-#: astroquery_cli/main.py:82
 msgid ""
-"Set the language for output messages (e.g., 'en', 'zh'). Affects help "
-"texts and outputs."
+"Set the language for output messages (e.g., 'en', 'zh'). Affects help texts "
+"and outputs."
 msgstr "设置输出消息的语言（例如'en'、'zh'）。影响帮助文本和输出内容。"
 
-#: astroquery_cli/main.py:91
-msgid "Test connectivity to major services (only available at top-level command)."
+msgid ""
+"Test connectivity to major services (only available at top-level command)."
 msgstr "测试与主要服务的连接（仅在顶级命令下可用）。"
 
-#: astroquery_cli/main.py:97
 msgid "Test field validity for modules (only available at top-level command)."
 msgstr "测试模块字段的有效性（仅在顶级命令下可用）。"
 
-#: astroquery_cli/main.py:210
 msgid "Install completion for the current shell."
 msgstr "为当前shell安装自动补全。"
 
-#: astroquery_cli/main.py:212
 msgid ""
 "Show completion for the current shell, to copy it or customize the "
 "installation."
 msgstr "显示当前shell的自动补全，以便复制或自定义安装。"
 
-#: astroquery_cli/main.py:214
 msgid "Show this message and exit."
 msgstr "显示此消息并退出。"
 
-#: astroquery_cli/main.py:239 astroquery_cli/modules/gaia_cli.py:51
-msgid ""
-"Please note that the Gaia ESA Archive has been rolled back to version "
-"3.7. Please find the release notes at https://www.cosmos.esa.int/web"
-"/gaia-users/archive/release-notes"
-msgstr ""
-"[yellow]请注意，盖亚ESA档案已回滚到3.7版本。请在以下网址查看发布说明：https://www.cosmos.esa.int/web"
-"/gaia-users/archive/release-notes[/yellow]"
-
-#: astroquery_cli/utils.py:34
 msgid "Terminal too narrow or content too complex, please open in browser:"
 msgstr "终端宽度不足或内容过于复杂，请在浏览器中打开："
 
-#: astroquery_cli/utils.py:196
 msgid ""
-"Path to save the output table (e.g., data.csv, results.ecsv, table.fits)."
-" Format inferred from extension."
-msgstr "输出表格的保存路径（例如：data.csv、results.ecsv、table.fits）。格式由文件扩展名自动推断。"
+"Path to save the output table (e.g., data.csv, results.ecsv, table.fits). "
+"Format inferred from extension."
+msgstr ""
+"输出表格的保存路径（例如：data.csv、results.ecsv、table.fits）。格式由文件扩"
+"展名自动推断。"
 
-#: astroquery_cli/utils.py:202
 msgid ""
-"Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable')."
-" Overrides inference from filename extension."
-msgstr "用于保存的Astropy表格格式（例如'csv'、'ecsv'、'fits'、'votable'）。覆盖文件名扩展名的推断。"
+"Astropy table format for saving (e.g., 'csv', 'ecsv', 'fits', 'votable'). "
+"Overrides inference from filename extension."
+msgstr ""
+"用于保存的Astropy表格格式（例如'csv'、'ecsv'、'fits'、'votable'）。覆盖文件名"
+"扩展名的推断。"
 
-#: astroquery_cli/modules/alma_cli.py:28
 msgid "Query the ALMA archive."
 msgstr "查询 ALMA 科学档案库。"
 
-#: astroquery_cli/modules/alma_cli.py:91
 msgid "Query ALMA for observations of an object."
 msgstr "查询 ALMA 中某个天体的观测数据。"
 
-#: astroquery_cli/modules/alma_cli.py:95
 msgid "Name of the astronomical object, e.g., 'Orion KL', 'Sgr B2', 'NGC 253'."
 msgstr "天体名称。"
 
-#: astroquery_cli/modules/alma_cli.py:96 astroquery_cli/modules/alma_cli.py:144
 msgid "Query only public data."
 msgstr "仅查询公开数据。"
 
-#: astroquery_cli/modules/alma_cli.py:97 astroquery_cli/modules/alma_cli.py:145
 msgid "Query only science data."
 msgstr "仅查询科学数据。"
 
-#: astroquery_cli/modules/alma_cli.py:98
 msgid "Specify payload fields to query (e.g., 'band_list', 'target_name')."
 msgstr "指定要查询的载荷字段（例如，'band_list'，'target_name'）。"
 
-#: astroquery_cli/modules/alma_cli.py:101
-#: astroquery_cli/modules/alma_cli.py:148
-#: astroquery_cli/modules/esasky_cli.py:150
-#: astroquery_cli/modules/esasky_cli.py:200
-#: astroquery_cli/modules/gaia_cli.py:122
-#: astroquery_cli/modules/gaia_cli.py:183
-#: astroquery_cli/modules/gaia_cli.py:259
-#: astroquery_cli/modules/irsa_cli.py:108
-#: astroquery_cli/modules/irsa_cli.py:207
-#: astroquery_cli/modules/jplhorizons_cli.py:161
-#: astroquery_cli/modules/mast_cli.py:113
-#: astroquery_cli/modules/mast_cli.py:161
-#: astroquery_cli/modules/mast_cli.py:206
-#: astroquery_cli/modules/nasa_ads_cli.py:127
-#: astroquery_cli/modules/ned_cli.py:134
-#: astroquery_cli/modules/simbad_cli.py:93
-#: astroquery_cli/modules/simbad_cli.py:135
-#: astroquery_cli/modules/simbad_cli.py:162
-#: astroquery_cli/modules/splatalogue_cli.py:141
-#: astroquery_cli/modules/splatalogue_cli.py:205
 msgid "Maximum number of rows to display. Use -1 for all rows."
 msgstr "最大显示行数。使用 -1 表示所有行。"
 
-#: astroquery_cli/modules/alma_cli.py:102
-#: astroquery_cli/modules/alma_cli.py:149
-#: astroquery_cli/modules/esasky_cli.py:151
-#: astroquery_cli/modules/esasky_cli.py:201
-#: astroquery_cli/modules/gaia_cli.py:123
-#: astroquery_cli/modules/gaia_cli.py:184
-#: astroquery_cli/modules/gaia_cli.py:260
-#: astroquery_cli/modules/irsa_cli.py:109
-#: astroquery_cli/modules/irsa_cli.py:208
-#: astroquery_cli/modules/mast_cli.py:114
-#: astroquery_cli/modules/mast_cli.py:162
-#: astroquery_cli/modules/mast_cli.py:207
-#: astroquery_cli/modules/nasa_ads_cli.py:130
-#: astroquery_cli/modules/ned_cli.py:100 astroquery_cli/modules/ned_cli.py:135
-#: astroquery_cli/modules/ned_cli.py:175
-#: astroquery_cli/modules/simbad_cli.py:94
-#: astroquery_cli/modules/simbad_cli.py:163
-#: astroquery_cli/modules/splatalogue_cli.py:142
-#: astroquery_cli/modules/vizier_cli.py:145
-#: astroquery_cli/modules/vizier_cli.py:209
-#: astroquery_cli/modules/vizier_cli.py:264
-#: astroquery_cli/modules/vizier_cli.py:333
 msgid "Show all columns in the output table."
 msgstr "在输出表中显示所有列。"
 
-#: astroquery_cli/modules/alma_cli.py:119
-#, python-brace-format
-msgid "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
+msgid ""
+"[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
 msgstr "[yellow]载荷项 '{item}' 不是键值对格式。已忽略。[/yellow]"
 
-#: astroquery_cli/modules/alma_cli.py:128
-#: astroquery_cli/modules/simbad_cli.py:117
-#, python-brace-format
 msgid "[green]Found {count} match(es) for '{object_name}'.[/green]"
 msgstr "[green]找到 {count} 条关于 '{object_name}' 的匹配记录。[/green]"
 
-#: astroquery_cli/modules/alma_cli.py:129
-#, python-brace-format
 msgid "ALMA Data for {object_name}"
 msgstr "{object_name} 的 ALMA 数据"
 
-#: astroquery_cli/modules/alma_cli.py:131
 msgid "ALMA object query"
 msgstr "ALMA 天体查询"
 
-#: astroquery_cli/modules/alma_cli.py:133 astroquery_cli/modules/ned_cli.py:116
-#: astroquery_cli/modules/simbad_cli.py:122
-#, python-brace-format
 msgid "[yellow]No information found for object '{object_name}'.[/yellow]"
 msgstr "[yellow]未找到关于天体 '{object_name}' 的信息。[/yellow]"
 
-#: astroquery_cli/modules/alma_cli.py:135
 msgid "ALMA object"
 msgstr "ALMA目标"
 
-#: astroquery_cli/modules/alma_cli.py:138
 msgid "Query ALMA for observations in a sky region."
 msgstr "查询 ALMA 中某个天区内的观测数据。"
 
-#: astroquery_cli/modules/alma_cli.py:142
 msgid "Coordinates (e.g., '10.68h +41.26d', '150.0 2.0')."
 msgstr "坐标（例如，'10.68h +41.26d'，'150.0 2.0'）。"
 
-#: astroquery_cli/modules/alma_cli.py:143
-#: astroquery_cli/modules/mast_cli.py:156
 msgid "Search radius (e.g., '0.1deg', '5arcmin')."
 msgstr "搜索半径（例如，'0.1deg'，'5arcmin'）。"
 
-#: astroquery_cli/modules/alma_cli.py:169
-#, python-brace-format
 msgid "[green]Found {count} match(es) in the region.[/green]"
 msgstr "[green]在该区域找到 {count} 条匹配记录。[/green]"
 
-#: astroquery_cli/modules/alma_cli.py:170
 msgid "ALMA Data for Region"
 msgstr "区域的 ALMA 数据"
 
-#: astroquery_cli/modules/alma_cli.py:172
 msgid "ALMA region query"
 msgstr "ALMA 区域查询"
 
-#: astroquery_cli/modules/alma_cli.py:174
 msgid "[yellow]No information found for the specified region.[/yellow]"
 msgstr "[yellow]未找到指定区域的信息。[/yellow]"
 
-#: astroquery_cli/modules/alma_cli.py:176
 msgid "ALMA region"
 msgstr "ALMA目标"
 
-#: astroquery_cli/modules/esasky_cli.py:26
 msgid "Query the ESA Sky archive."
 msgstr "查询 ESASky 科学档案库。"
 
-#: astroquery_cli/modules/esasky_cli.py:139
 msgid "Query ESASky catalogs for an object."
 msgstr "查询 ESASky 星表中某个天体的数据。"
 
-#: astroquery_cli/modules/esasky_cli.py:142
-msgid "Name of the astronomical object (e.g., 'M31', 'Vega', 'NGC 5194')."
-msgstr "天体名称。"
+msgid ""
+"Name of the astronomical object (e.g., 'NGC 253', 'HD 189733'). eg：M31、NGC "
+"253、HD 189733"
+msgstr ""
+"天体名称（例如：'NGC 253'、'HD 189733'）。例如：M31、NGC 253、HD 189733"
 
-#: astroquery_cli/modules/esasky_cli.py:146
 msgid ""
 "Specify catalogs to query (e.g., 'GAIA-DR3', '2MASS', 'ALLWISE'). Can be "
-"specified multiple times. Use 'list-catalogs' command to see all "
-"available catalogs. Default: GAIA-DR3."
-msgstr "指定要查询的星表（例如，'Gaia DR3'）。可多次指定。"
+"specified multiple times. Use 'list-catalogs' command to see all available "
+"catalogs. Default: GAIA-DR3."
+msgstr ""
+"指定要查询的星表（例如：'GAIA-DR3'、'2MASS'、'ALLWISE'）。可多次指定。使"
+"用'list-catalogs'命令查看所有可用星表。默认：GAIA-DR3。"
 
-#: astroquery_cli/modules/esasky_cli.py:152
-#: astroquery_cli/modules/esasky_cli.py:202
-#: astroquery_cli/modules/esasky_cli.py:236
-#: astroquery_cli/modules/gaia_cli.py:124
-#: astroquery_cli/modules/gaia_cli.py:187
-#: astroquery_cli/modules/gaia_cli.py:263
-#: astroquery_cli/modules/irsa_dust_cli.py:95
-#: astroquery_cli/modules/irsa_dust_cli.py:160
-#: astroquery_cli/modules/jplhorizons_cli.py:168
-#: astroquery_cli/modules/jplsbdb_cli.py:116
-#: astroquery_cli/modules/mast_cli.py:115
-#: astroquery_cli/modules/mast_cli.py:163
-#: astroquery_cli/modules/mast_cli.py:208 astroquery_cli/modules/ned_cli.py:101
-#: astroquery_cli/modules/ned_cli.py:136 astroquery_cli/modules/ned_cli.py:176
-#: astroquery_cli/modules/splatalogue_cli.py:143
-#: astroquery_cli/modules/splatalogue_cli.py:206
-#: astroquery_cli/modules/vizier_cli.py:151
 msgid "Enable test mode and print elapsed time."
 msgstr "启用测试模式并打印耗时。"
 
-#: astroquery_cli/modules/esasky_cli.py:157
-#, python-brace-format
 msgid "[cyan]Querying ESASky catalogs for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 ESASky 星表中关于天体 '{object_name}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/esasky_cli.py:167
-#, python-brace-format
 msgid "[green]Found data for '{object_name}' in {count} catalog(s).[/green]"
 msgstr "[green]在 {count} 个星表中找到了 '{object_name}' 的数据。[/green]"
 
-#: astroquery_cli/modules/esasky_cli.py:171
-#, python-brace-format
 msgid "ESASky: {cat_name} for {object_name}"
 msgstr "ESASky：{object_name} 的 {cat_name} 数据"
 
-#: astroquery_cli/modules/esasky_cli.py:173
-#, python-brace-format
 msgid "ESASky {cat_name} object query"
 msgstr "ESASky {cat_name} 天体查询"
 
-#: astroquery_cli/modules/esasky_cli.py:175
-#, python-brace-format
-msgid "[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]"
+msgid ""
+"[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]"
 msgstr "[yellow]星表 '{cat_name}' 中没有关于 '{object_name}' 的结果。[/yellow]"
 
-#: astroquery_cli/modules/esasky_cli.py:177
-#, python-brace-format
-msgid "[yellow]No catalog information found for object '{object_name}'.[/yellow]"
-msgstr "[yellow]未找到关于天体 '{object_name}' 的星表信息。[/yellow]"
-
-#: astroquery_cli/modules/esasky_cli.py:180
-msgid "ESASky object-catalogs"
+msgid "ESASky object result"
 msgstr "ESASky天体目录"
 
-#: astroquery_cli/modules/esasky_cli.py:188
+msgid "ESASky object query"
+msgstr "MAST 天体查询"
+
+msgid "[yellow]Unknown result type from ESASky.query_object_catalogs.[/yellow]"
+msgstr "[yellow]VizieR 未返回此查询的结果。[/yellow]"
+
+msgid ""
+"[yellow]No catalog information found for object '{object_name}'.[/yellow]"
+msgstr "[yellow]未找到关于天体 '{object_name}' 的星表信息。[/yellow]"
+
+msgid "ESASky object"
+msgstr "ESASky天体目录"
+
 msgid "Query ESASky catalogs in a sky region."
 msgstr "查询 ESASky 星表中某个天区内的观测数据。"
 
-#: astroquery_cli/modules/esasky_cli.py:191
 msgid "Coordinates (e.g., '10.68h +41.26d', 'M101', '299.86808 -14.67788')."
 msgstr "坐标（例如，'10.68h +41.26d'，'150.0 2.0'）。"
 
-#: astroquery_cli/modules/esasky_cli.py:192
 msgid "Search radius (e.g., '0.1deg', '5arcmin', '10s')."
 msgstr "搜索半径（例如，'0.1deg'，'5arcmin'）。"
 
-#: astroquery_cli/modules/esasky_cli.py:196
 msgid ""
-"Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra "
-"(CDA)'). Can be specified multiple times. Use 'list-catalogs' command to "
-"see all available catalogs."
-msgstr "指定要查询的星表（例如，'Gaia DR3'）。可多次指定。"
+"Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). "
+"Can be specified multiple times. Use 'object' command to see all available "
+"catalogs."
+msgstr ""
+"指定要查询的星表（例如：'XMM-Newton (XMM-SSC)'、'Chandra (CDA)'）。可多次指"
+"定。使用'object'命令查看所有可用星表。"
 
-#: astroquery_cli/modules/esasky_cli.py:207
-#, python-brace-format
 msgid ""
 "[cyan]Querying ESASky catalogs for region: '{coordinates}' with radius "
 "'{radius}'...[/cyan]"
-msgstr "[cyan]正在查询 ESASky 星表中区域 '{coordinates}' （半径 '{radius}'）的数据...[/cyan]"
+msgstr ""
+"[cyan]正在查询 ESASky 星表中区域 '{coordinates}' （半径 '{radius}'）的数据..."
+"[/cyan]"
 
-#: astroquery_cli/modules/esasky_cli.py:213
-#, python-brace-format
 msgid "[green]Found data in {count} catalog(s) for the region.[/green]"
 msgstr "[green]在该区域的 {count} 个星表中找到了数据。[/green]"
 
-#: astroquery_cli/modules/esasky_cli.py:217
-#, python-brace-format
 msgid "ESASky: {cat_name} for region"
 msgstr "ESASky：区域的 {cat_name} 数据"
 
-#: astroquery_cli/modules/esasky_cli.py:219
-#, python-brace-format
 msgid "ESASky {cat_name} region query"
 msgstr "ESASky {cat_name} 区域查询"
 
-#: astroquery_cli/modules/esasky_cli.py:221
-#, python-brace-format
 msgid "[yellow]No results from catalog '{cat_name}' for the region.[/yellow]"
 msgstr "[yellow]星表 '{cat_name}' 中没有该区域的结果。[/yellow]"
 
-#: astroquery_cli/modules/esasky_cli.py:223
 msgid "[yellow]No catalog information found for the specified region.[/yellow]"
 msgstr "[yellow]未找到指定区域的星表信息。[/yellow]"
 
-#: astroquery_cli/modules/esasky_cli.py:225
-msgid "ESASky region-catalogs"
+msgid "ESASky region"
 msgstr "ESASky区域目录"
 
-#: astroquery_cli/modules/esasky_cli.py:233
 msgid "List available missions/catalogs in ESASky."
 msgstr "列出 ESASky 中可用的任务/星表。"
 
-#: astroquery_cli/modules/esasky_cli.py:241
 msgid "[cyan]Fetching list of available ESASky missions/catalogs...[/cyan]"
 msgstr "[cyan]正在获取可用的 ESASky 任务/星表列表...[/cyan]"
 
-#: astroquery_cli/modules/esasky_cli.py:254
 msgid ""
-"[bold red]Unexpected list content from ESASky.list_catalogs(). Expected "
-"list of strings or AstropyTable.[/bold red]"
-msgstr "[粗体红色]ESASky.list_catalogs()返回的列表内容异常。期望是字符串列表或AstropyTable。[/粗体红色]"
+"[bold red]Unexpected list content from ESASky.list_catalogs(). Expected list "
+"of strings or AstropyTable.[/bold red]"
+msgstr ""
+"[bold red]ESASky.list_catalogs()返回的列表内容异常。期望是字符串列表或"
+"AstropyTable。[/bold red]"
 
-#: astroquery_cli/modules/esasky_cli.py:257
 msgid ""
 "[bold red]Unexpected return type from ESASky.list_catalogs(). Expected "
 "AstropyTable or list.[/bold red]"
-msgstr "[粗体红色]ESASky.list_catalogs()返回的类型异常。期望是AstropyTable或列表。[/粗体红色]"
+msgstr ""
+"[bold red]ESASky.list_catalogs()返回的类型异常。期望是AstropyTable或列表。[/"
+"bold red]"
 
-#: astroquery_cli/modules/esasky_cli.py:261
 msgid "Available ESASky Missions/Catalogs"
 msgstr "可用的 ESASky 任务/星表"
 
-#: astroquery_cli/modules/esasky_cli.py:263
 msgid "[yellow]Could not retrieve mission list or list is empty.[/yellow]"
 msgstr "[yellow]无法检索任务列表或列表为空。[/yellow]"
 
-#: astroquery_cli/modules/esasky_cli.py:265
 msgid "ESASky list_catalogs"
 msgstr "ESASky 目录列表"
 
-#: astroquery_cli/modules/gaia_cli.py:26
 msgid "Query the Gaia archive."
 msgstr "查询 Gaia 科学档案库。"
 
-#: astroquery_cli/modules/gaia_cli.py:108
 msgid "Query Gaia main source for a given object name or coordinates."
 msgstr "查询某个天体名称或特定坐标周围的星表。"
 
-#: astroquery_cli/modules/gaia_cli.py:112
 msgid "Object name or coordinates (e.g., 'M31', '10.68h +41.26d')."
 msgstr "中心天体名称或坐标（例如，'M31'，'10.68h +41.26d'）。"
 
-#: astroquery_cli/modules/gaia_cli.py:113
 msgid "Search radius for matching Gaia source (e.g., '5arcsec', '0.001deg')."
 msgstr "搜索半径（例如，'10arcsec'，'0.5deg'）。"
 
-#: astroquery_cli/modules/gaia_cli.py:116
 msgid "Gaia table to query. Default: gaiadr3.gaia_source"
 msgstr "要查询的Gaia表。默认：gaiadr3.gaia_source"
 
-#: astroquery_cli/modules/gaia_cli.py:119
 msgid "Columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'parallax')."
 msgstr "要检索的列（例如，'source_id'，'ra'，'dec'，'parallax'）。"
 
-#: astroquery_cli/modules/gaia_cli.py:136
 msgid "Invalid radius provided."
 msgstr "[bold red]提供的半径无效。[/bold red]"
 
-#: astroquery_cli/modules/gaia_cli.py:145
-#, python-brace-format
 msgid "[cyan]Querying Gaia for object: {target}...[/cyan]"
-msgstr "[cyan]正在查询 ALMA 中关于天体 '{object_name}' 的数据...[/cyan]"
+msgstr "[cyan]正在查询 Gaia 中关于天体 '{target}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/gaia_cli.py:153
-#, python-brace-format
 msgid "Gaia Main Source for '{target}'"
 msgstr "'{target}'的Gaia主源"
 
-#: astroquery_cli/modules/gaia_cli.py:156
 msgid "Gaia object query"
 msgstr "盖亚 查询对象"
 
-#: astroquery_cli/modules/gaia_cli.py:158
-#, python-brace-format
-msgid "[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
+msgid ""
+"[yellow]No Gaia source found for '{target}' in the given radius.[/yellow]"
 msgstr "[yellow]未找到给定文献编码 (bibcode) 对应的天体。[/yellow]"
 
-#: astroquery_cli/modules/gaia_cli.py:169
 msgid "Perform a cone search around a coordinate."
 msgstr "围绕一个坐标执行锥形搜索。"
 
-#: astroquery_cli/modules/gaia_cli.py:172
-#: astroquery_cli/modules/irsa_dust_cli.py:155
 msgid "Central object name or coordinates (e.g., 'M31', '10.68h +41.26d')."
 msgstr "中心天体名称或坐标（例如，'M31'，'10.68h +41.26d'）。"
 
-#: astroquery_cli/modules/gaia_cli.py:173 astroquery_cli/modules/ned_cli.py:130
 msgid "Search radius (e.g., '5arcmin', '0.1deg')."
 msgstr "搜索半径（例如，'5arcmin'，'0.1deg'）。"
 
-#: astroquery_cli/modules/gaia_cli.py:176
-#, python-brace-format
-msgid "Gaia table to query. Common choices: {choices} or specify full table name."
+msgid ""
+"Gaia table to query. Common choices: {choices} or specify full table name."
 msgstr "要查询的 Gaia 表。常用选项：{choices} 或指定完整表名。"
 
-#: astroquery_cli/modules/gaia_cli.py:179
 msgid ""
 "Specific columns to retrieve (e.g., 'source_id', 'ra', 'dec', 'pmra'). "
-"Default: all columns from the table for a small radius, or a default set "
-"for larger radii."
-msgstr "要检索的特定列（例如，'source_id'，'ra'（赤经），'dec'（赤纬），'pmra'（赤经方向自行））。默认：对于小半径搜索，检索表中的所有列；对于较大半径搜索，检索默认列集。"
+"Default: all columns from the table for a small radius, or a default set for "
+"larger radii."
+msgstr ""
+"要检索的特定列（例如，'source_id'，'ra'（赤经），'dec'（赤纬），'pmra'（赤经"
+"方向自行））。默认：对于小半径搜索，检索表中的所有列；对于较大半径搜索，检索"
+"默认列集。"
 
-#: astroquery_cli/modules/gaia_cli.py:180
 msgid "Maximum number of rows to return from the server."
 msgstr "从服务器返回的最大行数。"
 
-#: astroquery_cli/modules/gaia_cli.py:185
-#: astroquery_cli/modules/gaia_cli.py:261
 msgid "Gaia archive username (or set GAIA_USER env var)."
 msgstr "Gaia 档案库用户名（或设置 GAIA_USER 环境变量）。"
 
-#: astroquery_cli/modules/gaia_cli.py:186
-#: astroquery_cli/modules/gaia_cli.py:262
 msgid ""
-"Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set "
-"but no password."
-msgstr "Gaia 档案库密码（或设置 GAIA_PASSWORD 环境变量）。如果设置了用户但未设置密码，则会提示输入。"
-
-#: astroquery_cli/modules/gaia_cli.py:193
-#, python-brace-format
-msgid ""
-"[cyan]Performing Gaia cone search on '{table_name}' around '{target}' "
-"with radius {radius}...[/cyan]"
+"Gaia archive password (or set GAIA_PASSWORD env var). Prompt if user set but "
+"no password."
 msgstr ""
-"[cyan]正在对 '{table_name}' 表中 '{target}' 周围（半径 {radius}）执行 Gaia "
-"锥形搜索...[/cyan]"
+"Gaia 档案库密码（或设置 GAIA_PASSWORD 环境变量）。如果设置了用户但未设置密"
+"码，则会提示输入。"
 
-#: astroquery_cli/modules/gaia_cli.py:196
-#: astroquery_cli/modules/gaia_cli.py:272
+msgid ""
+"[cyan]Performing Gaia cone search on '{table_name}' around '{target}' with "
+"radius {radius}...[/cyan]"
+msgstr ""
+"[cyan]正在对 '{table_name}' 表中 '{target}' 周围（半径 {radius}）执行 Gaia 锥"
+"形搜索...[/cyan]"
+
 msgid "Gaia archive password"
 msgstr "Gaia 档案库密码"
 
-#: astroquery_cli/modules/gaia_cli.py:199
-#: astroquery_cli/modules/gaia_cli.py:275
-#, python-brace-format
 msgid "[dim]Logging into Gaia archive as '{user}'...[/dim]"
 msgstr "[dim]正在以 '{user}' 用户登录 Gaia 档案库...[/dim]"
 
-#: astroquery_cli/modules/gaia_cli.py:203
-#: astroquery_cli/modules/gaia_cli.py:279
-#, python-brace-format
 msgid "[bold red]Gaia login failed: {error}[/bold red]"
 msgstr "[bold red]Gaia 登录失败：{error}[/bold red]"
 
-#: astroquery_cli/modules/gaia_cli.py:204
-#: astroquery_cli/modules/gaia_cli.py:280
 msgid "[yellow]Proceeding with anonymous access if possible.[/yellow]"
 msgstr "[yellow]如果可能，将继续使用匿名访问。[/yellow]"
 
-#: astroquery_cli/modules/gaia_cli.py:206
-#: astroquery_cli/modules/gaia_cli.py:282
-#, python-brace-format
 msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
 msgstr "[dim]已作为 '{user}' 登录 Gaia 档案库。[/dim]"
 
-#: astroquery_cli/modules/gaia_cli.py:206
-#: astroquery_cli/modules/gaia_cli.py:282
 msgid "unknown user"
 msgstr "未知用户"
 
-#: astroquery_cli/modules/gaia_cli.py:208
 msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
 msgstr "[dim]未提供 Gaia 登录凭据。将使用匿名访问。[/dim]"
 
-#: astroquery_cli/modules/gaia_cli.py:214
 msgid "[bold red]Invalid radius provided.[/bold red]"
 msgstr "[bold red]提供的半径无效。[/bold red]"
 
-#: astroquery_cli/modules/gaia_cli.py:223
-#, python-brace-format
 msgid "[dim]Executing ADQL query (first {row_limit} rows):[/dim]"
 msgstr "[dim]正在执行 ADQL 查询（前 {row_limit} 行）：[/dim]"
 
-#: astroquery_cli/modules/gaia_cli.py:230
-#, python-brace-format
 msgid "Gaia Cone Search Results ({table_name})"
 msgstr "Gaia 锥形搜索结果 ({table_name})"
 
-#: astroquery_cli/modules/gaia_cli.py:232
-#: astroquery_cli/modules/gaia_cli.py:291
-#, python-brace-format
 msgid " (User: {user})"
 msgstr " （用户：{user}）"
 
-#: astroquery_cli/modules/gaia_cli.py:235
 msgid "Gaia cone search"
 msgstr "Gaia 锥形搜索"
 
-#: astroquery_cli/modules/gaia_cli.py:237
 msgid "[yellow]No results found from Gaia for this cone search.[/yellow]"
 msgstr "[yellow]Gaia 未找到此锥形搜索的结果。[/yellow]"
 
-#: astroquery_cli/modules/gaia_cli.py:240
-#, python-brace-format
 msgid "Gaia cone search on {table_name}"
 msgstr "{table_name} 上的 Gaia 锥形搜索"
 
-#: astroquery_cli/modules/gaia_cli.py:245
-#: astroquery_cli/modules/gaia_cli.py:306
 msgid "[dim]Logged out from Gaia archive.[/dim]"
 msgstr "[dim]已从 Gaia 档案库登出。[/dim]"
 
-#: astroquery_cli/modules/gaia_cli.py:253
 msgid "Execute a raw ADQL query (synchronous)."
 msgstr "执行原始 ADQL 查询（同步）。"
 
-#: astroquery_cli/modules/gaia_cli.py:256
 msgid "The ADQL query string."
 msgstr "ADQL 查询字符串。"
 
-#: astroquery_cli/modules/gaia_cli.py:268
 msgid "[cyan]Executing Gaia ADQL query...[/cyan]"
 msgstr "[cyan]正在执行 Gaia ADQL 查询...[/cyan]"
 
-#: astroquery_cli/modules/gaia_cli.py:289
 msgid "Gaia ADQL Query Results"
 msgstr "Gaia ADQL 查询结果"
 
-#: astroquery_cli/modules/gaia_cli.py:294
-#: astroquery_cli/modules/gaia_cli.py:299
 msgid "Gaia ADQL query"
 msgstr "Gaia ADQL 查询"
 
-#: astroquery_cli/modules/gaia_cli.py:296
 msgid "[yellow]ADQL query returned no results or an empty table.[/yellow]"
 msgstr "[yellow]ADQL 查询未返回结果或返回空表。[/yellow]"
 
-#: astroquery_cli/modules/gaia_cli.py:301
-#, python-brace-format
 msgid ""
 "[bold red]ADQL Query Error Details from server:\n"
 "{error_details}[/bold red]"
@@ -602,414 +401,316 @@ msgstr ""
 "[bold red]来自服务器的 ADQL 查询错误详细信息：\n"
 "{error_details}[/bold red]"
 
-#: astroquery_cli/modules/irsa_cli.py:27
 msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
 msgstr "查询 NASA/IPAC 红外科学档案库 (IRSA)。"
 
-#: astroquery_cli/modules/irsa_cli.py:98
-msgid "Query a specific catalog in IRSA using Gator."
-msgstr "使用 Gator 查询 IRSA 中的特定星表。"
-
-#: astroquery_cli/modules/irsa_cli.py:101
-msgid "Name of the IRSA catalog (e.g., 'allwise_p3as_psd', 'fp_psc')."
-msgstr "IRSA 星表名称（例如，'allwise_p3as_psd'）。"
-
-#: astroquery_cli/modules/irsa_cli.py:102
 msgid ""
-"Coordinates (e.g., '10.68h +41.26d', 'M51'). If not provided, returns "
-"first 500 rows."
-msgstr "坐标（例如，'10.68h +41.26d'，'M51'）。"
+"IRSA Gator catalog operations.\n"
+"\n"
+"Example: python -m astroquery_cli.main irsa gator query \"83.822083 "
+"-5.391111\" \"30arcsec\" --catalog fp_psc\n"
+"Use 'python -m astroquery_cli.main irsa gator list' to list all available "
+"catalogs."
+msgstr ""
+"IRSA Gator星表操作。\n"
+"\n"
+"示例：python -m astroquery_cli.main irsa gator query \"83.822083 -5.391111\" "
+"\"30arcsec\" --catalog fp_psc\n"
+"使用 'python -m astroquery_cli.main irsa gator list' 列出所有可用的星表。"
 
-#: astroquery_cli/modules/irsa_cli.py:103
 msgid ""
-"Search radius (e.g., '10arcsec', '0.5deg'). Required if coordinates "
-"provided."
+"Coordinates (e.g., '00 42 44.3 +41 16 09') or catalog name (e.g., 'fp_psc')."
+msgstr "坐标（例如，'00 42 44.3 +41 16 09'）或星表名称（例如，'fp_psc'）。"
+
+msgid ""
+"Search radius (e.g., '10arcsec', '0.5deg'). Required if coordinates provided."
 msgstr "搜索半径（例如，'10arcsec'，'0.5deg'）。"
 
-#: astroquery_cli/modules/irsa_cli.py:104
-#: astroquery_cli/modules/irsa_cli.py:203
 msgid ""
-"Specific columns to retrieve (comma separated or multiple use). Use 'all'"
-" for all columns."
+"Explicitly specify the IRSA catalog name (e.g., 'allwise_p3as_psd'). "
+"Defaults to 'gaia_dr3_source'."
+msgstr ""
+"明确指定IRSA星表名称（例如：'allwise_p3as_psd'）。默认为'gaia_dr3_source'。"
+
+msgid ""
+"Specific columns to retrieve (comma separated or multiple use). Use 'all' "
+"for all columns."
 msgstr "要检索的特定列。使用 'all' 表示所有列。可多次指定。"
 
-#: astroquery_cli/modules/irsa_cli.py:105
-#: astroquery_cli/modules/irsa_cli.py:204
 msgid ""
-"Column filters (e.g., 'w1mpro>10', 'ph_qual=A'). Can be specified "
-"multiple times."
+"Column filters (e.g., 'w1mpro>10', 'ph_qual=A'). Can be specified multiple "
+"times."
 msgstr "列筛选器（例如，'Imag<15' (I波段星等)）。可多次指定。"
 
-#: astroquery_cli/modules/irsa_cli.py:117
-#, python-brace-format
+msgid ""
+"[yellow]No catalog specified with coordinates. Defaulting to "
+"'gaia_dr3_source' catalog.[/yellow]"
+msgstr "[yellow]未指定带坐标的星表。默认为 'gaia_dr3_source' 星表。[/yellow]"
+
+msgid "[red]Error: Radius is required when coordinates are provided.[/red]"
+msgstr "[red]错误：提供坐标时，半径是必需的。[/red]"
+
 msgid ""
 "[cyan]Querying IRSA catalog '{catalog}' via Gator for region: "
 "'{coordinates}' with radius '{radius}'...[/cyan]"
 msgstr ""
-"[cyan]正在通过 Gator 查询 IRSA 星表 '{catalog}' 中区域 '{coordinates}' （半径 "
-"'{radius}'）的数据...[/cyan]"
+"[cyan]正在通过 Gator 查询 IRSA 星表 '{catalog}' 中区域 '{coordinates}' （半"
+"径 '{radius}'）的数据...[/cyan]"
 
-#: astroquery_cli/modules/irsa_cli.py:128
-msgid "[red]Error: Radius is required when coordinates are provided.[/red]"
-msgstr "[红色]错误：提供坐标时，半径是必需的。[/红色]"
+msgid ""
+"[red]Error: Catalog name provided as both positional argument and --catalog "
+"option. Please use only one.[/red]"
+msgstr ""
+"[red]错误：星表名称同时作为位置参数和 --catalog 选项提供。请只使用其中一个。"
+"[/red]"
 
-#: astroquery_cli/modules/irsa_cli.py:131
-#, python-brace-format
+msgid ""
+"[red]Error: Catalog name '{target_input}' provided as first argument, but a "
+"radius '{radius}' was also provided. Catalog queries do not use radius. "
+"Please use 'irsa gator <catalog_name>' without a radius, or provide "
+"coordinates and a radius.[/red]"
+msgstr ""
+"[red]错误：星表名称 '' 作为第一个参数提供，但同时提供了半径 ''。星表查询不使"
+"用半径。请使用不带半径的 'irsa gator <星表名称>'，或提供坐标和半径。[/red]"
+
 msgid "[cyan]Browsing IRSA catalog '{catalog}' (first {limit} rows)...[/cyan]"
-msgstr "[cyan]正在查询 VizieR （使用约束条件）在星表 {catalog_list} 中的数据...[/cyan]"
+msgstr ""
+"[cyan]正在查询 VizieR （使用约束条件）在星表 {catalog_list} 中的数据...[/"
+"cyan]"
 
-#: astroquery_cli/modules/irsa_cli.py:169
-#, python-brace-format
 msgid "[green]Found {count} match(es) in '{catalog}'.[/green]"
 msgstr "[green]在 '{catalog}' 中找到 {count} 条匹配记录。[/green]"
 
-#: astroquery_cli/modules/irsa_cli.py:170
-#, python-brace-format
 msgid "IRSA Gator: {catalog}"
 msgstr "IRSA Gator：{catalog}"
 
-#: astroquery_cli/modules/irsa_cli.py:172
-#, python-brace-format
 msgid "IRSA Gator {catalog} query"
 msgstr "IRSA Gator {catalog} 查询"
 
-#: astroquery_cli/modules/irsa_cli.py:174
-#, python-brace-format
 msgid ""
-"[yellow]No information found in '{catalog}' for the specified "
-"region.[/yellow]"
+"[yellow]No information found in '{catalog}' for the specified region.[/"
+"yellow]"
 msgstr "[yellow]在 '{catalog}' 中未找到指定区域的信息。[/yellow]"
 
-#: astroquery_cli/modules/irsa_cli.py:176
-#, python-brace-format
 msgid "IRSA Gator query for catalog {catalog}"
 msgstr "IRSA Gator 对星表 {catalog} 的查询"
 
-#: astroquery_cli/modules/irsa_cli.py:184
-msgid "List available catalogs in IRSA Gator for a mission."
-msgstr "列出 IRSA Gator 中某个任务可用的星表。"
-
-#: astroquery_cli/modules/irsa_cli.py:186
-msgid "Filter catalogs by mission code (e.g., 'WISE', 'SPITZER')."
-msgstr "按任务代码筛选星表（例如，'WISE'，'SPITZER'）。"
-
-#: astroquery_cli/modules/irsa_cli.py:188
-#, python-brace-format
-msgid ""
-"[cyan]Fetching list of available IRSA Gator catalogs "
-"{mission_info}...[/cyan]"
-msgstr "[cyan]正在获取可用的 IRSA Gator 星表列表 {mission_info}...[/cyan]"
-
-#: astroquery_cli/modules/irsa_cli.py:188
-#, python-brace-format
-msgid "for mission {mission}"
-msgstr "（任务 {mission}）"
-
-#: astroquery_cli/modules/irsa_cli.py:190
-msgid ""
-"[yellow]Listing all Gator catalogs programmatically is complex via "
-"astroquery.irsa directly.[/yellow]"
-msgstr "[yellow]通过 astroquery.irsa 直接以编程方式列出所有 Gator 星表较为复杂。[/yellow]"
-
-#: astroquery_cli/modules/irsa_cli.py:191
-msgid ""
-"[yellow]Please refer to the IRSA Gator website for a comprehensive list "
-"of catalogs.[/yellow]"
-msgstr "[yellow]请参阅 IRSA Gator 网站获取完整的星表列表。[/yellow]"
-
-#: astroquery_cli/modules/irsa_cli.py:192
-msgid ""
-"[yellow]Common catalog examples: 'allwise_p3as_psd', 'ptf_lightcurves', "
-"'fp_psc' (2MASS).[/yellow]"
-msgstr ""
-"[yellow]常用星表示例：'allwise_p3as_psd'，'ptf_lightcurves'，'fp_psc' "
-"(2MASS)。[/yellow]"
-
-#: astroquery_cli/modules/irsa_cli.py:194
-msgid "IRSA list_gator_catalogs"
-msgstr "IRSA list_gator_catalogs"
-
-#: astroquery_cli/modules/irsa_cli.py:197
 msgid "Perform a cone search across multiple IRSA collections."
 msgstr "在多个 IRSA 数据集中执行锥形搜索。"
 
-#: astroquery_cli/modules/irsa_cli.py:200
 msgid "Coordinates (e.g., '10.68h +41.26d', 'M31')."
 msgstr "坐标（例如，'10.68h +41.26d'，'M31'）。"
 
-#: astroquery_cli/modules/irsa_cli.py:201
 msgid "Search radius (e.g., '10arcsec', '0.5deg')."
 msgstr "搜索半径（例如，'10arcsec'，'0.5deg'）。"
 
-#: astroquery_cli/modules/irsa_cli.py:202
 msgid ""
-"Specify a collection (e.g., 'allwise', '2MASS'). Leave blank for a "
-"general search."
+"Specify a collection (e.g., 'allwise', '2MASS'). Leave blank for a general "
+"search."
 msgstr "指定一个数据集（例如，'allwise'，'2MASS'）。留空则进行常规搜索。"
 
-#: astroquery_cli/modules/irsa_cli.py:210
-#, python-brace-format
 msgid ""
-"[cyan]Performing IRSA cone search for region: '{coordinates}' with radius"
-" '{radius}'...[/cyan]"
-msgstr "[cyan]正在对区域 '{coordinates}' （半径 '{radius}'）执行 IRSA 锥形搜索...[/cyan]"
+"[cyan]Performing IRSA cone search for region: '{coordinates}' with radius "
+"'{radius}'...[/cyan]"
+msgstr ""
+"[cyan]正在对区域 '{coordinates}' （半径 '{radius}'）执行 IRSA 锥形搜索...[/"
+"cyan]"
 
-#: astroquery_cli/modules/irsa_cli.py:240
-#, python-brace-format
 msgid "[green]Found {count} match(es) in IRSA holdings.[/green]"
 msgstr "[green]在 IRSA 数据中找到 {count} 条匹配记录。[/green]"
 
-#: astroquery_cli/modules/irsa_cli.py:241
 msgid "IRSA Cone Search Results"
 msgstr "IRSA 锥形搜索结果"
 
-#: astroquery_cli/modules/irsa_cli.py:243
 msgid "IRSA cone search query"
 msgstr "IRSA 锥形搜索查询"
 
-#: astroquery_cli/modules/irsa_cli.py:245
-#, python-brace-format
 msgid ""
 "[yellow]No information found in IRSA for the specified "
 "region{collection_info}.[/yellow]"
 msgstr "[yellow]在 IRSA 中未找到指定区域{collection_info}的信息。[/yellow]"
 
-#: astroquery_cli/modules/irsa_cli.py:245
-#, python-brace-format
 msgid " in collection {collection}"
 msgstr "（数据集 {collection}）"
 
-#: astroquery_cli/modules/irsa_cli.py:248
 msgid "IRSA query_region"
 msgstr "IRSA query_region"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:22
 msgid "Query IRSA dust maps."
 msgstr "查询 IRSA 尘埃地图。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:89
 msgid "Get E(B-V) dust extinction values for one or more coordinates."
 msgstr "获取一个或多个坐标的 E(B-V) 尘埃消光值。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:91
 msgid ""
 "Object name(s) or coordinate(s) (e.g., 'M31', '10.68h +41.26d', '160.32 "
 "41.45'). Can be specified multiple times."
-msgstr "天体名称或坐标（例如，'M31'，'10.68h +41.26d'，'160.32 41.45'）。可多次指定。"
+msgstr ""
+"天体名称或坐标（例如，'M31'，'10.68h +41.26d'，'160.32 41.45'）。可多次指定。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:92
 msgid ""
-"Dust map to query ('SFD', 'Planck', 'IRIS'). SFD is Schlegel, Finkbeiner "
-"& Davis (1998)."
-msgstr "要查询的尘埃图（'SFD'，'Planck'，'IRIS'）。SFD 指 Schlegel, Finkbeiner & Davis (1998)。"
+"Dust map to query ('SFD', 'Planck', 'IRIS'). SFD is Schlegel, Finkbeiner & "
+"Davis (1998)."
+msgstr ""
+"要查询的尘埃图（'SFD'，'Planck'，'IRIS'）。SFD 指 Schlegel, Finkbeiner & "
+"Davis (1998)。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:100
-#, python-brace-format
 msgid ""
-"[cyan]Querying IRSA Dust ({map_name}) for extinction at: "
-"{targets_str}...[/cyan]"
-msgstr "[cyan]正在查询 IRSA Dust ({map_name}) 在 {targets_str} 处的消光值...[/cyan]"
+"[cyan]Querying IRSA Dust ({map_name}) for extinction at: {targets_str}...[/"
+"cyan]"
+msgstr ""
+"[cyan]正在查询 IRSA Dust ({map_name}) 在 {targets_str} 处的消光值...[/cyan]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:110
 msgid "[red]No valid coordinates parsed.[/red]"
 msgstr "[red]未解析到有效坐标。[/red]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:118
 msgid "[dim]Fetching extinction for each target individually...[/dim]"
 msgstr "[dim]正在单独获取每个目标的消光值...[/dim]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:120
-#, python-brace-format
 msgid "[dim]  Processing target {current_num}/{total_num}: {target_name}[/dim]"
 msgstr "[dim]  正在处理目标 {current_num}/{total_num}：{target_name}[/dim]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:128
-#, python-brace-format
 msgid "[yellow]Could not get extinction for '{target_name}': {error}[/yellow]"
 msgstr "[yellow]无法获取 '{target_name}' 的消光值：{error}[/yellow]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:131
 msgid "[yellow]No extinction data retrieved for any target.[/yellow]"
 msgstr "[yellow]未能检索到任何目标的消光数据。[/yellow]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:138
-#, python-brace-format
 msgid "IRSA Dust Extinction ({map_name})"
 msgstr "IRSA 尘埃消光 ({map_name})"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:140
-#, python-brace-format
 msgid "IRSA Dust {map_name} extinction"
 msgstr "IRSA Dust {map_name} 消光"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:142
-#, python-brace-format
 msgid "[yellow]No extinction data returned by IRSA Dust ({map_name}).[/yellow]"
 msgstr "[yellow]IRSA Dust ({map_name}) 未返回消光数据。[/yellow]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:145
-#, python-brace-format
 msgid "IRSA Dust ({map_name}) get_extinction_table"
 msgstr "IRSA Dust ({map_name}) get_extinction_table"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:153
 msgid "Get a FITS image of a dust map for a region."
 msgstr "获取某个区域尘埃图的 FITS 图像。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:156
 msgid "Radius of the image (e.g., '30arcmin', '1.5deg')."
 msgstr "图像半径（例如，'30arcmin'，'1.5deg'）。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:157
 msgid "Dust map to query ('SFD', 'Planck', 'IRIS')."
 msgstr "要查询的尘埃图（'SFD'，'Planck'，'IRIS'）。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:158
 msgid "Directory to save the FITS image(s)."
 msgstr "保存 FITS 图像的目录。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:159
 msgid "Prefix for the output FITS filename(s)."
 msgstr "输出 FITS 文件名的前缀。"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:165
-#, python-brace-format
 msgid ""
-"[cyan]Querying IRSA Dust ({map_name}) for map around '{target}' with "
-"radius {radius}...[/cyan]"
+"[cyan]Querying IRSA Dust ({map_name}) for map around '{target}' with radius "
+"{radius}...[/cyan]"
 msgstr ""
-"[cyan]正在查询 IRSA Dust ({map_name}) 中 '{target}' 周围（半径 "
-"{radius}）的星图...[/cyan]"
+"[cyan]正在查询 IRSA Dust ({map_name}) 中 '{target}' 周围（半径 {radius}）的星"
+"图...[/cyan]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:171
-#, python-brace-format
 msgid "[bold red]Error parsing input: {error}[/bold red]"
 msgstr "[bold red]解析输入时出错：{error}[/bold red]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:176
-#, python-brace-format
 msgid "[dim]Created output directory: {output_dir}[/dim]"
 msgstr "[dim]已创建输出目录：{output_dir}[/dim]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:182
-#, python-brace-format
 msgid ""
-"[yellow]No map images returned by IRSA Dust ({map_name}) for this "
-"region.[/yellow]"
+"[yellow]No map images returned by IRSA Dust ({map_name}) for this region.[/"
+"yellow]"
 msgstr "[yellow]IRSA Dust ({map_name}) 未返回该区域的星图图像。[/yellow]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:194
-#, python-brace-format
 msgid "[green]Saved dust map: {filename}[/green]"
 msgstr "[green]已保存尘埃图：{filename}[/green]"
 
-#: astroquery_cli/modules/irsa_dust_cli.py:198
-#, python-brace-format
 msgid "IRSA Dust ({map_name}) get_images"
 msgstr "IRSA Dust ({map_name}) get_images"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:21
 msgid "Query JPL Horizons ephemeris service."
 msgstr "查询 JPL Horizons星历表服务。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:126
 msgid "Query ephemerides, orbital elements, or vectors for a target object."
 msgstr "查询目标天体的星历、轨道根数或矢量数据。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:129
 msgid ""
 "Object ID (e.g., 'Mars', 'Ceres', '2000NM', '@10'). Use '@' prefix for "
 "spacecraft ID."
-msgstr "天体编号（例如，'火星' (Mars)，'谷神星' (Ceres)，'2000NM'，'@10'）。航天器编号使用 '@' 前缀。"
-
-#: astroquery_cli/modules/jplhorizons_cli.py:133
-#, python-brace-format
-msgid ""
-"Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 "
-"12:00'), a list of times separated by commas (e.g., "
-"'2023-01-01,2023-01-02'), or a start,stop,step dict-like string (e.g., "
-"\"{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}\"). If None, "
-"uses current time for single epoch queries like elements/vectors."
 msgstr ""
-"查询的历元。可以是单个 ISO 时间（例如，'2023-01-01 "
-"12:00'），一个用逗号分隔的时间列表（例如，'2023-01-01,2023-01-02'），或一个类似字典的 start,stop,step"
-" 字符串（例如，\"{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}\"）。如果为"
-" None，则对于像 elements/vectors 这样的单历元查询，使用当前时间。"
+"天体编号（例如，'火星' (Mars)，'谷神星' (Ceres)，'2000NM'，'@10'）。航天器编"
+"号使用 '@' 前缀。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:139
 msgid ""
-"Start time for ephemeris range (YYYY-MM-DD [HH:MM]). Overrides 'epochs' "
-"if 'end_time' is also set."
-msgstr "星历范围的开始时间 (YYYY-MM-DD [HH:MM])。如果同时设置了 'end_time'，则会覆盖 'epochs'。"
+"Epochs for the query. Can be a single ISO time (e.g., '2023-01-01 12:00'), a "
+"list of times separated by commas (e.g., '2023-01-01,2023-01-02'), or a "
+"start,stop,step dict-like string (e.g., \"{'start':'2023-01-01', "
+"'stop':'2023-01-05', 'step':'1d'}\"). If None, uses current time for single "
+"epoch queries like elements/vectors."
+msgstr ""
+"查询的历元。可以是单个 ISO 时间（例如，'2023-01-01 12:00'），一个用逗号分隔的"
+"时间列表（例如，'2023-01-01,2023-01-02'），或一个类似字典的 start,stop,step "
+"字符串（例如，\"{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}"
+"\"）。如果为 None，则对于像 elements/vectors 这样的单历元查询，使用当前时间。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:140
+msgid ""
+"Start time for ephemeris range (YYYY-MM-DD [HH:MM]). Overrides 'epochs' if "
+"'end_time' is also set."
+msgstr ""
+"星历范围的开始时间 (YYYY-MM-DD [HH:MM])。如果同时设置了 'end_time'，则会覆盖 "
+"'epochs'。"
+
 msgid "End time for ephemeris range (YYYY-MM-DD [HH:MM])."
 msgstr "星历范围的结束时间 (YYYY-MM-DD [HH:MM])。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:141
 msgid ""
 "Time step for ephemeris range (e.g., '1d', '1h', '10m'). Used if "
 "'start_time' and 'end_time' are set."
-msgstr "星历范围的时间步长（例如，'1d'，'1h'，'10m'）。当设置了 'start_time' 和 'end_time' 时使用。"
+msgstr ""
+"星历范围的时间步长（例如，'1d'，'1h'，'10m'）。当设置了 'start_time' 和 "
+"'end_time' 时使用。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:144
 msgid ""
-"Observatory code (e.g., '500' for Geocenter, 'geo' is alias for '500'). "
-"Try common codes or find specific ones."
-msgstr "天文台代码（例如，'500' 代表地心，'geo' 是 '500' 的别名）。尝试常用代码或查找特定代码。"
+"Observatory code (e.g., '500' for Geocenter, 'geo' is alias for '500'). Try "
+"common codes or find specific ones."
+msgstr ""
+"天文台代码（例如，'500' 代表地心，'geo' 是 '500' 的别名）。尝试常用代码或查找"
+"特定代码。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:150
 msgid "Type of the target identifier. If None, Horizons will try to guess."
 msgstr "目标标识符的类型。如果为 None，Horizons 将尝试猜测。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:155
 msgid "Type of ephemeris to retrieve."
 msgstr "要检索的星历类型。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:159
 msgid ""
-"Comma-separated string of quantity codes (e.g., '1,2,19,20'). Relevant "
-"for OBSERVER and VECTORS. See JPL Horizons docs for codes. Uses sensible "
+"Comma-separated string of quantity codes (e.g., '1,2,19,20'). Relevant for "
+"OBSERVER and VECTORS. See JPL Horizons docs for codes. Uses sensible "
 "defaults if None."
 msgstr ""
-"逗号分隔的物理量代码字符串（例如，'1,2,19,20'）。与 OBSERVER 和 VECTORS 类型相关。有关代码，请参阅 JPL "
-"Horizons 文档。如果为 None，则使用合理的默认值。"
+"逗号分隔的物理量代码字符串（例如，'1,2,19,20'）。与 OBSERVER 和 VECTORS 类型"
+"相关。有关代码，请参阅 JPL Horizons 文档。如果为 None，则使用合理的默认值。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:162
 msgid "Show all columns in the output table, even if wide."
 msgstr "在输出表中显示所有列，即使表格很宽。"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:165
-#, python-brace-format
 msgid "JPL Horizons server to use. Choices: {server_list}"
 msgstr "要使用的 JPL Horizons 服务器。选项：{server_list}"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:173
-#, python-brace-format
 msgid "[cyan]Querying JPL Horizons for '{target}'...[/cyan]"
 msgstr "[cyan]正在查询 JPL Horizons 中关于 '{target}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:177
-#, python-brace-format
 msgid "[dim]Using JPL server: {server}[/dim]"
 msgstr "[dim]正在使用 JPL 服务器：{server}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:183
-#, python-brace-format
 msgid "[dim]Using epoch range: {start} to {end} with step {step}[/dim]"
 msgstr "[dim]使用历元范围：从 {start} 到 {end}，步长 {step}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:189
-#, python-brace-format
 msgid "[dim]Using epoch dict: {epoch_dict}[/dim]"
 msgstr "[dim]使用历元字典：{epoch_dict}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:191
-#, python-brace-format
 msgid "[bold red]Error parsing --epochs as dict: {error}[/bold red]"
 msgstr "[bold red]将 --epochs 解析为字典时出错：{error}[/bold red]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:192
 msgid ""
 "[yellow]Example: --epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', "
 "'step':'1d'}}\"[/yellow]"
@@ -1017,300 +718,190 @@ msgstr ""
 "[yellow]示例：--epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', "
 "'step':'1d'}}\"[/yellow]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:196
-#, python-brace-format
 msgid "[dim]Using epoch list: {epoch_list}[/dim]"
 msgstr "[dim]使用历元列表：{epoch_list}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:199
-#, python-brace-format
 msgid "[dim]Using single epoch: {epoch}[/dim]"
 msgstr "[dim]使用单个历元：{epoch}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:202
-#, python-brace-format
-msgid "[dim]No epoch specified for {ephem_type}, using current JD: {epoch}[/dim]"
+msgid ""
+"[dim]No epoch specified for {ephem_type}, using current JD: {epoch}[/dim]"
 msgstr "[dim]未指定 {ephem_type} 的历元，使用当前时间：{epoch}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:209
-#, python-brace-format
 msgid ""
-"[yellow]No epoch specified for OBSERVER, using today as default: "
-"{epoch_dict}[/yellow]"
+"[yellow]No epoch specified for OBSERVER, using today as default: {epoch_dict}"
+"[/yellow]"
 msgstr "[yellow]未指定观察者历元，默认为今天：{epoch_dict}[/yellow]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:226
-#, python-brace-format
 msgid "{ephem_type} for {target}"
 msgstr "{target} 的 {ephem_type}"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:231
-#, python-brace-format
 msgid "[dim]Requesting quantities: {quantities}[/dim]"
 msgstr "[dim]请求的物理量：{quantities}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:236
-#, python-brace-format
 msgid "[dim]Requesting quantities for vectors: {quantities}[/dim]"
 msgstr "[dim]请求矢量的物理量：{quantities}[/dim]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:260
-#, python-brace-format
 msgid ""
-"[yellow]No results found for '{target}' with the specified "
-"parameters.[/yellow]"
+"[yellow]No results found for '{target}' with the specified parameters.[/"
+"yellow]"
 msgstr "[yellow]未找到给定文献编码 (bibcode) 对应的天体。[/yellow]"
 
-#: astroquery_cli/modules/jplhorizons_cli.py:263
 msgid "JPL Horizons object"
 msgstr "JPL Horizons天体"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:24
 msgid "Query JPL Small-Body Database (SBDB)."
 msgstr "查询 JPL 小天体数据库 (SBDB)。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:103
 msgid "Query JPL SBDB for a small body."
 msgstr "查询JPL SBDB以获取小天体信息。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:106
 msgid "Target small body (e.g., 'Ceres', '1P', '2023 BU')."
 msgstr "目标小天体（例如，'谷神星' (Ceres)，'1P' (哈雷彗星)，'2023 BU'）。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:107
 msgid ""
-"Type of target identifier ('name', 'des', 'moid', 'spk') (default: let "
-"SBDB auto-detect)."
-msgstr "目标标识符类型（'name'、'des'、'moid'、'spk'）（默认：让SBDB自动检测）。"
+"Type of target identifier ('name', 'des', 'moid', 'spk') (default: let SBDB "
+"auto-detect)."
+msgstr ""
+"目标标识符类型（'name'、'des'、'moid'、'spk'）（默认：让SBDB自动检测）。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:108
 msgid "Include physical parameters."
 msgstr "包括物理参数。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:109
 msgid "Include orbital elements."
 msgstr "包括轨道根数。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:110
 msgid "Include close-approach data."
 msgstr "包括近距离飞越数据。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:111
 msgid "Include radar observation data."
 msgstr "包括雷达观测数据。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:114
 msgid "Maximum number of rows to display for tables. Use -1 for all rows."
 msgstr "表格最大显示行数。使用 -1 表示所有行。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:115
 msgid "Show all columns in output tables."
 msgstr "在输出表格中显示所有列。"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:121
-#, python-brace-format
 msgid "[cyan]Querying JPL SBDB for target: '{target}'...[/cyan]"
 msgstr "[cyan]正在查询 JPL SBDB 中关于目标 '{target}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:133
-#, python-brace-format
 msgid "[green]Data found for '{target}'.[/green]"
 msgstr "[green]找到关于 '{target}' 的数据。[/green]"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:135
-#, python-brace-format
 msgid "JPL SBDB Data for {target}"
 msgstr "{target} 的 JPL SBDB 数据"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:137
-#, python-brace-format
 msgid "JPL SBDB query for {target}"
 msgstr "对 {target} 的 JPL SBDB 查询"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:141
-#, python-brace-format
 msgid "[bold magenta]SBDB Data for: {fullname}[/bold magenta]"
 msgstr "[bold magenta]SBDB 数据：{fullname}[/bold magenta]"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:145
-#, python-brace-format
-msgid ""
-"\n"
-"[bold underline]Table: {key}[/bold underline]"
-msgstr ""
-"\n"
-"[bold underline]表格：{key}[/bold underline]"
-
-#: astroquery_cli/modules/jplsbdb_cli.py:146
-#, python-brace-format
-msgid "{key} for {target}"
-msgstr "{target} 的 {key}"
-
-#: astroquery_cli/modules/jplsbdb_cli.py:148
-#, python-brace-format
-msgid "JPL SBDB {key} for {target}"
-msgstr "{target} 的 JPL SBDB {key}"
-
-#: astroquery_cli/modules/jplsbdb_cli.py:150
-#, python-brace-format
-msgid ""
-"\n"
-"[bold]{key}:[/bold]"
-msgstr ""
-"\n"
-"[bold]{key}：[/bold]"
-
-#: astroquery_cli/modules/jplsbdb_cli.py:165
-#, python-brace-format
-msgid "[bold]{key}:[/bold] {value}"
-msgstr "[bold]{key}：[/bold] {value}"
-
-#: astroquery_cli/modules/jplsbdb_cli.py:182
-#, python-brace-format
 msgid "[green]Primary data saved to {file_path}[/green]"
 msgstr "[green]主要数据已保存至 {file_path}[/green]"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:184
-#, python-brace-format
 msgid "[red]Could not save non-table data as JSON: {error}[/red]"
 msgstr "[red]无法将非表格数据保存为 JSON：{error}[/red]"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:189
-#, python-brace-format
 msgid "[yellow]No information found for target '{target}'.[/yellow]"
 msgstr "[yellow]未找到关于目标 '{target}' 的信息。[/yellow]"
 
-#: astroquery_cli/modules/jplsbdb_cli.py:192
 msgid "JPL SBDB object"
 msgstr "JPL SBDB天体"
 
-#: astroquery_cli/modules/mast_cli.py:26
 msgid "Query the Mikulski Archive for Space Telescopes (MAST)."
 msgstr "查询 Mikulski 空间望远镜档案库 (MAST)。"
 
-#: astroquery_cli/modules/mast_cli.py:104
 msgid "Query MAST for observations of an object."
 msgstr "查询 MAST 中某个天体的观测数据。"
 
-#: astroquery_cli/modules/mast_cli.py:107
 msgid "Name of the astronomical object."
 msgstr "天体名称。"
 
-#: astroquery_cli/modules/mast_cli.py:108
 msgid "Search radius around the object."
 msgstr "围绕天体的搜索半径。"
 
-#: astroquery_cli/modules/mast_cli.py:109
 msgid "Observation collection (e.g., 'HST', 'TESS')."
 msgstr "观测数据集（例如，'HST'，'TESS'）。"
 
-#: astroquery_cli/modules/mast_cli.py:110
 msgid "Instrument name (e.g., 'WFC3', 'ACS')."
 msgstr "仪器名称（例如，'WFC3'，'ACS'）。"
 
-#: astroquery_cli/modules/mast_cli.py:120
-#, python-brace-format
 msgid "[cyan]Querying MAST for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 MAST 中关于天体 '{object_name}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/mast_cli.py:137
-#, python-brace-format
 msgid "[green]Found {count} observation(s) for '{object_name}'.[/green]"
 msgstr "[green]找到 {count} 条关于 '{object_name}' 的观测记录。[/green]"
 
-#: astroquery_cli/modules/mast_cli.py:138
-#, python-brace-format
 msgid "MAST Observations for {object_name}"
 msgstr "{object_name} 的 MAST 观测数据"
 
-#: astroquery_cli/modules/mast_cli.py:140
 msgid "MAST object query"
 msgstr "MAST 天体查询"
 
-#: astroquery_cli/modules/mast_cli.py:142
-#, python-brace-format
 msgid ""
 "[yellow]No observations found for object '{object_name}' with specified "
 "criteria.[/yellow]"
 msgstr "[yellow]未找到符合指定条件的天体 '{object_name}' 的观测数据。[/yellow]"
 
-#: astroquery_cli/modules/mast_cli.py:152
 msgid "Query MAST for observations in a sky region."
 msgstr "查询 MAST 中某个天区内的观测数据。"
 
-#: astroquery_cli/modules/mast_cli.py:155 astroquery_cli/modules/ned_cli.py:129
 msgid "Coordinates (e.g., '10.68h +41.26d', 'M101')."
 msgstr "坐标（例如，'10.68h +41.26d'，'M101'）。"
 
-#: astroquery_cli/modules/mast_cli.py:157
 msgid "Observation collection."
 msgstr "观测数据集。"
 
-#: astroquery_cli/modules/mast_cli.py:158
 msgid "Instrument name."
 msgstr "仪器名称。"
 
-#: astroquery_cli/modules/mast_cli.py:168
-#, python-brace-format
 msgid ""
-"[cyan]Querying MAST for region: '{coordinates}' with radius "
-"'{radius}'...[/cyan]"
-msgstr "[cyan]正在查询 MAST 中区域 '{coordinates}' （半径 '{radius}'）的数据...[/cyan]"
+"[cyan]Querying MAST for region: '{coordinates}' with radius '{radius}'...[/"
+"cyan]"
+msgstr ""
+"[cyan]正在查询 MAST 中区域 '{coordinates}' （半径 '{radius}'）的数据...[/"
+"cyan]"
 
-#: astroquery_cli/modules/mast_cli.py:185
-#, python-brace-format
 msgid "[green]Found {count} observation(s) in the region.[/green]"
 msgstr "[green]在该区域找到 {count} 条观测记录。[/green]"
 
-#: astroquery_cli/modules/mast_cli.py:186
 msgid "MAST Observations for Region"
 msgstr "区域的 MAST 观测数据"
 
-#: astroquery_cli/modules/mast_cli.py:188
 msgid "MAST region query"
 msgstr "MAST 区域查询"
 
-#: astroquery_cli/modules/mast_cli.py:190
 msgid ""
-"[yellow]No observations found for the specified region with given "
-"criteria.[/yellow]"
+"[yellow]No observations found for the specified region with given criteria.[/"
+"yellow]"
 msgstr "[yellow]未找到符合指定条件的该区域的观测数据。[/yellow]"
 
-#: astroquery_cli/modules/mast_cli.py:192
 msgid "MAST region"
 msgstr "MAST区域"
 
-#: astroquery_cli/modules/mast_cli.py:200
 msgid "Get data product URLs for given observation IDs."
 msgstr "获取给定观测ID的数据产品URL。"
 
-#: astroquery_cli/modules/mast_cli.py:202
 msgid "List of observation IDs."
 msgstr "观测ID列表。"
 
-#: astroquery_cli/modules/mast_cli.py:203
 msgid "Product type(s) (e.g., 'SCIENCE', 'PREVIEW')."
 msgstr "产品类型（例如，'SCIENCE'，'PREVIEW'）。"
 
-#: astroquery_cli/modules/mast_cli.py:213
-#, python-brace-format
 msgid "[cyan]Fetching product list for obs ID(s): {obs_id_list}...[/cyan]"
 msgstr "[cyan]正在获取观测ID {obs_id_list} 的产品列表...[/cyan]"
 
-#: astroquery_cli/modules/mast_cli.py:220
-#, python-brace-format
 msgid "[green]Found {count} data products.[/green]"
 msgstr "[green]找到 {count} 个数据产品。[/green]"
 
-#: astroquery_cli/modules/mast_cli.py:221
 msgid "MAST Data Products"
 msgstr "MAST 数据产品"
 
-#: astroquery_cli/modules/mast_cli.py:223
 msgid "MAST products list"
 msgstr "MAST 产品列表"
 
-#: astroquery_cli/modules/mast_cli.py:224
 msgid ""
 "[info]Use 'aqc mast download-products <obs_id> ...' or "
 "'astroquery.mast.Observations.download_products()' to download.[/info]"
@@ -1318,25 +909,20 @@ msgstr ""
 "[info]使用 'aqc mast download-products <obs_id> ...' 或 "
 "'astroquery.mast.Observations.download_products()' 下载。[/info]"
 
-#: astroquery_cli/modules/mast_cli.py:226
 msgid ""
-"[yellow]No data products found for the given observation ID(s) and "
-"criteria.[/yellow]"
+"[yellow]No data products found for the given observation ID(s) and criteria."
+"[/yellow]"
 msgstr "[yellow]未找到符合给定观测ID和条件的数据产品。[/yellow]"
 
-#: astroquery_cli/modules/mast_cli.py:228
 msgid "MAST get_product_urls"
 msgstr "MAST get_product_urls"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:25
 msgid "Query the NASA Astrophysics Data System (ADS)."
 msgstr "查询 NASA 天体物理数据系统 (ADS)。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:91
 msgid "Perform a query on NASA ADS."
 msgstr "在 NASA ADS 上执行查询。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:97
 msgid ""
 "ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', "
 "'bibcode:1998AJ....116.1009R')."
@@ -1344,895 +930,755 @@ msgstr ""
 "ADS 查询字符串（例如，'author:\"Adam G. Riess\" "
 "year:1998'，'bibcode:1998AJ....116.1009R'）。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:102
 msgid "Show latest published papers (sorted by date, most recent first)."
 msgstr "显示最新发表的论文（按日期排序，最新在前）。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:107
 msgid "Show highly cited review articles (sorted by citation count)."
 msgstr "显示高被引的综述文章（按引用次数排序）。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:112
 msgid "Fields to return."
 msgstr "要返回的字段。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:116
 msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
-msgstr "结果排序依据（例如，'date'（日期），'citation_count'（引用次数），'score'（得分））。"
+msgstr ""
+"结果排序依据（例如，'date'（日期），'citation_count'（引用次数），'score'（得"
+"分））。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:119
 msgid "Maximum number of pages to retrieve."
 msgstr "要检索的最大页数。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:122
 msgid "Number of results per page (max 200 for ADS API)."
 msgstr "每页结果数（ADS API 最大为200）。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:144
 msgid ""
-"[red]Cannot specify both --latest and --review. Please choose only "
-"one.[/red]"
-msgstr "[red]你不能同时指定 -w/--wavelength-range 和 -f/--frequency-range。[/red]"
+"[red]Cannot specify both --latest and --review. Please choose only one.[/red]"
+msgstr ""
+"[red]你不能同时指定 -w/--wavelength-range 和 -f/--frequency-range。[/red]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:151
 msgid "[red]Please specify a query string, --latest, or --review.[/red]"
 msgstr "[red]请指定查询字符串、--latest或--review。[/red]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:161
 msgid "Querying NASA ADS for latest papers"
 msgstr "正在查询NASA ADS获取最新论文。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:174
-msgid "Querying NASA ADS for highly cited review articles (using property:review)"
+msgid ""
+"Querying NASA ADS for highly cited review articles (using property:review)"
 msgstr "正在查询NASA ADS获取高引用评论文章（使用属性：review）。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:178
-#, python-brace-format
 msgid "Querying NASA ADS with: {query_string}"
 msgstr "正在使用以下内容查询NASA ADS："
 
-#: astroquery_cli/modules/nasa_ads_cli.py:183
 msgid ""
-"[red]Error: No valid query could be formed. Please check your "
-"inputs.[/red]"
+"[red]Error: No valid query could be formed. Please check your inputs.[/red]"
 msgstr "[red]错误：无法形成有效的查询。请检查您的输入。[/red]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:191
 msgid ""
-"[red]Error: No NASA ADS API token found! Please get yours from: "
-"https://ui.adsabs.harvard.edu/user/settings/token and set it in the "
-"ADS_DEV_KEY environment variable or in your ~/.aqc/config.ini file.[/red]"
+"[red]Error: No NASA ADS API token found! Please get yours from: https://"
+"ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY "
+"environment variable or in your ~/.aqc/config.ini file.[/red]"
 msgstr ""
-"[red]错误：未找到NASA ADS "
-"API令牌！请从以下网址获取您的令牌：https://ui.adsabs.harvard.edu/user/settings/token，并将其设置在ADS_DEV_KEY环境变量中或您的~/.aqc/config.ini文件中。[/red]"
+"[red]错误：未找到NASA ADS API令牌！请从以下网址获取您的令牌：https://"
+"ui.adsabs.harvard.edu/user/settings/token，并将其设置在ADS_DEV_KEY环境变量中"
+"或您的~/.aqc/config.ini文件中。[/red]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:212
-#: astroquery_cli/modules/nasa_ads_cli.py:247
 msgid "[yellow]No results found for your ADS query.[/yellow]"
 msgstr "[yellow]未找到您的 ADS 查询结果。[/yellow]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:237
 msgid ""
-"[yellow]None of the requested fields were found in the ADS query "
-"results.[/yellow]"
+"[yellow]None of the requested fields were found in the ADS query results.[/"
+"yellow]"
 msgstr "[yellow]未找到您的 ADS 查询结果。[/yellow]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:242
-#, python-brace-format
 msgid "[green]Found {count} result(s) from ADS.[/green]"
 msgstr "[green]从 ADS 找到 {count} 条结果。[/green]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:243
 msgid "ADS Query Results"
 msgstr "ADS 查询结果"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:245
-#: astroquery_cli/modules/nasa_ads_cli.py:250
 msgid "NASA ADS query"
 msgstr "NASA ADS 查询"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:253
 msgid "Get BibTeX for a NASA ADS bibcode."
 msgstr "获取NASA ADS文献代码的BibTeX。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:256
 msgid "List of ADS bibcodes."
 msgstr "ADS 文献编码 (bibcode) 列表。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:257
 msgid "File to save BibTeX entries (e.g., refs.bib)."
 msgstr "保存 BibTeX 条目的文件（例如，refs.bib）。"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:262
-#, python-brace-format
 msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
 msgstr "[cyan]正在获取 {bibcode_list} 的 BibTeX...[/cyan]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:264
 msgid ""
-"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be"
-" rate-limited.[/yellow]"
-msgstr "[yellow]警告：未设置 ADS_DEV_KEY 环境变量。查询可能会受到速率限制。[/yellow]"
+"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
+"rate-limited.[/yellow]"
+msgstr ""
+"[yellow]警告：未设置 ADS_DEV_KEY 环境变量。查询可能会受到速率限制。[/yellow]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:278
-#, python-brace-format
 msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
 msgstr "[yellow]无法检索 {bibcode} 的 BibTeX。[/yellow]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:282
 msgid "[green]BibTeX entries retrieved:[/green]"
 msgstr "[green]已检索到的 BibTeX 条目：[/green]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:288
-#, python-brace-format
 msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
 msgstr "[green]BibTeX 条目已保存至 '{file_path}'。[/green]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:290
 msgid "[yellow]No BibTeX entries could be retrieved.[/yellow]"
 msgstr "[yellow]未能检索到任何 BibTeX 条目。[/yellow]"
 
-#: astroquery_cli/modules/nasa_ads_cli.py:293
 msgid "NASA ADS get_bibtex"
 msgstr "NASA ADS get_bibtex"
 
-#: astroquery_cli/modules/ned_cli.py:26
 msgid "Query the NASA/IPAC Extragalactic Database (NED)."
 msgstr "查询 NASA/IPAC 河外星系数据库 (NED)。"
 
-#: astroquery_cli/modules/ned_cli.py:93
 msgid "Query NED for an object by name."
 msgstr "按名称查询 NED 中的天体。"
 
-#: astroquery_cli/modules/ned_cli.py:96 astroquery_cli/modules/ned_cli.py:171
 msgid "Name of the extragalactic object."
 msgstr "河外天体名称。"
 
-#: astroquery_cli/modules/ned_cli.py:99
 msgid "Maximum number of objects to display (usually 1 for direct name)."
 msgstr "最大显示天体数量（直接按名称搜索时通常为1）。"
 
-#: astroquery_cli/modules/ned_cli.py:106
-#, python-brace-format
 msgid "[cyan]Querying NED for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 NED 中关于天体 '{object_name}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/ned_cli.py:111
-#, python-brace-format
 msgid "[green]Found information for '{object_name}'.[/green]"
 msgstr "[green]找到关于 '{object_name}' 的信息。[/green]"
 
-#: astroquery_cli/modules/ned_cli.py:112
-#, python-brace-format
 msgid "NED Data for {object_name}"
 msgstr "{object_name} 的 NED 数据"
 
-#: astroquery_cli/modules/ned_cli.py:114
 msgid "NED object query"
 msgstr "NED 天体查询"
 
-#: astroquery_cli/modules/ned_cli.py:118
 msgid "NED object"
 msgstr "NED天体"
 
-#: astroquery_cli/modules/ned_cli.py:126
 msgid "Query NED for objects in a sky region."
 msgstr "查询 NED 中某个天区内的天体。"
 
-#: astroquery_cli/modules/ned_cli.py:131
 msgid "Equinox of coordinates (e.g., 'J2000', 'B1950')."
 msgstr "坐标的参考分点（例如，'J2000'，'B1950'）。"
 
-#: astroquery_cli/modules/ned_cli.py:141
-#, python-brace-format
 msgid ""
-"[cyan]Querying NED for region: '{coordinates}' with radius "
-"'{radius}'...[/cyan]"
-msgstr "[cyan]正在查询 NED 中区域 '{coordinates}' （半径 '{radius}'）的数据...[/cyan]"
+"[cyan]Querying NED for region: '{coordinates}' with radius '{radius}'...[/"
+"cyan]"
+msgstr ""
+"[cyan]正在查询 NED 中区域 '{coordinates}' （半径 '{radius}'）的数据...[/cyan]"
 
-#: astroquery_cli/modules/ned_cli.py:153
-#, python-brace-format
 msgid "[green]Found {count} object(s) in the region.[/green]"
 msgstr "[green]在该区域找到 {count} 个天体。[/green]"
 
-#: astroquery_cli/modules/ned_cli.py:154
 msgid "NED Objects in Region"
 msgstr "区域内的 NED 天体"
 
-#: astroquery_cli/modules/ned_cli.py:156
 msgid "NED region query"
 msgstr "NED 区域查询"
 
-#: astroquery_cli/modules/ned_cli.py:158
 msgid "[yellow]No objects found in the specified region.[/yellow]"
 msgstr "[yellow]未在指定区域找到天体。[/yellow]"
 
-#: astroquery_cli/modules/ned_cli.py:160
 msgid "NED region"
 msgstr "NED区域"
 
-#: astroquery_cli/modules/ned_cli.py:168
 msgid "Get image metadata for an object from NED."
 msgstr "从 NED 获取天体的图像元数据。"
 
-#: astroquery_cli/modules/ned_cli.py:174
 msgid "Maximum number of image entries to display. Use -1 for all rows."
 msgstr "最大显示图像条目数。使用 -1 表示所有行。"
 
-#: astroquery_cli/modules/ned_cli.py:181
-#, python-brace-format
-msgid "[cyan]Fetching image list from NED for object: '{object_name}'...[/cyan]"
+msgid ""
+"[cyan]Fetching image list from NED for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在从 NED 获取天体 '{object_name}' 的图像列表...[/cyan]"
 
-#: astroquery_cli/modules/ned_cli.py:185
-#, python-brace-format
 msgid "[green]Found {count} image entries for '{object_name}'.[/green]"
 msgstr "[green]找到 {count} 条关于 '{object_name}' 的图像条目。[/green]"
 
-#: astroquery_cli/modules/ned_cli.py:186
-#, python-brace-format
 msgid "NED Image List for {object_name}"
 msgstr "{object_name} 的 NED 图像列表"
 
-#: astroquery_cli/modules/ned_cli.py:188
 msgid "NED image list query"
 msgstr "NED 图像列表查询"
 
-#: astroquery_cli/modules/ned_cli.py:190
-#, python-brace-format
 msgid "[yellow]No image entries found for object '{object_name}'.[/yellow]"
 msgstr "[yellow]未找到关于天体 '{object_name}' 的图像条目。[/yellow]"
 
-#: astroquery_cli/modules/ned_cli.py:192
 msgid "NED images"
 msgstr "NED图像"
 
-#: astroquery_cli/modules/simbad_cli.py:18
 msgid "SIMBAD astronomical database."
 msgstr "查询 SIMBAD 天文数据库。"
 
-#: astroquery_cli/modules/simbad_cli.py:83
 msgid "Query basic data for an astronomical object."
 msgstr "查询某个天体的基本数据。"
 
-#: astroquery_cli/modules/simbad_cli.py:86
 msgid "Name of the object to query (e.g., 'M101', 'HD12345')."
 msgstr "要查询的天体名称（例如，'M101'，'HD12345'）。"
 
-#: astroquery_cli/modules/simbad_cli.py:87
 msgid "Enable wildcard searching for the object name."
 msgstr "对天体名称启用通配符搜索。"
 
-#: astroquery_cli/modules/simbad_cli.py:88
 msgid ""
 "Additional VOTable fields to retrieve (e.g., 'otype', 'sptype'). Can be "
 "specified multiple times."
-msgstr "要检索的额外 VOTable 字段（例如，'otype'（天体类型），'sptype'（光谱型））。可多次指定。"
+msgstr ""
+"要检索的额外 VOTable 字段（例如，'otype'（天体类型），'sptype'（光谱型））。"
+"可多次指定。"
 
-#: astroquery_cli/modules/simbad_cli.py:89
 msgid ""
 "Default VOTable fields to remove (e.g., 'coo_bibcode'). Can be specified "
 "multiple times."
 msgstr "要移除的默认 VOTable 字段（例如，'coo_bibcode'）。可多次指定。"
 
-#: astroquery_cli/modules/simbad_cli.py:90
 msgid "Automatically include a set of common useful fields."
 msgstr "自动包含一组常用的有用字段。"
 
-#: astroquery_cli/modules/simbad_cli.py:102
-#, python-brace-format
 msgid "[cyan]Querying SIMBAD for object: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 SIMBAD 中关于天体 '{object_name}' 的数据...[/cyan]"
 
-#: astroquery_cli/modules/simbad_cli.py:118
-#, python-brace-format
 msgid "SIMBAD Data for {object_name}"
 msgstr "{object_name} 的 SIMBAD 数据"
 
-#: astroquery_cli/modules/simbad_cli.py:120
 msgid "SIMBAD object query"
 msgstr "SIMBAD 天体查询"
 
-#: astroquery_cli/modules/simbad_cli.py:125
 msgid "SIMBAD object"
 msgstr "SIMBAD天体"
 
-#: astroquery_cli/modules/simbad_cli.py:129
 msgid "Query all identifiers for an astronomical object."
 msgstr "查询某个天体的所有标识符。"
 
-#: astroquery_cli/modules/simbad_cli.py:132
 msgid "Name of the object (e.g., 'Polaris')."
 msgstr "天体名称（例如，'北极星' (Polaris)）。"
 
-#: astroquery_cli/modules/simbad_cli.py:141
-#, python-brace-format
 msgid "[cyan]Querying SIMBAD for identifiers of: '{object_name}'...[/cyan]"
 msgstr "[cyan]正在查询 SIMBAD 中 '{object_name}' 的标识符...[/cyan]"
 
-#: astroquery_cli/modules/simbad_cli.py:146
-#, python-brace-format
 msgid "SIMBAD Identifiers for {object_name}"
 msgstr "{object_name} 的 SIMBAD 标识符"
 
-#: astroquery_cli/modules/simbad_cli.py:148
 msgid "SIMBAD ID query"
 msgstr "SIMBAD ID 查询"
 
-#: astroquery_cli/modules/simbad_cli.py:150
-#, python-brace-format
 msgid "[yellow]No identifiers found for object '{object_name}'.[/yellow]"
 msgstr "[yellow]未找到天体 '{object_name}' 的标识符。[/yellow]"
 
-#: astroquery_cli/modules/simbad_cli.py:152
 msgid "SIMBAD ids"
 msgstr "SIMBAD标识符"
 
-#: astroquery_cli/modules/simbad_cli.py:156
 msgid "Query objects associated with a bibcode or bibcode list."
 msgstr "查询与某个文献编码 (bibcode) 或文献编码列表相关的天体。"
 
-#: astroquery_cli/modules/simbad_cli.py:159
-msgid "Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple."
-msgstr "要查询的文献编码 (bibcode)（例如，'2003A&A...409..581H'）。可指定多个。"
+msgid ""
+"Bibcode(s) to query (e.g., '2003A&A...409..581H'). Can specify multiple."
+msgstr ""
+"要查询的文献编码 (bibcode)（例如，'2003A&A...409..581H'）。可指定多个。"
 
-#: astroquery_cli/modules/simbad_cli.py:171
-#, python-brace-format
-msgid "[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]"
+msgid ""
+"[cyan]Querying SIMBAD for objects in bibcode(s): {bibcodes_list}...[/cyan]"
 msgstr "[cyan]正在查询 SIMBAD 中文献编码 {bibcodes_list} 包含的天体...[/cyan]"
 
-#: astroquery_cli/modules/simbad_cli.py:177
 msgid "SIMBAD Objects for Bibcode(s)"
 msgstr "文献编码 (bibcode) 对应的 SIMBAD 天体"
 
-#: astroquery_cli/modules/simbad_cli.py:179
 msgid "SIMBAD bibcode query"
 msgstr "SIMBAD bibcode 查询"
 
-#: astroquery_cli/modules/simbad_cli.py:181
 msgid "[yellow]No objects found for the given bibcode(s).[/yellow]"
 msgstr "[yellow]未找到给定文献编码 (bibcode) 对应的天体。[/yellow]"
 
-#: astroquery_cli/modules/simbad_cli.py:183
 msgid "SIMBAD bibcode"
 msgstr "SIMBAD文献代码"
 
-#: astroquery_cli/modules/splatalogue_cli.py:26
 msgid "Query the Splatalogue spectral line database."
 msgstr "查询 Splatalogue 谱线数据库。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:94
-#, python-brace-format
 msgid ""
 "[red]Error: Wavelength range '{range_str}' must be in 'min-max' format "
 "(e.g., '100um-200um').[/red]"
-msgstr "[red]错误：频率范围 '{freq_str}' 必须是 '最小值-最大值' 格式（例如，'100GHz-110GHz'）。[/red]"
+msgstr ""
+"[red]错误：频率范围 '{freq_str}' 必须是 '最小值-最大值' 格式（例"
+"如，'100GHz-110GHz'）。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:96
-#, python-brace-format
 msgid ""
-"[red]Error: Frequency range '{range_str}' must be in 'min-max' format "
-"(e.g., '100GHz-110GHz').[/red]"
-msgstr "[red]错误：频率范围 '{freq_str}' 必须是 '最小值-最大值' 格式（例如，'100GHz-110GHz'）。[/red]"
+"[red]Error: Frequency range '{range_str}' must be in 'min-max' format (e.g., "
+"'100GHz-110GHz').[/red]"
+msgstr ""
+"[red]错误：频率范围 '{freq_str}' 必须是 '最小值-最大值' 格式（例"
+"如，'100GHz-110GHz'）。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:103
 msgid ""
-"[red]Error: Wavelengths must have units of length (e.g., um, nm, "
-"mm).[/red]"
+"[red]Error: Wavelengths must have units of length (e.g., um, nm, mm).[/red]"
 msgstr "[red]错误：频率必须带有频率单位（例如，GHz, MHz）。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:107
 msgid ""
-"[red]Error: Frequencies must have units of frequency (e.g., GHz, "
-"MHz).[/red]"
+"[red]Error: Frequencies must have units of frequency (e.g., GHz, MHz).[/red]"
 msgstr "[red]错误：频率必须带有频率单位（例如，GHz, MHz）。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:111
-#, python-brace-format
-msgid "[red]Error parsing {unit_type} range '{range_str}': {error_message}[/red]"
+msgid ""
+"[red]Error parsing {unit_type} range '{range_str}': {error_message}[/red]"
 msgstr "[red]解析频率范围 '{freq_str}' 时出错：{error_message}[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:114
 msgid ""
-"Query spectral lines from Splatalogue by chemical name. Optionally filter"
-" by wavelength (-w) or frequency (-f) range."
-msgstr "按化学名称查询Splatalogue中的谱线。可选择按波长 (-w) 或频率 (-f) 范围筛选。"
+"Query spectral lines from Splatalogue by chemical name. Optionally filter by "
+"wavelength (-w) or frequency (-f) range."
+msgstr ""
+"按化学名称查询Splatalogue中的谱线。可选择按波长 (-w) 或频率 (-f) 范围筛选。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:120
 msgid "Chemical name pattern (e.g., 'CO', '%H2O%'). "
 msgstr "源名称或模式（例如，'Gaia DR3'，'2MASS'）。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:121
 msgid "You can use cent for SQL-like wildcards: "
 msgstr "您可以使用百分号作为SQL风格的通配符："
 
-#: astroquery_cli/modules/splatalogue_cli.py:122
 msgid "'%CO%' matches any containing CO, "
 msgstr "'%CO%'匹配任何包含CO的字符串，"
 
-#: astroquery_cli/modules/splatalogue_cli.py:123
 msgid "'CO%' matches starting with CO, "
 msgstr "'CO%'匹配以CO开头的字符串，"
 
-#: astroquery_cli/modules/splatalogue_cli.py:124
 msgid "'%CO' matches matches ending with CO. "
 msgstr "'%CO'匹配以CO结尾的"
 
-#: astroquery_cli/modules/splatalogue_cli.py:128
 msgid ""
-"Wavelength range (e.g., '100um-200um'). You can directly input this as "
-"the second argument without -w. Mutually exclusive with frequency_range."
-msgstr "波长范围（例如，'100um-200um'）。你可以直接将其作为第二个参数输入，无需 -w。与频率范围互斥。"
+"Wavelength range (e.g., '100um-200um'). You can directly input this as the "
+"second argument without -w. Mutually exclusive with frequency_range."
+msgstr ""
+"波长范围（例如，'100um-200um'）。你可以直接将其作为第二个参数输入，无需 -w。"
+"与频率范围互斥。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:131
 msgid ""
-"Frequency range (e.g., '100GHz-110GHz'). You can directly input this as "
-"the second argument without -f. Mutually exclusive with wavelength_range."
-msgstr "频率范围（例如，'100GHz-110GHz'）。你可以直接将其作为第二个参数输入，无需 -f。与波长范围互斥。"
+"Frequency range (e.g., '100GHz-110GHz'). You can directly input this as the "
+"second argument without -f. Mutually exclusive with wavelength_range."
+msgstr ""
+"频率范围（例如，'100GHz-110GHz'）。你可以直接将其作为第二个参数输入，无需 "
+"-f。与波长范围互斥。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:133
 msgid "Maximum energy in K (E_upper)."
 msgstr "最大能量（以 K 为单位）(E_upper，上能级能量)。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:134
 msgid "Energy type ('el' or 'eu' for E_lower or E_upper)."
-msgstr "能量类型（'el' 代表 E_lower（下能级能量）或 'eu' 代表 E_upper（上能级能量））。"
+msgstr ""
+"能量类型（'el' 代表 E_lower（下能级能量）或 'eu' 代表 E_upper（上能级能"
+"量））。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:135
 msgid ""
 "Line strength units (e.g., 'ls1', 'ls2', 'ls4', 'ls5' for CDMS/JPL or "
 "TopModel)."
-msgstr "谱线强度单位（例如，CDMS/JPL 或 TopModel 使用的 'ls1'，'ls2'，'ls4'，'ls5'）。"
+msgstr ""
+"谱线强度单位（例如，CDMS/JPL 或 TopModel 使用的 "
+"'ls1'，'ls2'，'ls4'，'ls5'）。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:136
 msgid "Species to exclude (e.g., 'HDO')."
 msgstr "要排除的物质种类（例如，'HDO'）。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:139
 msgid ""
 "Astropy table format for saving (e.g. 'csv', 'ecsv', 'fits', 'votable'). "
 "Overrides file extension inference."
-msgstr "用于保存的Astropy表格格式（例如'csv'、'ecsv'、'fits'、'votable'）。覆盖文件名扩展名的推断。"
+msgstr ""
+"用于保存的Astropy表格格式（例如'csv'、'ecsv'、'fits'、'votable'）。覆盖文件名"
+"扩展名的推断。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:147
 msgid ""
-"[red]You cannot specify both -w/--wavelength-range and -f/--frequency-"
-"range.[/red]"
-msgstr "[red]你不能同时指定 -w/--wavelength-range 和 -f/--frequency-range。[/red]"
+"[red]You cannot specify both -w/--wavelength-range and -f/--frequency-range."
+"[/red]"
+msgstr ""
+"[red]你不能同时指定 -w/--wavelength-range 和 -f/--frequency-range。[/red]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:160
-#, python-brace-format
 msgid ""
 "[cyan]Querying Splatalogue for '{chemical_name}' in frequency range "
 "'{frequency_range}'...[/cyan]"
-msgstr "[cyan]正在查询 Splatalogue 中频率范围 '{frequency_range}' 的谱线...[/cyan]"
-
-#: astroquery_cli/modules/splatalogue_cli.py:163
-msgid ""
-"[red]Error: You must specify a wavelength or frequency range as the "
-"second argument (e.g., '100um-200um' or '100GHz-110GHz'). No -w or -f "
-"flag is needed; just provide the range directly.[/red]"
 msgstr ""
-"[red]错误：你必须将波长或频率范围作为第二个参数指定（例如，'100um-200um' 或 '100GHz-110GHz'）。不需要 -w 或"
-" -f 标志；只需直接提供范围即可。[/red]"
+"[cyan]正在查询 Splatalogue 中频率范围 '{frequency_range}' 的谱线...[/cyan]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:187
-#, python-brace-format
+msgid ""
+"[red]Error: You must specify a wavelength or frequency range as the second "
+"argument (e.g., '100um-200um' or '100GHz-110GHz'). No -w or -f flag is "
+"needed; just provide the range directly.[/red]"
+msgstr ""
+"[red]错误：你必须将波长或频率范围作为第二个参数指定（例如，'100um-200um' 或 "
+"'100GHz-110GHz'）。不需要 -w 或 -f 标志；只需直接提供范围即可。[/red]"
+
 msgid "[green]Found {count} spectral line(s).[/green]"
 msgstr "[green]找到 {count} 条谱线。[/green]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:188
 msgid "Splatalogue Lines"
 msgstr "Splatalogue 谱线"
 
-#: astroquery_cli/modules/splatalogue_cli.py:190
 msgid "Splatalogue line query"
 msgstr "Splatalogue 谱线查询"
 
-#: astroquery_cli/modules/splatalogue_cli.py:192
 msgid "[yellow]No spectral lines found for the given criteria.[/yellow]"
 msgstr "[yellow]未找到符合给定条件的谱线。[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:195
 msgid ""
-"[yellow]No matching chemical species found. Please check your "
-"chemical_name pattern and try removing wildcards or using a more specific"
-" name.[/yellow]"
-msgstr "[yellow]未找到匹配的化学物质。请检查你的化学名称模式，并尝试移除通配符或使用更具体的名称。[/yellow]"
+"[yellow]No matching chemical species found. Please check your chemical_name "
+"pattern and try removing wildcards or using a more specific name.[/yellow]"
+msgstr ""
+"[yellow]未找到匹配的化学物质。请检查你的化学名称模式，并尝试移除通配符或使用"
+"更具体的名称。[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:197
 msgid "Splatalogue lines"
 msgstr "Splatalogue谱线"
 
-#: astroquery_cli/modules/splatalogue_cli.py:200
 msgid "Get the table of NRAO recommended species."
 msgstr "获取 NRAO 推荐物质种类的表格。"
 
-#: astroquery_cli/modules/splatalogue_cli.py:208
-msgid "[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"
+msgid ""
+"[cyan]Fetching NRAO recommended species table from Splatalogue...[/cyan]"
 msgstr "[cyan]正在从 Splatalogue 获取 NRAO 推荐物质种类表格...[/cyan]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:212
 msgid "Splatalogue NRAO Recommended Species"
 msgstr "Splatalogue NRAO 推荐物质种类"
 
-#: astroquery_cli/modules/splatalogue_cli.py:214
 msgid "Splatalogue species table"
 msgstr "Splatalogue 物质种类表格"
 
-#: astroquery_cli/modules/splatalogue_cli.py:216
 msgid "[yellow]Could not retrieve species table or it is empty.[/yellow]"
 msgstr "[yellow]无法检索物质种类表格或表格为空。[/yellow]"
 
-#: astroquery_cli/modules/splatalogue_cli.py:218
 msgid "Splatalogue species-table"
 msgstr "Splatalogue物种表"
 
-#: astroquery_cli/modules/vizier_cli.py:20
 msgid "Query the VizieR astronomical catalog service."
 msgstr "查询 VizieR 天文星表数据库。"
 
-#: astroquery_cli/modules/vizier_cli.py:97
-#, python-brace-format
 msgid ""
-"[bold red]Error parsing angle string '{angle_str}': {error_message}[/bold"
-" red]"
-msgstr "[bold red]解析角度字符串 '{angle_str}' 时出错：{error_message}[/bold red]"
+"[bold red]Error parsing angle string '{angle_str}': {error_message}[/bold "
+"red]"
+msgstr ""
+"[bold red]解析角度字符串 '{angle_str}' 时出错：{error_message}[/bold red]"
 
-#: astroquery_cli/modules/vizier_cli.py:98
 msgid "[yellow]Hint: Use format like '5arcmin', '0.5deg', '10arcsec'.[/yellow]"
-msgstr "[yellow]提示：使用类似 '5arcmin'，'0.5deg'，'10arcsec' 的格式。[/yellow]"
+msgstr ""
+"[yellow]提示：使用类似 '5arcmin'，'0.5deg'，'10arcsec' 的格式。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:116
-#, python-brace-format
 msgid ""
-"[bold red]Error parsing coordinates '{coords_str}': {error_message}[/bold"
-" red]"
+"[bold red]Error parsing coordinates '{coords_str}': {error_message}[/bold "
+"red]"
 msgstr "[bold red]解析坐标 '{coords_str}' 时出错：{error_message}[/bold red]"
 
-#: astroquery_cli/modules/vizier_cli.py:117
 msgid "[yellow]Hint: Try 'M31', '10.68h +41.26d', or '160.32 41.45'.[/yellow]"
-msgstr "[yellow]提示：尝试 'M31'，'10.68h +41.26d'，或 '160.32 41.45'。[/yellow]"
+msgstr ""
+"[yellow]提示：尝试 'M31'，'10.68h +41.26d'，或 '160.32 41.45'。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:126
-#, python-brace-format
 msgid ""
-"[bold red]Invalid constraint format: '{item}'. Expected "
-"'column=condition'.[/bold red]"
+"[bold red]Invalid constraint format: '{item}'. Expected 'column=condition'.[/"
+"bold red]"
 msgstr "[bold red]无效的约束格式：'{item}'。应为 '列名=条件'。[/bold red]"
 
-#: astroquery_cli/modules/vizier_cli.py:139
 msgid "Find VizieR catalogs based on keywords, UCDs, or source names."
 msgstr "根据关键词、UCD (统一内容描述符) 或源名称查找 VizieR 星表。"
 
-#: astroquery_cli/modules/vizier_cli.py:141
 msgid "Keyword(s) to search for in catalog descriptions."
 msgstr "在星表描述中搜索的关键词。"
 
-#: astroquery_cli/modules/vizier_cli.py:142
 msgid "UCD (Unified Content Descriptor) to filter catalogs."
 msgstr "用于筛选星表的 UCD (统一内容描述符)。"
 
-#: astroquery_cli/modules/vizier_cli.py:143
 msgid "Source name or pattern (e.g., 'Gaia DR3', '2MASS')."
 msgstr "源名称或模式（例如，'Gaia DR3'，'2MASS'）。"
 
-#: astroquery_cli/modules/vizier_cli.py:144
 msgid "Maximum number of catalogs to list."
 msgstr "列出的最大星表数量。"
 
-#: astroquery_cli/modules/vizier_cli.py:148
-#: astroquery_cli/modules/vizier_cli.py:212
-#: astroquery_cli/modules/vizier_cli.py:267
-#: astroquery_cli/modules/vizier_cli.py:336
-#, python-brace-format
 msgid "VizieR server to use. Choices: {server_list}"
 msgstr "要使用的 VizieR 服务器。选项：{server_list}"
 
-#: astroquery_cli/modules/vizier_cli.py:156
 msgid "[cyan]Searching for VizieR catalogs...[/cyan]"
 msgstr "[cyan]正在搜索 VizieR 星表...[/cyan]"
 
-#: astroquery_cli/modules/vizier_cli.py:158
-#, python-brace-format
 msgid "[dim]Using VizieR server: {server_url}[/dim]"
 msgstr "[dim]正在使用 VizieR 服务器：{server_url}[/dim]"
 
-#: astroquery_cli/modules/vizier_cli.py:163
-#, python-brace-format
 msgid "[dim]Keywords: {keywords_list}[/dim]"
 msgstr "[dim]关键词：{keywords_list}[/dim]"
 
-#: astroquery_cli/modules/vizier_cli.py:166
-#, python-brace-format
 msgid "[dim]UCD: {ucd_val}[/dim]"
 msgstr "[dim]UCD：{ucd_val}[/dim]"
 
-#: astroquery_cli/modules/vizier_cli.py:169
-#, python-brace-format
 msgid "[dim]Source Name: {source_val}[/dim]"
 msgstr "[dim]源名称：{source_val}[/dim]"
 
-#: astroquery_cli/modules/vizier_cli.py:172
 msgid ""
 "[yellow]Please provide at least one search criterion (keyword, ucd, or "
 "source name).[/yellow]"
 msgstr "[yellow]请至少提供一个搜索条件（关键词、UCD 或源名称）。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:173
 msgid "Example: `aqc vizier find-catalogs --keyword photometry --keyword M31`"
 msgstr "示例：`aqc vizier find-catalogs --keyword photometry --keyword M31`"
 
-#: astroquery_cli/modules/vizier_cli.py:182
 msgid "Found VizieR Catalogs"
 msgstr "找到的 VizieR 星表"
 
-#: astroquery_cli/modules/vizier_cli.py:187
 msgid "[yellow]No catalogs found matching your criteria.[/yellow]"
 msgstr "[yellow]未找到符合您条件的星表。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:190
 msgid "VizieR find_catalogs"
 msgstr "VizieR find_catalogs"
 
-#: astroquery_cli/modules/vizier_cli.py:199
+msgid ""
+"List all available VizieR catalogs. Note: VizieR API does not support "
+"listing all catalogs at once. If no catalogs are found, try 'find-catalogs' "
+"with keywords. Common keywords: 'photometry', 'galaxy', 'quasar', 'gaia', "
+"'2mass', 'sdss', 'star', 'cluster', 'radio', 'infrared', 'xray', 'survey', "
+"'variable', 'proper motion', 'catalog'. Example: aqc vizier find-catalogs --"
+"keyword photometry --keyword galaxy"
+msgstr ""
+"列出所有可用的VizieR星表。注意：VizieR API不支持一次性列出所有星表。如果未找"
+"到星表，请尝试使用关键字'find-catalogs'。常用关键字： 'photometry', "
+"'galaxy', 'quasar', 'gaia', '2mass', 'sdss', 'star', 'cluster', 'radio', "
+"'infrared', 'xray', 'survey', 'variable', 'proper motion', 'catalog'.示例："
+"aqc vizier find-catalogs --keyword photometry --keyword galaxy"
+
+msgid "[cyan]Attempting to list all VizieR catalogs...[/cyan]"
+msgstr "[cyan]正在搜索 VizieR 星表...[/cyan]"
+
+msgid ""
+"[yellow]Note: If this returns no catalogs, the VizieR service might not "
+"support listing all catalogs directly, or there might be a network issue. "
+"Consider using 'find-catalogs' with specific keywords instead.[/yellow]"
+msgstr ""
+"[yellow]注意：如果未返回任何星表，VizieR服务可能不支持直接列出所有星表，或者"
+"可能存在网络问题。请考虑使用特定关键字进行“find-catalogs”查询。[/yellow]"
+
+msgid "All Available VizieR Catalogs"
+msgstr "找到的 VizieR 星表"
+
+msgid ""
+"[yellow]No catalogs found using direct listing. VizieR API does not support "
+"listing all catalogs at once. Please use keyword search. Common keywords: "
+"'photometry', 'galaxy', 'quasar', 'gaia', '2mass', 'sdss', 'star', "
+"'cluster', 'radio', 'infrared', 'xray', 'survey', 'variable', 'proper "
+"motion', 'catalog'.[/yellow]"
+msgstr ""
+"[yellow]未通过直接列出找到任何星表。VizieR API不支持一次性列出所有星表。请使"
+"用关键字搜索。常用关键字： 'photometry', 'galaxy', 'quasar', 'gaia', "
+"'2mass', 'sdss', 'star', 'cluster', 'radio', 'infrared', 'xray', 'survey', "
+"'variable', 'proper motion', 'catalog'.[/yellow]"
+
+msgid ""
+"[yellow]Example: aqc vizier find-catalogs --keyword photometry --keyword "
+"galaxy[/yellow]"
+msgstr "示例：`aqc vizier find-catalogs --keyword photometry --keyword M31`"
+
+msgid "VizieR list_catalogs"
+msgstr "VizieR find_catalogs"
+
+msgid ""
+"[yellow]VizieR API does not support listing all catalogs at once. Please use "
+"keyword search. Common keywords: 'photometry', 'galaxy', 'quasar', 'gaia', "
+"'2mass', 'sdss', 'star', 'cluster', 'radio', 'infrared', 'xray', 'survey', "
+"'variable', 'proper motion', 'catalog'.[/yellow]"
+msgstr ""
+"[yellow]VizieR API不支持一次性列出所有星表。请使用关键字搜索。常用关键字： "
+"'photometry', 'galaxy', 'quasar', 'gaia', '2mass', 'sdss', 'star', "
+"'cluster', 'radio', 'infrared', 'xray', 'survey', 'variable', 'proper "
+"motion', 'catalog'.[/yellow]"
+
 msgid "Query catalogs around an object name or specific coordinates."
 msgstr "查询某个天体名称或特定坐标周围的星表。"
 
-#: astroquery_cli/modules/vizier_cli.py:202
 msgid ""
-"Object name (e.g., 'M31') or coordinates (e.g., '10.68h +41.26d' or "
-"'160.32 41.45')."
-msgstr "天体名称（例如，'M31'）或坐标（例如，'10.68h +41.26d' 或 '160.32 41.45'）。"
-
-#: astroquery_cli/modules/vizier_cli.py:203
-msgid ""
-"Search radius (e.g., '5arcmin', '0.1deg'). Can be specified as positional"
-" argument or with -r/--radius."
-msgstr "锥形搜索半径（例如，'5arcmin'，'0.1deg'）。如果未指定宽度/高度，则使用此参数。"
-
-#: astroquery_cli/modules/vizier_cli.py:204
-#: astroquery_cli/modules/vizier_cli.py:259
-msgid ""
-"VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). "
-"Can be specified multiple times. Default: 'I/261/gaiadr3'"
-msgstr "VizieR 星表标识符（例如，'I/261/gaiadr3'，'J/ApJ/710/1776'）。可多次指定。"
-
-#: astroquery_cli/modules/vizier_cli.py:205
-msgid ""
-"Specific columns to retrieve (e.g., 'RAJ2000', 'DEJ2000', 'pmRA'). Use "
-"'all' for all columns. Can be specified multiple times."
+"Object name (e.g., 'M31') or coordinates (e.g., '10.68h +41.26d' or '160.32 "
+"41.45')."
 msgstr ""
-"要检索的特定列（例如，'RAJ2000'（J2000赤经），'DEJ2000'（J2000赤纬），'pmRA'（赤经方向自行））。使用 'all'"
-" 表示所有列。可多次指定。"
+"天体名称（例如，'M31'）或坐标（例如，'10.68h +41.26d' 或 '160.32 41.45'）。"
 
-#: astroquery_cli/modules/vizier_cli.py:206
+msgid ""
+"Search radius (e.g., '5arcmin', '0.1deg'). Can be specified as positional "
+"argument or with -r/--radius."
+msgstr ""
+"锥形搜索半径（例如，'5arcmin'，'0.1deg'）。如果未指定宽度/高度，则使用此参"
+"数。"
+
+msgid ""
+"VizieR catalog identifier(s) (e.g., 'I/261/gaiadr3', 'J/ApJ/710/1776'). Can "
+"be specified multiple times. Default: 'I/261/gaiadr3'"
+msgstr ""
+"VizieR 星表标识符（例如，'I/261/gaiadr3'，'J/ApJ/710/1776'）。可多次指定。"
+
+msgid ""
+"Specific columns to retrieve (e.g., 'RAJ2000', 'DEJ2000', 'pmRA'). Use 'all' "
+"for all columns. Can be specified multiple times."
+msgstr ""
+"要检索的特定列（例如，'RAJ2000'（J2000赤经），'DEJ2000'（J2000赤"
+"纬），'pmRA'（赤经方向自行））。使用 'all' 表示所有列。可多次指定。"
+
 msgid ""
 "Column filters (e.g., 'Imag<15', 'B-V>0.5'). Can be specified multiple "
 "times. Format: 'column_name<operator>value'."
-msgstr "列筛选器（例如，'Imag<15' (I波段星等)，'B-V>0.5' (B-V色指数)）。可多次指定。格式：'列名<运算符>值'。"
+msgstr ""
+"列筛选器（例如，'Imag<15' (I波段星等)，'B-V>0.5' (B-V色指数)）。可多次指定。"
+"格式：'列名<运算符>值'。"
 
-#: astroquery_cli/modules/vizier_cli.py:207
-#: astroquery_cli/modules/vizier_cli.py:262
-#: astroquery_cli/modules/vizier_cli.py:331
 msgid "Maximum number of rows to return per catalog."
 msgstr "每个星表返回的最大行数。"
 
-#: astroquery_cli/modules/vizier_cli.py:208
-#: astroquery_cli/modules/vizier_cli.py:263
-#: astroquery_cli/modules/vizier_cli.py:332
 msgid "Maximum number of rows to display per table. Use -1 for all rows."
 msgstr "每个表格最大显示行数。使用 -1 表示所有行。"
 
-#: astroquery_cli/modules/vizier_cli.py:217
-#, python-brace-format
 msgid ""
 "[cyan]Querying VizieR for object '{target_name}' in catalog(s): "
 "{catalog_list}...[/cyan]"
-msgstr "[cyan]正在查询 VizieR 中天体 '{target_name}' 在星表 {catalog_list} 中的数据...[/cyan]"
+msgstr ""
+"[cyan]正在查询 VizieR 中天体 '{target_name}' 在星表 {catalog_list} 中的数"
+"据...[/cyan]"
 
-#: astroquery_cli/modules/vizier_cli.py:220
-#, python-brace-format
 msgid "[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]"
 msgstr "[dim]正在使用 VizieR 服务器：{server_url}，行数限制：{limit}[/dim]"
 
-#: astroquery_cli/modules/vizier_cli.py:237
-#: astroquery_cli/modules/vizier_cli.py:306
-#: astroquery_cli/modules/vizier_cli.py:366
 msgid "[yellow]No results returned from VizieR for this query.[/yellow]"
 msgstr "[yellow]VizieR 未返回此查询的结果。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:243
-#, python-brace-format
 msgid "Results from {catalog_name} for {target_name}"
 msgstr "来自 {catalog_name} 中关于 {target_name} 的结果"
 
-#: astroquery_cli/modules/vizier_cli.py:245
-#, python-brace-format
 msgid ""
-"[yellow]No data found in catalog '{catalog_name}' for the given "
-"criteria.[/yellow]"
+"[yellow]No data found in catalog '{catalog_name}' for the given criteria.[/"
+"yellow]"
 msgstr "[yellow]在星表 '{catalog_name}' 中未找到符合给定条件的数据。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:248
 msgid "Vizier object"
 msgstr "Vizier天体"
 
-#: astroquery_cli/modules/vizier_cli.py:252
 msgid "Query catalogs within a sky region (cone or box)."
 msgstr "查询某个天区（锥形或盒形）内的星表。"
 
-#: astroquery_cli/modules/vizier_cli.py:255
 msgid ""
 "Central coordinates for the region (e.g., '10.68h +41.26d' or '160.32 "
 "41.45')."
 msgstr "区域的中心坐标（例如，'10.68h +41.26d' 或 '160.32 41.45'）。"
 
-#: astroquery_cli/modules/vizier_cli.py:256
 msgid ""
-"Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying "
-"width/height. Can be specified as positional argument or with "
-"-r/--radius."
-msgstr "锥形搜索半径（例如，'5arcmin'，'0.1deg'）。如果未指定宽度/高度，则使用此参数。"
+"Cone search radius (e.g., '5arcmin', '0.1deg'). Use if not specifying width/"
+"height. Can be specified as positional argument or with -r/--radius."
+msgstr ""
+"锥形搜索半径（例如，'5arcmin'，'0.1deg'）。如果未指定宽度/高度，则使用此参"
+"数。"
 
-#: astroquery_cli/modules/vizier_cli.py:257
 msgid "Width of a box region (e.g., '10arcmin', '0.5deg'). Requires --height."
 msgstr "盒形区域的宽度（例如，'10arcmin'，'0.5deg'）。需要 --height 参数。"
 
-#: astroquery_cli/modules/vizier_cli.py:258
 msgid "Height of a box region (e.g., '10arcmin', '0.5deg'). Requires --width."
 msgstr "盒形区域的高度（例如，'10arcmin'，'0.5deg'）。需要 --width 参数。"
 
-#: astroquery_cli/modules/vizier_cli.py:260
-#: astroquery_cli/modules/vizier_cli.py:330
 msgid ""
-"Specific columns to retrieve. Use 'all' for all columns. Can be specified"
-" multiple times."
+"Specific columns to retrieve. Use 'all' for all columns. Can be specified "
+"multiple times."
 msgstr "要检索的特定列。使用 'all' 表示所有列。可多次指定。"
 
-#: astroquery_cli/modules/vizier_cli.py:261
 msgid "Column filters (e.g., 'Imag<15'). Can be specified multiple times."
 msgstr "列筛选器（例如，'Imag<15' (I波段星等)）。可多次指定。"
 
-#: astroquery_cli/modules/vizier_cli.py:283
 msgid ""
-"[bold red]Error: Specify either --radius (for cone search) OR (--width "
-"and --height) (for box search), not both.[/bold red]"
+"[bold red]Error: Specify either --radius (for cone search) OR (--width and --"
+"height) (for box search), not both.[/bold red]"
 msgstr ""
-"[bold red]错误：请指定 --radius（用于锥形搜索）或 (--width 和 "
-"--height)（用于盒形搜索），不能同时指定。[/bold red]"
+"[bold red]错误：请指定 --radius（用于锥形搜索）或 (--width 和 --height)（用于"
+"盒形搜索），不能同时指定。[/bold red]"
 
-#: astroquery_cli/modules/vizier_cli.py:286
 msgid ""
 "[bold red]Error: For a box search, both --width and --height must be "
 "specified.[/bold red]"
-msgstr "[bold red]错误：对于盒形搜索，必须同时指定 --width 和 --height。[/bold red]"
+msgstr ""
+"[bold red]错误：对于盒形搜索，必须同时指定 --width 和 --height。[/bold red]"
 
-#: astroquery_cli/modules/vizier_cli.py:289
 msgid ""
-"[bold red]Error: You must specify search dimensions: either --radius OR "
-"(--width and --height).[/bold red]"
-msgstr "[bold red]错误：您必须指定搜索维度：--radius 或 (--width 和 --height)。[/bold red]"
+"[bold red]Error: You must specify search dimensions: either --radius OR (--"
+"width and --height).[/bold red]"
+msgstr ""
+"[bold red]错误：您必须指定搜索维度：--radius 或 (--width 和 --height)。[/"
+"bold red]"
 
-#: astroquery_cli/modules/vizier_cli.py:320
 msgid "Vizier region"
 msgstr "Vizier区域"
 
-#: astroquery_cli/modules/vizier_cli.py:324
 msgid "Query catalogs based on specific column constraints or keywords."
 msgstr "根据特定的列约束或关键词查询星表。"
 
-#: astroquery_cli/modules/vizier_cli.py:327
 msgid "VizieR catalog identifier(s). Can be specified multiple times."
 msgstr "VizieR 星表标识符。可多次指定。"
 
-#: astroquery_cli/modules/vizier_cli.py:328
 msgid ""
 "Constraints on column values (e.g., 'Vmag=<10', 'B-V=0.5..1.0'). Can be "
 "specified multiple times. Format: 'column_name=condition'."
-msgstr "列值约束（例如，'Vmag=<10' (V波段星等)，'B-V=0.5..1.0' (B-V色指数)）。可多次指定。格式：'列名<运算符>值'。"
+msgstr ""
+"列值约束（例如，'Vmag=<10' (V波段星等)，'B-V=0.5..1.0' (B-V色指数)）。可多次"
+"指定。格式：'列名<运算符>值'。"
 
-#: astroquery_cli/modules/vizier_cli.py:329
 msgid ""
 "Keywords to filter results within the catalog (different from finding "
 "catalogs)."
 msgstr "用于在星表内筛选结果的关键词"
 
-#: astroquery_cli/modules/vizier_cli.py:347
 msgid ""
 "[yellow]Please provide at least --constraint(s) or --keyword(s) for this "
 "query type.[/yellow]"
-msgstr "[yellow]请至少提供 --constraint(s)（约束条件）或 --keyword(s)（关键词）用于此查询类型。[/yellow]"
+msgstr ""
+"[yellow]请至少提供 --constraint(s)（约束条件）或 --keyword(s)（关键词）用于此"
+"查询类型。[/yellow]"
 
-#: astroquery_cli/modules/vizier_cli.py:377
 msgid "Vizier constraints"
 msgstr "Vizier约束"
 
-#: astroquery_cli/options/ping.py:30
-#, python-brace-format
 msgid "{ms_value} ms"
 msgstr "{ms_value} 毫秒"
 
-#: astroquery_cli/options/ping.py:31
 msgid "No time found"
 msgstr "未找到时间"
 
-#: astroquery_cli/options/ping.py:33
 msgid "ICMP disabled or blocked"
 msgstr "ICMP被禁用或阻止"
 
-#: astroquery_cli/options/ping.py:35
-#, python-brace-format
 msgid "Ping error: {error_message}"
 msgstr "Ping错误: {error_message}"
 
-#: astroquery_cli/options/ping.py:39
 msgid "Checking service availability...\n"
 msgstr "正在检查服务可用性...\n"
 
-#: astroquery_cli/options/ping.py:44 astroquery_cli/options/ping.py:53
 msgid "Unknown"
 msgstr "未知用户"
 
-#: astroquery_cli/options/ping.py:47
-#, python-brace-format
 msgid "Resolved to {ip_address}"
 msgstr "已解析到 {ip_address}"
 
-#: astroquery_cli/options/ping.py:49
-#, python-brace-format
 msgid "DNS resolution failed: {error_message}"
 msgstr "DNS解析失败: {error_message}"
 
-#: astroquery_cli/options/ping.py:54
 msgid "Service Unavailable"
 msgstr "服务不可用"
 
-#: astroquery_cli/options/ping.py:57
-#, python-brace-format
 msgid "HTTP Status: {status_code}"
 msgstr "HTTP状态: {status_code}"
 
-#: astroquery_cli/options/ping.py:59
 msgid "Service Available"
 msgstr "服务可用"
 
-#: astroquery_cli/options/ping.py:61
-#, python-brace-format
 msgid "Service Responded with Error ({status_code})"
 msgstr "服务响应错误 ({status_code})"
 
-#: astroquery_cli/options/ping.py:63
-#, python-brace-format
 msgid "HTTP Request Failed: {error_message}"
 msgstr "HTTP请求失败: {error_message}"
 
-#: astroquery_cli/options/ping.py:64
 msgid "Service Unavailable (Connection Error)"
 msgstr "服务不可用（连接错误）"
 
-#: astroquery_cli/options/ping.py:66
-#, python-brace-format
 msgid "--- {url_address} ---"
 msgstr "--- {url_address} ---"
 
-#: astroquery_cli/options/ping.py:67
-#, python-brace-format
 msgid "  Availability: {availability_message}"
 msgstr " 可用性：{availability_message}"
 
-#: astroquery_cli/options/ping.py:68
-#, python-brace-format
 msgid "  DNS Status: {dns_status}"
 msgstr " DNS状态: {dns_status}"
 
-#: astroquery_cli/options/ping.py:69
-#, python-brace-format
 msgid "  Ping Status: {ping_status}"
 msgstr " Ping状态：{ping_status}"
 
-#: astroquery_cli/options/ping.py:70
-#, python-brace-format
 msgid "  HTTP Status: {http_status}\n"
 msgstr " HTTP状态：{http_status}\n"
-

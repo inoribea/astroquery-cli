@@ -20,7 +20,7 @@ DEFAULT_COMMANDS = [
 
 def run_test(commands=None):
     """
-    commands: list of list, e.g. [["esasky", "list-catalogs"], ...]
+    commands: list of list, e.g. [["esasky", "object"], ...]
     If None, use DEFAULT_COMMANDS.
     """
     cli = [sys.executable, "-m", "astroquery_cli.main"]

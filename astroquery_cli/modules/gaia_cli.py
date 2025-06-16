@@ -48,8 +48,7 @@ def get_app():
         setup_debug_context(ctx, debug, verbose)
         # Re-enable Gaia server messages when the gaia app is actually invoked
         gaia_conf.show_server_messages = True
-        message = builtins._("Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes")
-        console.print(f"[yellow]{message}[/yellow]")
+        
 
         # Custom help display logic
         if ctx.invoked_subcommand is None and \

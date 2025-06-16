@@ -5,6 +5,22 @@ os.environ['LANGUAGE'] = 'zh_CN.UTF-8'
 import sys
 import typer
 import builtins
+
+import logging
+from astropy.logger import AstropyLogger
+logging.setLoggerClass(AstropyLogger)
+logging.getLogger('astroquery').setLevel(logging.INFO)
+
+# Monkey patch astroquery DummyLogger: add getEffectiveLevel to avoid AttributeError
+try:
+    import importlib
+    aq_logger_mod = importlib.import_module("astroquery.logger")
+    if hasattr(aq_logger_mod, "DummyLogger"):
+        def _dummy_getEffectiveLevel(self):
+            return logging.INFO
+        aq_logger_mod.DummyLogger.getEffectiveLevel = _dummy_getEffectiveLevel
+except Exception:
+    pass
 from io import StringIO
 from contextlib import redirect_stdout
 from astropy.config import get_config_dir, get_config
@@ -236,9 +252,8 @@ def main_callback(
 
             # Remove the gaia_message from the captured help text if it's present
             # This is to prevent duplication if Typer's help also includes it
-            gaia_message_raw = i18n._("Please note that the Gaia ESA Archive has been rolled back to version 3.7. Please find the release notes at https://www.cosmos.esa.int/web/gaia-users/archive/release-notes")
-            full_help_text = full_help_text.replace(gaia_message_raw + "\n", "") # Remove with newline
-            full_help_text = full_help_text.replace(gaia_message_raw, "") # Remove without newline
+            import re
+            full_help_text = re.sub(r"Please note that the Gaia ESA Archive has been rolled back to version 3\.7\..*?release-notes\)?\n?", "", full_help_text, flags=re.DOTALL)
 
             # Extract only the "Commands" section using regex, including the full bottom border
             commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)

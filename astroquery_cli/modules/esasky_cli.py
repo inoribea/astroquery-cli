@@ -136,10 +136,13 @@ def get_app():
 
 
 
-    @app.command(name="object-catalogs", help=builtins._("Query ESASky catalogs for an object."))
+    @app.command(name="object", help=builtins._("Query ESASky catalogs for an object."))
     @global_keyboard_interrupt_handler
     def query_object_catalogs(ctx: typer.Context,
-        object_name: str = typer.Argument(..., help=builtins._("Name of the astronomical object (e.g., 'M31', 'Vega', 'NGC 5194').")),
+        object_name: str = typer.Argument(
+            ...,
+            help=builtins._("Name of the astronomical object (e.g., 'NGC 253', 'HD 189733'). eg：M31、NGC 253、HD 189733")
+        ),
         catalogs: Optional[List[str]] = typer.Option(
             None,
             "--catalog",
@@ -165,19 +168,50 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
 
             if result_tables_dict:
                 console.print(_("[green]Found data for '{object_name}' in {count} catalog(s).[/green]").format(object_name=object_name, count=len(result_tables_dict)))
-                for cat_name, table_list in result_tables_dict.items():
-                    if table_list:
-                        table = table_list[0]
-                        display_table(ctx, table, title=_("ESASky: {cat_name} for {object_name}").format(cat_name=cat_name, object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                from astropy.table.table import Table
+                try:
+                    from astropy.table.table import TableList
+                except ImportError:
+                    TableList = None
+                try:
+                    from astroquery.utils.commons import TableList as AQTableList
+                except ImportError:
+                    AQTableList = None
+                if isinstance(result_tables_dict, dict):
+                    for cat_name, table_list in result_tables_dict.items():
+                        if table_list:
+                            table = table_list[0]
+                            display_table(ctx, table, title=_("ESASky: {cat_name} for {object_name}").format(cat_name=cat_name, object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                            if output_file:
+                                save_table_to_file(table, output_file.replace(".", f"_{cat_name}."), output_format, _("ESASky {cat_name} object query").format(cat_name=cat_name))
+                        else:
+                            console.print(_("[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]").format(cat_name=cat_name, object_name=object_name))
+                elif (TableList is not None and isinstance(result_tables_dict, TableList)) or (AQTableList is not None and isinstance(result_tables_dict, AQTableList)):
+                    for table in result_tables_dict:
+                        display_table(ctx, table, title=_("ESASky object result"), max_rows=max_rows_display, show_all_columns=show_all_columns)
                         if output_file:
-                            save_table_to_file(table, output_file.replace(".", f"_{cat_name}."), output_format, _("ESASky {cat_name} object query").format(cat_name=cat_name))
+                            save_table_to_file(table, output_file, output_format, _("ESASky object query"))
+                    return
+                elif isinstance(result_tables_dict, Table):
+                    display_table(ctx, result_tables_dict, title=_("ESASky object result"), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                    if output_file:
+                        save_table_to_file(result_tables_dict, output_file, output_format, _("ESASky object query"))
+                else:
+                    if hasattr(result_tables_dict, "tables") and hasattr(result_tables_dict, "keys"):
+                        for table in result_tables_dict:
+                            cat_name = getattr(table, "name", None) or getattr(table, "meta", {}).get("name", "Unknown")
+                            display_table(ctx, table, title=_("ESASky: {cat_name} for {object_name}").format(cat_name=cat_name, object_name=object_name), max_rows=max_rows_display, show_all_columns=show_all_columns)
+                            if output_file:
+                                save_table_to_file(table, output_file.replace(".", f"_{cat_name}."), output_format, _("ESASky {cat_name} object query").format(cat_name=cat_name))
+                        return
                     else:
-                        console.print(_("[yellow]No results from catalog '{cat_name}' for '{object_name}'.[/yellow]").format(cat_name=cat_name, object_name=object_name))
+                        console.print(_("[yellow]Unknown result type from ESASky.query_object_catalogs.[/yellow]"))
+                        console.print(f"[debug] type: {type(result_tables_dict)}, value: {result_tables_dict}")
             else:
                 console.print(_("[yellow]No catalog information found for object '{object_name}'.[/yellow]").format(object_name=object_name))
 
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("ESASky object-catalogs"))
+            handle_astroquery_exception(ctx, e, _("ESASky object"))
             raise typer.Exit(code=1)
 
         if test:
@@ -185,7 +219,7 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="region-catalogs", help=builtins._("Query ESASky catalogs in a sky region."))
+    @app.command(name="region", help=builtins._("Query ESASky catalogs in a sky region."))
     @global_keyboard_interrupt_handler
     def query_region_catalogs(ctx: typer.Context,
         coordinates: str = typer.Argument(..., help=builtins._("Coordinates (e.g., '10.68h +41.26d', 'M101', '299.86808 -14.67788').")),
@@ -193,7 +227,7 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
         catalogs: Optional[List[str]] = typer.Option(
             None,
             "--catalog",
-            help=builtins._("Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). Can be specified multiple times. Use 'list-catalogs' command to see all available catalogs.")
+            help=builtins._("Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). Can be specified multiple times. Use 'object' command to see all available catalogs.")
         ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
@@ -222,7 +256,7 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
             else:
                 console.print(_("[yellow]No catalog information found for the specified region.[/yellow]"))
         except Exception as e:
-            handle_astroquery_exception(ctx, e, _("ESASky region-catalogs"))
+            handle_astroquery_exception(ctx, e, _("ESASky region"))
             raise typer.Exit(code=1)
 
         if test:
@@ -230,7 +264,7 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
-    @app.command(name="list-catalogs", help=builtins._("List available missions/catalogs in ESASky."))
+    @app.command(name="list", help=builtins._("List available missions/catalogs in ESASky."))
     @global_keyboard_interrupt_handler
     def list_catalogs(ctx: typer.Context,
 test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time."))

@@ -56,10 +56,11 @@ def parse_coordinates(ctx: typer.Context, coords_str: str) -> Optional[SkyCoord]
                  return SkyCoord(ra=float(parts[0]), dec=float(parts[1]), unit=(u.deg, u.deg), frame='icrs')
         return SkyCoord(coords_str, frame='icrs')
     except Exception as e1:
+        # Do not exit here, just print error and return None
         console.print(f"[bold red]Error: Could not parse coordinates '{coords_str}'.[/bold red]")
         console.print(f"[yellow]Details: {e1}[/yellow]")
         console.print(f"[yellow]Ensure format is recognized by Astropy (e.g., '10.68h +41.26d', '10d30m0s 20d0m0s', '150.0 2.0' for deg).[/yellow]")
-        raise typer.Exit(code=1)
+        return None
 
 def parse_angle_str_to_quantity(ctx: typer.Context, angle_str: str) -> u.Quantity:
     """
@@ -124,6 +125,35 @@ def display_table(
     max_col_width: Optional[int] = 30
 ):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
+
+    # If astro_table is a list of lists, convert it to an AstropyTable
+    if isinstance(astro_table, list) and all(isinstance(row, list) for row in astro_table):
+        if not astro_table:
+            console.print(Padding(f"[yellow]No data returned for '{title if title else 'query'}'.[/yellow]", (0,2)))
+            return
+        # Assume the first row contains headers if it's a list of lists
+        # Or, if it's a simple key-value pair list, create generic headers
+        if all(len(row) == 2 for row in astro_table):
+            # This is likely a key-value pair list from dict_to_table_rows
+            headers = ["Field", "Value"]
+        else:
+            # For other list of lists, try to infer headers or use generic ones
+            headers = [f"Column {i+1}" for i in range(len(astro_table[0]))]
+        
+        try:
+            astro_table = AstropyTable(rows=astro_table, names=headers)
+        except Exception as e:
+            console.print(f"[bold red]Error converting list to AstropyTable: {e}[/bold red]")
+            # Fallback to just printing rows if conversion fails
+            rich_table = RichTable(title=title, show_lines=True, header_style="bold magenta", expand=False)
+            for h in headers:
+                rich_table.add_column(h, overflow="fold" if max_col_width else "ellipsis", max_width=max_col_width if max_col_width and max_col_width > 0 else None)
+            for row_data in astro_table:
+                rich_table.add_row(*[str(item) for item in row_data])
+            console.print(rich_table)
+            console.print(Padding(f"Total rows: {len(astro_table)}", (0,2)))
+            return
+
     if astro_table is None or len(astro_table) == 0:
         console.print(Padding(f"[yellow]No data returned for '{title if title else 'query'}'.[/yellow]", (0,2)))
         return
@@ -247,7 +277,6 @@ def global_keyboard_interrupt_handler(func):
             _ = i18n.get_translator()
             console = Console()
             console.print(f"[bold yellow]{_('User interrupted the query. Exiting safely.')}[bold yellow]")
-            # 直接退出主进程，避免 Typer/Click traceback
             import os
             os._exit(130)
     return wrapper

@@ -161,10 +161,10 @@ def get_app():
         if keywords:
             query_params['keywords'] = keywords
             console.print(_("[dim]Keywords: {keywords_list}[/dim]").format(keywords_list=keywords))
-        if ucd:
+        if ucd is not None: # Only add if not None
             query_params['ucd'] = ucd
             console.print(_("[dim]UCD: {ucd_val}[/dim]").format(ucd_val=ucd))
-        if source_name:
+        if source_name is not None: # Only add if not None
             query_params['source_name'] = source_name
             console.print(_("[dim]Source Name: {source_val}[/dim]").format(source_val=source_name))
 
@@ -175,7 +175,7 @@ def get_app():
 
         try:
             result_tables = Vizier.find_catalogs(**query_params)
-            if result_tables:
+            if result_tables and len(result_tables) > 0 and 0 in result_tables.keys():
                 display_table(
                     ctx,
                     result_tables[0],
@@ -185,6 +185,7 @@ def get_app():
                 )
             else:
                 console.print(_("[yellow]No catalogs found matching your criteria.[/yellow]"))
+                return
 
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("VizieR find_catalogs"))
@@ -195,6 +196,63 @@ def get_app():
             print(f"Elapsed: {elapsed:.3f} s")
             raise typer.Exit()
 
+    @app.command(
+        name="list",
+        help=builtins._(
+            "List all available VizieR catalogs. "
+            "Note: VizieR API does not support listing all catalogs at once. "
+            "If no catalogs are found, try 'find-catalogs' with keywords. "
+            "Common keywords: 'photometry', 'galaxy', 'quasar', 'gaia', '2mass', 'sdss', 'star', 'cluster', 'radio', 'infrared', 'xray', 'survey', 'variable', 'proper motion', 'catalog'. "
+            "Example: aqc vizier find-catalogs --keyword photometry --keyword galaxy"
+        )
+    )
+    @global_keyboard_interrupt_handler
+    def list_catalogs(ctx: typer.Context,
+        max_catalogs: int = typer.Option(20, help=builtins._("Maximum number of catalogs to list.")),
+        show_all_columns: bool = typer.Option(False, "--show-all-cols", help=builtins._("Show all columns in the output table.")),
+        vizier_server: str = typer.Option(
+            "vizier_cds",
+            help=builtins._("VizieR server to use. Choices: {server_list}").format(server_list=list(VIZIER_SERVERS.keys())),
+            autocompletion=lambda: list(VIZIER_SERVERS.keys())
+        )
+    ):
+        console.print(_("[cyan]Attempting to list all VizieR catalogs...[/cyan]"))
+        console.print(_("[yellow]Note: If this returns no catalogs, the VizieR service might not support listing all catalogs directly, or there might be a network issue. Consider using 'find-catalogs' with specific keywords instead.[/yellow]"))
+        vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
+        console.print(_("[dim]Using VizieR server: {server_url}[/dim]").format(server_url=vizier_conf.server))
+
+        try:
+            # Attempt to get all catalogs. If this fails or returns empty,
+            # we will fall back to a keyword search and provide suggestions.
+            all_catalogs = Vizier.get_catalogs(catalog=[])
+            
+            if all_catalogs:
+                display_table(
+                    ctx,
+                    all_catalogs[0],
+                    title=_("All Available VizieR Catalogs"),
+                    max_rows=max_catalogs,
+                    show_all_columns=show_all_columns
+                )
+            else:
+                console.print(_(
+                    "[yellow]No catalogs found using direct listing. "
+                    "VizieR API does not support listing all catalogs at once. "
+                    "Please use keyword search. "
+                    "Common keywords: 'photometry', 'galaxy', 'quasar', 'gaia', '2mass', 'sdss', 'star', 'cluster', 'radio', 'infrared', 'xray', 'survey', 'variable', 'proper motion', 'catalog'.[/yellow]"
+                ))
+                console.print(_("[yellow]Example: aqc vizier find-catalogs --keyword photometry --keyword galaxy[/yellow]"))
+                return
+
+        except Exception as e:
+            handle_astroquery_exception(ctx, e, _("VizieR list_catalogs"))
+            console.print(_(
+                "[yellow]VizieR API does not support listing all catalogs at once. "
+                "Please use keyword search. "
+                "Common keywords: 'photometry', 'galaxy', 'quasar', 'gaia', '2mass', 'sdss', 'star', 'cluster', 'radio', 'infrared', 'xray', 'survey', 'variable', 'proper motion', 'catalog'.[/yellow]"
+            ))
+            console.print(_("[yellow]Example: aqc vizier find-catalogs --keyword photometry --keyword galaxy[/yellow]"))
+            return
 
     @app.command(name="object", help=builtins._("Query catalogs around an object name or specific coordinates."))
     @global_keyboard_interrupt_handler
