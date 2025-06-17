@@ -8,6 +8,7 @@ import builtins
 
 import logging
 from astropy.logger import AstropyLogger
+
 logging.setLoggerClass(AstropyLogger)
 logging.getLogger('astroquery').setLevel(logging.INFO)
 

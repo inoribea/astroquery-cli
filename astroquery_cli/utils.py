@@ -12,9 +12,7 @@ import shutil
 import os
 import re
 import builtins
-from astroquery_cli import i18n
-
-builtins._ = i18n._
+import astroquery_cli.i18n as i18n
 
 console = Console()
 
