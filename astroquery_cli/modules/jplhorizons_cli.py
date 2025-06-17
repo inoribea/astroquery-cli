@@ -12,6 +12,7 @@ import re # Import re
 from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+from astroquery_cli.debug import debug # Import debug function
 
 def get_app():
     import builtins
@@ -174,32 +175,32 @@ def get_app():
 
         current_server = JPL_SERVERS.get(jpl_server.lower(), jpl_conf.horizons_server)
         if jpl_conf.horizons_server != current_server:
-            console.print(_("[dim]Using JPL server: {server}[/dim]").format(server=current_server))
+            debug(_("Using JPL server: {server}").format(server=current_server))
             jpl_conf.horizons_server = current_server
 
         epoch_dict = None
         if start_time and end_time:
             epoch_dict = {'start': start_time, 'stop': end_time, 'step': step}
-            console.print(_("[dim]Using epoch range: {start} to {end} with step {step}[/dim]").format(start=start_time, end=end_time, step=step))
+            debug(_("Using epoch range: {start} to {end} with step {step}").format(start=start_time, end=end_time, step=step))
         elif epochs:
             if epochs.startswith("{") and epochs.endswith("}"):
                 try:
                     import ast
                     epoch_dict = ast.literal_eval(epochs)
-                    console.print(_("[dim]Using epoch dict: {epoch_dict}[/dim]").format(epoch_dict=epoch_dict))
+                    debug(_("Using epoch dict: {epoch_dict}").format(epoch_dict=epoch_dict))
                 except (ValueError, SyntaxError) as e:
                     console.print(_("[bold red]Error parsing --epochs as dict: {error}[/bold red]").format(error=e))
                     console.print(_("[yellow]Example: --epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', 'step':'1d'}}\"[/yellow]"))
                     raise typer.Exit(code=1)
             elif ',' in epochs:
                 epoch_dict = [t.strip() for t in epochs.split(',')]
-                console.print(_("[dim]Using epoch list: {epoch_list}[/dim]").format(epoch_list=epoch_dict))
+                debug(_("Using epoch list: {epoch_list}").format(epoch_list=epoch_dict))
             else:
                 epoch_dict = epochs
-                console.print(_("[dim]Using single epoch: {epoch}[/dim]").format(epoch=epoch_dict))
+                debug(_("Using single epoch: {epoch}").format(epoch=epoch_dict))
         elif ephem_type in [EphemType.ELEMENTS, EphemType.VECTORS]:
             epoch_dict = Time.now().jd
-            console.print(_("[dim]No epoch specified for {ephem_type}, using current JD: {epoch}[/dim]").format(ephem_type=ephem_type.value, epoch=epoch_dict))
+            debug(_("No epoch specified for {ephem_type}, using current JD: {epoch}").format(ephem_type=ephem_type.value, epoch=epoch_dict))
         elif ephem_type == EphemType.OBSERVER:
             import datetime
             now = datetime.datetime.now()
@@ -228,12 +229,12 @@ def get_app():
 
             if ephem_type == EphemType.OBSERVER:
                 q = quantities or get_default_quantities_ephem(ctx)
-                console.print(_("[dim]Requesting quantities: {quantities}[/dim]").format(quantities=q))
+                debug(_("Requesting quantities: {quantities}").format(quantities=q))
                 result_table = obj.ephemerides(quantities=q, get_raw_response=False)
 
             elif ephem_type == EphemType.VECTORS:
                 q = quantities
-                if q: console.print(_("[dim]Requesting quantities for vectors: {quantities}[/dim]").format(quantities=q))
+                if q: debug(_("Requesting quantities for vectors: {quantities}").format(quantities=q))
                 result_table = obj.vectors(quantities=q, get_raw_response=False) if q else obj.vectors(get_raw_response=False)
 
             elif ephem_type == EphemType.ELEMENTS:

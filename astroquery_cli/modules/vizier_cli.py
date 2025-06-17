@@ -11,6 +11,7 @@ import re # Import re
 from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+from astroquery_cli.debug import debug # Import debug function
 
 def get_app():
     import builtins
@@ -155,18 +156,18 @@ def get_app():
 
         console.print(_("[cyan]Searching for VizieR catalogs...[/cyan]"))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
-        console.print(_("[dim]Using VizieR server: {server_url}[/dim]").format(server_url=vizier_conf.server))
+        debug(_("Using VizieR server: {server_url}").format(server_url=vizier_conf.server))
 
         query_params = {}
         if keywords:
             query_params['keywords'] = keywords
-            console.print(_("[dim]Keywords: {keywords_list}[/dim]").format(keywords_list=keywords))
+            debug(_("Keywords: {keywords_list}").format(keywords_list=keywords))
         if ucd is not None: # Only add if not None
             query_params['ucd'] = ucd
-            console.print(_("[dim]UCD: {ucd_val}[/dim]").format(ucd_val=ucd))
+            debug(_("UCD: {ucd_val}").format(ucd_val=ucd))
         if source_name is not None: # Only add if not None
             query_params['source_name'] = source_name
-            console.print(_("[dim]Source Name: {source_val}[/dim]").format(source_val=source_name))
+            debug(_("Source Name: {source_val}").format(source_val=source_name))
 
         if not query_params:
             console.print(_("[yellow]Please provide at least one search criterion (keyword, ucd, or source name).[/yellow]"))
@@ -219,7 +220,7 @@ def get_app():
         console.print(_("[cyan]Attempting to list all VizieR catalogs...[/cyan]"))
         console.print(_("[yellow]Note: If this returns no catalogs, the VizieR service might not support listing all catalogs directly, or there might be a network issue. Consider using 'find-catalogs' with specific keywords instead.[/yellow]"))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
-        console.print(_("[dim]Using VizieR server: {server_url}[/dim]").format(server_url=vizier_conf.server))
+        debug(_("Using VizieR server: {server_url}").format(server_url=vizier_conf.server))
 
         try:
             # Attempt to get all catalogs. If this fails or returns empty,
@@ -275,7 +276,7 @@ def get_app():
         console.print(_("[cyan]Querying VizieR for object '{target_name}' in catalog(s): {catalog_list}...[/cyan]").format(target_name=target, catalog_list=', '.join(catalogs_to_query)))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
-        console.print(_("[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]").format(server_url=vizier_conf.server, limit=row_limit))
+        debug(_("Using VizieR server: {server_url}, Row limit: {limit}").format(server_url=vizier_conf.server, limit=row_limit))
 
         coords = parse_coordinates(ctx, target)
         rad_quantity = parse_angle_str_to_quantity(ctx, radius)
@@ -330,7 +331,7 @@ def get_app():
         console.print(_(f"[cyan]Querying VizieR region around '{coordinates}' in catalog(s): {', '.join(catalogs_to_query)}...[/cyan]"))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
-        console.print(_(f"[dim]Using VizieR server: {vizier_conf.server}, Row limit: {row_limit}[/dim]"))
+        debug(_(f"Using VizieR server: {vizier_conf.server}, Row limit: {row_limit}"))
 
         coords_obj = parse_coordinates(ctx, coordinates) # Changed to coords_obj
         rad_quantity = parse_angle_str_to_quantity(ctx, radius)
@@ -398,7 +399,7 @@ def get_app():
         console.print(_(f"[cyan]Querying VizieR with constraints in catalog(s): {', '.join(catalogs)}...[/cyan]"))
         vizier_conf.server = VIZIER_SERVERS.get(vizier_server.lower(), vizier_conf.server)
         vizier_conf.row_limit = row_limit
-        console.print(_(f"[dim]Using VizieR server: {vizier_conf.server}, Row limit: {row_limit}[/dim]"))
+        debug(_(f"Using VizieR server: {vizier_conf.server}, Row limit: {row_limit}"))
 
         parsed_constraints = parse_constraints_list(ctx, constraints)
         if not parsed_constraints and not keywords:
@@ -408,10 +409,10 @@ def get_app():
         query_kwargs = {}
         if parsed_constraints:
             query_kwargs.update(parsed_constraints)
-            console.print(_(f"[dim]Using constraints: {query_kwargs}[/dim]"))
+            debug(_(f"Using constraints: {query_kwargs}"))
         if keywords:
             query_kwargs['keywords'] = " ".join(keywords)
-            console.print(_(f"[dim]Using keywords: {query_kwargs['keywords']}[/dim]"))
+            debug(_(f"Using keywords: {query_kwargs['keywords']}"))
 
 
         viz = Vizier(columns=columns if columns else ["*"], row_limit=row_limit)

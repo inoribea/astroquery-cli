@@ -16,6 +16,7 @@ import re # Import re
 from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+from astroquery_cli.debug import debug # Import debug function
 
 def get_app():
     import builtins
@@ -135,8 +136,8 @@ def get_app():
 
         # Debugging information
         if ctx.obj.get("DEBUG"):
-            console.print(f"DEBUG: query_ads - Initial query_string: {query_string}, latest: {latest}, review: {review}, sort_by: {sort_by}")
-            console.print(f"DEBUG: query_ads - _final_query_string: {_final_query_string}, _final_sort_by: {_final_sort_by}")
+            debug(f"query_ads - Initial query_string: {query_string}, latest: {latest}, review: {review}, sort_by: {sort_by}")
+            debug(f"_final_query_string: {_final_query_string}, _final_sort_by: {_final_sort_by}")
 
         # 1. Handle mutual exclusivity of --latest and --review
         if latest and review:
@@ -257,7 +258,7 @@ def get_app():
         output_file: Optional[str] = typer.Option(None, "-o", "--output-file", help=builtins._("File to save BibTeX entries (e.g., refs.bib)."))
     ):
         # Debugging information
-        console.print(f"DEBUG: get_bibtex - bibcodes: {bibcodes}")
+        debug(f"get_bibtex - bibcodes: {bibcodes}")
 
         console.print(_("[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]").format(bibcode_list=', '.join(bibcodes)))
         if not ADS.TOKEN and not os.getenv("ADS_DEV_KEY"):

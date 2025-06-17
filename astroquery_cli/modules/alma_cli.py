@@ -19,6 +19,7 @@ from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
 import sys # Import sys
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+from astroquery_cli.debug import debug # Import debug function
 
 def get_app():
     import builtins
@@ -106,7 +107,7 @@ def get_app():
         alma = Alma()
         try:
             # Debugging information
-            console.print(f"DEBUG: query_object - object_name: {object_name}")
+            debug(f"query_object - object_name: {object_name}")
 
             console.print(f"[cyan]{_('Querying ALMA for object: {object_name}').format(object_name=object_name)}[/cyan]")
             query_payload = {'source_name_alma': object_name}
@@ -152,7 +153,7 @@ def get_app():
         _ = i18n.get_translator(lang)
         try:
             # Debugging information
-            console.print(f"DEBUG: query_region - coordinates: {coordinates}, radius: {radius}")
+            debug(f"query_region - coordinates: {coordinates}, radius: {radius}")
 
             console.print(f"[cyan]{_('Querying ALMA for region: {coordinates} with radius {radius}').format(coordinates=coordinates, radius=radius)}[/cyan]")
             coord = parse_coordinates(ctx, coordinates)

@@ -17,6 +17,7 @@ import re # Import re
 from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+from astroquery_cli.debug import debug # Import debug function
 
 def get_app():
     import builtins
@@ -144,9 +145,9 @@ def get_app():
             console.print(builtins._("[cyan]Querying Gaia for object: {target}...[/cyan]").format(target=target)) # Use builtins._
 
             job = Gaia.launch_job(query, dump_to_file=False)
-            console.print("[dim]Job launched. Getting results...[/dim]")
+            debug("Job launched. Getting results...")
             result_table = job.get_results()
-            console.print(f"[dim]Results retrieved. Table length: {len(result_table) if result_table is not None else 0}[/dim]")
+            debug(f"Results retrieved. Table length: {len(result_table) if result_table is not None else 0}")
 
             if result_table is not None and len(result_table) > 0:
                 title = _("Gaia Main Source for '{target}'").format(target=target)
@@ -195,16 +196,16 @@ def get_app():
             login_password = typer.prompt(_("Gaia archive password"), hide_input=True)
 
         if login_user and login_password:
-            console.print(_("[dim]Logging into Gaia archive as '{user}'...[/dim]").format(user=login_user))
+            debug(_("Logging into Gaia archive as '{user}'...").format(user=login_user))
             try:
                 Gaia.login(user=login_user, password=login_password)
             except Exception as e:
                 console.print(_("[bold red]Gaia login failed: {error}[/bold red]").format(error=e))
                 console.print(_("[yellow]Proceeding with anonymous access if possible.[/yellow]"))
         elif Gaia.authenticated():
-            console.print(_("[dim]Already logged into Gaia archive as '{user}'.[/dim]").format(user=Gaia.credentials.username if Gaia.credentials else _('unknown user')))
+            debug(_("Already logged into Gaia archive as '{user}'.").format(user=Gaia.credentials.username if Gaia.credentials else _('unknown user')))
         else:
-            console.print(_("[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"))
+            debug(_("No Gaia login credentials provided. Using anonymous access."))
 
         try:
             coords_obj = parse_coordinates(ctx, target)
@@ -219,8 +220,8 @@ def get_app():
             WHERE 1=CONTAINS(POINT('ICRS', ra, dec), CIRCLE('ICRS', {coords_obj.ra.deg}, {coords_obj.dec.deg}, {rad_quantity.to(u.deg).value}))
             LIMIT {row_limit}
             """
-            console.print(_("[dim]Executing ADQL query (first {row_limit} rows):[/dim]").format(row_limit=row_limit))
-            console.print(f"[dim]{query.strip()}[/dim]")
+            debug(_("Executing ADQL query (first {row_limit} rows):").format(row_limit=row_limit))
+            debug(f"{query.strip()}")
 
             job = Gaia.launch_job(query, dump_to_file=False)
             result_table = job.get_results()
@@ -241,7 +242,7 @@ def get_app():
         finally:
             if login_user and Gaia.authenticated():
                 Gaia.logout()
-                console.print(_("[dim]Logged out from Gaia archive.[/dim]"))
+                debug(_("Logged out from Gaia archive."))
 
         if test:
             elapsed = time.perf_counter() - start
@@ -265,20 +266,20 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
         start = time.perf_counter() if test else None
 
         console.print(_("[cyan]Executing Gaia ADQL query...[/cyan]"))
-        console.print(f"[dim]{query}[/dim]")
+        debug(f"{query}")
 
         if login_user and not login_password:
             login_password = typer.prompt(_("Gaia archive password"), hide_input=True)
 
         if login_user and login_password:
-            console.print(_("[dim]Logging into Gaia archive as '{user}'...[/dim]").format(user=login_user))
+            debug(_("Logging into Gaia archive as '{user}'...").format(user=login_user))
             try:
                 Gaia.login(user=login_user, password=login_password)
             except Exception as e:
                 console.print(_("[bold red]Gaia login failed: {error}[/bold red]").format(error=e))
                 console.print(_("[yellow]Proceeding with anonymous access if possible.[/yellow]"))
         elif Gaia.authenticated():
-            console.print(_("[dim]Already logged into Gaia archive as '{user}'.[/dim]").format(user=Gaia.credentials.username if Gaia.credentials else _('unknown user')))
+            debug(_("Already logged into Gaia archive as '{user}'.").format(user=Gaia.credentials.username if Gaia.credentials else _('unknown user')))
 
         try:
             job = Gaia.launch_job(query, dump_to_file=False)
@@ -302,7 +303,7 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
         finally:
             if login_user and Gaia.authenticated():
                 Gaia.logout()
-                console.print(_("[dim]Logged out from Gaia archive.[/dim]"))
+                debug(_("Logged out from Gaia archive."))
 
         if test:
             elapsed = time.perf_counter() - start

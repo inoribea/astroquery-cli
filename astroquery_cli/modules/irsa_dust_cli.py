@@ -13,6 +13,7 @@ import re # Import re
 from io import StringIO # Import StringIO
 from contextlib import redirect_stdout # Import redirect_stdout
 from astroquery_cli.common_options import setup_debug_context # Import setup_debug_context
+from astroquery_cli.debug import debug # Import debug function
 
 def get_app():
     import builtins
@@ -115,9 +116,9 @@ def get_app():
                 table_result = IrsaDust.get_extinction_table(coordinates_list[0], map_name=map_name)
             else:
                 results = []
-                console.print(_("[dim]Fetching extinction for each target individually...[/dim]"))
+                debug(_("Fetching extinction for each target individually..."))
                 for i, coord in enumerate(coordinates_list):
-                    console.print(_("[dim]  Processing target {current_num}/{total_num}: {target_name}[/dim]").format(current_num=i+1, total_num=len(coordinates_list), target_name=targets[i]))
+                    debug(_("  Processing target {current_num}/{total_num}: {target_name}").format(current_num=i+1, total_num=len(coordinates_list), target_name=targets[i]))
                     try:
                         tbl = IrsaDust.get_extinction_table(coord, map_name=map_name)
                         tbl['target_input'] = targets[i]
@@ -173,7 +174,7 @@ def get_app():
 
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
-            console.print(_("[dim]Created output directory: {output_dir}[/dim]").format(output_dir=output_dir))
+            debug(_("Created output directory: {output_dir}").format(output_dir=output_dir))
 
         try:
             image_hdulists = IrsaDust.get_images(coords, radius=rad_quantity, map_name=map_name, image_type="ebv")
