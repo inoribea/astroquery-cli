@@ -13,16 +13,18 @@ A practical command-line interface (CLI) for selected [astroquery](https://astro
 ## Supported Modules 🧩
 
 - **ALMA**: Basic query
-- **Gaia**: Cone search
-- **MAST**: Basic query
-- **NED**: Name resolution
-- **SIMBAD**: Basic query
-- **VizieR**: Catalog search, basic query
-- **IRSA**: Placeholder, under development
-- **JPLHorizons/JPLSBDB**: Small body queries
-- **Splatalogue**: Molecular line queries
 - **ESASky**: Sky region visualization queries
-- **NASA-ADS**: Literature search and BibTeX retrieval in NASA ADS, Allow simple commands to search for "latest papers" or "highly cited reviews".
+- **Gaia**: Cone search
+- **IRSA**: Infrared Science Archive queries
+- **IRSA Dust**: Infrared Science Archive Dust queries
+- **JPLHorizons**: JPL Horizons queries
+- **JPLSBDB**: JPL Small-Body Database queries
+- **MAST**: Mikulski Archive for Space Telescopes queries
+- **NASA-ADS**: NASA Astrophysics Data System literature search and BibTeX retrieval, allows simple commands to search for "latest papers" or "highly cited reviews".
+- **NED**: NASA/IPAC Extragalactic Database name resolution
+- **SIMBAD**: SIMBAD Astronomical Database basic query
+- **Splatalogue**: Molecular line queries
+- **VizieR**: VizieR Catalogue Database catalog search, basic query
 
 _Some modules and commands are not fully implemented. Please refer to `aqc --help` for the latest status._
 
