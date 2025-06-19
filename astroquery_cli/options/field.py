@@ -18,7 +18,7 @@ def run_field():
         "jplhorizons": "jplhorizons",
         "jplsbdb": "jplsbdb",
         "mast": "mast",
-        "nasa_ads": "nasa_ads",
+        "ads": "ads",
         "ned": "ned",
         "simbad": "simbad",
         "splatalogue": "splatalogue",

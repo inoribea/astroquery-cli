@@ -22,14 +22,14 @@ def get_app():
     import builtins
     _ = builtins._
     app = typer.Typer(
-        name="nasa_ads",
+        name="ads",
         help=builtins._("Query the NASA Astrophysics Data System (ADS)."),
         invoke_without_command=True, # Add this to allow callback to run without subcommand
         no_args_is_help=False # Set to False for custom handling
     )
 
     @app.callback()
-    def nasa_ads_callback(
+    def ads_callback(
         ctx: typer.Context,
         debug: bool = typer.Option(
             False,

@@ -69,7 +69,7 @@ def setup_subcommands():
     # Import all subcommands
     from .modules import (
         simbad_cli, alma_cli, esasky_cli, gaia_cli, irsa_cli, jpl_cli, # Updated for jpl
-        mast_cli, nasa_ads_cli, ned_cli, splatalogue_cli, vizier_cli
+        mast_cli, ads_cli, ned_cli, splatalogue_cli, vizier_cli
     )
     # Restore astroquery log level after import
     logging.getLogger('astroquery').setLevel(logging.NOTSET)
@@ -80,7 +80,7 @@ def setup_subcommands():
     app.add_typer(irsa_cli.get_app(), name="irsa")
     app.add_typer(jpl_cli.get_app(), name="jpl") # Updated for jpl
     app.add_typer(mast_cli.get_app(), name="mast")
-    app.add_typer(nasa_ads_cli.get_app(), name="nasa_ads")
+    app.add_typer(ads_cli.get_app(), name="ads")
     app.add_typer(ned_cli.get_app(), name="ned")
     app.add_typer(simbad_cli.get_app(), name="simbad")
     app.add_typer(splatalogue_cli.get_app(), name="splatalogue")
