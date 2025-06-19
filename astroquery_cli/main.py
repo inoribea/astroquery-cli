@@ -68,8 +68,9 @@ def setup_subcommands():
 
     # Import all subcommands
     from .modules import (
-        simbad_cli, alma_cli, esasky_cli, gaia_cli, irsa_cli, jpl_cli, # Updated for jpl
-        mast_cli, ads_cli, ned_cli, splatalogue_cli, vizier_cli
+        simbad_cli, alma_cli, esasky_cli, gaia_cli, irsa_cli, jpl_cli,
+        mast_cli, ads_cli, ned_cli, splatalogue_cli, vizier_cli,
+        heasarc_cli, sdss_cli, eso_cli, nist_cli, exoplanet_cli
     )
     # Restore astroquery log level after import
     logging.getLogger('astroquery').setLevel(logging.NOTSET)
@@ -85,6 +86,11 @@ def setup_subcommands():
     app.add_typer(simbad_cli.get_app(), name="simbad")
     app.add_typer(splatalogue_cli.get_app(), name="splatalogue")
     app.add_typer(vizier_cli.get_app(), name="vizier")
+    app.add_typer(heasarc_cli.get_app(), name="heasarc")
+    app.add_typer(sdss_cli.get_app(), name="sdss")
+    app.add_typer(eso_cli.get_app(), name="eso")
+    app.add_typer(nist_cli.get_app(), name="nist")
+    app.command(name="exoplanet", help=builtins._("Query the NASA Exoplanet Archive."))(exoplanet_cli.get_app())
 
 @app.callback()
 def main_callback(
