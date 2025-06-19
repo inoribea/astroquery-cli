@@ -152,21 +152,21 @@ def get_app():
         import time
         start = time.perf_counter() if test else None
 
-        if target is None:
+        if target is None and not any(arg in ["-h", "--help"] for arg in ctx.args):
             help_output_capture = StringIO()
             with redirect_stdout(help_output_capture):
-                ctx.get_help()
+                try:
+                    ctx.get_help()
+                except SystemExit:
+                    pass
             full_help_text = help_output_capture.getvalue()
             
-            # Extract Usage and Arguments sections
-            usage_match = re.search(r'Usage:.*?\n', full_help_text)
-            arguments_match = re.search(r'╭─ Arguments ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
+            # Remove the "Options" section
+            full_help_text = re.sub(r'╭─ Options ─.*?(\n(?:│.*?\n)*)╰─.*─╯', '', full_help_text, flags=re.DOTALL)
+            # Remove the "Commands" section
+            full_help_text = re.sub(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', '', full_help_text, flags=re.DOTALL)
             
-            if usage_match:
-                console.print(usage_match.group(0).strip())
-            if arguments_match:
-                console.print(arguments_match.group(0))
-            
+            console.print(full_help_text)
             raise typer.Exit()
 
         console.print(_("[cyan]Querying JPL Horizons for '{target}'...[/cyan]").format(target=target))
@@ -276,15 +276,12 @@ def get_app():
                 ctx.get_help()
             full_help_text = help_output_capture.getvalue()
             
-            # Extract Usage and Arguments sections
-            usage_match = re.search(r'Usage:.*?\n', full_help_text)
-            arguments_match = re.search(r'╭─ Arguments ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
+            # Remove the "Options" section
+            full_help_text = re.sub(r'╭─ Options ─.*?(\n(?:│.*?\n)*)╰─.*─╯', '', full_help_text, flags=re.DOTALL)
+            # Remove the "Commands" section
+            full_help_text = re.sub(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', '', full_help_text, flags=re.DOTALL)
             
-            if usage_match:
-                console.print(usage_match.group(0).strip())
-            if arguments_match:
-                console.print(arguments_match.group(0))
-            
+            console.print(full_help_text)
             raise typer.Exit()
 
         console.print(_("[cyan]Querying JPL SBDB for target: '{target}'...[/cyan]").format(target=target))

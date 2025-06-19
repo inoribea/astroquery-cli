@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "astroquery_cli"
-version = "0.12.1"
+version = "0.12.5"
 description = "CLI for astroquery modules with autocompletion."
 authors = ["inoribea <inoribea@outlook.com>"]
 readme = "README.md"
