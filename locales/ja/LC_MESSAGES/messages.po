@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-16 20:34+0800\n"
+"POT-Creation-Date: 2025-06-20 03:53+0800\n"
 "PO-Revision-Date: 2025-05-18 20:49+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.15.0\n"
 
 msgid "Enable debug mode with verbose output."
 msgstr "詳細出力付きデバッグモードを有効にする。"
@@ -51,9 +51,19 @@ msgstr ""
 msgid "Show this message and exit."
 msgstr "このメッセージを表示して終了する。"
 
+msgid "User interrupted the query. Exiting safely."
+msgstr "ユーザーがクエリを中断しました。安全に終了します。"
+
 msgid "Terminal too narrow or content too complex, please open in browser:"
 msgstr ""
 "ターミナルの幅が足りないか、内容が複雑すぎます。ブラウザで開いてください："
+
+msgid ""
+"Terminal is narrow. Displaying only mission names for brevity. Use --show-"
+"all-cols to see descriptions."
+msgstr ""
+"ターミナルが狭いため、簡潔さのためにミッション名のみを表示しています。説明を"
+"見るには--show-all-colsを使用してください。"
 
 msgid ""
 "Path to save the output table (e.g., data.csv, results.ecsv, table.fits). "
@@ -68,6 +78,131 @@ msgid ""
 msgstr ""
 "保存するためのAstropyテーブル形式（例：'csv'、'ecsv'、'fits'、'votable'）。"
 "ファイル拡張子からの推論を上書きします。"
+
+msgid "Query the NASA Astrophysics Data System (ADS)."
+msgstr "NASA 天体物理データシステム (ADS) を照会します。"
+
+msgid "Perform a query on NASA ADS."
+msgstr "NASA ADS で照会を実行します。"
+
+msgid ""
+"ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', "
+"'bibcode:1998AJ....116.1009R')."
+msgstr ""
+"ADS 照会文字列 (例: 'author:\"Adam G. Riess\" year:1998', "
+"'bibcode:1998AJ....116.1009R')。"
+
+msgid "Show latest published papers (sorted by date, most recent first)."
+msgstr "最新の公開論文を表示します（日付順、新しいものから）。"
+
+msgid "Show highly cited review articles (sorted by citation count)."
+msgstr "引用数の多いレビュー論文を表示します（引用数順）。"
+
+msgid "Fields to return."
+msgstr "返すフィールド。"
+
+msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
+msgstr ""
+"結果のソート順 (例: 'date' (日付), 'citation_count' (引用数), 'score' (スコ"
+"ア))。"
+
+msgid "Maximum number of pages to retrieve."
+msgstr "取得する最大ページ数。"
+
+msgid "Number of results per page (max 200 for ADS API)."
+msgstr "ページあたりの結果数 (ADS API の最大は200)。"
+
+msgid "Maximum number of rows to display. Use -1 for all rows."
+msgstr "表示する最大行数。すべての行を表示するには -1 を使用します。"
+
+msgid "Show all columns in the output table."
+msgstr "出力テーブルにすべての列を表示します。"
+
+msgid ""
+"[red]Cannot specify both --latest and --review. Please choose only one.[/red]"
+msgstr ""
+"[red]-w/--wavelength-range と -f/--frequency-range の両方を指定することはでき"
+"ません。[/red]"
+
+msgid "[red]Please specify a query string, --latest, or --review.[/red]"
+msgstr "[red]クエリ文字列、--latest、または--reviewを指定してください。[/red]"
+
+msgid "Querying NASA ADS for latest papers"
+msgstr "NASA ADSで最新の論文を検索中。"
+
+msgid ""
+"Querying NASA ADS for highly cited review articles (using property:review)"
+msgstr "NASA ADSで高引用の総説記事を検索中（プロパティ:reviewを使用）。"
+
+msgid "Querying NASA ADS with: {query_string}"
+msgstr "NASA ADSをで検索中。"
+
+msgid ""
+"[red]Error: No valid query could be formed. Please check your inputs.[/red]"
+msgstr ""
+"[red]エラー: 有効なクエリを形成できませんでした。入力を確認してください。[/"
+"red][red]エラー: 有効なクエリを形成できませんでした。入力を確認してください。"
+"[/red]"
+
+msgid ""
+"[red]Error: No NASA ADS API token found! Please get yours from: https://"
+"ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY "
+"environment variable or in your ~/.aqc/config.ini file.[/red]"
+msgstr ""
+"[red]エラー: NASA ADS APIトークンが見つかりません！次のURLから取得してくださ"
+"い: https://ui.adsabs.harvard.edu/user/settings/token。そして、ADS_DEV_KEY環"
+"境変数または~/.aqc/config.iniファイルに設定してください。[/red]"
+
+msgid "[yellow]No results found for your ADS query.[/yellow]"
+msgstr "[yellow]ADS照会で結果は見つかりませんでした。[/yellow]"
+
+msgid ""
+"[yellow]None of the requested fields were found in the ADS query results.[/"
+"yellow]"
+msgstr "[yellow]ADS照会で結果は見つかりませんでした。[/yellow]"
+
+msgid "[green]Found {count} result(s) from ADS.[/green]"
+msgstr "[green]ADS から {count} 件の結果が見つかりました。[/green]"
+
+msgid "ADS Query Results"
+msgstr "ADS 照会結果"
+
+msgid "NASA ADS query"
+msgstr "NASA ADS 照会"
+
+msgid "Get BibTeX for a NASA ADS bibcode."
+msgstr "NASA ADSのBibcodeのBibTeXを取得します。"
+
+msgid "List of ADS bibcodes."
+msgstr "ADS bibcode のリスト。"
+
+msgid "File to save BibTeX entries (e.g., refs.bib)."
+msgstr "BibTeX エントリを保存するファイル (例: refs.bib)。"
+
+msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
+msgstr "[cyan]{bibcode_list} のBibTeXを取得中...[/cyan]"
+
+msgid ""
+"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
+"rate-limited.[/yellow]"
+msgstr ""
+"[yellow]警告: ADS_DEV_KEY 環境変数が設定されていません。クエリがレート制限さ"
+"れる可能性があります。[/yellow]"
+
+msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
+msgstr "[yellow]{bibcode} のBibTeXを取得できませんでした。[/yellow]"
+
+msgid "[green]BibTeX entries retrieved:[/green]"
+msgstr "[green]取得されたBibTeXエントリ:[/green]"
+
+msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
+msgstr "[green]BibTeXエントリを '{file_path}' に保存しました。[/green]"
+
+msgid "[yellow]No BibTeX entries could be retrieved.[/yellow]"
+msgstr "[yellow]BibTeXエントリは取得できませんでした。[/yellow]"
+
+msgid "NASA ADS get_bibtex"
+msgstr "NASA ADS get_bibtex"
 
 msgid "Query the ALMA archive."
 msgstr "ALMA を検索します。"
@@ -87,12 +222,6 @@ msgstr "科学データのみを照会します。"
 msgid "Specify payload fields to query (e.g., 'band_list', 'target_name')."
 msgstr ""
 "照会する payload フィールドを指定します (例: 'band_list', 'target_name')。"
-
-msgid "Maximum number of rows to display. Use -1 for all rows."
-msgstr "表示する最大行数。すべての行を表示するには -1 を使用します。"
-
-msgid "Show all columns in the output table."
-msgstr "出力テーブルにすべての列を表示します。"
 
 msgid ""
 "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
@@ -209,11 +338,11 @@ msgid "Search radius (e.g., '0.1deg', '5arcmin', '10s')."
 msgstr "検索半径 (例: '0.1deg', '5arcmin')。"
 
 msgid ""
-"Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). "
+"Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'atnfpsr (CDA)'). "
 "Can be specified multiple times. Use 'object' command to see all available "
 "catalogs."
 msgstr ""
-"照会するカタログを指定します（例：'XMM-Newton (XMM-SSC)'、'Chandra (CDA)'）。"
+"照会するカタログを指定します（例：'XMM-Newton (XMM-SSC)'、'atnfpsr (CDA)'）。"
 "複数回指定できます。「object」コマンドを使用して、利用可能なすべてのカタログ"
 "を表示します。"
 
@@ -271,6 +400,34 @@ msgstr ""
 
 msgid "ESASky list_catalogs"
 msgstr "ESASky カタログ一覧"
+
+msgid "Right Ascension in degrees."
+msgstr "赤経（度単位）。"
+
+msgid "Declination in degrees."
+msgstr "赤緯（度単位）。"
+
+msgid "Search radius in degrees (for cone search)."
+msgstr "検索半径（度単位、コーンサーチ用）。"
+
+msgid ""
+"[red]Error: Please provide either --object-name or both --ra and --dec (with "
+"--radius).[/red]"
+msgstr ""
+"[red]エラー：--object-nameまたは--raと--dec（--radius付き）の両方を指定してく"
+"ださい。[/red]"
+
+msgid "Listing ESO instruments..."
+msgstr "ESOの観測装置をリストアップ中..."
+
+msgid "[green]Available ESO Instruments:[/green]"
+msgstr "[green]利用可能なESO観測装置：[/green]"
+
+msgid "ESO list instruments"
+msgstr "ESO観測装置リスト"
+
+msgid "Planet name (e.g., 'Kepler-186 f')."
+msgstr "惑星名（例：'Kepler-186 f'）。"
 
 msgid "Query the Gaia archive."
 msgstr "Gaia アーカイブを照会します。"
@@ -354,32 +511,17 @@ msgstr ""
 msgid "Gaia archive password"
 msgstr "Gaia アーカイブパスワード"
 
-msgid "[dim]Logging into Gaia archive as '{user}'...[/dim]"
-msgstr "[dim]ユーザー '{user}' としてGaiaアーカイブにログイン中...[/dim]"
-
 msgid "[bold red]Gaia login failed: {error}[/bold red]"
 msgstr "[bold red]Gaia ログインに失敗しました: {error}[/bold red]"
 
 msgid "[yellow]Proceeding with anonymous access if possible.[/yellow]"
 msgstr "[yellow]可能であれば匿名アクセスを続行します。[/yellow]"
 
-msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
-msgstr ""
-"[dim]ユーザー '{user}' として既にGaiaアーカイブにログインしています。[/dim]"
-
 msgid "unknown user"
 msgstr "不明なユーザー"
 
-msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
-msgstr ""
-"[dim]Gaiaのログイン資格情報が提供されていません。匿名アクセスを使用します。[/"
-"dim]"
-
 msgid "[bold red]Invalid radius provided.[/bold red]"
 msgstr "[bold red]指定された半径が無効です。[/bold red]"
-
-msgid "[dim]Executing ADQL query (first {row_limit} rows):[/dim]"
-msgstr "[dim]ADQLクエリを実行中 (最初の {row_limit} 行):[/dim]"
 
 msgid "Gaia Cone Search Results ({table_name})"
 msgstr "Gaia コーンサーチ結果 ({table_name})"
@@ -396,9 +538,6 @@ msgstr ""
 
 msgid "Gaia cone search on {table_name}"
 msgstr "{table_name} でのGaiaコーンサーチ"
-
-msgid "[dim]Logged out from Gaia archive.[/dim]"
-msgstr "[dim]Gaiaアーカイブからログアウトしました。[/dim]"
 
 msgid "Execute a raw ADQL query (synchronous)."
 msgstr "生のADQLクエリを実行します (同期)。"
@@ -425,6 +564,33 @@ msgid ""
 msgstr ""
 "[bold red]サーバーからのADQLクエリエラー詳細:\n"
 "{error_details}[/bold red]"
+
+msgid ""
+"Query a specific HEASARC mission. Use 'heasarc list' to see available "
+"missions."
+msgstr ""
+"特定のHEASARCミッションをクエリします。利用可能なミッションを見るに"
+"は'heasarc list'を使用してください。"
+
+msgid "HEASARC mission name (e.g., 'atnfpsr')."
+msgstr "HEASARCミッション名（例：'atnfpsr'）。"
+
+msgid "Querying HEASARC mission: {mission}..."
+msgstr "HEASARCミッションをクエリ中：..."
+
+msgid "Filter missions by a starting prefix (e.g., 'atnfpsr')."
+msgstr "接頭辞でミッションをフィルタリング（例：'atnfpsr'）。"
+
+msgid "Listing HEASARC missions..."
+msgstr "HEASARCミッションをリストアップ中..."
+
+msgid ""
+"[cyan]Filtered from {original_count} to {filtered_count} missions with "
+"prefix \"{prefix}\".[/cyan]"
+msgstr "[cyan]接頭辞\"\"でからミッションにフィルタリングされました。[/cyan]"
+
+msgid "HEASARC list missions"
+msgstr "HEASARCミッションリスト"
 
 msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
 msgstr "NASA/IPAC 赤外線科学アーカイブ (IRSA) を照会します。"
@@ -571,9 +737,6 @@ msgstr " コレクション {collection} 内"
 msgid "IRSA query_region"
 msgstr "IRSA query_region"
 
-msgid "Query IRSA dust maps."
-msgstr "IRSA ダストマップを照会します。"
-
 msgid "Get E(B-V) dust extinction values for one or more coordinates."
 msgstr "1つ以上の座標における E(B-V) ダスト吸収値を取得します。"
 
@@ -598,13 +761,6 @@ msgstr "[cyan]IRSA Dust ({map_name}) で {targets_str} の吸収を照会中...[
 
 msgid "[red]No valid coordinates parsed.[/red]"
 msgstr "[red]有効な座標が解析されませんでした。[/red]"
-
-msgid "[dim]Fetching extinction for each target individually...[/dim]"
-msgstr "[dim]各ターゲットの吸収を個別に取得中...[/dim]"
-
-msgid "[dim]  Processing target {current_num}/{total_num}: {target_name}[/dim]"
-msgstr ""
-"[dim]  ターゲット {current_num}/{total_num}: {target_name} を処理中[/dim]"
 
 msgid "[yellow]Could not get extinction for '{target_name}': {error}[/yellow]"
 msgstr "[yellow]'{target_name}' の吸収を取得できませんでした: {error}[/yellow]"
@@ -650,9 +806,6 @@ msgstr ""
 msgid "[bold red]Error parsing input: {error}[/bold red]"
 msgstr "[bold red]入力の解析エラー: {error}[/bold red]"
 
-msgid "[dim]Created output directory: {output_dir}[/dim]"
-msgstr "[dim]出力ディレクトリを作成しました: {output_dir}[/dim]"
-
 msgid ""
 "[yellow]No map images returned by IRSA Dust ({map_name}) for this region.[/"
 "yellow]"
@@ -665,9 +818,6 @@ msgstr "[green]ダストマップを保存しました: {filename}[/green]"
 
 msgid "IRSA Dust ({map_name}) get_images"
 msgstr "IRSA Dust ({map_name}) get_images"
-
-msgid "Query JPL Horizons ephemeris service."
-msgstr "JPL Horizons 天体暦サービスを照会します。"
 
 msgid "Query ephemerides, orbital elements, or vectors for a target object."
 msgstr "ターゲット天体の天体暦、軌道要素、またはベクトルを照会します。"
@@ -740,52 +890,15 @@ msgstr "使用する JPL Horizons サーバー。選択肢: {server_list}"
 msgid "[cyan]Querying JPL Horizons for '{target}'...[/cyan]"
 msgstr "[cyan]'{target}' のJPL Horizonsデータを照会中...[/cyan]"
 
-msgid "[dim]Using JPL server: {server}[/dim]"
-msgstr "[dim]JPLサーバーを使用中: {server}[/dim]"
-
-msgid "[dim]Using epoch range: {start} to {end} with step {step}[/dim]"
-msgstr "[dim]元期範囲を使用中: {start} から {end} まで、ステップ {step}[/dim]"
-
-msgid "[dim]Using epoch dict: {epoch_dict}[/dim]"
-msgstr "[dim]元期辞書を使用中: {epoch_dict}[/dim]"
-
-msgid "[bold red]Error parsing --epochs as dict: {error}[/bold red]"
-msgstr "[bold red]--epochs を辞書として解析中にエラー: {error}[/bold red]"
-
 msgid ""
-"[yellow]Example: --epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', "
-"'step':'1d'}}\"[/yellow]"
+"[red]Error parsing epoch dictionary: {error}. Please ensure it's a valid "
+"Python dictionary string.[/red]"
 msgstr ""
-"[yellow]例: --epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', "
-"'step':'1d'}}\"[/yellow]"
-
-msgid "[dim]Using epoch list: {epoch_list}[/dim]"
-msgstr "[dim]元期リストを使用中: {epoch_list}[/dim]"
-
-msgid "[dim]Using single epoch: {epoch}[/dim]"
-msgstr "[dim]単一元期を使用中: {epoch}[/dim]"
-
-msgid ""
-"[dim]No epoch specified for {ephem_type}, using current JD: {epoch}[/dim]"
-msgstr ""
-"[dim]{ephem_type} の元期が指定されていません。現在時刻を使用します: {epoch}[/"
-"dim]"
-
-msgid ""
-"[yellow]No epoch specified for OBSERVER, using today as default: {epoch_dict}"
-"[/yellow]"
-msgstr ""
-"[yellow]OBSERVERの時代が指定されていません。本日をデフォルトとして使用しま"
-"す: {epoch_dict}[yellow]"
+"[red]エポック辞書の解析エラー：。有効なPython辞書文字列であることを確認してく"
+"ださい。[/red]"
 
 msgid "{ephem_type} for {target}"
 msgstr "{target} の {ephem_type}"
-
-msgid "[dim]Requesting quantities: {quantities}[/dim]"
-msgstr "[dim]要求された物理量: {quantities}[/dim]"
-
-msgid "[dim]Requesting quantities for vectors: {quantities}[/dim]"
-msgstr "[dim]ベクトルの要求された物理量: {quantities}[/dim]"
 
 msgid ""
 "[yellow]No results found for '{target}' with the specified parameters.[/"
@@ -798,9 +911,6 @@ msgstr "JPL Horizons天体"
 
 msgid "Query JPL Small-Body Database (SBDB)."
 msgstr "JPL 小天体データベース (SBDB) を照会します。"
-
-msgid "Query JPL SBDB for a small body."
-msgstr "JPL SBDBで小惑星を照会します。"
 
 msgid "Target small body (e.g., 'Ceres', '1P', '2023 BU')."
 msgstr ""
@@ -973,125 +1083,6 @@ msgstr ""
 msgid "MAST get_product_urls"
 msgstr "MAST get_product_urls"
 
-msgid "Query the NASA Astrophysics Data System (ADS)."
-msgstr "NASA 天体物理データシステム (ADS) を照会します。"
-
-msgid "Perform a query on NASA ADS."
-msgstr "NASA ADS で照会を実行します。"
-
-msgid ""
-"ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', "
-"'bibcode:1998AJ....116.1009R')."
-msgstr ""
-"ADS 照会文字列 (例: 'author:\"Adam G. Riess\" year:1998', "
-"'bibcode:1998AJ....116.1009R')。"
-
-msgid "Show latest published papers (sorted by date, most recent first)."
-msgstr "最新の公開論文を表示します（日付順、新しいものから）。"
-
-msgid "Show highly cited review articles (sorted by citation count)."
-msgstr "引用数の多いレビュー論文を表示します（引用数順）。"
-
-msgid "Fields to return."
-msgstr "返すフィールド。"
-
-msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
-msgstr ""
-"結果のソート順 (例: 'date' (日付), 'citation_count' (引用数), 'score' (スコ"
-"ア))。"
-
-msgid "Maximum number of pages to retrieve."
-msgstr "取得する最大ページ数。"
-
-msgid "Number of results per page (max 200 for ADS API)."
-msgstr "ページあたりの結果数 (ADS API の最大は200)。"
-
-msgid ""
-"[red]Cannot specify both --latest and --review. Please choose only one.[/red]"
-msgstr ""
-"[red]-w/--wavelength-range と -f/--frequency-range の両方を指定することはでき"
-"ません。[/red]"
-
-msgid "[red]Please specify a query string, --latest, or --review.[/red]"
-msgstr "[red]クエリ文字列、--latest、または--reviewを指定してください。[/red]"
-
-msgid "Querying NASA ADS for latest papers"
-msgstr "NASA ADSで最新の論文を検索中。"
-
-msgid ""
-"Querying NASA ADS for highly cited review articles (using property:review)"
-msgstr "NASA ADSで高引用の総説記事を検索中（プロパティ:reviewを使用）。"
-
-msgid "Querying NASA ADS with: {query_string}"
-msgstr "NASA ADSをで検索中。"
-
-msgid ""
-"[red]Error: No valid query could be formed. Please check your inputs.[/red]"
-msgstr ""
-"[red]エラー: 有効なクエリを形成できませんでした。入力を確認してください。[/"
-"red][red]エラー: 有効なクエリを形成できませんでした。入力を確認してください。"
-"[/red]"
-
-msgid ""
-"[red]Error: No NASA ADS API token found! Please get yours from: https://"
-"ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY "
-"environment variable or in your ~/.aqc/config.ini file.[/red]"
-msgstr ""
-"[red]エラー: NASA ADS APIトークンが見つかりません！次のURLから取得してくださ"
-"い: https://ui.adsabs.harvard.edu/user/settings/token。そして、ADS_DEV_KEY環"
-"境変数または~/.aqc/config.iniファイルに設定してください。[/red]"
-
-msgid "[yellow]No results found for your ADS query.[/yellow]"
-msgstr "[yellow]ADS照会で結果は見つかりませんでした。[/yellow]"
-
-msgid ""
-"[yellow]None of the requested fields were found in the ADS query results.[/"
-"yellow]"
-msgstr "[yellow]ADS照会で結果は見つかりませんでした。[/yellow]"
-
-msgid "[green]Found {count} result(s) from ADS.[/green]"
-msgstr "[green]ADS から {count} 件の結果が見つかりました。[/green]"
-
-msgid "ADS Query Results"
-msgstr "ADS 照会結果"
-
-msgid "NASA ADS query"
-msgstr "NASA ADS 照会"
-
-msgid "Get BibTeX for a NASA ADS bibcode."
-msgstr "NASA ADSのBibcodeのBibTeXを取得します。"
-
-msgid "List of ADS bibcodes."
-msgstr "ADS bibcode のリスト。"
-
-msgid "File to save BibTeX entries (e.g., refs.bib)."
-msgstr "BibTeX エントリを保存するファイル (例: refs.bib)。"
-
-msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
-msgstr "[cyan]{bibcode_list} のBibTeXを取得中...[/cyan]"
-
-msgid ""
-"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
-"rate-limited.[/yellow]"
-msgstr ""
-"[yellow]警告: ADS_DEV_KEY 環境変数が設定されていません。クエリがレート制限さ"
-"れる可能性があります。[/yellow]"
-
-msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
-msgstr "[yellow]{bibcode} のBibTeXを取得できませんでした。[/yellow]"
-
-msgid "[green]BibTeX entries retrieved:[/green]"
-msgstr "[green]取得されたBibTeXエントリ:[/green]"
-
-msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
-msgstr "[green]BibTeXエントリを '{file_path}' に保存しました。[/green]"
-
-msgid "[yellow]No BibTeX entries could be retrieved.[/yellow]"
-msgstr "[yellow]BibTeXエントリは取得できませんでした。[/yellow]"
-
-msgid "NASA ADS get_bibtex"
-msgstr "NASA ADS get_bibtex"
-
 msgid "Query the NASA/IPAC Extragalactic Database (NED)."
 msgstr "NASA/IPAC 銀河系外データベース (NED) を照会します。"
 
@@ -1173,6 +1164,132 @@ msgstr ""
 
 msgid "NED images"
 msgstr "NED画像"
+
+msgid ""
+"Error: Wavelength range (MINWAV and MAXWAV) must be provided either as "
+"arguments or implicitly via a line name query."
+msgstr ""
+"エラー：波長範囲（MINWAVとMAXWAV）は引数として、または線名クエリを介して暗黙"
+"的に指定する必要があります。"
+
+msgid ""
+"Query the Sloan Digital Sky Survey (SDSS) database.\n"
+"\n"
+"Perform a query on SDSS. You must provide parameters for exactly one of the "
+"following query types:\n"
+"\n"
+"  1. Cone Search:\n"
+"     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
+"     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n"
+"  2. Spectroscopic Object ID Search:\n"
+"     --specobjid <ID> [--objtype <TYPE>]\n"
+"     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')\n"
+"  3. Fiber ID Search:\n"
+"     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
+"     (e.g., --plate 123 --mjd 51608 --fiberid 1)"
+msgstr ""
+"スローン・デジタル・スカイ・サーベイ（SDSS）データベースをクエリします。\n"
+"\n"
+"SDSSでクエリを実行します。以下のクエリタイプのうち正確に1つに対してパラメータ"
+"を指定する必要があります：\n"
+"\n"
+"  1. コーンサーチ：\n"
+"     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
+"     （例：--ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin'）\n"
+"  2. 分光観測オブジェクトID検索：\n"
+"     --specobjid <ID> [--objtype <TYPE>]\n"
+"     （例：--specobjid 2634622337315530752 --objtype 'GALAXY'）\n"
+"  3. ファイバーID検索：\n"
+"     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
+"     （例：--plate 123 --mjd 51608 --fiberid 1）"
+
+msgid ""
+"Perform a query on SDSS using the options provided to the main 'sdss' "
+"command."
+msgstr ""
+"メインの'sdss'コマンドに提供されたオプションを使用してSDSSでクエリを実行しま"
+"す。"
+
+msgid ""
+"Right Ascension (e.g., '10.5 deg', '0h42m30s'). Required for cone search."
+msgstr "赤経（例：'10.5 deg'、'0h42m30s'）。コーンサーチに必要です。"
+
+msgid ""
+"Object type (e.g., 'STAR', 'GALAXY', 'QSO'). Note: This parameter is only "
+"applicable for queries using specobjid or plate/mjd/fiberid, not for cone "
+"searches."
+msgstr ""
+"オブジェクトタイプ（例：'STAR'、'GALAXY'、'QSO'）。注：このパラメータは"
+"specobjidまたはplate/mjd/fiberidを使用したクエリにのみ適用され、コーンサーチ"
+"には適用されません。"
+
+msgid "Spectroscopic object ID. Required for specobjid search."
+msgstr "分光観測オブジェクトID。specobjid検索に必要です。"
+
+msgid "Plate number for spectroscopic data. Required for fiber ID search."
+msgstr "分光観測データのプレート番号。ファイバーID検索に必要です。"
+
+msgid ""
+"Modified Julian Date for spectroscopic data. Required for fiber ID search."
+msgstr "分光観測データの修正ユリウス日。ファイバーID検索に必要です。"
+
+msgid "Fiber ID for spectroscopic data. Required for fiber ID search."
+msgstr "分光観測データのファイバーID。ファイバーID検索に必要です。"
+
+msgid "Querying SDSS..."
+msgstr "SDSSをクエリ中..."
+
+msgid ""
+"[red]Error: For a cone search, --ra, --dec, and --radius are all required. "
+"Please provide all three.[/red]"
+msgstr ""
+"[red]エラー：コーンサーチには--ra、--dec、--radiusのすべてが必要です。3つすべ"
+"てを指定してください。[/red]"
+
+msgid ""
+"[red]Error: Cannot combine cone search parameters (--ra, --dec, --radius) "
+"with other query types (--specobjid or --plate, --mjd, --fiberid).[/red]"
+msgstr ""
+"[red]エラー：コーンサーチパラメータ（--ra、--dec、--radius）を他のクエリタイ"
+"プ（--specobjidまたは--plate、--mjd、--fiberid）と組み合わせることはできませ"
+"ん。[/red]"
+
+msgid ""
+"[red]Error: Cannot combine --specobjid with other query types (cone search "
+"or fiber ID search).[/red]"
+msgstr ""
+"[red]エラー：--specobjidを他のクエリタイプ（コーンサーチまたはファイバーID検"
+"索）と組み合わせることはできません。[/red]"
+
+msgid ""
+"[red]Error: For a fiber ID search, --plate, --mjd, and --fiberid are all "
+"required. Please provide all three.[/red]"
+msgstr ""
+"[red]エラー：ファイバーID検索には--plate、--mjd、--fiberidのすべてが必要で"
+"す。3つすべてを指定してください。[/red]"
+
+msgid ""
+"[red]Error: Cannot combine fiber ID search parameters (--plate, --mjd, --"
+"fiberid) with other query types (cone search or specobjid search).[/red]"
+msgstr ""
+"[red]エラー：ファイバーID検索パラメータ（--plate、--mjd、--fiberid）を他のク"
+"エリタイプ（コーンサーチまたはspecobjid検索）と組み合わせることはできません。"
+"[/red]"
+
+msgid ""
+"[red]Error: No valid query parameters provided. Please specify parameters "
+"for one of the following query types: coordinates (--ra, --dec, --radius), "
+"or --specobjid, or --plate, --mjd, and --fiberid.[/red]"
+msgstr ""
+"[red]エラー：有効なクエリパラメータが指定されていません。以下のクエリタイプの"
+"いずれかに対してパラメータを指定してください：座標（--ra、--dec、--radius）、"
+"または--specobjid、または--plate、--mjd、--fiberid。[/red]"
+
+msgid ""
+"[green]Filtered {filtered_count} results for objtype '{objtype}' from "
+"{initial_count} total.[/green]"
+msgstr ""
+"[green]合計件からobjtype ''の件の結果をフィルタリングしました。[/green]"
 
 msgid "SIMBAD astronomical database."
 msgstr "SIMBAD 天文データベース。"
@@ -1465,18 +1582,6 @@ msgstr "使用するVizieRサーバー。選択肢: {server_list}"
 msgid "[cyan]Searching for VizieR catalogs...[/cyan]"
 msgstr "[cyan]VizieRカタログを検索中...[/cyan]"
 
-msgid "[dim]Using VizieR server: {server_url}[/dim]"
-msgstr "[dim]VizieRサーバーを使用中: {server_url}[/dim]"
-
-msgid "[dim]Keywords: {keywords_list}[/dim]"
-msgstr "[dim]キーワード: {keywords_list}[/dim]"
-
-msgid "[dim]UCD: {ucd_val}[/dim]"
-msgstr "[dim]UCD: {ucd_val}[/dim]"
-
-msgid "[dim]Source Name: {source_val}[/dim]"
-msgstr "[dim]ソース名: {source_val}[/dim]"
-
 msgid ""
 "[yellow]Please provide at least one search criterion (keyword, ucd, or "
 "source name).[/yellow]"
@@ -1613,9 +1718,6 @@ msgstr ""
 "[cyan]天体 '{target_name}' のデータをカタログ {catalog_list} でVizieR照会"
 "中...[/cyan]"
 
-msgid "[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]"
-msgstr "[dim]VizieRサーバーを使用中: {server_url}, 行制限: {limit}[/dim]"
-
 msgid "[yellow]No results returned from VizieR for this query.[/yellow]"
 msgstr "[yellow]この照会ではVizieRから結果が返されませんでした。[/yellow]"
 
@@ -1662,6 +1764,9 @@ msgstr ""
 
 msgid "Column filters (e.g., 'Imag<15'). Can be specified multiple times."
 msgstr "列フィルター (例: 'Imag<15')。複数指定可能です。"
+
+msgid ", "
+msgstr ""
 
 msgid ""
 "[bold red]Error: Specify either --radius (for cone search) OR (--width and --"
@@ -1713,6 +1818,9 @@ msgid ""
 msgstr ""
 "[yellow]この照会タイプには、少なくとも --constraint(s) または --keyword(s) を"
 "指定してください。[/yellow]"
+
+msgid "keywords"
+msgstr "キーワード"
 
 msgid "Vizier constraints"
 msgstr "Vizierの制約"

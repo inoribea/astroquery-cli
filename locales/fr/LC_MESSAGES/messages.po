@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-16 20:34+0800\n"
+"POT-Creation-Date: 2025-06-20 03:53+0800\n"
 "PO-Revision-Date: 2025-05-18 20:49+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.15.0\n"
 
 msgid "Enable debug mode with verbose output."
 msgstr "Activer le mode débogage avec sortie détaillée."
@@ -53,10 +53,20 @@ msgstr ""
 msgid "Show this message and exit."
 msgstr "Afficher ce message et quitter."
 
+msgid "User interrupted the query. Exiting safely."
+msgstr "L'utilisateur a interrompu la requête. Sortie en toute sécurité."
+
 msgid "Terminal too narrow or content too complex, please open in browser:"
 msgstr ""
 "Terminal trop étroit ou contenu trop complexe, veuillez ouvrir dans le "
 "navigateur :"
+
+msgid ""
+"Terminal is narrow. Displaying only mission names for brevity. Use --show-"
+"all-cols to see descriptions."
+msgstr ""
+"Le terminal est étroit. Affichage uniquement des noms de missions par souci "
+"de concision. Utilisez --show-all-cols pour voir les descriptions."
 
 msgid ""
 "Path to save the output table (e.g., data.csv, results.ecsv, table.fits). "
@@ -72,6 +82,141 @@ msgstr ""
 "Format de table Astropy pour l'enregistrement (par exemple, 'csv', 'ecsv', "
 "'fits', 'votable'). Annule l'inférence à partir de l'extension du nom de "
 "fichier."
+
+msgid "Query the NASA Astrophysics Data System (ADS)."
+msgstr "Interroger le système de données astrophysiques de la NASA (ADS)."
+
+msgid "Perform a query on NASA ADS."
+msgstr "Effectuer une requête sur NASA ADS."
+
+msgid ""
+"ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', "
+"'bibcode:1998AJ....116.1009R')."
+msgstr ""
+"Chaîne de requête ADS (par exemple, 'author:\"Adam G. Riess\" year:1998', "
+"'bibcode:1998AJ....116.1009R')."
+
+msgid "Show latest published papers (sorted by date, most recent first)."
+msgstr ""
+"Afficher les derniers articles publiés (triés par date, les plus récents en "
+"premier)."
+
+msgid "Show highly cited review articles (sorted by citation count)."
+msgstr ""
+"Afficher les articles de revue très cités (triés par nombre de citations)."
+
+msgid "Fields to return."
+msgstr "Champs à retourner."
+
+msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
+msgstr ""
+"Trier les résultats par (par exemple, 'date', 'citation_count', 'score')."
+
+msgid "Maximum number of pages to retrieve."
+msgstr "Nombre maximum de pages à récupérer."
+
+msgid "Number of results per page (max 200 for ADS API)."
+msgstr "Nombre de résultats par page (max 200 pour l'API ADS)."
+
+msgid "Maximum number of rows to display. Use -1 for all rows."
+msgstr ""
+"Nombre maximum de lignes à afficher. Utilisez -1 pour toutes les lignes."
+
+msgid "Show all columns in the output table."
+msgstr "Afficher toutes les colonnes dans le tableau de sortie."
+
+msgid ""
+"[red]Cannot specify both --latest and --review. Please choose only one.[/red]"
+msgstr ""
+"[red]Vous ne pouvez pas spécifier à la fois -w/--wavelength-range et -f/--"
+"frequency-range.[/red]"
+
+msgid "[red]Please specify a query string, --latest, or --review.[/red]"
+msgstr ""
+"[red]Veuillez spécifier une chaîne de requête, --latest, ou --review.[/red]"
+"[red]Veuillez spécifier une chaîne de requête, --latest, ou --review.[/red]"
+
+msgid "Querying NASA ADS for latest papers"
+msgstr "Interrogation de NASA ADS pour les derniers articles."
+
+msgid ""
+"Querying NASA ADS for highly cited review articles (using property:review)"
+msgstr ""
+"Interrogation de NASA ADS pour les articles de revue très cités (en "
+"utilisant la propriété :review).Interrogation de NASA ADS pour les articles "
+"de revue très cités (en utilisant la propriété :review)."
+
+msgid "Querying NASA ADS with: {query_string}"
+msgstr "Interrogation de NASA ADS avec : "
+
+msgid ""
+"[red]Error: No valid query could be formed. Please check your inputs.[/red]"
+msgstr ""
+"[red]Erreur : Aucune requête valide n'a pu être formée. Veuillez vérifier "
+"vos entrées.[/red][red]Erreur : Aucune requête valide n'a pu être formée. "
+"Veuillez vérifier vos entrées.[/red]"
+
+msgid ""
+"[red]Error: No NASA ADS API token found! Please get yours from: https://"
+"ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY "
+"environment variable or in your ~/.aqc/config.ini file.[/red]"
+msgstr ""
+"[red]Erreur : Aucun jeton d'API NASA ADS trouvé ! Veuillez obtenir le vôtre "
+"à l'adresse suivante : https://ui.adsabs.harvard.edu/user/settings/token et "
+"le définir dans la variable d'environnement ADS_DEV_KEY ou dans votre "
+"fichier ~/.aqc/config.ini.[/red]"
+
+msgid "[yellow]No results found for your ADS query.[/yellow]"
+msgstr "[yellow]Aucun résultat trouvé pour votre requête ADS.[/yellow]"
+
+msgid ""
+"[yellow]None of the requested fields were found in the ADS query results.[/"
+"yellow]"
+msgstr "[yellow]Aucun résultat trouvé pour votre requête ADS.[/yellow]"
+
+msgid "[green]Found {count} result(s) from ADS.[/green]"
+msgstr "[green]Trouvé {count} résultat(s) d'ADS.[/green]"
+
+msgid "ADS Query Results"
+msgstr "Résultats de la requête ADS"
+
+msgid "NASA ADS query"
+msgstr "Requête NASA ADS"
+
+msgid "Get BibTeX for a NASA ADS bibcode."
+msgstr "Obtenir BibTeX pour un bibcode NASA ADS."
+
+msgid "List of ADS bibcodes."
+msgstr "Liste des bibcodes ADS."
+
+msgid "File to save BibTeX entries (e.g., refs.bib)."
+msgstr "Fichier pour enregistrer les entrées BibTeX (par exemple, refs.bib)."
+
+msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
+msgstr "[cyan]Récupération de BibTeX pour : {bibcode_list}...[/cyan]"
+
+msgid ""
+"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
+"rate-limited.[/yellow]"
+msgstr ""
+"[yellow]Avertissement : La variable d'environnement ADS_DEV_KEY n'est pas "
+"définie. Les requêtes peuvent être soumises à des limitations de débit.[/"
+"yellow]"
+
+msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
+msgstr "[yellow]Impossible de récupérer BibTeX pour {bibcode}.[/yellow]"
+
+msgid "[green]BibTeX entries retrieved:[/green]"
+msgstr "[green]Entrées BibTeX récupérées :[/green]"
+
+msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
+msgstr "[green]Entrées BibTeX enregistrées dans '{file_path}'.[/green]"
+
+msgid "[yellow]No BibTeX entries could be retrieved.[/yellow]"
+msgstr "[yellow]Aucune entrée BibTeX n'a pu être récupérée.[/yellow]"
+
+msgid "NASA ADS get_bibtex"
+msgstr "NASA ADS get_bibtex"
 
 msgid "Query the ALMA archive."
 msgstr "Interroger les archives ALMA."
@@ -92,13 +237,6 @@ msgid "Specify payload fields to query (e.g., 'band_list', 'target_name')."
 msgstr ""
 "Spécifier les champs de la charge utile à interroger (par exemple, "
 "'band_list', 'target_name')."
-
-msgid "Maximum number of rows to display. Use -1 for all rows."
-msgstr ""
-"Nombre maximum de lignes à afficher. Utilisez -1 pour toutes les lignes."
-
-msgid "Show all columns in the output table."
-msgstr "Afficher toutes les colonnes dans le tableau de sortie."
 
 msgid ""
 "[yellow]Payload item '{item}' is not a key=value pair. Ignoring.[/yellow]"
@@ -223,12 +361,12 @@ msgid "Search radius (e.g., '0.1deg', '5arcmin', '10s')."
 msgstr "Rayon de recherche (par exemple, '0.1deg', '5arcmin')."
 
 msgid ""
-"Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). "
+"Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'atnfpsr (CDA)'). "
 "Can be specified multiple times. Use 'object' command to see all available "
 "catalogs."
 msgstr ""
 "Spécifiez les catalogues à interroger (par exemple, 'XMM-Newton (XMM-SSC)', "
-"'Chandra (CDA)'). Peut être spécifié plusieurs fois. Utilisez la commande "
+"'atnfpsr (CDA)'). Peut être spécifié plusieurs fois. Utilisez la commande "
 "'object' pour voir tous les catalogues disponibles.Spécifier les catalogues "
 "à interroger (par exemple, 'Gaia DR3'). Peut être spécifié plusieurs fois."
 
@@ -293,6 +431,34 @@ msgstr ""
 
 msgid "ESASky list_catalogs"
 msgstr "ESASky list_catalogs"
+
+msgid "Right Ascension in degrees."
+msgstr "Ascension droite en degrés."
+
+msgid "Declination in degrees."
+msgstr "Déclinaison en degrés."
+
+msgid "Search radius in degrees (for cone search)."
+msgstr "Rayon de recherche en degrés (pour une recherche conique)."
+
+msgid ""
+"[red]Error: Please provide either --object-name or both --ra and --dec (with "
+"--radius).[/red]"
+msgstr ""
+"[red]Erreur : Veuillez fournir soit --object-name, soit à la fois --ra et --"
+"dec (avec --radius).[/red]"
+
+msgid "Listing ESO instruments..."
+msgstr "Liste des instruments ESO..."
+
+msgid "[green]Available ESO Instruments:[/green]"
+msgstr "[green]Instruments ESO disponibles :[/green]"
+
+msgid "ESO list instruments"
+msgstr "Liste des instruments ESO"
+
+msgid "Planet name (e.g., 'Kepler-186 f')."
+msgstr "Nom de la planète (par exemple, 'Kepler-186 f')."
 
 msgid "Query the Gaia archive."
 msgstr "Interroger les archives de Gaia."
@@ -386,32 +552,17 @@ msgstr ""
 msgid "Gaia archive password"
 msgstr "Mot de passe de l'archive Gaia"
 
-msgid "[dim]Logging into Gaia archive as '{user}'...[/dim]"
-msgstr "[dim]Connexion à l'archive Gaia en tant que '{user}'...[/dim]"
-
 msgid "[bold red]Gaia login failed: {error}[/bold red]"
 msgstr "[bold red]Échec de la connexion à Gaia : {error}[/bold red]"
 
 msgid "[yellow]Proceeding with anonymous access if possible.[/yellow]"
 msgstr "[yellow]Procède avec un accès anonyme si possible.[/yellow]"
 
-msgid "[dim]Already logged into Gaia archive as '{user}'.[/dim]"
-msgstr "[dim]Déjà connecté à l'archive Gaia en tant que '{user}'.[/dim]"
-
 msgid "unknown user"
 msgstr "utilisateur inconnu"
 
-msgid "[dim]No Gaia login credentials provided. Using anonymous access.[/dim]"
-msgstr ""
-"[dim]Aucun identifiant de connexion Gaia fourni. Utilisation de l'accès "
-"anonyme.[/dim]"
-
 msgid "[bold red]Invalid radius provided.[/bold red]"
 msgstr "[bold red]Rayon fourni invalide.[/bold red]"
-
-msgid "[dim]Executing ADQL query (first {row_limit} rows):[/dim]"
-msgstr ""
-"[dim]Exécution de la requête ADQL (premières {row_limit} lignes) :[/dim]"
 
 msgid "Gaia Cone Search Results ({table_name})"
 msgstr "Résultats de la recherche conique Gaia ({table_name})"
@@ -428,9 +579,6 @@ msgstr ""
 
 msgid "Gaia cone search on {table_name}"
 msgstr "Recherche conique Gaia sur {table_name}"
-
-msgid "[dim]Logged out from Gaia archive.[/dim]"
-msgstr "[dim]Déconnecté de l'archive Gaia.[/dim]"
 
 msgid "Execute a raw ADQL query (synchronous)."
 msgstr "Exécuter une requête ADQL brute (synchrone)."
@@ -458,6 +606,33 @@ msgid ""
 msgstr ""
 "[bold red]Détails de l'erreur de requête ADQL du serveur :\n"
 "{error_details}[/bold red]"
+
+msgid ""
+"Query a specific HEASARC mission. Use 'heasarc list' to see available "
+"missions."
+msgstr ""
+"Interroger une mission HEASARC spécifique. Utilisez 'heasarc list' pour voir "
+"les missions disponibles."
+
+msgid "HEASARC mission name (e.g., 'atnfpsr')."
+msgstr "Nom de la mission HEASARC (par exemple, 'atnfpsr')."
+
+msgid "Querying HEASARC mission: {mission}..."
+msgstr "Interrogation de la mission HEASARC : ..."
+
+msgid "Filter missions by a starting prefix (e.g., 'atnfpsr')."
+msgstr "Filtrer les missions par un préfixe de début (par exemple, 'atnfpsr')."
+
+msgid "Listing HEASARC missions..."
+msgstr "Liste des missions HEASARC..."
+
+msgid ""
+"[cyan]Filtered from {original_count} to {filtered_count} missions with "
+"prefix \"{prefix}\".[/cyan]"
+msgstr "[cyan]Filtré de  à  missions avec le préfixe \"\".[/cyan]"
+
+msgid "HEASARC list missions"
+msgstr "Liste des missions HEASARC"
 
 msgid "Query NASA/IPAC Infrared Science Archive (IRSA)."
 msgstr ""
@@ -616,9 +791,6 @@ msgstr " dans la collection {collection} "
 msgid "IRSA query_region"
 msgstr "IRSA query_region"
 
-msgid "Query IRSA dust maps."
-msgstr "Interroger les cartes de poussière IRSA."
-
 msgid "Get E(B-V) dust extinction values for one or more coordinates."
 msgstr ""
 "Obtenir les valeurs d'extinction de poussière E(B-V) pour une ou plusieurs "
@@ -647,14 +819,6 @@ msgstr ""
 
 msgid "[red]No valid coordinates parsed.[/red]"
 msgstr "[red]Aucune coordonnée valide n'a été analysée.[/red]"
-
-msgid "[dim]Fetching extinction for each target individually...[/dim]"
-msgstr ""
-"[dim]Récupération de l'extinction pour chaque cible individuellement...[/dim]"
-
-msgid "[dim]  Processing target {current_num}/{total_num}: {target_name}[/dim]"
-msgstr ""
-"[dim]  Traitement de la cible {current_num}/{total_num} : {target_name}[/dim]"
 
 msgid "[yellow]Could not get extinction for '{target_name}': {error}[/yellow]"
 msgstr ""
@@ -704,9 +868,6 @@ msgstr ""
 msgid "[bold red]Error parsing input: {error}[/bold red]"
 msgstr "[bold red]Erreur lors de l'analyse de l'entrée : {error}[/bold red]"
 
-msgid "[dim]Created output directory: {output_dir}[/dim]"
-msgstr "[dim]Répertoire de sortie créé : {output_dir}[/dim]"
-
 msgid ""
 "[yellow]No map images returned by IRSA Dust ({map_name}) for this region.[/"
 "yellow]"
@@ -719,9 +880,6 @@ msgstr "[green]Carte de poussière enregistrée : {filename}[/green]"
 
 msgid "IRSA Dust ({map_name}) get_images"
 msgstr "IRSA Dust ({map_name}) get_images"
-
-msgid "Query JPL Horizons ephemeris service."
-msgstr "Interroger le service d'éphémérides JPL Horizons."
 
 msgid "Query ephemerides, orbital elements, or vectors for a target object."
 msgstr ""
@@ -798,56 +956,15 @@ msgstr "Serveur JPL Horizons à utiliser. Choix : {server_list}"
 msgid "[cyan]Querying JPL Horizons for '{target}'...[/cyan]"
 msgstr "[cyan]Interrogation de JPL Horizons pour '{target}'...[/cyan]"
 
-msgid "[dim]Using JPL server: {server}[/dim]"
-msgstr "[dim]Utilisation du serveur JPL : {server}[/dim]"
-
-msgid "[dim]Using epoch range: {start} to {end} with step {step}[/dim]"
-msgstr ""
-"[dim]Utilisation de la plage d'époques : {start} à {end} avec le pas {step}[/"
-"dim]"
-
-msgid "[dim]Using epoch dict: {epoch_dict}[/dim]"
-msgstr "[dim]Utilisation du dictionnaire d'époque : {epoch_dict}[/dim]"
-
-msgid "[bold red]Error parsing --epochs as dict: {error}[/bold red]"
-msgstr ""
-"[bold red]Erreur lors de l'analyse de --epochs comme dict : {error}[/bold "
-"red]"
-
 msgid ""
-"[yellow]Example: --epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', "
-"'step':'1d'}}\"[/yellow]"
+"[red]Error parsing epoch dictionary: {error}. Please ensure it's a valid "
+"Python dictionary string.[/red]"
 msgstr ""
-"[yellow]Exemple : --epochs \"{{'start':'2023-01-01', 'stop':'2023-01-05', "
-"'step':'1d'}}\"[/yellow]"
-
-msgid "[dim]Using epoch list: {epoch_list}[/dim]"
-msgstr "[dim]Utilisation de la liste d'époques : {epoch_list}[/dim]"
-
-msgid "[dim]Using single epoch: {epoch}[/dim]"
-msgstr "[dim]Utilisation d'une seule époque : {epoch}[/dim]"
-
-msgid ""
-"[dim]No epoch specified for {ephem_type}, using current JD: {epoch}[/dim]"
-msgstr ""
-"[dim]Aucune époque spécifiée pour {ephem_type}, utilisation de l'heure "
-"actuelle : {epoch}[/dim]"
-
-msgid ""
-"[yellow]No epoch specified for OBSERVER, using today as default: {epoch_dict}"
-"[/yellow]"
-msgstr ""
-"[yellow]Aucune époque spécifiée pour OBSERVER, utilisation d'aujourd'hui par "
-"défaut : {epoch_dict}[/yellow]"
+"[red]Erreur lors de l'analyse du dictionnaire d'époque : . Veuillez vous "
+"assurer qu'il s'agit d'une chaîne de dictionnaire Python valide.[/red]"
 
 msgid "{ephem_type} for {target}"
 msgstr "{ephem_type} pour {target}"
-
-msgid "[dim]Requesting quantities: {quantities}[/dim]"
-msgstr "[dim]Quantités demandées : {quantities}[/dim]"
-
-msgid "[dim]Requesting quantities for vectors: {quantities}[/dim]"
-msgstr "[dim]Quantités demandées pour les vecteurs : {quantities}[/dim]"
 
 msgid ""
 "[yellow]No results found for '{target}' with the specified parameters.[/"
@@ -861,9 +978,6 @@ msgstr "Objet JPL Horizons"
 
 msgid "Query JPL Small-Body Database (SBDB)."
 msgstr "Interroger la base de données des petits corps (SBDB) du JPL."
-
-msgid "Query JPL SBDB for a small body."
-msgstr "Interroger la SBDB du JPL pour un petit corps."
 
 msgid "Target small body (e.g., 'Ceres', '1P', '2023 BU')."
 msgstr "Petit corps cible (par exemple, 'Cérès', '1P', '2023 BU')."
@@ -1041,134 +1155,6 @@ msgstr ""
 msgid "MAST get_product_urls"
 msgstr "MAST get_product_urls"
 
-msgid "Query the NASA Astrophysics Data System (ADS)."
-msgstr "Interroger le système de données astrophysiques de la NASA (ADS)."
-
-msgid "Perform a query on NASA ADS."
-msgstr "Effectuer une requête sur NASA ADS."
-
-msgid ""
-"ADS query string (e.g., 'author:\"Adam G. Riess\" year:1998', "
-"'bibcode:1998AJ....116.1009R')."
-msgstr ""
-"Chaîne de requête ADS (par exemple, 'author:\"Adam G. Riess\" year:1998', "
-"'bibcode:1998AJ....116.1009R')."
-
-msgid "Show latest published papers (sorted by date, most recent first)."
-msgstr ""
-"Afficher les derniers articles publiés (triés par date, les plus récents en "
-"premier)."
-
-msgid "Show highly cited review articles (sorted by citation count)."
-msgstr ""
-"Afficher les articles de revue très cités (triés par nombre de citations)."
-
-msgid "Fields to return."
-msgstr "Champs à retourner."
-
-msgid "Sort results by (e.g., 'date', 'citation_count', 'score')."
-msgstr ""
-"Trier les résultats par (par exemple, 'date', 'citation_count', 'score')."
-
-msgid "Maximum number of pages to retrieve."
-msgstr "Nombre maximum de pages à récupérer."
-
-msgid "Number of results per page (max 200 for ADS API)."
-msgstr "Nombre de résultats par page (max 200 pour l'API ADS)."
-
-msgid ""
-"[red]Cannot specify both --latest and --review. Please choose only one.[/red]"
-msgstr ""
-"[red]Vous ne pouvez pas spécifier à la fois -w/--wavelength-range et -f/--"
-"frequency-range.[/red]"
-
-msgid "[red]Please specify a query string, --latest, or --review.[/red]"
-msgstr ""
-"[red]Veuillez spécifier une chaîne de requête, --latest, ou --review.[/red]"
-"[red]Veuillez spécifier une chaîne de requête, --latest, ou --review.[/red]"
-
-msgid "Querying NASA ADS for latest papers"
-msgstr "Interrogation de NASA ADS pour les derniers articles."
-
-msgid ""
-"Querying NASA ADS for highly cited review articles (using property:review)"
-msgstr ""
-"Interrogation de NASA ADS pour les articles de revue très cités (en "
-"utilisant la propriété :review).Interrogation de NASA ADS pour les articles "
-"de revue très cités (en utilisant la propriété :review)."
-
-msgid "Querying NASA ADS with: {query_string}"
-msgstr "Interrogation de NASA ADS avec : "
-
-msgid ""
-"[red]Error: No valid query could be formed. Please check your inputs.[/red]"
-msgstr ""
-"[red]Erreur : Aucune requête valide n'a pu être formée. Veuillez vérifier "
-"vos entrées.[/red][red]Erreur : Aucune requête valide n'a pu être formée. "
-"Veuillez vérifier vos entrées.[/red]"
-
-msgid ""
-"[red]Error: No NASA ADS API token found! Please get yours from: https://"
-"ui.adsabs.harvard.edu/user/settings/token and set it in the ADS_DEV_KEY "
-"environment variable or in your ~/.aqc/config.ini file.[/red]"
-msgstr ""
-"[red]Erreur : Aucun jeton d'API NASA ADS trouvé ! Veuillez obtenir le vôtre "
-"à l'adresse suivante : https://ui.adsabs.harvard.edu/user/settings/token et "
-"le définir dans la variable d'environnement ADS_DEV_KEY ou dans votre "
-"fichier ~/.aqc/config.ini.[/red]"
-
-msgid "[yellow]No results found for your ADS query.[/yellow]"
-msgstr "[yellow]Aucun résultat trouvé pour votre requête ADS.[/yellow]"
-
-msgid ""
-"[yellow]None of the requested fields were found in the ADS query results.[/"
-"yellow]"
-msgstr "[yellow]Aucun résultat trouvé pour votre requête ADS.[/yellow]"
-
-msgid "[green]Found {count} result(s) from ADS.[/green]"
-msgstr "[green]Trouvé {count} résultat(s) d'ADS.[/green]"
-
-msgid "ADS Query Results"
-msgstr "Résultats de la requête ADS"
-
-msgid "NASA ADS query"
-msgstr "Requête NASA ADS"
-
-msgid "Get BibTeX for a NASA ADS bibcode."
-msgstr "Obtenir BibTeX pour un bibcode NASA ADS."
-
-msgid "List of ADS bibcodes."
-msgstr "Liste des bibcodes ADS."
-
-msgid "File to save BibTeX entries (e.g., refs.bib)."
-msgstr "Fichier pour enregistrer les entrées BibTeX (par exemple, refs.bib)."
-
-msgid "[cyan]Fetching BibTeX for: {bibcode_list}...[/cyan]"
-msgstr "[cyan]Récupération de BibTeX pour : {bibcode_list}...[/cyan]"
-
-msgid ""
-"[yellow]Warning: ADS_DEV_KEY environment variable not set. Queries may be "
-"rate-limited.[/yellow]"
-msgstr ""
-"[yellow]Avertissement : La variable d'environnement ADS_DEV_KEY n'est pas "
-"définie. Les requêtes peuvent être soumises à des limitations de débit.[/"
-"yellow]"
-
-msgid "[yellow]Could not retrieve BibTeX for {bibcode}.[/yellow]"
-msgstr "[yellow]Impossible de récupérer BibTeX pour {bibcode}.[/yellow]"
-
-msgid "[green]BibTeX entries retrieved:[/green]"
-msgstr "[green]Entrées BibTeX récupérées :[/green]"
-
-msgid "[green]BibTeX entries saved to '{file_path}'.[/green]"
-msgstr "[green]Entrées BibTeX enregistrées dans '{file_path}'.[/green]"
-
-msgid "[yellow]No BibTeX entries could be retrieved.[/yellow]"
-msgstr "[yellow]Aucune entrée BibTeX n'a pu être récupérée.[/yellow]"
-
-msgid "NASA ADS get_bibtex"
-msgstr "NASA ADS get_bibtex"
-
 msgid "Query the NASA/IPAC Extragalactic Database (NED)."
 msgstr "Interroger la base de données extragalactiques NASA/IPAC (NED)."
 
@@ -1254,6 +1240,140 @@ msgstr ""
 
 msgid "NED images"
 msgstr "Images NED"
+
+msgid ""
+"Error: Wavelength range (MINWAV and MAXWAV) must be provided either as "
+"arguments or implicitly via a line name query."
+msgstr ""
+"Erreur : La plage de longueurs d'onde (MINWAV et MAXWAV) doit être fournie "
+"soit comme arguments, soit implicitement via une requête de nom de ligne."
+
+msgid ""
+"Query the Sloan Digital Sky Survey (SDSS) database.\n"
+"\n"
+"Perform a query on SDSS. You must provide parameters for exactly one of the "
+"following query types:\n"
+"\n"
+"  1. Cone Search:\n"
+"     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
+"     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n"
+"  2. Spectroscopic Object ID Search:\n"
+"     --specobjid <ID> [--objtype <TYPE>]\n"
+"     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')\n"
+"  3. Fiber ID Search:\n"
+"     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
+"     (e.g., --plate 123 --mjd 51608 --fiberid 1)"
+msgstr ""
+"Interroger la base de données du Sloan Digital Sky Survey (SDSS).\n"
+"\n"
+"Effectuer une requête sur SDSS. Vous devez fournir des paramètres pour "
+"exactement un des types de requête suivants :\n"
+"\n"
+"  1. Recherche conique :\n"
+"     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
+"     (par exemple, --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n"
+"  2. Recherche par ID d'objet spectroscopique :\n"
+"     --specobjid <ID> [--objtype <TYPE>]\n"
+"     (par exemple, --specobjid 2634622337315530752 --objtype 'GALAXY')\n"
+"  3. Recherche par ID de fibre :\n"
+"     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
+"     (par exemple, --plate 123 --mjd 51608 --fiberid 1)"
+
+msgid ""
+"Perform a query on SDSS using the options provided to the main 'sdss' "
+"command."
+msgstr ""
+"Effectuer une requête sur SDSS en utilisant les options fournies à la "
+"commande principale 'sdss'."
+
+msgid ""
+"Right Ascension (e.g., '10.5 deg', '0h42m30s'). Required for cone search."
+msgstr ""
+"Ascension droite (par exemple, '10.5 deg', '0h42m30s'). Requis pour une "
+"recherche conique."
+
+msgid ""
+"Object type (e.g., 'STAR', 'GALAXY', 'QSO'). Note: This parameter is only "
+"applicable for queries using specobjid or plate/mjd/fiberid, not for cone "
+"searches."
+msgstr ""
+"Type d'objet (par exemple, 'STAR', 'GALAXY', 'QSO'). Remarque : Ce paramètre "
+"n'est applicable que pour les requêtes utilisant specobjid ou plate/mjd/"
+"fiberid, pas pour les recherches coniques."
+
+msgid "Spectroscopic object ID. Required for specobjid search."
+msgstr "ID d'objet spectroscopique. Requis pour une recherche par specobjid."
+
+msgid "Plate number for spectroscopic data. Required for fiber ID search."
+msgstr ""
+"Numéro de plaque pour les données spectroscopiques. Requis pour une "
+"recherche par ID de fibre."
+
+msgid ""
+"Modified Julian Date for spectroscopic data. Required for fiber ID search."
+msgstr ""
+"Date julienne modifiée pour les données spectroscopiques. Requis pour une "
+"recherche par ID de fibre."
+
+msgid "Fiber ID for spectroscopic data. Required for fiber ID search."
+msgstr ""
+"ID de fibre pour les données spectroscopiques. Requis pour une recherche par "
+"ID de fibre."
+
+msgid "Querying SDSS..."
+msgstr "Interrogation de SDSS..."
+
+msgid ""
+"[red]Error: For a cone search, --ra, --dec, and --radius are all required. "
+"Please provide all three.[/red]"
+msgstr ""
+"[red]Erreur : Pour une recherche conique, --ra, --dec et --radius sont tous "
+"requis. Veuillez fournir les trois.[/red]"
+
+msgid ""
+"[red]Error: Cannot combine cone search parameters (--ra, --dec, --radius) "
+"with other query types (--specobjid or --plate, --mjd, --fiberid).[/red]"
+msgstr ""
+"[red]Erreur : Impossible de combiner les paramètres de recherche conique (--"
+"ra, --dec, --radius) avec d'autres types de requête (--specobjid ou --plate, "
+"--mjd, --fiberid).[/red]"
+
+msgid ""
+"[red]Error: Cannot combine --specobjid with other query types (cone search "
+"or fiber ID search).[/red]"
+msgstr ""
+"[red]Erreur : Impossible de combiner --specobjid avec d'autres types de "
+"requête (recherche conique ou recherche par ID de fibre).[/red]"
+
+msgid ""
+"[red]Error: For a fiber ID search, --plate, --mjd, and --fiberid are all "
+"required. Please provide all three.[/red]"
+msgstr ""
+"[red]Erreur : Pour une recherche par ID de fibre, --plate, --mjd et --"
+"fiberid sont tous requis. Veuillez fournir les trois.[/red]"
+
+msgid ""
+"[red]Error: Cannot combine fiber ID search parameters (--plate, --mjd, --"
+"fiberid) with other query types (cone search or specobjid search).[/red]"
+msgstr ""
+"[red]Erreur : Impossible de combiner les paramètres de recherche par ID de "
+"fibre (--plate, --mjd, --fiberid) avec d'autres types de requête (recherche "
+"conique ou recherche par specobjid).[/red]"
+
+msgid ""
+"[red]Error: No valid query parameters provided. Please specify parameters "
+"for one of the following query types: coordinates (--ra, --dec, --radius), "
+"or --specobjid, or --plate, --mjd, and --fiberid.[/red]"
+msgstr ""
+"[red]Erreur : Aucun paramètre de requête valide fourni. Veuillez spécifier "
+"des paramètres pour l'un des types de requête suivants : coordonnées (--ra, "
+"--dec, --radius), ou --specobjid, ou --plate, --mjd et --fiberid.[/red]"
+
+msgid ""
+"[green]Filtered {filtered_count} results for objtype '{objtype}' from "
+"{initial_count} total.[/green]"
+msgstr ""
+"[green]Filtré  résultats pour le type d'objet '' sur  au total.[/green]"
 
 msgid "SIMBAD astronomical database."
 msgstr "Base de données astronomique SIMBAD."
@@ -1572,18 +1692,6 @@ msgstr "Serveur VizieR à utiliser. Choix : {server_list}"
 msgid "[cyan]Searching for VizieR catalogs...[/cyan]"
 msgstr "[cyan]Recherche de catalogues VizieR...[/cyan]"
 
-msgid "[dim]Using VizieR server: {server_url}[/dim]"
-msgstr "[dim]Utilisation du serveur VizieR : {server_url}[/dim]"
-
-msgid "[dim]Keywords: {keywords_list}[/dim]"
-msgstr "[dim]Mots-clés : {keywords_list}[/dim]"
-
-msgid "[dim]UCD: {ucd_val}[/dim]"
-msgstr "[dim]UCD : {ucd_val}[/dim]"
-
-msgid "[dim]Source Name: {source_val}[/dim]"
-msgstr "[dim]Nom de la source : {source_val}[/dim]"
-
 msgid ""
 "[yellow]Please provide at least one search criterion (keyword, ucd, or "
 "source name).[/yellow]"
@@ -1727,11 +1835,6 @@ msgstr ""
 "[cyan]Interrogation de VizieR pour l'objet '{target_name}' dans le(s) "
 "catalogue(s) : {catalog_list}...[/cyan]"
 
-msgid "[dim]Using VizieR server: {server_url}, Row limit: {limit}[/dim]"
-msgstr ""
-"[dim]Utilisation du serveur VizieR : {server_url}, Limite de lignes : {limit}"
-"[/dim]"
-
 msgid "[yellow]No results returned from VizieR for this query.[/yellow]"
 msgstr "[yellow]Aucun résultat renvoyé par VizieR pour cette requête.[/yellow]"
 
@@ -1787,6 +1890,9 @@ msgstr ""
 "Filtres de colonnes (par exemple, 'Imag<15'). Peuvent être spécifiés "
 "plusieurs fois."
 
+msgid ", "
+msgstr ""
+
 msgid ""
 "[bold red]Error: Specify either --radius (for cone search) OR (--width and --"
 "height) (for box search), not both.[/bold red]"
@@ -1840,6 +1946,9 @@ msgid ""
 msgstr ""
 "[yellow]Veuillez fournir au moins --constraint(s) ou --keyword(s) pour ce "
 "type de requête.[/yellow]"
+
+msgid "keywords"
+msgstr "mots-clés"
 
 msgid "Vizier constraints"
 msgstr "Contraintes Vizier"

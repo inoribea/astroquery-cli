@@ -57,7 +57,7 @@ app = typer.Typer(
     help=i18n._("Astroquery CLI"),
     invoke_without_command=True,
     no_args_is_help=False,
-    add_completion=True,
+    add_completion=False, # Set to False to remove global completion commands
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 

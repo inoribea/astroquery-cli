@@ -20,6 +20,10 @@ def run_field():
         "mast": "mast",
         "ads": "ads",
         "ned": "ned",
+        "heasarc": "heasarc",
+        "sdss": "sdss",
+        "eso": "eso",
+        "nist": "nist",
         "simbad": "simbad",
         "splatalogue": "splatalogue",
         "vizier": "vizier",
@@ -89,6 +93,50 @@ def run_field():
                         except Exception as e:
                             print(f"Error getting Gaia fields: {e}")
                             print(f"Skipping field check for GAIA.")
+                            continue
+                    elif module_name == "heasarc":
+                        try:
+                            # Heasarc fields are table-specific. Get tables first, then columns from a table.
+                            tables = astroquery_module.Heasarc.get_tables()
+                            if tables:
+                                # Try to get columns from the first table found
+                                first_table = tables[0]
+                                columns = astroquery_module.Heasarc.get_columns(first_table)
+                                official_fields = set(col.name for col in columns)
+                            else:
+                                print(f"Heasarc.get_tables() returned no tables, skipping field check.")
+                                continue
+                        except Exception as e:
+                            print(f"Error getting Heasarc fields: {e}")
+                            print(f"Skipping field check for HEASARC.")
+                            continue
+                    elif module_name == "sdss":
+                        try:
+                            official_fields = set(astroquery_module.SDSS.get_available_columns())
+                        except Exception as e:
+                            print(f"Error getting SDSS fields: {e}")
+                            print(f"Skipping field check for SDSS.")
+                            continue
+                    elif module_name == "eso":
+                        try:
+                            # ESO fields are typically retrieved via list_fields()
+                            official_fields = set(astroquery_module.ESO.list_fields())
+                        except Exception as e:
+                            print(f"Error getting ESO fields: {e}")
+                            print(f"Skipping field check for ESO.")
+                            continue
+                    elif module_name == "nist":
+                        try:
+                            # NIST fields can be obtained from a sample query result
+                            results = astroquery_module.NIST.get_transitions(wavelength_range=(1000, 1001), energy_unit='eV', top=1)
+                            if results is not None and len(results) > 0:
+                                official_fields = set(results.colnames)
+                            else:
+                                print(f"NIST query returned no results, skipping field check.")
+                                continue
+                        except Exception as e:
+                            print(f"Error getting NIST fields: {e}")
+                            print(f"Skipping field check for NIST.")
                             continue
                     else:
                         # Try common methods to get official fields, including a small query if possible

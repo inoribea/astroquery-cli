@@ -23,7 +23,7 @@ def get_app():
     _ = builtins._
     app = typer.Typer(
         name="nist",
-        help=builtins._("Query the NIST Atomic Spectra Database."),
+        help="Query the NIST Atomic Spectra Database.",
         invoke_without_command=True,
         no_args_is_help=False
     )
@@ -34,54 +34,46 @@ def get_app():
         ctx: typer.Context,
         query_string: Optional[str] = typer.Argument(
             None,
-            help=builtins._(
-                "Primary query input. Can be:\n"
+            help="Primary query input. Can be:\n"
                 "  1. A wavelength range (e.g., '2000 3000').\n"
                 "  2. A line name (e.g., 'Fe II', 'H I').\n"
                 "If a line name is provided without explicit --minwav/--maxwav, a broad default range will be used."
-            ),
         ),
         minwav: Optional[float] = typer.Option(
             None,
-            help=builtins._(
-                "Explicit minimum wavelength (e.g., 2000). Overrides any wavelength range parsed from 'query_string'. "
+            help="Explicit minimum wavelength (e.g., 2000). Overrides any wavelength range parsed from 'query_string'. "
                 "Can be combined with '--linename'."
-            ),
         ),
         maxwav: Optional[float] = typer.Option(
             None,
-            help=builtins._(
-                "Explicit maximum wavelength (e.g., 3000). Overrides any wavelength range parsed from 'query_string'. "
+            help="Explicit maximum wavelength (e.g., 3000). Overrides any wavelength range parsed from 'query_string'. "
                 "Can be combined with '--linename'."
-            ),
         ),
         linename: Optional[str] = typer.Option(
             None,
-            help=builtins._(
-                "Explicit line name (e.g., 'Fe II', 'H I'). Overrides any line name parsed from 'query_string'. "
+            help="Explicit line name (e.g., 'Fe II', 'H I'). Overrides any line name parsed from 'query_string'. "
                 "Can be combined with explicit '--minwav' and '--maxwav' for a specific range."
-            ),
         ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(
-            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+            25, help="Maximum number of rows to display. Use -1 for all rows."
         ),
         show_all_columns: bool = typer.Option(
-            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
+            False, "--show-all-cols", help="Show all columns in the output table."
         ),
-        test: bool = typer.Option(False, "--test", "-t", help=_("Enable test mode and print elapsed time.")),
+        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time."),
         debug_flag: bool = typer.Option( # Renamed to avoid conflict with imported debug
             False,
             "--debug", # Removed -t to avoid conflict with --test
-            help=_("Enable debug mode with verbose output."),
+            help="Enable debug mode with verbose output.",
             envvar="AQC_DEBUG"
         ),
         verbose: bool = typer.Option(
             False,
             "-v",
             "--verbose",
-            help=_("Enable verbose output.")
+            help="Enable verbose output."
         )
     ):
         setup_debug_context(ctx, debug_flag, verbose)

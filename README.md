@@ -16,12 +16,14 @@ A practical command-line interface (CLI) for selected [astroquery](https://astro
 - **ESASky**: Sky region visualization queries
 - **Gaia**: Cone search
 - **IRSA**: Infrared Science Archive queries
-- **IRSA Dust**: Infrared Science Archive Dust queries
-- **JPLHorizons**: JPL Horizons queries
+- **Heasarc**: HEASARC Archive queries
 - **JPLSBDB**: JPL Small-Body Database queries
 - **MAST**: Mikulski Archive for Space Telescopes queries
 - **NASA-ADS**: NASA Astrophysics Data System literature search and BibTeX retrieval, allows simple commands to search for "latest papers" or "highly cited reviews".
 - **NED**: NASA/IPAC Extragalactic Database name resolution
+- **NIST**: National Institute of Standards and Technology Atomic Spectra Database queries
+- **SDSS**: Sloan Digital Sky Survey queries
+- **ESO**: European Southern Observatory queries
 - **SIMBAD**: SIMBAD Astronomical Database basic query
 - **Splatalogue**: Molecular line queries
 - **VizieR**: VizieR Catalogue Database catalog search, basic query

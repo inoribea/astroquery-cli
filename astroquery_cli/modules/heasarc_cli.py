@@ -24,14 +24,30 @@ def get_app():
     app = typer.Typer(
         name="heasarc",
         help=builtins._("Query the HEASARC database."),
-        invoke_without_command=True,
-        no_args_is_help=False
+        invoke_without_command=True, # Allow invoking without a subcommand
+        # no_args_is_help=True # Show help if no arguments are provided (handled manually below)
     )
 
     @app.callback()
+    @global_keyboard_interrupt_handler
     def heasarc_callback(
         ctx: typer.Context,
-        debug: bool = typer.Option(
+        # Moved query options to callback
+        ra: Optional[float] = typer.Option(None, help=builtins._("Right Ascension in degrees.")),
+        dec: Optional[float] = typer.Option(None, help=builtins._("Declination in degrees.")),
+        radius: Optional[float] = typer.Option(None, help=builtins._("Search radius in degrees (for cone search).")),
+        output_file: Optional[str] = common_output_options["output_file"],
+        output_format: Optional[str] = common_output_options["output_format"],
+        max_rows_display: int = typer.Option(
+            25, "--max-rows-display", help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+        ),
+        show_all_columns: bool = typer.Option(
+            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
+        ),
+        max_rows: int = typer.Option(
+            100, "--max-rows", help=builtins._("Maximum number of rows to retrieve from the HEASARC database. Use -1 for all rows.")
+        ),
+        enable_debug: bool = typer.Option(
             False,
             "-t",
             "--debug",
@@ -43,64 +59,84 @@ def get_app():
             "-v",
             "--verbose",
             help=_("Enable verbose output.")
-        )
+        ),
     ):
-        setup_debug_context(ctx, debug, verbose)
+        setup_debug_context(ctx, enable_debug, verbose)
+        debug(f"heasarc_callback: ctx.invoked_subcommand={ctx.invoked_subcommand}, ctx.args={ctx.args}")
+        heasarc = Heasarc() # Instantiate Heasarc here for all operations
 
-        if ctx.invoked_subcommand is None and \
-           not any(arg in ["-h", "--help"] for arg in ctx.args):
-            help_output_capture = StringIO()
-            with redirect_stdout(help_output_capture):
-                try:
-                    app(ctx.args + ["--help"])
-                except SystemExit:
-                    pass
-            full_help_text = help_output_capture.getvalue()
+        # Check if a subcommand was invoked (e.g., 'list')
+        if ctx.invoked_subcommand is not None:
+            return # Let the subcommand handle its own logic
 
-            commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
-            if commands_match:
-                commands_section = commands_match.group(0)
-                filtered_commands_section = "\n".join([
-                    line for line in commands_section.splitlines() if "Usage:" not in line
-                ])
-                console.print(filtered_commands_section)
-            else:
-                console.print(full_help_text)
-            raise typer.Exit()
-
-    @app.command(name="query", help=builtins._("Perform a query on HEASARC."))
+    @app.command(name="query", help=builtins._("Query a specific HEASARC mission. Use 'heasarc list' to see available missions."))
     @global_keyboard_interrupt_handler
-    def query_heasarc(
+    def query_heasarc_mission(
         ctx: typer.Context,
-        mission: str = typer.Argument(..., help=builtins._("HEASARC mission name (e.g., 'chandra', 'xmm').")),
+        mission: str = typer.Argument(..., help=builtins._("HEASARC mission name (e.g., 'atnfpsr').")),
         ra: Optional[float] = typer.Option(None, help=builtins._("Right Ascension in degrees.")),
         dec: Optional[float] = typer.Option(None, help=builtins._("Declination in degrees.")),
         radius: Optional[float] = typer.Option(None, help=builtins._("Search radius in degrees (for cone search).")),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(
-            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+            25, "--max-rows-display", help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
         ),
         show_all_columns: bool = typer.Option(
             False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
         ),
+        max_rows: int = typer.Option(
+            100, "--max-rows", help=builtins._("Maximum number of rows to retrieve from the HEASARC database. Use -1 for all rows.")
+        ),
     ):
-        if ctx.obj.get("DEBUG"):
-            debug(f"query_heasarc - mission: {mission}, ra: {ra}, dec: {dec}, radius: {radius}")
+        # Debug context is set up by the heasarc_callback
+        heasarc = Heasarc() # Instantiate Heasarc here for all operations
 
         console.print(f"[cyan]{_('Querying HEASARC mission: {mission}...').format(mission=mission)}[/cyan]")
 
         try:
-            heasarc = Heasarc()
-            heasarc.mission = mission
+            # Get the actual catalog name from the mission list
+            catalogs = heasarc.list_catalogs()
+            
+            catalog_name = None
+            search_mission_upper = mission.strip().upper()
+
+            # Specific mapping for 'atnfpsr' to 'atnfpulsar'
+            if search_mission_upper == 'ATNFPSR':
+                catalog_name = 'atnfpulsar'
+            else:
+                for row in catalogs:
+                    # Use 'name' as the primary key for catalog/table name
+                    if 'name' in row and row['name'].strip().upper() == search_mission_upper:
+                        catalog_name = row['name']
+                        break
+                    # Fallback to 'Table' or 'CATALOG' if 'name' is not present or doesn't match
+                    elif 'Table' in row and row['Table'].strip().upper() == search_mission_upper:
+                        catalog_name = row['Table']
+                        break
+                    elif 'CATALOG' in row and row['CATALOG'].strip().upper() == search_mission_upper:
+                        catalog_name = row['CATALOG']
+                        break
+            
+            if catalog_name is None:
+                console.print(_(f"[red]Error: Mission '{mission}' not found in HEASARC catalogs. Use 'heasarc list' to see available missions.[/red]"))
+                raise typer.Exit(code=1)
+
+            # Set maxrec for query
+            maxrec_value = None if max_rows == -1 else max_rows
 
             if ra is not None and dec is not None:
                 if radius is None:
                     console.print(_("[red]Error: --radius is required when --ra and --dec are provided for a cone search.[/red]"))
                     raise typer.Exit(code=1)
-                results = heasarc.query_region(ra=ra, dec=dec, radius=radius)
+                adql_query = heasarc.query_region(ra=ra, dec=dec, radius=radius, catalog=catalog_name, get_query_payload=True, maxrec=maxrec_value)
+                console.print(f"[debug] ADQL Query (cone): {adql_query}")
+                results = heasarc.query_region(ra=ra, dec=dec, radius=radius, catalog=catalog_name, maxrec=maxrec_value)
             else:
-                results = heasarc.query_object(mission) # Query all data for the mission
+                # Use query_tap for all-sky queries with the correct catalog name
+                adql_query_string = f"SELECT * FROM {catalog_name}"
+                console.print(f"[debug] ADQL Query (all-sky): {adql_query_string}")
+                results = heasarc.query_tap(query=adql_query_string, maxrec=maxrec_value)
 
             if results and len(results) > 0:
                 console.print(_("[green]Found {count} result(s) from HEASARC.[/green]").format(count=len(results)))
@@ -114,20 +150,52 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("HEASARC query"))
             raise typer.Exit(code=1)
 
-    @app.command(name="list-missions", help=builtins._("List available HEASARC missions."))
+    @app.command(name="list", help=builtins._("List available HEASARC missions."))
     @global_keyboard_interrupt_handler
-    def list_missions(ctx: typer.Context):
+    def list_heasarc_missions(
+        ctx: typer.Context,
+        max_rows_display: int = typer.Option(
+            25, "--max-rows-display", "--max-rows", help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+        ),
+        show_all_columns: bool = typer.Option(
+            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
+        ),
+        prefix: Optional[str] = typer.Option(
+            None, "--prefix", "-p", help=builtins._("Filter missions by a starting prefix (e.g., 'atnfpsr').")
+        ),
+    ):
+        debug(f"list_heasarc_missions: max_rows_display={max_rows_display}, show_all_columns={show_all_columns}, prefix={prefix}")
+        heasarc = Heasarc()
         console.print(f"[cyan]{_('Listing HEASARC missions...')}[/cyan]")
         try:
-            missions = Heasarc.get_missions()
-            if missions:
-                console.print(_("[green]Available HEASARC Missions:[/green]"))
-                for m in missions:
-                    console.print(f"- {m}")
+            missions_table = heasarc.list_catalogs()
+            
+            if prefix:
+                original_count = len(missions_table)
+                # Determine the correct column name for filtering
+                mission_name_column = None
+                if 'name' in missions_table.colnames:
+                    mission_name_column = 'name'
+                elif 'Table' in missions_table.colnames:
+                    mission_name_column = 'Table'
+                elif 'CATALOG' in missions_table.colnames:
+                    mission_name_column = 'CATALOG'
+                
+                if mission_name_column:
+                    # Apply the filter using boolean indexing
+                    mask = [str(name).lower().startswith(prefix.lower()) for name in missions_table[mission_name_column]]
+                    missions_table = missions_table[mask]
+                else:
+                    # If no suitable column is found, log a warning or handle appropriately
+                    debug("Could not find a suitable mission name column ('name', 'Table', or 'CATALOG') for filtering.")
+
+                console.print(_("[cyan]Filtered from {original_count} to {filtered_count} missions with prefix \"{prefix}\".[/cyan]").format(original_count=original_count, filtered_count=len(missions_table), prefix=prefix))
+
+            if missions_table:
+                display_table(ctx, missions_table, title=_("Available HEASARC Missions"), max_rows=max_rows_display, show_all_columns=show_all_columns)
             else:
-                console.print(_("[yellow]No HEASARC missions found.[/yellow]"))
+                console.print(_("[yellow]No HEASARC missions found matching your criteria.[/yellow]"))
         except Exception as e:
             handle_astroquery_exception(ctx, e, _("HEASARC list missions"))
             raise typer.Exit(code=1)
-
     return app

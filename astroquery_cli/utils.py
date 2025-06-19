@@ -13,6 +13,7 @@ import os
 import re
 import builtins
 import astroquery_cli.i18n as i18n
+from pyvo.dal.tap import TAPResults # Import TAPResults
 
 console = Console()
 
@@ -124,6 +125,17 @@ def display_table(
 ):
     lang = ctx.obj.get("lang", "en") if ctx.obj else "en"
 
+    # Convert TAPResults to AstropyTable if necessary
+    if isinstance(astro_table, TAPResults):
+        try:
+            astro_table = astro_table.to_table()
+        except Exception as e:
+            console.print(f"[bold red]Error converting TAPResults to AstropyTable: {e}[/bold red]")
+            # If conversion fails, we can't proceed with displaying as AstropyTable
+            # A fallback could be to print raw TAPResults or exit
+            console.print(f"[yellow]Cannot display results. Raw TAPResults object: {astro_table}[/yellow]")
+            return
+
     # If astro_table is a list of lists, convert it to an AstropyTable
     if isinstance(astro_table, list) and all(isinstance(row, list) for row in astro_table):
         if not astro_table:
@@ -159,18 +171,42 @@ def display_table(
     rich_table = RichTable(title=title, show_lines=True, header_style="bold magenta", expand=False)
 
     displayed_columns = astro_table.colnames
-    if not show_all_columns and len(astro_table.colnames) > 10:
-        console.print(f"[cyan]Table has {len(astro_table.colnames)} columns. Displaying first 10. Use --show-all-cols to see all.[/cyan]")
-        displayed_columns = astro_table.colnames[:10]
+    
+    # If show_all_columns is True, bypass all column limiting
+    if show_all_columns:
+        pass # Display all columns
+    elif is_narrow_terminal(ctx):
+        # If narrow, only show the 'name' column for mission lists
+        if 'name' in displayed_columns and 'description' in displayed_columns:
+            console.print(f"[yellow]{builtins._('Terminal is narrow. Displaying only mission names for brevity. Use --show-all-cols to see descriptions.')}[/yellow]")
+            displayed_columns = ['name']
+        else: # If not mission list, or no description, still limit to 10 if not show_all_columns
+            console.print(f"[cyan]Table has {len(astro_table.colnames)} columns. Displaying first 10. Use --show-all-cols to see all.[/cyan]")
+            displayed_columns = astro_table.colnames[:10]
+    else:
+        # If not narrow, and there are many columns, still limit unless --show-all-cols is used
+        if len(astro_table.colnames) > 10:
+            console.print(f"[cyan]Table has {len(astro_table.colnames)} columns. Displaying first 10. Use --show-all-cols to see all.[/cyan]")
+            displayed_columns = astro_table.colnames[:10]
 
     for col_name in displayed_columns:
-        rich_table.add_column(col_name, overflow="fold" if max_col_width else "ellipsis", max_width=max_col_width if max_col_width and max_col_width > 0 else None)
+        # Apply max_col_width only if it's not the 'description' column and max_col_width is set
+        if col_name == 'description':
+            rich_table.add_column(col_name, overflow="fold")
+        else:
+            rich_table.add_column(col_name, overflow="fold" if max_col_width else "ellipsis", max_width=max_col_width if max_col_width and max_col_width > 0 else None)
 
     num_rows_to_display = len(astro_table)
     show_ellipsis = False
-    if max_rows > 0 and len(astro_table) > max_rows :
+    # Removed DEFAULT_HARD_LIMIT as it was causing truncation even with -1
+
+    if max_rows == -1:
+        num_rows_to_display = len(astro_table) # Display all rows if -1
+    elif max_rows > 0 and len(astro_table) > max_rows:
         num_rows_to_display = max_rows
         show_ellipsis = True
+    else:
+        num_rows_to_display = len(astro_table)
 
     for i in range(num_rows_to_display):
         row = astro_table[i]
@@ -178,7 +214,11 @@ def display_table(
 
     console.print(rich_table)
     if show_ellipsis:
-        console.print(f"... and {len(astro_table) - max_rows} more rows. Use --max-rows -1 to display all rows.")
+        # Adjusted message for hard limit vs. user-specified limit
+        if max_rows == -1: # Hard limit was applied
+            console.print(f"... and {len(astro_table) - num_rows_to_display} more rows. To display all, use --max-rows-display {len(astro_table)} or a sufficiently large number.")
+        else: # User-specified limit was applied
+            console.print(f"... and {len(astro_table) - max_rows} more rows. Use --max-rows-display -1 to display all rows.")
     console.print(Padding(f"Total rows: {len(astro_table)}", (0,2)))
 
 def handle_astroquery_exception(ctx: typer.Context, e: Exception, service_name: str):

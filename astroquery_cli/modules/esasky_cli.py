@@ -103,7 +103,7 @@ def get_app():
         "EROSITA-EFEDS-MAIN",
         "EROSITA-EFEDS-HARD",
         "EUCLID-MER",
-        "CHANDRA-SC21",
+        "atnfpsr-SC21",
         "XMM-EPIC-STACK",
         "XMM-OM",
         "HCV",
@@ -228,7 +228,7 @@ test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mo
         catalogs: Optional[List[str]] = typer.Option(
             None,
             "--catalog",
-            help=builtins._("Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'Chandra (CDA)'). Can be specified multiple times. Use 'object' command to see all available catalogs.")
+            help=builtins._("Specify catalogs to query (e.g., 'XMM-Newton (XMM-SSC)', 'atnfpsr (CDA)'). Can be specified multiple times. Use 'object' command to see all available catalogs.")
         ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],

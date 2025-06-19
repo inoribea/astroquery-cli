@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "astroquery_cli"
-version = "0.12.5"
+version = "0.12.9"
 description = "CLI for astroquery modules with autocompletion."
 authors = ["inoribea <inoribea@outlook.com>"]
 readme = "README.md"
@@ -18,10 +18,11 @@ include = [
 python = ">=3.11"
 typer = "^0.15.4"
 rich = "^13.5.2"
-astropy = "^6.1.0"
+astropy = "^7.1.0"
 babel = "^2.15.0"
 requests = "^2.10.0"
 astroquery = "^0.4.10"
+pyvo = "^1.4.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"

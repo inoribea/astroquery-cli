@@ -9,7 +9,7 @@ import builtins
 URLS = [
     "https://almascience.org",
     "https://gea.esac.esa.int",
-    "https://ssd.jpl.nasa.gov",
+    "https://www.nasa.gov",
     "https://cds.unistra.fr",
 ]
 
