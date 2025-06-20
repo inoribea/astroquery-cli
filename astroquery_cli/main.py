@@ -75,27 +75,27 @@ def setup_subcommands():
     # Restore astroquery log level after import
     logging.getLogger('astroquery').setLevel(logging.NOTSET)
 
-    app.add_typer(alma_cli.get_app(), name="alma")
-    app.add_typer(esasky_cli.get_app(), name="esasky")
-    app.add_typer(gaia_cli.get_app(), name="gaia")
-    app.add_typer(irsa_cli.get_app(), name="irsa")
-    app.add_typer(jpl_cli.get_app(), name="jpl") # Updated for jpl
     app.add_typer(mast_cli.get_app(), name="mast")
-    app.add_typer(ads_cli.get_app(), name="ads")
-    app.add_typer(ned_cli.get_app(), name="ned")
-    app.add_typer(simbad_cli.get_app(), name="simbad", help=builtins._("Query the SIMBAD astronomical database. (sim)"))
-    app.add_typer(simbad_cli.get_app(), name="sim") # Alias for simbad
-    app.add_typer(splatalogue_cli.get_app(), name="splatalogue", help=builtins._("Query the Splatalogue spectral line database. (spl)"))
-    app.add_typer(splatalogue_cli.get_app(), name="spl") # Alias for splatalogue
     app.add_typer(vizier_cli.get_app(), name="vizier", help=builtins._("Query the VizieR astronomical catalog database. (viz)"))
     app.add_typer(vizier_cli.get_app(), name="viz") # Alias for vizier
-    app.add_typer(heasarc_cli.get_app(), name="heasarc", help=builtins._("Query the HEASARC database. (hea)"))
-    app.add_typer(heasarc_cli.get_app(), name="hea") # Alias for heasarc
-    app.add_typer(sdss_cli.get_app(), name="sdss")
-    app.add_typer(eso_cli.get_app(), name="eso")
-    app.add_typer(nist_cli.get_app(), name="nist")
+    app.add_typer(simbad_cli.get_app(), name="simbad", help=builtins._("Query the SIMBAD astronomical database. (sim)"))
+    app.add_typer(simbad_cli.get_app(), name="sim") # Alias for simbad
+    app.add_typer(jpl_cli.get_app(), name="jpl") # Updated for jpl
     app.add_typer(exoplanet_cli.get_app(), name="exoplanet", help=builtins._("Query the NASA Exoplanet Archive. (exo)"))
     app.add_typer(exoplanet_cli.get_app(), name="exo") # Alias for exoplanet
+    app.add_typer(heasarc_cli.get_app(), name="heasarc", help=builtins._("Query the HEASARC database. (hea)"))
+    app.add_typer(heasarc_cli.get_app(), name="hea") # Alias for heasarc
+    app.add_typer(gaia_cli.get_app(), name="gaia")
+    app.add_typer(alma_cli.get_app(), name="alma")
+    app.add_typer(irsa_cli.get_app(), name="irsa")
+    app.add_typer(sdss_cli.get_app(builtins._), name="sdss")
+    app.add_typer(ned_cli.get_app(), name="ned")
+    app.add_typer(eso_cli.get_app(), name="eso")
+    app.add_typer(esasky_cli.get_app(), name="esasky")
+    app.add_typer(nist_cli.get_app(builtins._), name="nist")
+    app.add_typer(splatalogue_cli.get_app(), name="splatalogue", help=builtins._("Query the Splatalogue spectral line database. (spl)"))
+    app.add_typer(splatalogue_cli.get_app(), name="spl") # Alias for splatalogue
+    app.add_typer(ads_cli.get_app(), name="ads")
 
 @app.callback()
 def main_callback(

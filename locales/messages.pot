@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-20 18:48+0800\n"
+"POT-Creation-Date: 2025-06-20 22:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,8 +26,8 @@ msgstr ""
 #: astroquery_cli/modules/heasarc_cli.py:53
 #: astroquery_cli/modules/irsa_cli.py:44 astroquery_cli/modules/irsa_cli.py:311
 #: astroquery_cli/modules/jpl_cli.py:42 astroquery_cli/modules/mast_cli.py:38
-#: astroquery_cli/modules/ned_cli.py:38 astroquery_cli/modules/nist_cli.py:66
-#: astroquery_cli/modules/sdss_cli.py:51
+#: astroquery_cli/modules/ned_cli.py:38 astroquery_cli/modules/nist_cli.py:64
+#: astroquery_cli/modules/sdss_cli.py:49
 #: astroquery_cli/modules/simbad_cli.py:33
 #: astroquery_cli/modules/splatalogue_cli.py:38
 #: astroquery_cli/modules/vizier_cli.py:33
@@ -43,8 +43,8 @@ msgstr ""
 #: astroquery_cli/modules/heasarc_cli.py:60
 #: astroquery_cli/modules/irsa_cli.py:51 astroquery_cli/modules/irsa_cli.py:318
 #: astroquery_cli/modules/jpl_cli.py:49 astroquery_cli/modules/mast_cli.py:45
-#: astroquery_cli/modules/ned_cli.py:45 astroquery_cli/modules/nist_cli.py:73
-#: astroquery_cli/modules/sdss_cli.py:58
+#: astroquery_cli/modules/ned_cli.py:45 astroquery_cli/modules/nist_cli.py:71
+#: astroquery_cli/modules/sdss_cli.py:56
 #: astroquery_cli/modules/simbad_cli.py:40
 #: astroquery_cli/modules/splatalogue_cli.py:45
 #: astroquery_cli/modules/vizier_cli.py:40
@@ -55,24 +55,24 @@ msgstr ""
 msgid "Astroquery CLI"
 msgstr ""
 
-#: astroquery_cli/main.py:86
-msgid "Query the SIMBAD astronomical database. (sim)"
-msgstr ""
-
-#: astroquery_cli/main.py:88
-msgid "Query the Splatalogue spectral line database. (spl)"
-msgstr ""
-
-#: astroquery_cli/main.py:90
+#: astroquery_cli/main.py:79
 msgid "Query the VizieR astronomical catalog database. (viz)"
 msgstr ""
 
-#: astroquery_cli/main.py:92
+#: astroquery_cli/main.py:81
+msgid "Query the SIMBAD astronomical database. (sim)"
+msgstr ""
+
+#: astroquery_cli/main.py:84
+msgid "Query the NASA Exoplanet Archive. (exo)"
+msgstr ""
+
+#: astroquery_cli/main.py:86
 msgid "Query the HEASARC database. (hea)"
 msgstr ""
 
-#: astroquery_cli/main.py:97
-msgid "Query the NASA Exoplanet Archive. (exo)"
+#: astroquery_cli/main.py:96
+msgid "Query the Splatalogue spectral line database. (spl)"
 msgstr ""
 
 #: astroquery_cli/main.py:107
@@ -188,7 +188,7 @@ msgstr ""
 #: astroquery_cli/modules/mast_cli.py:113
 #: astroquery_cli/modules/mast_cli.py:161
 #: astroquery_cli/modules/mast_cli.py:206 astroquery_cli/modules/ned_cli.py:134
-#: astroquery_cli/modules/nist_cli.py:57 astroquery_cli/modules/sdss_cli.py:71
+#: astroquery_cli/modules/nist_cli.py:55 astroquery_cli/modules/sdss_cli.py:69
 #: astroquery_cli/modules/simbad_cli.py:93
 #: astroquery_cli/modules/simbad_cli.py:135
 #: astroquery_cli/modules/simbad_cli.py:162
@@ -215,7 +215,7 @@ msgstr ""
 #: astroquery_cli/modules/mast_cli.py:162
 #: astroquery_cli/modules/mast_cli.py:207 astroquery_cli/modules/ned_cli.py:100
 #: astroquery_cli/modules/ned_cli.py:135 astroquery_cli/modules/ned_cli.py:175
-#: astroquery_cli/modules/nist_cli.py:60 astroquery_cli/modules/sdss_cli.py:74
+#: astroquery_cli/modules/nist_cli.py:58 astroquery_cli/modules/sdss_cli.py:72
 #: astroquery_cli/modules/simbad_cli.py:94
 #: astroquery_cli/modules/simbad_cli.py:163
 #: astroquery_cli/modules/splatalogue_cli.py:142
@@ -450,7 +450,7 @@ msgstr ""
 #: astroquery_cli/modules/mast_cli.py:163
 #: astroquery_cli/modules/mast_cli.py:208 astroquery_cli/modules/ned_cli.py:101
 #: astroquery_cli/modules/ned_cli.py:136 astroquery_cli/modules/ned_cli.py:176
-#: astroquery_cli/modules/nist_cli.py:62
+#: astroquery_cli/modules/nist_cli.py:60
 #: astroquery_cli/modules/splatalogue_cli.py:143
 #: astroquery_cli/modules/splatalogue_cli.py:206
 #: astroquery_cli/modules/vizier_cli.py:152
@@ -1655,215 +1655,241 @@ msgstr ""
 msgid "NED images"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:26
+#: astroquery_cli/modules/nist_cli.py:24
 msgid "Query the NIST Atomic Spectra Database."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:37
+#: astroquery_cli/modules/nist_cli.py:35
 msgid ""
 "Primary query input: wavelength range (e.g., '2000 3000') or line name "
 "(e.g., 'Fe II')."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:41
+#: astroquery_cli/modules/nist_cli.py:39
 msgid ""
 "Explicit minimum wavelength (e.g., 2000). Overrides any wavelength range "
 "parsed from 'query_string'. Can be combined with '--linename'."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:46
+#: astroquery_cli/modules/nist_cli.py:44
 msgid ""
 "Explicit maximum wavelength (e.g., 3000). Overrides any wavelength range "
 "parsed from 'query_string'. Can be combined with '--linename'."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:51
+#: astroquery_cli/modules/nist_cli.py:49
 msgid ""
 "Explicit line name (e.g., 'Fe II', 'H I'). Overrides any line name parsed"
 " from 'query_string'. Can be combined with explicit '--minwav' and '--"
 "maxwav' for a specific range."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:91
+#: astroquery_cli/modules/nist_cli.py:89
 msgid "Query the NIST Atomic Spectra Database. You can query by:\n"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:92
+#: astroquery_cli/modules/nist_cli.py:90
 msgid "  1. Wavelength range: Provide two numbers (e.g., '2000 3000').\n"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:93
+#: astroquery_cli/modules/nist_cli.py:91
 msgid "  2. Line name: Provide a line name (e.g., 'Fe II', 'H I').\n"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:94
+#: astroquery_cli/modules/nist_cli.py:92
 msgid ""
 "     If a line name is provided without explicit --minwav/--maxwav, a "
 "broad default range will be used.\n"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:95
+#: astroquery_cli/modules/nist_cli.py:93
 msgid ""
 "You can combine explicit --minwav/--maxwav with --linename for a specific"
 " range.\n"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:107
+#: astroquery_cli/modules/nist_cli.py:105
 msgid ""
 "\n"
 "Use --help to see all available options."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:148
+#: astroquery_cli/modules/nist_cli.py:146
 msgid ""
 "[red]Error: Wavelength range (MINWAV and MAXWAV) must be provided either "
 "as arguments or implicitly via a line name query.[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:154
+#: astroquery_cli/modules/nist_cli.py:152
 msgid "Querying NIST Atomic Spectra Database..."
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:160
+#: astroquery_cli/modules/nist_cli.py:158
 msgid "[green]Found {count} result(s) from NIST.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:161
+#: astroquery_cli/modules/nist_cli.py:159
 msgid "NIST Query Results"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:163
-#: astroquery_cli/modules/nist_cli.py:168
+#: astroquery_cli/modules/nist_cli.py:161
+#: astroquery_cli/modules/nist_cli.py:166
 msgid "NIST query"
 msgstr ""
 
-#: astroquery_cli/modules/nist_cli.py:165
+#: astroquery_cli/modules/nist_cli.py:163
 msgid "[yellow]No results found for your NIST query.[/yellow]"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:25
+msgid "Query the Sloan Digital Sky Survey database."
 msgstr ""
 
 #: astroquery_cli/modules/sdss_cli.py:26
 msgid ""
-"Query the Sloan Digital Sky Survey database.\n"
-"\n"
 "Perform a query on SDSS. You must provide parameters for exactly one of "
-"the following query types:\n"
-"\n"
-"  1. Cone Search:\n"
-"     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
-"     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n"
-"\n"
-"  2. Spectroscopic Object ID Search:\n"
-"     --specobjid <ID> [--objtype <TYPE>]\n"
-"     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')\n"
-"\n"
-"  3. Fiber ID Search:\n"
-"     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
-"     (e.g., --plate 123 --mjd 51608 --fiberid 1)"
+"the following query types:"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:60
+#: astroquery_cli/modules/sdss_cli.py:27
+msgid "  1. Cone Search:"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:28
+msgid "     --ra <RA> --dec <DEC> --radius <RADIUS>"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:29
+msgid "     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:30
+msgid "  2. Spectroscopic Object ID Search:"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:31
+msgid "     --specobjid <ID> [--objtype <TYPE>]"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:32
+msgid "     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:33
+msgid "  3. Fiber ID Search:"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:34
+msgid "     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:35
+msgid "     (e.g., --plate 123 --mjd 51608 --fiberid 1)"
+msgstr ""
+
+#: astroquery_cli/modules/sdss_cli.py:58
 msgid "Right Ascension (e.g., '10.5 deg', '0h42m30s'). Required for cone search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:61
+#: astroquery_cli/modules/sdss_cli.py:59
 msgid "Declination (e.g., '20.1 deg', '+41d12m0s'). Required for cone search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:62
+#: astroquery_cli/modules/sdss_cli.py:60
 msgid ""
 "Search radius (e.g., '0.5 deg', '2 arcmin'). Max 3 arcmin. Required for "
 "cone search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:63
+#: astroquery_cli/modules/sdss_cli.py:61
 msgid ""
 "Object type (e.g., 'STAR', 'GALAXY', 'QSO'). Note: This parameter is only"
 " applicable for queries using specobjid or plate/mjd/fiberid, not for "
 "cone searches."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:64
+#: astroquery_cli/modules/sdss_cli.py:62
 msgid "Spectroscopic object ID. Required for specobjid search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:65
+#: astroquery_cli/modules/sdss_cli.py:63
 msgid "Plate number for spectroscopic data. Required for fiber ID search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:66
+#: astroquery_cli/modules/sdss_cli.py:64
 msgid "Modified Julian Date for spectroscopic data. Required for fiber ID search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:67
+#: astroquery_cli/modules/sdss_cli.py:65
 msgid "Fiber ID for spectroscopic data. Required for fiber ID search."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:101
+#: astroquery_cli/modules/sdss_cli.py:99
 msgid "Querying SDSS..."
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:126
+#: astroquery_cli/modules/sdss_cli.py:124
 msgid ""
 "[red]Error: For a cone search, --ra, --dec, and --radius are all "
 "required. Please provide all three.[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:129
+#: astroquery_cli/modules/sdss_cli.py:127
 msgid ""
 "[red]Error: Cannot combine cone search parameters (--ra, --dec, --radius)"
 " with other query types (--specobjid or --plate, --mjd, --fiberid).[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:138
+#: astroquery_cli/modules/sdss_cli.py:136
 msgid ""
 "[red]Error: Cannot combine --specobjid with other query types (cone "
 "search or fiber ID search).[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:145
+#: astroquery_cli/modules/sdss_cli.py:143
 msgid ""
 "[red]Error: For a fiber ID search, --plate, --mjd, and --fiberid are all "
 "required. Please provide all three.[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:148
+#: astroquery_cli/modules/sdss_cli.py:146
 msgid ""
 "[red]Error: Cannot combine fiber ID search parameters (--plate, --mjd, "
 "--fiberid) with other query types (cone search or specobjid "
 "search).[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:152
+#: astroquery_cli/modules/sdss_cli.py:150
 msgid ""
 "[red]Error: No valid query parameters provided. Please specify parameters"
 " for one of the following query types: coordinates (--ra, --dec, "
 "--radius), or --specobjid, or --plate, --mjd, and --fiberid.[/red]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:160
+#: astroquery_cli/modules/sdss_cli.py:158
 msgid "[yellow]No results found for objtype '{objtype}' after filtering.[/yellow]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:163
+#: astroquery_cli/modules/sdss_cli.py:161
 msgid ""
 "[green]Filtered {filtered_count} results for objtype '{objtype}' from "
 "{initial_count} total.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:166
+#: astroquery_cli/modules/sdss_cli.py:164
 msgid "[green]Found {count} result(s) from SDSS.[/green]"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:167
+#: astroquery_cli/modules/sdss_cli.py:165
 msgid "SDSS Query Results"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:169
-#: astroquery_cli/modules/sdss_cli.py:174
+#: astroquery_cli/modules/sdss_cli.py:167
+#: astroquery_cli/modules/sdss_cli.py:172
 msgid "SDSS query"
 msgstr ""
 
-#: astroquery_cli/modules/sdss_cli.py:171
+#: astroquery_cli/modules/sdss_cli.py:169
 msgid "[yellow]No results found for your SDSS query.[/yellow]"
 msgstr ""
 

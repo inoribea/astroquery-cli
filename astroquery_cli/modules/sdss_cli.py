@@ -18,23 +18,21 @@ import re # Keep re for other uses in the file
 from astroquery_cli.common_options import setup_debug_context
 from astroquery_cli.debug import debug
 
-def get_app():
-    import builtins
-    _ = builtins._
+def get_app(_: callable):
     app = typer.Typer(
         name="sdss",
-        help=builtins._(
-            "Query the Sloan Digital Sky Survey database.\n\n"
-            "Perform a query on SDSS. You must provide parameters for exactly one of the following query types:\n\n"
-            "  1. Cone Search:\n"
-            "     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
-            "     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n\n"
-            "  2. Spectroscopic Object ID Search:\n"
-            "     --specobjid <ID> [--objtype <TYPE>]\n"
-            "     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')\n\n"
-            "  3. Fiber ID Search:\n"
-            "     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
-            "     (e.g., --plate 123 --mjd 51608 --fiberid 1)"
+        help=(
+            _("Query the Sloan Digital Sky Survey database.") + "\n\n" +
+            _("Perform a query on SDSS. You must provide parameters for exactly one of the following query types:") + "\n\n" +
+            _("  1. Cone Search:") + "\n" +
+            _("     --ra <RA> --dec <DEC> --radius <RADIUS>") + "\n" +
+            _("     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')") + "\n\n" +
+            _("  2. Spectroscopic Object ID Search:") + "\n" +
+            _("     --specobjid <ID> [--objtype <TYPE>]") + "\n" +
+            _("     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')") + "\n\n" +
+            _("  3. Fiber ID Search:") + "\n" +
+            _("     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]") + "\n" +
+            _("     (e.g., --plate 123 --mjd 51608 --fiberid 1)")
         ),
         invoke_without_command=True,
         no_args_is_help=False
@@ -48,30 +46,30 @@ def get_app():
             False,
             "-t",
             "--debug",
-            help=builtins._("Enable debug mode with verbose output."),
+            help=_("Enable debug mode with verbose output."),
             envvar="AQC_DEBUG"
         ),
         verbose: bool = typer.Option(
             False,
             "-v",
             "--verbose",
-            help=builtins._("Enable verbose output.")
+            help=_("Enable verbose output.")
         ),
-        ra: Optional[str] = typer.Option(None, help=builtins._("Right Ascension (e.g., '10.5 deg', '0h42m30s'). Required for cone search.")),
-        dec: Optional[str] = typer.Option(None, help=builtins._("Declination (e.g., '20.1 deg', '+41d12m0s'). Required for cone search.")),
-        radius: Optional[str] = typer.Option(None, help=builtins._("Search radius (e.g., '0.5 deg', '2 arcmin'). Max 3 arcmin. Required for cone search.")),
-        objtype: Optional[str] = typer.Option(None, help=builtins._("Object type (e.g., 'STAR', 'GALAXY', 'QSO'). Note: This parameter is only applicable for queries using specobjid or plate/mjd/fiberid, not for cone searches.")),
-        specobjid: Optional[int] = typer.Option(None, help=builtins._("Spectroscopic object ID. Required for specobjid search.")),
-        plate: Optional[int] = typer.Option(None, help=builtins._("Plate number for spectroscopic data. Required for fiber ID search.")),
-        mjd: Optional[int] = typer.Option(None, help=builtins._("Modified Julian Date for spectroscopic data. Required for fiber ID search.")),
-        fiberid: Optional[int] = typer.Option(None, help=builtins._("Fiber ID for spectroscopic data. Required for fiber ID search.")),
+        ra: Optional[str] = typer.Option(None, help=_("Right Ascension (e.g., '10.5 deg', '0h42m30s'). Required for cone search.")),
+        dec: Optional[str] = typer.Option(None, help=_("Declination (e.g., '20.1 deg', '+41d12m0s'). Required for cone search.")),
+        radius: Optional[str] = typer.Option(None, help=_("Search radius (e.g., '0.5 deg', '2 arcmin'). Max 3 arcmin. Required for cone search.")),
+        objtype: Optional[str] = typer.Option(None, help=_("Object type (e.g., 'STAR', 'GALAXY', 'QSO'). Note: This parameter is only applicable for queries using specobjid or plate/mjd/fiberid, not for cone searches.")),
+        specobjid: Optional[int] = typer.Option(None, help=_("Spectroscopic object ID. Required for specobjid search.")),
+        plate: Optional[int] = typer.Option(None, help=_("Plate number for spectroscopic data. Required for fiber ID search.")),
+        mjd: Optional[int] = typer.Option(None, help=_("Modified Julian Date for spectroscopic data. Required for fiber ID search.")),
+        fiberid: Optional[int] = typer.Option(None, help=_("Fiber ID for spectroscopic data. Required for fiber ID search.")),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(
-            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+            25, help=_("Maximum number of rows to display. Use -1 for all rows.")
         ),
         show_all_columns: bool = typer.Option(
-            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
+            False, "--show-all-cols", help=_("Show all columns in the output table.")
         ),
     ):
         setup_debug_context(ctx, debug, verbose)

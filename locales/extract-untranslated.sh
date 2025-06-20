@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex # Enable verbose debugging
+set -e
 
 # Get the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
