@@ -40,9 +40,7 @@ Thumbs.db
 *.sqlite3
 
 # translation files
-untranslated_fr.tmp
-untranslated_ja.tmp
-untranslated_zh.tmp
+*.tmp
 
 locales/fr/LC_MESSAGES/messages.po.bak
 locales/ja/LC_MESSAGES/messages.po.bak

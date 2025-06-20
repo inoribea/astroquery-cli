@@ -27,6 +27,7 @@ pyvo = "^1.4.1"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"
 snakeviz = "^2.2.0"
+polib = "^1.2.0"
 
 [build-system]
 requires = ["poetry-core"]

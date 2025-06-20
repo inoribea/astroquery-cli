@@ -17,18 +17,19 @@ A practical command-line interface (CLI) for selected [astroquery](https://astro
 - **Gaia**: Cone search
 - **IRSA**: Infrared Science Archive queries
 - **Heasarc**: HEASARC Archive queries
-- **JPLSBDB**: JPL Small-Body Database queries
+- **JPL**: JPL Small-Body Database queries
 - **MAST**: Mikulski Archive for Space Telescopes queries
-- **NASA-ADS**: NASA Astrophysics Data System literature search and BibTeX retrieval, allows simple commands to search for "latest papers" or "highly cited reviews".
+- **ADS**: NASA Astrophysics Data System literature search and BibTeX retrieval, allows simple commands to search for "latest papers" or "highly cited reviews".
 - **NED**: NASA/IPAC Extragalactic Database name resolution
 - **NIST**: National Institute of Standards and Technology Atomic Spectra Database queries
+- **Exoplanet**: NASA Exoplanet Archive queries
 - **SDSS**: Sloan Digital Sky Survey queries
 - **ESO**: European Southern Observatory queries
 - **SIMBAD**: SIMBAD Astronomical Database basic query
 - **Splatalogue**: Molecular line queries
 - **VizieR**: VizieR Catalogue Database catalog search, basic query
 
-_Some modules and commands are not fully implemented. Please refer to `aqc --help` for the latest status._
+_Some modules and commands are not fully implemented. Aliases are available for some modules (e.g., `sim` for `simbad`, `viz` for `vizier`, `spl` for `splatalogue`, `hea` for `heasarc`, `exo` for `exoplanet`). Please refer to `aqc --help` for the latest status._
 
 ---
 
@@ -126,7 +127,16 @@ aqc --field simbad
 
 ### Updating Translations
 
-Helper scripts in the `locales/` directory assist with extracting, updating, and compiling translation files. See script comments for details.
+Helper scripts in the `locales/` directory assist with extracting, updating, and compiling translation files. The general workflow is as follows:
+
+1.  **Extract untranslated entries**: Run `locales/extract-untranslated.sh`. This script generates `untranslated_pot.tmp` (for new entries in `messages.pot`) and `untranslated_<lang>.tmp` files (for untranslated entries in language-specific `.po` files).
+2.  **Translate `untranslated_pot.tmp`**: Manually translate the entries in `locales/untranslated_pot.tmp`. These are new `msgid` entries that need to be added to all language files.
+3.  **Merge translations**: After translating `untranslated_pot.tmp`, merge these translations into the respective `untranslated_<lang>.tmp` files. This step typically involves copying the translated `msgstr` from `untranslated_pot.tmp` to the corresponding entries in `untranslated_<lang>.tmp`.
+4.  **Update `.po` files**: Run `locales/update-po.sh` to incorporate the translated entries from the `untranslated_<lang>.tmp` files into the `messages.po` files for each language.
+5.  **Check for updates**: Run `locales/check-update.sh` to ensure all translation files are consistent and up-to-date.
+6.  **Compile `.mo` files**: After updating `.po` files, compile them into `.mo` files using `locales/compile-mo.sh` (or similar command if not explicitly provided as a script).
+
+Refer to the comments within each script in the `locales/` directory for more detailed instructions.
 
 ---
 
