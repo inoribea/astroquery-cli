@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex # Enable verbose debugging
 
 # Get the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -11,102 +11,164 @@ LOCALES_DIR="$SCRIPT_DIR"
 DOMAIN="messages"
 POT_FILE="$LOCALES_DIR/$DOMAIN.pot" # This needs to be an absolute path
 
-# Extract untranslated and fuzzy entries
-echo "Extracting untranslated and fuzzy entries..."
+# AWK script to extract and clean msgid strings, handling multi-line and unescaping
+# This script is written to a temporary file to avoid issues with 'read -r -d'
+AWK_EXTRACT_MSGID_SCRIPT_PATH="$LOCALES_DIR/awk_extract_msgid.awk"
+cat << 'EOF_AWK_EXTRACT_MSGID' > "$AWK_EXTRACT_MSGID_SCRIPT_PATH"
+BEGIN {
+    current_msgid_raw = "";
+    in_msgid_block = 0;
+}
+
+/^msgid / {
+    if (in_msgid_block) {
+        cleaned_msgid = current_msgid_raw;
+        sub(/^msgid /, "", cleaned_msgid);
+        if (length(cleaned_msgid) > 0 && substr(cleaned_msgid, 1, 1) == "\"" && substr(cleaned_msgid, length(cleaned_msgid), 1) == "\"") {
+            cleaned_msgid = substr(cleaned_msgid, 2, length(cleaned_msgid) - 2);
+        }
+        gsub(/\n"/, "\n", cleaned_msgid);
+        gsub(/\\"/, "\"", cleaned_msgid);
+        gsub(/\\n/, "\n", cleaned_msgid);
+        print cleaned_msgid;
+    }
+    current_msgid_raw = $0;
+    in_msgid_block = 1;
+    next;
+}
+
+/^msgstr / {
+    cleaned_msgid = current_msgid_raw;
+    sub(/^msgid /, "", cleaned_msgid);
+    if (length(cleaned_msgid) > 0 && substr(cleaned_msgid, 1, 1) == "\"" && substr(cleaned_msgid, length(cleaned_msgid), 1) == "\"") {
+        cleaned_msgid = substr(cleaned_msgid, 2, length(cleaned_msgid) - 2);
+    }
+    gsub(/\n"/, "\n", cleaned_msgid);
+    gsub(/\\"/, "\"", cleaned_msgid);
+    gsub(/\\n/, "\n", cleaned_msgid);
+    print cleaned_msgid;
+    
+    current_msgid_raw = "";
+    in_msgid_block = 0;
+    next;
+}
+
+/^"/ {
+    if (in_msgid_block) {
+        current_msgid_raw = current_msgid_raw "\n" $0;
+    }
+    next;
+}
+
+/^#/ {
+    next;
+}
+
+/^$/ {
+    if (in_msgid_block) {
+        cleaned_msgid = current_msgid_raw;
+        sub(/^msgid /, "", cleaned_msgid);
+        if (length(cleaned_msgid) > 0 && substr(cleaned_msgid, 1, 1) == "\"" && substr(cleaned_msgid, length(cleaned_msgid), 1) == "\"") {
+            cleaned_msgid = substr(cleaned_msgid, 2, length(cleaned_msgid) - 2);
+        }
+        gsub(/\n"/, "\n", cleaned_msgid);
+        gsub(/\\"/, "\"", cleaned_msgid);
+        gsub(/\\n/, "\n", cleaned_msgid);
+        print cleaned_msgid;
+    }
+    current_msgid_raw = "";
+    in_msgid_block = 0;
+    next;
+}
+
+END {
+    if (in_msgid_block && current_msgid_raw != "") {
+        cleaned_msgid = current_msgid_raw;
+        sub(/^msgid /, "", cleaned_msgid);
+        if (length(cleaned_msgid) > 0 && substr(cleaned_msgid, 1, 1) == "\"" && substr(cleaned_msgid, length(cleaned_msgid), 1) == "\"") {
+            cleaned_msgid = substr(cleaned_msgid, 2, length(cleaned_msgid) - 2);
+        }
+        gsub(/\n"/, "\n", cleaned_msgid);
+        gsub(/\\"/, "\"", cleaned_msgid);
+        gsub(/\\n/, "\n", cleaned_msgid);
+        print cleaned_msgid;
+    }
+}
+EOF_AWK_EXTRACT_MSGID
+
+echo "Extracting untranslated and missing entries..."
 for po in "$LOCALES_DIR"/*/LC_MESSAGES/$DOMAIN.po; do
     [ -f "$po" ] || continue
     lang=$(basename "$(dirname "$(dirname "$po")")")
     tmpfile="$LOCALES_DIR/untranslated_${lang}.tmp"
+    tmpfile_pot_msgids="$LOCALES_DIR/all_pot_msgids.tmp"
+    tmpfile_po_translated_msgids="$LOCALES_DIR/po_translated_msgids_${lang}.tmp"
     
-    # Clear the tmpfile first
+    # Clear tmp files
     : > "$tmpfile"
+    : > "$tmpfile_pot_msgids"
+    : > "$tmpfile_po_translated_msgids"
 
-    # Extract untranslated messages by directly parsing the .po file
-    awk -f - "$po" > "$tmpfile" << 'EOF_AWK'
+    echo "--- Processing language: $lang ---"
+
+    # 1. Extract all msgids from the .pot file
+    echo "Step 1: Extracting all msgids from $POT_FILE..."
+    awk -f "$AWK_EXTRACT_MSGID_SCRIPT_PATH" "$POT_FILE" | sort -u > "$tmpfile_pot_msgids"
+    echo "Step 1 Complete: All msgids from $POT_FILE extracted to $tmpfile_pot_msgids"
+
+    # 2. Extract all *translated* msgids from the .po file
+    echo "Step 2: Extracting translated msgids from $po..."
+    grep -P -A 1 '^msgid ' "$po" | awk '
         BEGIN {
-            current_msgid = "";
-            current_msgstr = "";
-            is_fuzzy = 0;
-            in_entry = 0; # 0: outside entry, 1: in msgid, 2: in msgstr
+            current_msgid_block = "";
+            in_msgid_section = 0;
         }
-
-        # Handle comments and fuzzy flag
-        /^#/ {
-            if ($0 ~ /#, fuzzy/) {
-                is_fuzzy = 1;
-            }
-            next;
-        }
-
-        # Start of a new msgid
         /^msgid / {
-            # Process the previous entry before starting a new one
-            if (in_entry == 2 && current_msgid != "" && current_msgstr == "" && is_fuzzy == 0) {
-                print current_msgid "|||" current_msgstr;
-            }
-            
-            # Reset for the new entry
-            current_msgid = $0;
-            sub(/^msgid /, "", current_msgid); # Remove "msgid "
-            # Remove leading and trailing quotes from msgid
-            if (current_msgid ~ /^".*"$/) {
-                current_msgid = substr(current_msgid, 2, length(current_msgid) - 2);
-            }
-            
-            current_msgstr = "";
-            is_fuzzy = 0;
-            in_entry = 1; # Now in msgid block
+            current_msgid_block = $0;
+            in_msgid_section = 1;
             next;
         }
-
-        # Start of a new msgstr
-        /^msgstr / {
-            current_msgstr = $0;
-            sub(/^msgstr /, "", current_msgstr); # Remove "msgstr "
-            # Remove leading and trailing quotes from msgstr
-            if (current_msgstr ~ /^".*"$/) {
-                current_msgstr = substr(current_msgstr, 2, length(current_msgstr) - 2);
+        /^msgstr "[^"]+"$/ { # msgstr is not empty
+            if (in_msgid_section) {
+                print current_msgid_block; # Print the msgid block
             }
-            in_entry = 2; # Now in msgstr block
+            in_msgid_section = 0;
+            current_msgid_block = "";
             next;
         }
-
-        # Continuation lines (quoted strings)
-        /^"/ {
-            line_content = $0;
-            # Remove leading and trailing quotes from continuation lines
-            if (line_content ~ /^".*"$/) {
-                line_content = substr(line_content, 2, length(line_content) - 2);
-            }
-            
-            if (in_entry == 1) { # Appending to msgid
-                current_msgid = current_msgid line_content;
-            } else if (in_entry == 2) { # Appending to msgstr
-                current_msgstr = current_msgstr line_content;
+        /^"/ { # Continuation lines for msgid
+            if (in_msgid_section) {
+                current_msgid_block = current_msgid_block "\n" $0;
             }
             next;
         }
-
-        # Empty line (marks end of an entry)
-        /^$/ {
-            # Check if the completed entry is untranslated and not fuzzy
-            if (in_entry == 2 && current_msgid != "" && current_msgstr == "" && is_fuzzy == 0) {
-                print current_msgid "|||" current_msgstr;
-            }
-            # Reset for the next entry
-            current_msgid = "";
-            current_msgstr = "";
-            is_fuzzy = 0;
-            in_entry = 0;
+        /^#/ { next; } # Ignore comments
+        /^$/ { # Empty line, end of entry
+            in_msgid_section = 0;
+            current_msgid_block = "";
             next;
         }
-
-        # End of file: process the last entry if it exists
         END {
-            if (in_entry == 2 && current_msgid != "" && current_msgstr == "" && is_fuzzy == 0) {
-                print current_msgid "|||" current_msgstr;
+            # Handle case where last entry is a translated msgid
+            if (in_msgid_section && current_msgid_block != "") {
+                # This case is tricky, as we only print if msgstr is non-empty.
+                # The grep -A 1 should handle this by providing the msgstr line.
+                # So, no need to print here, as it would have been printed by the /^msgstr/ block.
             }
         }
-EOF_AWK
-    echo "Untranslated entries written to: $tmpfile"
+    ' | awk -f "$AWK_EXTRACT_MSGID_SCRIPT_PATH" - | sort -u > "$tmpfile_po_translated_msgids"
+    echo "Step 2 Complete: Translated msgids from $po extracted to $tmpfile_po_translated_msgids"
+
+    # 3. Compare the two lists to find untranslated/missing entries
+    echo "Step 3: Comparing msgids to find untranslated and missing entries..."
+    comm -23 "$tmpfile_pot_msgids" "$tmpfile_po_translated_msgids" > "$tmpfile"
+    echo "Step 3 Complete: Untranslated and missing entries written to: $tmpfile"
+
+    # Clean up temporary files for the current language
+    echo "Cleaning up temporary files for language $lang..."
+    rm "$tmpfile_pot_msgids" "$tmpfile_po_translated_msgids"
 done
+
+# Clean up the AWK script file after all languages are processed
+echo "Cleaning up AWK script file..."
+rm "$AWK_EXTRACT_MSGID_SCRIPT_PATH"
