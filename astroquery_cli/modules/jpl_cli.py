@@ -60,14 +60,40 @@ def get_app():
                 except SystemExit:
                     pass
             full_help_text = help_output_capture.getvalue()
+            
+            # Define aliases to filter out
+            aliases_to_filter = ["h", "s"]
+
             commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
             if commands_match:
                 commands_section = commands_match.group(0)
-                filtered_commands_section = "\n".join([
-                    line for line in commands_section.splitlines() if "Usage:" not in line
-                ])
-                console.print(filtered_commands_section)
+                # Filter out alias lines
+                filtered_commands_section_lines = []
+                for line in commands_section.splitlines():
+                    is_alias_line = False
+                    for alias in aliases_to_filter:
+                        # Check if the line starts with the alias name followed by spaces
+                        if re.match(rf"^\s*│\s*{re.escape(alias)}\s+", line):
+                            is_alias_line = True
+                            break
+                    if not is_alias_line and "Usage:" not in line:
+                        filtered_commands_section_lines.append(line)
+                
+                # Reconstruct the commands section, ensuring the borders are kept
+                if len(filtered_commands_section_lines) > 1: # Check if there's content beyond just the header/footer
+                    # Find the header and footer lines
+                    header_line = filtered_commands_section_lines[0]
+                    footer_line = filtered_commands_section_lines[-1]
+                    
+                    # Reconstruct the section with filtered content in between
+                    commands_section = header_line + "\n" + "\n".join(filtered_commands_section_lines[1:-1]) + "\n" + footer_line
+                else:
+                    # If only header/footer remain, just use the original filtered section
+                    commands_section = "\n".join(filtered_commands_section_lines)
+
+                console.print(commands_section)
             else:
+                # Fallback: if commands section not found, print full help
                 console.print(full_help_text)
             raise typer.Exit()
 
@@ -105,7 +131,8 @@ def get_app():
         _ = i18n.get_translator(lang)
         return "1,2,4,8,9,10,12,13,14,19,20,21,23,24,31"
 
-    @app.command(name="horizons", help=builtins._("Query ephemerides, orbital elements, or vectors for a target object."))
+    @app.command(name="horizons", help=builtins._("Query ephemerides, orbital elements, or vectors for a target object. (h)"))
+    @app.command(name="h", help=builtins._("Alias for horizons."))
     @global_keyboard_interrupt_handler
     def query_horizons(ctx: typer.Context,
         target: Optional[str] = typer.Argument(None, help=builtins._("Object ID (e.g., 'Mars', 'Ceres', '2000NM', '@10'). Use '@' prefix for spacecraft ID.")),
@@ -247,7 +274,7 @@ def get_app():
 
     sbdb_app = typer.Typer(
         name="sbdb",
-        help=builtins._("Query JPL Small-Body Database (SBDB)."),
+        help=builtins._("Query JPL Small-Body Database (SBDB). (s)"),
         no_args_is_help=False
     )
 
@@ -431,4 +458,5 @@ def get_app():
             raise typer.Exit()
 
     app.add_typer(sbdb_app, name="sbdb")
+    app.add_typer(sbdb_app, name="s") # Alias for sbdb
     return app

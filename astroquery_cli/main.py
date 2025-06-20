@@ -83,14 +83,19 @@ def setup_subcommands():
     app.add_typer(mast_cli.get_app(), name="mast")
     app.add_typer(ads_cli.get_app(), name="ads")
     app.add_typer(ned_cli.get_app(), name="ned")
-    app.add_typer(simbad_cli.get_app(), name="simbad")
-    app.add_typer(splatalogue_cli.get_app(), name="splatalogue")
-    app.add_typer(vizier_cli.get_app(), name="vizier")
-    app.add_typer(heasarc_cli.get_app(), name="heasarc")
+    app.add_typer(simbad_cli.get_app(), name="simbad", help=builtins._("Query the SIMBAD astronomical database. (sim)"))
+    app.add_typer(simbad_cli.get_app(), name="sim") # Alias for simbad
+    app.add_typer(splatalogue_cli.get_app(), name="splatalogue", help=builtins._("Query the Splatalogue spectral line database. (spl)"))
+    app.add_typer(splatalogue_cli.get_app(), name="spl") # Alias for splatalogue
+    app.add_typer(vizier_cli.get_app(), name="vizier", help=builtins._("Query the VizieR astronomical catalog database. (viz)"))
+    app.add_typer(vizier_cli.get_app(), name="viz") # Alias for vizier
+    app.add_typer(heasarc_cli.get_app(), name="heasarc", help=builtins._("Query the HEASARC database. (hea)"))
+    app.add_typer(heasarc_cli.get_app(), name="hea") # Alias for heasarc
     app.add_typer(sdss_cli.get_app(), name="sdss")
     app.add_typer(eso_cli.get_app(), name="eso")
     app.add_typer(nist_cli.get_app(), name="nist")
-    app.add_typer(exoplanet_cli.get_app(), name="exoplanet")
+    app.add_typer(exoplanet_cli.get_app(), name="exoplanet", help=builtins._("Query the NASA Exoplanet Archive. (exo)"))
+    app.add_typer(exoplanet_cli.get_app(), name="exo") # Alias for exoplanet
 
 @app.callback()
 def main_callback(
@@ -254,6 +259,9 @@ def main_callback(
                     pass
             full_help_text = help_output_capture.getvalue()
 
+            # Define aliases to filter out
+            aliases_to_filter = ["sim", "spl", "viz", "hea", "exo"]
+
             # Remove the gaia_message from the captured help text if it's present
             # This is to prevent duplication if Typer's help also includes it
             import re
@@ -263,11 +271,31 @@ def main_callback(
             commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
             if commands_match:
                 commands_section = commands_match.group(0)
-                # This is a fallback in case Typer's internal help generation includes it
-                filtered_commands_section = "\n".join([
-                    line for line in commands_section.splitlines() if "Usage:" not in line
-                ])
-                console.print(filtered_commands_section)
+                # Filter out alias lines
+                filtered_commands_section_lines = []
+                for line in commands_section.splitlines():
+                    is_alias_line = False
+                    for alias in aliases_to_filter:
+                        # Check if the line starts with the alias name followed by spaces
+                        if re.match(rf"^\s*│\s*{re.escape(alias)}\s+", line):
+                            is_alias_line = True
+                            break
+                    if not is_alias_line and "Usage:" not in line:
+                        filtered_commands_section_lines.append(line)
+                
+                # Reconstruct the commands section, ensuring the borders are kept
+                if len(filtered_commands_section_lines) > 1: # Check if there's content beyond just the header/footer
+                    # Find the header and footer lines
+                    header_line = filtered_commands_section_lines[0]
+                    footer_line = filtered_commands_section_lines[-1]
+                    
+                    # Reconstruct the section with filtered content in between
+                    commands_section = header_line + "\n" + "\n".join(filtered_commands_section_lines[1:-1]) + "\n" + footer_line
+                else:
+                    # If only header/footer remain, just use the original filtered section
+                    commands_section = "\n".join(filtered_commands_section_lines)
+
+                console.print(commands_section)
             else:
                 # Fallback: if commands section not found, print full help
                 console.print(full_help_text)

@@ -23,7 +23,7 @@ def get_app():
     _ = builtins._
     app = typer.Typer(
         name="ned",
-        help=builtins._("Query the NASA/IPAC Extragalactic Database (NED)."),
+        help=builtins._("Query the NASA/IPAC Extragalactic Database"),
         invoke_without_command=True, # Add this to allow callback to run without subcommand
         no_args_is_help=False # Set to False for custom handling
     )

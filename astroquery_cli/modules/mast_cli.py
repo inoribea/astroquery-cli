@@ -23,7 +23,7 @@ def get_app():
     _ = builtins._
     app = typer.Typer(
         name="mast",
-        help=builtins._("Query the Mikulski Archive for Space Telescopes (MAST)."),
+        help=builtins._("Query the Mikulski Archive for Space Telescopes"),
         invoke_without_command=True, # Add this to allow callback to run without subcommand
         no_args_is_help=False # Set to False for custom handling
     )

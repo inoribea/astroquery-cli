@@ -29,7 +29,7 @@ def get_app():
     _ = builtins._
     app = typer.Typer(
         name="irsa",
-        help=builtins._("Query NASA/IPAC Infrared Science Archive (IRSA)."),
+        help=builtins._("Query NASA/IPAC Infrared Science Archive"),
         invoke_without_command=True, # Add this to allow callback to run without subcommand
         no_args_is_help=False # Set to False for custom handling
     )

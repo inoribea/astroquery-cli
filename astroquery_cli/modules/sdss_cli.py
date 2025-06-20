@@ -24,7 +24,7 @@ def get_app():
     app = typer.Typer(
         name="sdss",
         help=builtins._(
-            "Query the Sloan Digital Sky Survey (SDSS) database.\n\n"
+            "Query the Sloan Digital Sky Survey database.\n\n"
             "Perform a query on SDSS. You must provide parameters for exactly one of the following query types:\n\n"
             "  1. Cone Search:\n"
             "     --ra <RA> --dec <DEC> --radius <RADIUS>\n"

@@ -23,7 +23,7 @@ def get_app():
     _ = builtins._
     app = typer.Typer(
         name="eso",
-        help=builtins._("Query the European Southern Observatory (ESO) archive."),
+        help=builtins._("Query the European Southern Observatory archive."),
         invoke_without_command=True,
         no_args_is_help=False
     )
