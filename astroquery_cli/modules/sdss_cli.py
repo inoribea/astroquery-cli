@@ -28,10 +28,10 @@ def get_app():
             "Perform a query on SDSS. You must provide parameters for exactly one of the following query types:\n\n"
             "  1. Cone Search:\n"
             "     --ra <RA> --dec <DEC> --radius <RADIUS>\n"
-            "     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n"
+            "     (e.g., --ra '10.5 deg' --dec '20.1 deg' --radius '2 arcmin')\n\n"
             "  2. Spectroscopic Object ID Search:\n"
             "     --specobjid <ID> [--objtype <TYPE>]\n"
-            "     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')\n"
+            "     (e.g., --specobjid 2634622337315530752 --objtype 'GALAXY')\n\n"
             "  3. Fiber ID Search:\n"
             "     --plate <PLATE> --mjd <MJD> --fiberid <FIBERID> [--objtype <TYPE>]\n"
             "     (e.g., --plate 123 --mjd 51608 --fiberid 1)"
@@ -41,75 +41,22 @@ def get_app():
     )
 
     @app.callback()
+    @global_keyboard_interrupt_handler
     def sdss_callback(
         ctx: typer.Context,
         debug: bool = typer.Option(
             False,
             "-t",
             "--debug",
-            help=_("Enable debug mode with verbose output."),
+            help=builtins._("Enable debug mode with verbose output."),
             envvar="AQC_DEBUG"
         ),
         verbose: bool = typer.Option(
             False,
             "-v",
             "--verbose",
-            help=_("Enable verbose output.")
-        )
-    ):
-        setup_debug_context(ctx, debug, verbose)
-
-        if ctx.invoked_subcommand is None and \
-           not any(arg in ["-h", "--help"] for arg in ctx.args):
-            # Print initial help text (Usage and main description)
-            console.print(f"Usage: {ctx.command.get_usage(ctx)}\n")
-            console.print(ctx.command.help)
-
-            # Manually construct and print the Commands section
-            commands_list = []
-            for command in app.registered_commands:
-                command_name = command.name
-                command_help = command.help if command.help else ""
-                # Adjust padding to match Typer's default formatting for commands
-                commands_list.append(f"│ {command_name:<7} {command_help}") 
-
-            if commands_list:
-                # Get terminal width for dynamic box sizing
-                try:
-                    terminal_width = os.get_terminal_size().columns
-                except OSError:
-                    terminal_width = 80 # Fallback if not in a proper terminal
-
-                # Typer often uses a default width around 80-100. Let's cap it to avoid overly wide boxes.
-                box_width = min(terminal_width, 100) 
-                
-                # Calculate inner content width for padding
-                # The format is "│ {name} {help} │"
-                # So, inner content width is box_width - 4 (for two '│ ' and two ' │')
-                inner_content_width = box_width - 4
-
-                console.print("╭─ Commands " + "─" * (box_width - len("╭─ Commands ") - 1) + "╮")
-                for cmd_line in commands_list:
-                    # cmd_line is like "│ query   Perform a query..."
-                    # We need to pad the part after "│ "
-                    content_to_pad = cmd_line[2:]
-                    padded_line = f"│ {content_to_pad.ljust(inner_content_width)} │"
-                    console.print(padded_line)
-                console.print("╰─" + "─" * (box_width - 3) + "╯") # Corrected: box_width - 3
-            
-            # Do NOT print Options section as per user's latest request
-            
-            raise typer.Exit()
-
-    @app.command(
-        name="query",
-        help=builtins._(
-            "Perform a query on SDSS using the options provided to the main 'sdss' command."
-        )
-    )
-    @global_keyboard_interrupt_handler
-    def query_sdss(
-        ctx: typer.Context,
+            help=builtins._("Enable verbose output.")
+        ),
         ra: Optional[str] = typer.Option(None, help=builtins._("Right Ascension (e.g., '10.5 deg', '0h42m30s'). Required for cone search.")),
         dec: Optional[str] = typer.Option(None, help=builtins._("Declination (e.g., '20.1 deg', '+41d12m0s'). Required for cone search.")),
         radius: Optional[str] = typer.Option(None, help=builtins._("Search radius (e.g., '0.5 deg', '2 arcmin'). Max 3 arcmin. Required for cone search.")),
@@ -127,13 +74,29 @@ def get_app():
             False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
         ),
     ):
-        # Remove the custom help message filtering logic
-        # This ensures Typer's default help generation is used,
-        # which will correctly display the query command's help.
-        pass # No changes needed here, the original parameters are already in place.
+        setup_debug_context(ctx, debug, verbose)
+
+        # If no query parameters are provided and help is not explicitly requested,
+        # Typer's default behavior will now print the help message for the main command.
+        # The custom help printing logic is removed.
+        if ctx.invoked_subcommand is not None:
+            return # Let Typer handle subcommands if they exist (though we're removing 'query')
 
         if ctx.obj.get("DEBUG"):
-            debug(f"query_sdss - ra: {ra}, dec: {dec}, radius: {radius}, objtype: {objtype}, specobjid: {specobjid}")
+            debug(f"sdss_callback - ra: {ra}, dec: {dec}, radius: {radius}, objtype: {objtype}, specobjid: {specobjid}")
+
+        # Check if any query parameters are provided
+        query_params_provided = any([ra, dec, radius, objtype, specobjid, plate, mjd, fiberid])
+
+        if not query_params_provided and not any(arg in ["-h", "--help"] for arg in ctx.args):
+            # If no query parameters and no help flag, print help and exit
+            # This mimics the original behavior of showing help when no command/args are given
+            console.print(f"Usage: {ctx.command.get_usage(ctx)}\n")
+            console.print(ctx.command.help)
+            raise typer.Exit()
+        elif not query_params_provided and any(arg in ["-h", "--help"] for arg in ctx.args):
+            # If only help flag is provided, let Typer handle it
+            return
 
         console.print(f"[cyan]{_('Querying SDSS...')}[/cyan]")
 

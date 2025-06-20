@@ -22,18 +22,16 @@ def get_app():
     import builtins
     _ = builtins._
 
-    @global_keyboard_interrupt_handler
-    def exoplanet_command(
+    exoplanet_app = typer.Typer(
+        name="exoplanet",
+        help=builtins._("Query the NASA Exoplanet Archive."),
+        invoke_without_command=True,
+        no_args_is_help=False
+    )
+
+    @exoplanet_app.callback()
+    def exoplanet_main_callback(
         ctx: typer.Context,
-        planet_name: str = typer.Argument(..., help=builtins._("Planet name (e.g., 'Kepler-186 f').")),
-        output_file: Optional[str] = common_output_options["output_file"],
-        output_format: Optional[str] = common_output_options["output_format"],
-        max_rows_display: int = typer.Option(
-            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
-        ),
-        show_all_columns: bool = typer.Option(
-            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
-        ),
         debug: bool = typer.Option(
             False,
             "-t",
@@ -50,6 +48,44 @@ def get_app():
     ):
         setup_debug_context(ctx, debug, verbose)
 
+        if ctx.invoked_subcommand is None and \
+           not any(arg in ["-h", "--help"] for arg in ctx.args):
+            # Capture the full help output by explicitly calling the app with --help
+            help_output_capture = StringIO()
+            with redirect_stdout(help_output_capture):
+                try:
+                    exoplanet_app(ctx.args + ["--help"])
+                except SystemExit:
+                    pass
+            full_help_text = help_output_capture.getvalue()
+
+            # Extract only the "Commands" section using regex, including the full bottom border
+            commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
+            if commands_match:
+                commands_section = commands_match.group(0)
+                filtered_commands_section = "\n".join([
+                    line for line in commands_section.splitlines() if "Usage:" not in line
+                ])
+                console.print(filtered_commands_section)
+            else:
+                console.print(full_help_text)
+            raise typer.Exit()
+
+    @exoplanet_app.command(name="query", help=builtins._("Query the NASA Exoplanet Archive for a specific planet."))
+    @global_keyboard_interrupt_handler
+    def exoplanet_query_command(
+        ctx: typer.Context,
+        planet_name: str = typer.Argument(..., help=builtins._("Planet name (e.g., 'Kepler-186 f').")),
+        output_file: Optional[str] = common_output_options["output_file"],
+        output_format: Optional[str] = common_output_options["output_format"],
+        max_rows_display: int = typer.Option(
+            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
+        ),
+        show_all_columns: bool = typer.Option(
+            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
+        )
+    ):
+        # debug and verbose options are handled by the main callback
         if ctx.obj.get("DEBUG"):
             debug(f"query_exoplanet - planet_name: {planet_name}")
 
@@ -70,4 +106,4 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("NASA Exoplanet Archive query"))
             raise typer.Exit(code=1)
 
-    return exoplanet_command
+    return exoplanet_app

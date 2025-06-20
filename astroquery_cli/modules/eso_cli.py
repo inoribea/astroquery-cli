@@ -35,14 +35,14 @@ def get_app():
             False,
             "-t",
             "--debug",
-            help=_("Enable debug mode with verbose output."),
+            help=builtins._("Enable debug mode with verbose output."),
             envvar="AQC_DEBUG"
         ),
         verbose: bool = typer.Option(
             False,
             "-v",
             "--verbose",
-            help=_("Enable verbose output.")
+            help=builtins._("Enable verbose output.")
         )
     ):
         setup_debug_context(ctx, debug, verbose)
@@ -61,7 +61,7 @@ def get_app():
             if commands_match:
                 commands_section = commands_match.group(0)
                 filtered_commands_section = "\n".join([
-                    line for line in commands_section.splitlines() if "Usage:" not in line
+                    line for line in commands_section.splitlines() if _("Usage:") not in line
                 ])
                 console.print(filtered_commands_section)
             else:
@@ -118,7 +118,7 @@ def get_app():
             handle_astroquery_exception(ctx, e, _("ESO query"))
             raise typer.Exit(code=1)
 
-    @app.command(name="list-instruments", help=builtins._("List available ESO instruments."))
+    @app.command(name="list", help=builtins._("List available ESO instruments."))
     @global_keyboard_interrupt_handler
     def list_instruments(ctx: typer.Context):
         console.print(f"[cyan]{_('Listing ESO instruments...')}[/cyan]")

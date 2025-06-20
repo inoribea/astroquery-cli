@@ -32,7 +32,6 @@ def get_app():
     @global_keyboard_interrupt_handler
     def heasarc_callback(
         ctx: typer.Context,
-        # Moved query options to callback
         ra: Optional[float] = typer.Option(None, help=builtins._("Right Ascension in degrees.")),
         dec: Optional[float] = typer.Option(None, help=builtins._("Declination in degrees.")),
         radius: Optional[float] = typer.Option(None, help=builtins._("Search radius in degrees (for cone search).")),
@@ -47,27 +46,50 @@ def get_app():
         max_rows: int = typer.Option(
             100, "--max-rows", help=builtins._("Maximum number of rows to retrieve from the HEASARC database. Use -1 for all rows.")
         ),
-        enable_debug: bool = typer.Option(
+        enable_debug_flag: bool = typer.Option( # Renamed to avoid conflict
             False,
             "-t",
             "--debug",
-            help=_("Enable debug mode with verbose output."),
+            help=builtins._("Enable debug mode with verbose output."),
             envvar="AQC_DEBUG"
         ),
-        verbose: bool = typer.Option(
+        enable_verbose_flag: bool = typer.Option( # Renamed to avoid conflict
             False,
             "-v",
             "--verbose",
-            help=_("Enable verbose output.")
+            help=builtins._("Enable verbose output.")
         ),
     ):
-        setup_debug_context(ctx, enable_debug, verbose)
+        setup_debug_context(ctx, enable_debug_flag, enable_verbose_flag) # Use new parameter names
         debug(f"heasarc_callback: ctx.invoked_subcommand={ctx.invoked_subcommand}, ctx.args={ctx.args}")
-        heasarc = Heasarc() # Instantiate Heasarc here for all operations
 
-        # Check if a subcommand was invoked (e.g., 'list')
-        if ctx.invoked_subcommand is not None:
-            return # Let the subcommand handle its own logic
+        # Check if a subcommand was invoked (e.g., 'list' or 'query')
+        # If no subcommand and no explicit help flag, display only commands section
+        if ctx.invoked_subcommand is None and \
+           not any(arg in ["-h", "--help"] for arg in ctx.args):
+            # Capture the full help output by explicitly calling the app with --help
+            help_output_capture = StringIO()
+            with redirect_stdout(help_output_capture):
+                try:
+                    app(ctx.args + ["--help"])
+                except SystemExit:
+                    pass
+            full_help_text = help_output_capture.getvalue()
+
+            # Extract only the "Commands" section using regex, including the full bottom border
+            commands_match = re.search(r'╭─ Commands ─.*?(\n(?:│.*?\n)*)╰─.*─╯', full_help_text, re.DOTALL)
+            if commands_match:
+                commands_section = commands_match.group(0)
+                filtered_commands_section = "\n".join([
+                    line for line in commands_section.splitlines() if "Usage:" not in line
+                ])
+                console.print(filtered_commands_section)
+            else:
+                console.print(full_help_text)
+            raise typer.Exit()
+
+        # If a subcommand was invoked or -h/--help was provided, let Typer handle it.
+        # The options defined in this callback will be part of the full help.
 
     @app.command(name="query", help=builtins._("Query a specific HEASARC mission. Use 'heasarc list' to see available missions."))
     @global_keyboard_interrupt_handler

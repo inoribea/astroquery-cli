@@ -54,7 +54,7 @@ def load_default_lang():
 
 app = typer.Typer(
     name="aqc",
-    help=i18n._("Astroquery CLI"),
+    help=builtins._("Astroquery CLI"),
     invoke_without_command=True,
     no_args_is_help=False,
     add_completion=False, # Set to False to remove global completion commands
@@ -90,7 +90,7 @@ def setup_subcommands():
     app.add_typer(sdss_cli.get_app(), name="sdss")
     app.add_typer(eso_cli.get_app(), name="eso")
     app.add_typer(nist_cli.get_app(), name="nist")
-    app.command(name="exoplanet", help=builtins._("Query the NASA Exoplanet Archive."))(exoplanet_cli.get_app())
+    app.add_typer(exoplanet_cli.get_app(), name="exoplanet")
 
 @app.callback()
 def main_callback(
@@ -99,7 +99,7 @@ def main_callback(
         None,
         "-l",
         "--lang",
-        help=i18n._("Set the language for output messages (e.g., 'en', 'zh'). Affects help texts and outputs."),
+        help=builtins._("Set the language for output messages (e.g., 'en', 'zh'). Affects help texts and outputs."),
         is_eager=True,
         envvar="AQC_LANG",
         show_default=False
@@ -108,26 +108,26 @@ def main_callback(
         False,
         "-p",
         "--ping",
-        help=i18n._("Test connectivity to major services (only available at top-level command).")
+        help=builtins._("Test connectivity to major services (only available at top-level command).")
     ),
     field: bool = typer.Option(
         False,
         "-f",
         "--field",
-        help=i18n._("Test field validity for modules (only available at top-level command).")
+        help=builtins._("Test field validity for modules (only available at top-level command).")
     ),
     debug: bool = typer.Option(
         False,
         "-d",
         "--debug",
-        help=i18n._("Enable debug mode with verbose output."),
+        help=builtins._("Enable debug mode with verbose output."),
         envvar="AQC_DEBUG"
     ),
     verbose: bool = typer.Option(
         False,
         "-v",
         "--verbose",
-        help=i18n._("Enable verbose output.")
+        help=builtins._("Enable verbose output.")
     )
 ):
     _ = builtins._
@@ -281,7 +281,7 @@ def cli():
             debug_manager.enable_debug()
             # Print a message indicating debug mode is enabled
             console = Console()
-            console.print("[bold green]Debug mode enabled.[/bold green]")
+            console.print(_("[bold green]Debug mode enabled.[/bold green]"))
         # Removed the "Debug mode disabled" message as per user request.
 
         setup_subcommands()

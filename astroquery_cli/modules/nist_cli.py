@@ -23,7 +23,7 @@ def get_app():
     _ = builtins._
     app = typer.Typer(
         name="nist",
-        help="Query the NIST Atomic Spectra Database.",
+        help=builtins._("Query the NIST Atomic Spectra Database."),
         invoke_without_command=True,
         no_args_is_help=False
     )
@@ -34,46 +34,43 @@ def get_app():
         ctx: typer.Context,
         query_string: Optional[str] = typer.Argument(
             None,
-            help="Primary query input. Can be:\n"
-                "  1. A wavelength range (e.g., '2000 3000').\n"
-                "  2. A line name (e.g., 'Fe II', 'H I').\n"
-                "If a line name is provided without explicit --minwav/--maxwav, a broad default range will be used."
+            help=builtins._("Primary query input: wavelength range (e.g., '2000 3000') or line name (e.g., 'Fe II').")
         ),
         minwav: Optional[float] = typer.Option(
             None,
-            help="Explicit minimum wavelength (e.g., 2000). Overrides any wavelength range parsed from 'query_string'. "
-                "Can be combined with '--linename'."
+            help=builtins._("Explicit minimum wavelength (e.g., 2000). Overrides any wavelength range parsed from 'query_string'. "
+                "Can be combined with '--linename'.")
         ),
         maxwav: Optional[float] = typer.Option(
             None,
-            help="Explicit maximum wavelength (e.g., 3000). Overrides any wavelength range parsed from 'query_string'. "
-                "Can be combined with '--linename'."
+            help=builtins._("Explicit maximum wavelength (e.g., 3000). Overrides any wavelength range parsed from 'query_string'. "
+                "Can be combined with '--linename'.")
         ),
         linename: Optional[str] = typer.Option(
             None,
-            help="Explicit line name (e.g., 'Fe II', 'H I'). Overrides any line name parsed from 'query_string'. "
-                "Can be combined with explicit '--minwav' and '--maxwav' for a specific range."
+            help=builtins._("Explicit line name (e.g., 'Fe II', 'H I'). Overrides any line name parsed from 'query_string'. "
+                "Can be combined with explicit '--minwav' and '--maxwav' for a specific range.")
         ),
         output_file: Optional[str] = common_output_options["output_file"],
         output_format: Optional[str] = common_output_options["output_format"],
         max_rows_display: int = typer.Option(
-            25, help="Maximum number of rows to display. Use -1 for all rows."
+            25, help=builtins._("Maximum number of rows to display. Use -1 for all rows.")
         ),
         show_all_columns: bool = typer.Option(
-            False, "--show-all-cols", help="Show all columns in the output table."
+            False, "--show-all-cols", help=builtins._("Show all columns in the output table.")
         ),
-        test: bool = typer.Option(False, "--test", "-t", help="Enable test mode and print elapsed time."),
+        test: bool = typer.Option(False, "--test", "-t", help=builtins._("Enable test mode and print elapsed time.")),
         debug_flag: bool = typer.Option( # Renamed to avoid conflict with imported debug
             False,
             "--debug", # Removed -t to avoid conflict with --test
-            help="Enable debug mode with verbose output.",
+            help=builtins._("Enable debug mode with verbose output."),
             envvar="AQC_DEBUG"
         ),
         verbose: bool = typer.Option(
             False,
             "-v",
             "--verbose",
-            help="Enable verbose output."
+            help=builtins._("Enable verbose output.")
         )
     ):
         setup_debug_context(ctx, debug_flag, verbose)
@@ -81,17 +78,40 @@ def get_app():
         # If no query string and no wavelength/linename options are provided, show help
         # This handles the case where `nist` is called without any arguments
         if query_string is None and minwav is None and maxwav is None and linename is None:
-            # If help is not explicitly requested, but no arguments are given, show help
+            help_output_capture = StringIO()
+            with redirect_stdout(help_output_capture):
+                try:
+                    app(["--help"]) # Call app with --help to get its own help
+                except SystemExit:
+                    pass
+            full_help_text = help_output_capture.getvalue()
+
+            # Description text
+            desc_text = (
+                _("Query the NIST Atomic Spectra Database. You can query by:\n") +
+                _("  1. Wavelength range: Provide two numbers (e.g., '2000 3000').\n") +
+                _("  2. Line name: Provide a line name (e.g., 'Fe II', 'H I').\n") +
+                _("     If a line name is provided without explicit --minwav/--maxwav, a broad default range will be used.\n") +
+                _("You can combine explicit --minwav/--maxwav with --linename for a specific range.\n")
+            )
+
+            # If help is not explicitly requested, show simplified help
             if not any(arg in ["-h", "--help"] for arg in ctx.args):
-                help_output_capture = StringIO()
-                with redirect_stdout(help_output_capture):
-                    try:
-                        app(["--help"]) # Call app with --help to get its own help
-                    except SystemExit:
-                        pass
-                console.print(help_output_capture.getvalue())
+                console.print(desc_text)
+                
+                # Extract and print Arguments section
+                args_match = re.search(r"(╭─ Arguments ─+╮\n.*?\n╰─+╯)", full_help_text, flags=re.DOTALL)
+                if args_match:
+                    console.print(args_match.group(0))
+                
+                console.print(_("\nUse --help to see all available options."))
                 raise typer.Exit()
-            # If help IS explicitly requested, Typer will handle it, so we just return.
+            else:
+                # If help IS explicitly requested, print full help
+                console.print(desc_text)
+                console.print(full_help_text)
+                raise typer.Exit()
+            # Typer will handle explicit --help, so we just return if it's not handled above.
             return
 
         _minwav = minwav
@@ -125,7 +145,7 @@ def get_app():
                 _maxwav = 100000.0  # Default maximum wavelength
 
         if _minwav is None or _maxwav is None:
-            console.print(f"[red]{_('Error: Wavelength range (MINWAV and MAXWAV) must be provided either as arguments or implicitly via a line name query.')}[/red]")
+            console.print(_(f"[red]Error: Wavelength range (MINWAV and MAXWAV) must be provided either as arguments or implicitly via a line name query.[/red]"))
             raise typer.Exit(code=1)
 
         if ctx.obj.get("DEBUG"):
