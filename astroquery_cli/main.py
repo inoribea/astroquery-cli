@@ -25,10 +25,11 @@ except Exception:
 from io import StringIO
 from contextlib import redirect_stdout
 from astropy.config import get_config_dir, get_config
-from rich.console import Console # Import Console
-from rich.text import Text # Import Text
+from rich.console import Console # Re-import Console if needed for other parts
+from rich.text import Text # Re-import Text if needed for other parts
 import re # Import re
 import logging # Import logging
+import shutil # Re-import shutil if needed for other parts
 
 # Suppress astroquery log messages globally (moved to __init__.py for earlier execution)
 # Monkey patch for astroquery.logger._init_log (moved to __init__.py for earlier execution)
@@ -50,7 +51,6 @@ def save_default_lang(lang):
 
 def load_default_lang():
     return config.get_language()
-
 
 app = typer.Typer(
     name="aqc",
