@@ -22,6 +22,23 @@ try:
         aq_logger_mod.DummyLogger.getEffectiveLevel = _dummy_getEffectiveLevel
 except Exception:
     pass
+# Monkey patch for astroquery.logger._init_log to support astropy >= 6.0
+try:
+    import importlib
+    from astropy.logger import AstropyLogger
+    aq_logger_mod = importlib.import_module("astroquery.logger")
+
+    def _new_init_log():
+        """Initializes the log, including the log levels and log writer."""
+        log = AstropyLogger('astroquery')
+        # log._set_defaults() # This line is removed as it's deprecated in astropy 6.0
+        return log
+
+    if hasattr(aq_logger_mod, '_init_log'):
+        aq_logger_mod._init_log = _new_init_log
+
+except Exception:
+    pass
 from io import StringIO
 from contextlib import redirect_stdout
 from astropy.config import get_config_dir, get_config
