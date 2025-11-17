@@ -142,7 +142,11 @@ Refer to the comments within each script in the `locales/` directory for more de
 
 ## License 📄
 
-MIT License
+This project is licensed under the BSD 3-Clause License.  
+See the `LICENSE` file for details.
+
+This project uses [astroquery](https://github.com/astropy/astroquery),  
+which is also licensed under the BSD 3-Clause License.
 
 ---
 
@@ -151,3 +155,4 @@ MIT License
 - [Astroquery](https://astroquery.readthedocs.io/)
 - [Typer](https://typer.tiangolo.com/)
 - [Rich](https://github.com/Textualize/rich)
+
