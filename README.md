@@ -146,7 +146,6 @@ This project is licensed under the BSD 3-Clause License.
 See the `LICENSE` file for details.
 
 This project uses [astroquery](https://github.com/astropy/astroquery),  
-which is also licensed under the BSD 3-Clause License.
 
 ---
 
@@ -155,4 +154,5 @@ which is also licensed under the BSD 3-Clause License.
 - [Astroquery](https://astroquery.readthedocs.io/)
 - [Typer](https://typer.tiangolo.com/)
 - [Rich](https://github.com/Textualize/rich)
+
 
