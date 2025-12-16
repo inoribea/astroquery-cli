@@ -1,0 +1,17 @@
+{
+  "name": "astroquery-cli",
+  "version": "1.0.0",
+  "description": "npx-friendly wrapper for the astroquery-cli Python tool",
+  "bin": {
+    "astroquery-cli": "./npx-entry.js",
+    "aqc": "./npx-entry.js"
+  },
+  "type": "module",
+  "license": "BSD-3-Clause",
+  "files": [
+    "npx-entry.js"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

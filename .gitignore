@@ -50,3 +50,5 @@ locales/zh/LC_MESSAGES/messages.po.bak
 PKGBUILD
 .SRCINFO
 
+# Spec workflow artifacts
+.spec-workflow/

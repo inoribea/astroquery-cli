@@ -43,6 +43,21 @@ _Some modules and commands are not fully implemented. Aliases are available for 
 
 ## Installation 🛠️
 
+### Quick use via npx
+
+> 需要 Node.js ≥18 与本地 Python 3.11+。首次执行会在 `~/.cache/astroquery-cli`（可通过 `AQC_VENV_DIR` 覆盖）创建虚拟环境并安装 Python 端依赖。
+
+```bash
+npx astroquery-cli --help
+# 示例：npx astroquery-cli simbad query --identifier "M31"
+```
+
+可用环境变量：
+
+- `AQC_PYTHON`：指定 Python 解释器路径
+- `AQC_VENV_DIR`：自定义虚拟环境缓存目录
+- `AQC_FORCE_INSTALL=1`：强制重新安装/升级 Python 端依赖
+
 ### From Source
 
 ```bash
